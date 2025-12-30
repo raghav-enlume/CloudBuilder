@@ -1,0 +1,233 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Cloudcraft-inspired Architecture Diagram Builder Design System */
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 220 25% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 10%;
+
+    --primary: 210 100% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 25% 10%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 10% 50%;
+
+    --accent: 175 80% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 210 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --canvas-bg: 220 20% 95%;
+    --canvas-grid: 220 15% 88%;
+    --sidebar-bg: 220 25% 12%;
+    --sidebar-foreground: 220 10% 90%;
+    --sidebar-accent: 220 20% 18%;
+    --node-bg: 0 0% 100%;
+    --node-border: 220 13% 85%;
+    --node-shadow: 220 25% 10%;
+    --connection-line: 210 100% 50%;
+    --success: 145 65% 42%;
+    --warning: 38 92% 50%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(210, 100%, 50%) 0%, hsl(190, 100%, 45%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(175, 80%, 40%) 0%, hsl(160, 70%, 45%) 100%);
+    --gradient-sidebar: linear-gradient(180deg, hsl(220, 25%, 14%) 0%, hsl(220, 25%, 10%) 100%);
+    --gradient-node: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(220, 20%, 98%) 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px hsl(220 25% 10% / 0.05);
+    --shadow-md: 0 4px 12px hsl(220 25% 10% / 0.08);
+    --shadow-lg: 0 8px 30px hsl(220 25% 10% / 0.12);
+    --shadow-node: 0 4px 20px hsl(220 25% 10% / 0.1);
+    --shadow-node-hover: 0 8px 30px hsl(210 100% 50% / 0.15);
+    --shadow-glow: 0 0 20px hsl(210 100% 50% / 0.3);
+
+    --sidebar-background: 220 25% 12%;
+    --sidebar-primary: 210 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 20% 18%;
+    --sidebar-accent-foreground: 220 10% 90%;
+    --sidebar-border: 220 20% 20%;
+    --sidebar-ring: 210 100% 50%;
+  }
+
+  .dark {
+    --background: 220 25% 8%;
+    --foreground: 220 10% 95%;
+
+    --card: 220 25% 12%;
+    --card-foreground: 220 10% 95%;
+
+    --popover: 220 25% 12%;
+    --popover-foreground: 220 10% 95%;
+
+    --primary: 210 100% 55%;
+    --primary-foreground: 220 25% 8%;
+
+    --secondary: 220 20% 18%;
+    --secondary-foreground: 220 10% 95%;
+
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 10% 60%;
+
+    --accent: 175 80% 45%;
+    --accent-foreground: 220 25% 8%;
+
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 20% 20%;
+    --input: 220 20% 20%;
+    --ring: 210 100% 55%;
+
+    --canvas-bg: 220 25% 10%;
+    --canvas-grid: 220 20% 15%;
+    --sidebar-bg: 220 30% 6%;
+    --sidebar-foreground: 220 10% 90%;
+    --sidebar-accent: 220 25% 12%;
+    --node-bg: 220 25% 14%;
+    --node-border: 220 20% 22%;
+    --node-shadow: 220 30% 5%;
+    --connection-line: 210 100% 55%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(210, 100%, 55%) 0%, hsl(190, 100%, 50%) 100%);
+    --gradient-sidebar: linear-gradient(180deg, hsl(220, 30%, 8%) 0%, hsl(220, 30%, 5%) 100%);
+    --gradient-node: linear-gradient(135deg, hsl(220, 25%, 16%) 0%, hsl(220, 25%, 12%) 100%);
+
+    --shadow-node: 0 4px 20px hsl(220 30% 5% / 0.4);
+    --shadow-node-hover: 0 8px 30px hsl(210 100% 55% / 0.2);
+
+    --sidebar-background: 220 30% 6%;
+    --sidebar-border: 220 25% 12%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .canvas-grid {
+    background-image:
+      linear-gradient(hsl(var(--canvas-grid)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--canvas-grid)) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .resource-card {
+    @apply relative p-3 rounded-lg cursor-grab transition-all duration-200;
+    background: var(--gradient-node);
+    border: 1px solid hsl(var(--node-border));
+    box-shadow: var(--shadow-sm);
+  }
+
+  .resource-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .resource-card:active {
+    @apply cursor-grabbing;
+    transform: scale(1.02);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .diagram-node {
+    @apply rounded-xl transition-all duration-200;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .diagram-node:hover {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .diagram-node.selected {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .sidebar-section {
+    @apply mb-4;
+  }
+
+  .sidebar-section-title {
+    @apply text-xs font-semibold uppercase tracking-wider mb-2 px-2;
+    color: hsl(var(--muted-foreground));
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+
+  .animate-pulse-subtle {
+    animation: pulse-subtle 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-subtle {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  .drag-overlay {
+    @apply opacity-90 scale-105;
+    box-shadow: var(--shadow-lg);
+  }
+}
