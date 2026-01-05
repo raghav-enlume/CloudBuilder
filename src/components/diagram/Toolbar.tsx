@@ -1,4 +1,4 @@
-import { Trash2, Download, Upload, Undo, Redo, FileArchive, Zap, Library } from 'lucide-react';
+import { Trash2, Download, Upload, Undo, Redo, FileArchive, Zap, Library, Cloud } from 'lucide-react';
 import JSZip from 'jszip';
 import { useRef, useState } from 'react';
 import { Node, Edge } from 'reactflow';
@@ -19,6 +19,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { parseArchitectureJSON } from '@/lib/architectureParser';
+import { parseAWSDataJSON } from '@/lib/awsDataParser';
 import { ARCHITECTURE_TEMPLATES } from '@/data/templates';
 
 export const Toolbar = () => {
@@ -26,6 +27,7 @@ export const Toolbar = () => {
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const architectureFileInputRef = useRef<HTMLInputElement>(null);
+  const awsDataFileInputRef = useRef<HTMLInputElement>(null);
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
   const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
 
@@ -227,6 +229,59 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
     setIsTemplateDialogOpen(false);
   };
 
+  const handleAWSDataImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const fileContent = await file.text();
+      const data = JSON.parse(fileContent);
+
+      // Validate the AWS data format (should have region keys with vpcs, subnets, instances)
+      const isValidAWSData = Object.values(data).some((region: any) => 
+        region.vpcs && region.subnets && region.instances
+      );
+
+      if (!isValidAWSData) {
+        toast({
+          title: 'Invalid AWS data format',
+          description: 'The file must contain AWS region data with vpcs, subnets, and instances.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      // Parse AWS data to nodes and edges
+      const { nodes: parsedNodes, edges: parsedEdges } = parseAWSDataJSON(data);
+
+      // Load the diagram
+      loadDiagram(parsedNodes, parsedEdges);
+
+      // Count resources
+      const vpcCount = parsedNodes.filter(n => n.id.startsWith('vpc-')).length;
+      const subnetCount = parsedNodes.filter(n => n.id.startsWith('subnet-')).length;
+      const instanceCount = parsedNodes.filter(n => n.id.startsWith('instance-')).length;
+
+      toast({
+        title: 'AWS data imported',
+        description: `Loaded ${vpcCount} VPCs, ${subnetCount} Subnets, and ${instanceCount} EC2 Instances with ${parsedEdges.length} connections.`,
+      });
+
+      setIsImportDialogOpen(false);
+    } catch (error) {
+      toast({
+        title: 'Import failed',
+        description: error instanceof Error ? error.message : 'Failed to import the AWS data file.',
+        variant: 'destructive',
+      });
+    }
+
+    // Reset file input
+    if (awsDataFileInputRef.current) {
+      awsDataFileInputRef.current.value = '';
+    }
+  };
+
   return (
     <div className="h-14 border-b border-border bg-card/80 backdrop-blur-sm px-4 flex items-center justify-between">
       <div className="flex items-center gap-2">
@@ -334,6 +389,17 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
                     <Zap className="h-4 w-4 mr-2" />
                     Architecture Format
                   </Button>
+                  <Button 
+                    onClick={() => {
+                      setIsImportDialogOpen(false);
+                      awsDataFileInputRef.current?.click();
+                    }}
+                    className="w-full"
+                    variant="outline"
+                  >
+                    <Cloud className="h-4 w-4 mr-2" />
+                    AWS Data Format
+                  </Button>
                 </div>
               </DialogContent>
             </Dialog>
@@ -357,6 +423,15 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
           onChange={handleArchitectureImport}
           className="hidden"
           aria-label="Import architecture diagram"
+        />
+
+        <input
+          ref={awsDataFileInputRef}
+          type="file"
+          accept=".json"
+          onChange={handleAWSDataImport}
+          className="hidden"
+          aria-label="Import AWS data"
         />
 
         <div className="w-px h-6 bg-border mx-1" />
@@ -402,6 +477,22 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
             </Dialog>
           </TooltipTrigger>
           <TooltipContent>Template Library</TooltipContent>
+        </Tooltip>
+
+        <div className="w-px h-6 bg-border mx-1" />
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-9 w-9" 
+              onClick={handleClear}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Clear Canvas</TooltipContent>
         </Tooltip>
 
         <div className="w-px h-6 bg-border mx-1" />

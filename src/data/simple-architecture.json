@@ -1,0 +1,60 @@
+{
+    "architecture": {
+        "name": "Simple AWS Web Application",
+        "region": "us-east-1",
+        "components": [
+            {
+                "id": "internet",
+                "type": "User",
+                "label": "Internet Users"
+            },
+            {
+                "id": "alb",
+                "type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+                "label": "Application Load Balancer"
+            },
+            {
+                "id": "ec2",
+                "type": "AWS::EC2::Instance",
+                "label": "EC2 Web Server",
+                "count": 2
+            },
+            {
+                "id": "rds",
+                "type": "AWS::RDS::DBInstance",
+                "label": "RDS Database"
+            },
+            {
+                "id": "s3",
+                "type": "AWS::S3::Bucket",
+                "label": "S3 Bucket"
+            }
+        ],
+        "connections": [
+            {
+                "from": "internet",
+                "to": "alb",
+                "protocol": "HTTPS",
+                "port": 443
+            },
+            {
+                "from": "alb",
+                "to": "ec2",
+                "protocol": "HTTP",
+                "port": 80
+            },
+            {
+                "from": "ec2",
+                "to": "rds",
+                "protocol": "TCP",
+                "port": 3306
+            },
+            {
+                "from": "ec2",
+                "to": "s3",
+                "protocol": "HTTPS",
+                "port": 443
+            }
+        ]
+    }
+}

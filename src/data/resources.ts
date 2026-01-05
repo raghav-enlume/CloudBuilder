@@ -378,6 +378,551 @@ export const cloudResources: ResourceType[] = [
       { key: 'fifoQueue', label: 'FIFO Queue', type: 'boolean' },
     ],
   },
+  // Additional Compute Resources
+  {
+    id: 'autoscaling',
+    name: 'Auto Scaling Group',
+    category: 'compute',
+    icon: 'autoscaling',
+    description: 'Automatic scaling of compute resources',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'minSize', label: 'Min Size', type: 'number', placeholder: '1' },
+      { key: 'maxSize', label: 'Max Size', type: 'number', placeholder: '5' },
+      { key: 'desiredCapacity', label: 'Desired Capacity', type: 'number', placeholder: '2' },
+      { key: 'scalingPolicy', label: 'Scaling Policy', type: 'select', options: [
+        { value: 'target-tracking', label: 'Target Tracking' },
+        { value: 'step-scaling', label: 'Step Scaling' },
+        { value: 'scheduled', label: 'Scheduled' },
+      ]},
+    ],
+  },
+  {
+    id: 'fargate',
+    name: 'Fargate',
+    category: 'compute',
+    icon: 'fargate',
+    description: 'Serverless container compute',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'cpuUnits', label: 'CPU Units', type: 'select', options: [
+        { value: '256', label: '256 (.25 vCPU)' },
+        { value: '512', label: '512 (.5 vCPU)' },
+        { value: '1024', label: '1024 (1 vCPU)' },
+        { value: '2048', label: '2048 (2 vCPU)' },
+        { value: '4096', label: '4096 (4 vCPU)' },
+      ]},
+      { key: 'memory', label: 'Memory (MB)', type: 'number', placeholder: '512' },
+      { key: 'containerImage', label: 'Container Image', type: 'text', placeholder: 'docker.io/myapp:latest' },
+    ],
+  },
+  {
+    id: 'elasticbeanstalk',
+    name: 'Elastic Beanstalk',
+    category: 'compute',
+    icon: 'elasticbeanstalk',
+    description: 'Platform as a service',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'platform', label: 'Platform', type: 'select', options: [
+        { value: 'node.js', label: 'Node.js' },
+        { value: 'python', label: 'Python' },
+        { value: 'java', label: 'Java' },
+        { value: 'dotnet', label: '.NET' },
+        { value: 'php', label: 'PHP' },
+        { value: 'ruby', label: 'Ruby' },
+      ]},
+      { key: 'environmentName', label: 'Environment Name', type: 'text', placeholder: 'my-app-env' },
+      { key: 'instanceType', label: 'Instance Type', type: 'text', placeholder: 't3.micro' },
+    ],
+  },
+
+  // Additional Networking Resources
+  {
+    id: 'subnet',
+    name: 'Subnet',
+    category: 'networking',
+    icon: 'subnet',
+    description: 'VPC subnet',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'subnetName', label: 'Subnet Name', type: 'text', placeholder: 'my-subnet' },
+      { key: 'cidrBlock', label: 'CIDR Block', type: 'text', placeholder: '10.0.1.0/24' },
+      { key: 'availabilityZone', label: 'Availability Zone', type: 'text', placeholder: 'us-east-1a' },
+      { key: 'publicSubnet', label: 'Public Subnet', type: 'boolean' },
+    ],
+  },
+  {
+    id: 'securitygroup',
+    name: 'Security Group',
+    category: 'networking',
+    icon: 'securitygroup',
+    description: 'Virtual firewall',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'groupName', label: 'Group Name', type: 'text', placeholder: 'my-sg' },
+      { key: 'description', label: 'Description', type: 'text', placeholder: 'Security group description' },
+      { key: 'inboundRules', label: 'Inbound Rules', type: 'number', placeholder: '1' },
+      { key: 'outboundRules', label: 'Outbound Rules', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'networkacl',
+    name: 'Network ACL',
+    category: 'networking',
+    icon: 'networkacl',
+    description: 'Network access control list',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'naclName', label: 'NACL Name', type: 'text', placeholder: 'my-nacl' },
+      { key: 'ruleCount', label: 'Rule Count', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'internetgateway',
+    name: 'Internet Gateway',
+    category: 'networking',
+    icon: 'internetgateway',
+    description: 'VPC internet connectivity',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'gatewayName', label: 'Gateway Name', type: 'text', placeholder: 'my-igw' },
+      { key: 'attachedVPC', label: 'Attached VPC', type: 'text', placeholder: 'vpc-12345678' },
+    ],
+  },
+  {
+    id: 'natgateway',
+    name: 'NAT Gateway',
+    category: 'networking',
+    icon: 'natgateway',
+    description: 'Network address translation',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'gatewayName', label: 'Gateway Name', type: 'text', placeholder: 'my-nat-gateway' },
+      { key: 'subnet', label: 'Subnet', type: 'text', placeholder: 'subnet-12345678' },
+      { key: 'elasticIP', label: 'Elastic IP', type: 'text', placeholder: '203.0.113.0' },
+    ],
+  },
+  {
+    id: 'alb',
+    name: 'Application Load Balancer',
+    category: 'networking',
+    icon: 'alb',
+    description: 'Application layer load balancing',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'lbName', label: 'Load Balancer Name', type: 'text', placeholder: 'my-alb' },
+      { key: 'scheme', label: 'Scheme', type: 'select', options: [
+        { value: 'internet-facing', label: 'Internet-facing' },
+        { value: 'internal', label: 'Internal' },
+      ]},
+      { key: 'port', label: 'Listener Port', type: 'number', placeholder: '80' },
+      { key: 'protocol', label: 'Protocol', type: 'select', options: [
+        { value: 'HTTP', label: 'HTTP' },
+        { value: 'HTTPS', label: 'HTTPS' },
+      ]},
+    ],
+  },
+  {
+    id: 'nlb',
+    name: 'Network Load Balancer',
+    category: 'networking',
+    icon: 'nlb',
+    description: 'Ultra-high performance load balancing',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'lbName', label: 'Load Balancer Name', type: 'text', placeholder: 'my-nlb' },
+      { key: 'port', label: 'Listener Port', type: 'number', placeholder: '443' },
+      { key: 'protocol', label: 'Protocol', type: 'select', options: [
+        { value: 'TCP', label: 'TCP' },
+        { value: 'UDP', label: 'UDP' },
+        { value: 'TLS', label: 'TLS' },
+      ]},
+    ],
+  },
+  {
+    id: 'route53',
+    name: 'Route 53',
+    category: 'networking',
+    icon: 'route53',
+    description: 'DNS and domain registration',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'hostedZone', label: 'Hosted Zone', type: 'text', placeholder: 'example.com' },
+      { key: 'recordCount', label: 'Record Count', type: 'number', placeholder: '1' },
+      { key: 'routingPolicy', label: 'Routing Policy', type: 'select', options: [
+        { value: 'simple', label: 'Simple' },
+        { value: 'weighted', label: 'Weighted' },
+        { value: 'latency', label: 'Latency' },
+        { value: 'failover', label: 'Failover' },
+        { value: 'geolocation', label: 'Geolocation' },
+      ]},
+    ],
+  },
+  {
+    id: 'vpcpeering',
+    name: 'VPC Peering',
+    category: 'networking',
+    icon: 'vpcpeering',
+    description: 'VPC-to-VPC connectivity',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'peeringName', label: 'Peering Name', type: 'text', placeholder: 'my-pcx' },
+      { key: 'requesterVPC', label: 'Requester VPC', type: 'text', placeholder: 'vpc-12345678' },
+      { key: 'accepterVPC', label: 'Accepter VPC', type: 'text', placeholder: 'vpc-87654321' },
+    ],
+  },
+  {
+    id: 'transitgateway',
+    name: 'Transit Gateway',
+    category: 'networking',
+    icon: 'transitgateway',
+    description: 'Hub-and-spoke network architecture',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'tgwName', label: 'Transit Gateway Name', type: 'text', placeholder: 'my-tgw' },
+      { key: 'attachmentCount', label: 'Attachment Count', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'availability-zone',
+    name: 'Availability Zone',
+    category: 'networking',
+    icon: 'availability-zone',
+    description: 'Region availability zone',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'zone', label: 'Zone', type: 'text', placeholder: 'us-west-2a' },
+      { key: 'zoneId', label: 'Zone ID', type: 'text', placeholder: 'usw2-az1' },
+    ],
+  },
+
+  // Additional Storage Resources
+  {
+    id: 'glacier',
+    name: 'S3 Glacier',
+    category: 'storage',
+    icon: 'glacier',
+    description: 'Long-term archival storage',
+    color: '#569A31',
+    editableAttributes: [
+      { key: 'vaultName', label: 'Vault Name', type: 'text', placeholder: 'my-vault' },
+      { key: 'archiveDescription', label: 'Archive Description', type: 'text', placeholder: 'Archive description' },
+      { key: 'retentionDays', label: 'Retention Days', type: 'number', placeholder: '365' },
+    ],
+  },
+
+  // Additional Database Resources
+  {
+    id: 'aurora',
+    name: 'Aurora',
+    category: 'database',
+    icon: 'aurora',
+    description: 'Relational database (MySQL/PostgreSQL compatible)',
+    color: '#3B48CC',
+    editableAttributes: [
+      { key: 'engine', label: 'Engine', type: 'select', options: [
+        { value: 'aurora-mysql', label: 'Aurora MySQL' },
+        { value: 'aurora-postgresql', label: 'Aurora PostgreSQL' },
+      ]},
+      { key: 'instanceClass', label: 'Instance Class', type: 'text', placeholder: 'db.r5.large' },
+      { key: 'multiAZ', label: 'Multi-AZ', type: 'boolean' },
+      { key: 'backupRetentionDays', label: 'Backup Retention Days', type: 'number', placeholder: '7' },
+    ],
+  },
+  {
+    id: 'redshift',
+    name: 'Redshift',
+    category: 'database',
+    icon: 'redshift',
+    description: 'Data warehouse',
+    color: '#3B48CC',
+    editableAttributes: [
+      { key: 'clusterName', label: 'Cluster Name', type: 'text', placeholder: 'my-redshift' },
+      { key: 'nodeType', label: 'Node Type', type: 'select', options: [
+        { value: 'dc2.large', label: 'dc2.large' },
+        { value: 'dc2.xlarge', label: 'dc2.xlarge' },
+        { value: 'ra3.xlplus', label: 'ra3.xlplus' },
+      ]},
+      { key: 'numberOfNodes', label: 'Number of Nodes', type: 'number', placeholder: '2' },
+    ],
+  },
+
+  // Messaging, Events & Streaming
+  {
+    id: 'sns',
+    name: 'SNS Topic',
+    category: 'messaging',
+    icon: 'sns',
+    description: 'Simple notification service',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'topicName', label: 'Topic Name', type: 'text', placeholder: 'my-topic' },
+      { key: 'displayName', label: 'Display Name', type: 'text', placeholder: 'My Topic' },
+      { key: 'subscriptionCount', label: 'Subscription Count', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'eventbridge',
+    name: 'EventBridge',
+    category: 'messaging',
+    icon: 'eventbridge',
+    description: 'Event-driven application integration',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'ruleName', label: 'Rule Name', type: 'text', placeholder: 'my-rule' },
+      { key: 'eventPattern', label: 'Event Pattern', type: 'textarea', placeholder: 'JSON event pattern' },
+      { key: 'targetCount', label: 'Target Count', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'kinesis-streams',
+    name: 'Kinesis Data Streams',
+    category: 'messaging',
+    icon: 'kinesis',
+    description: 'Streaming data service',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'streamName', label: 'Stream Name', type: 'text', placeholder: 'my-stream' },
+      { key: 'shardCount', label: 'Shard Count', type: 'number', placeholder: '1' },
+      { key: 'dataRetention', label: 'Data Retention (hours)', type: 'number', placeholder: '24' },
+    ],
+  },
+  {
+    id: 'kinesis-firehose',
+    name: 'Kinesis Firehose',
+    category: 'messaging',
+    icon: 'firehose',
+    description: 'Data delivery to destinations',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'deliveryStreamName', label: 'Delivery Stream Name', type: 'text', placeholder: 'my-firehose' },
+      { key: 'destination', label: 'Destination', type: 'select', options: [
+        { value: 's3', label: 'S3' },
+        { value: 'redshift', label: 'Redshift' },
+        { value: 'elasticsearch', label: 'Elasticsearch' },
+        { value: 'splunk', label: 'Splunk' },
+      ]},
+      { key: 'bufferSizeMB', label: 'Buffer Size (MB)', type: 'number', placeholder: '128' },
+    ],
+  },
+
+  // Security & Identity
+  {
+    id: 'iamrole',
+    name: 'IAM Role',
+    category: 'security',
+    icon: 'iamrole',
+    description: 'IAM role with permissions',
+    color: '#DD344C',
+    editableAttributes: [
+      { key: 'roleName', label: 'Role Name', type: 'text', placeholder: 'MyRole' },
+      { key: 'assumeRolePrincipal', label: 'Assume Role Principal', type: 'text', placeholder: 'ec2.amazonaws.com' },
+      { key: 'policyCount', label: 'Attached Policies', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'awsorganizations',
+    name: 'AWS Organizations',
+    category: 'security',
+    icon: 'awsorganizations',
+    description: 'Centralized account management',
+    color: '#DD344C',
+    editableAttributes: [
+      { key: 'organizationId', label: 'Organization ID', type: 'text', placeholder: 'o-xxxxxxxxxx' },
+      { key: 'masterAccount', label: 'Master Account ID', type: 'text', placeholder: '123456789012' },
+      { key: 'accountCount', label: 'Account Count', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'secretsmanager',
+    name: 'Secrets Manager',
+    category: 'security',
+    icon: 'secretsmanager',
+    description: 'Secret storage and rotation',
+    color: '#DD344C',
+    editableAttributes: [
+      { key: 'secretName', label: 'Secret Name', type: 'text', placeholder: 'my-secret' },
+      { key: 'secretType', label: 'Secret Type', type: 'select', options: [
+        { value: 'database', label: 'Database Credentials' },
+        { value: 'api-key', label: 'API Key' },
+        { value: 'custom', label: 'Custom Secret' },
+      ]},
+      { key: 'rotationEnabled', label: 'Rotation Enabled', type: 'boolean' },
+    ],
+  },
+  {
+    id: 'ssmparameterstore',
+    name: 'SSM Parameter Store',
+    category: 'security',
+    icon: 'ssmparameterstore',
+    description: 'Parameter and configuration storage',
+    color: '#DD344C',
+    editableAttributes: [
+      { key: 'parameterName', label: 'Parameter Name', type: 'text', placeholder: '/myapp/config' },
+      { key: 'parameterType', label: 'Parameter Type', type: 'select', options: [
+        { value: 'String', label: 'String' },
+        { value: 'StringList', label: 'String List' },
+        { value: 'SecureString', label: 'Secure String' },
+      ]},
+      { key: 'value', label: 'Value', type: 'text', placeholder: 'parameter value' },
+    ],
+  },
+  {
+    id: 'shield',
+    name: 'AWS Shield',
+    category: 'security',
+    icon: 'shield',
+    description: 'DDoS protection',
+    color: '#DD344C',
+    editableAttributes: [
+      { key: 'protectionLevel', label: 'Protection Level', type: 'select', options: [
+        { value: 'standard', label: 'Standard (Free)' },
+        { value: 'advanced', label: 'Advanced (Paid)' },
+      ]},
+      { key: 'protectedResources', label: 'Protected Resources', type: 'number', placeholder: '1' },
+    ],
+  },
+
+  // Monitoring, Logging & Management
+  {
+    id: 'cloudtrail',
+    name: 'CloudTrail',
+    category: 'monitoring',
+    icon: 'cloudtrail',
+    description: 'API activity logging',
+    color: '#FF4F8B',
+    editableAttributes: [
+      { key: 'trailName', label: 'Trail Name', type: 'text', placeholder: 'my-trail' },
+      { key: 's3BucketName', label: 'S3 Bucket Name', type: 'text', placeholder: 'my-bucket' },
+      { key: 'enableMFA', label: 'Enable MFA Delete', type: 'boolean' },
+    ],
+  },
+  {
+    id: 'awsconfig',
+    name: 'AWS Config',
+    category: 'monitoring',
+    icon: 'awsconfig',
+    description: 'Configuration compliance tracking',
+    color: '#FF4F8B',
+    editableAttributes: [
+      { key: 'configRecorderName', label: 'Recorder Name', type: 'text', placeholder: 'default' },
+      { key: 's3BucketName', label: 'S3 Bucket Name', type: 'text', placeholder: 'my-bucket' },
+      { key: 'ruleCount', label: 'Rule Count', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'awsbackup',
+    name: 'AWS Backup',
+    category: 'monitoring',
+    icon: 'awsbackup',
+    description: 'Centralized backup management',
+    color: '#FF4F8B',
+    editableAttributes: [
+      { key: 'vaultName', label: 'Backup Vault Name', type: 'text', placeholder: 'my-vault' },
+      { key: 'retentionDays', label: 'Retention Days', type: 'number', placeholder: '30' },
+      { key: 'resourceCount', label: 'Resource Count', type: 'number', placeholder: '1' },
+    ],
+  },
+
+  // DevOps & Infrastructure as Code
+  {
+    id: 'cloudformation',
+    name: 'CloudFormation',
+    category: 'devops',
+    icon: 'cloudformation',
+    description: 'Infrastructure as code',
+    color: '#C925D1',
+    editableAttributes: [
+      { key: 'stackName', label: 'Stack Name', type: 'text', placeholder: 'my-stack' },
+      { key: 'templateUrl', label: 'Template URL', type: 'text', placeholder: 'https://s3.amazonaws.com/...' },
+      { key: 'resourceCount', label: 'Resource Count', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'awscdk',
+    name: 'AWS CDK',
+    category: 'devops',
+    icon: 'awscdk',
+    description: 'Infrastructure via code (Python/JS/TS)',
+    color: '#C925D1',
+    editableAttributes: [
+      { key: 'stackName', label: 'Stack Name', type: 'text', placeholder: 'my-cdk-stack' },
+      { key: 'language', label: 'Language', type: 'select', options: [
+        { value: 'typescript', label: 'TypeScript' },
+        { value: 'python', label: 'Python' },
+        { value: 'csharp', label: 'C#' },
+        { value: 'java', label: 'Java' },
+      ]},
+      { key: 'constructCount', label: 'Construct Count', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'codepipeline',
+    name: 'CodePipeline',
+    category: 'devops',
+    icon: 'codepipeline',
+    description: 'CI/CD pipeline automation',
+    color: '#C925D1',
+    editableAttributes: [
+      { key: 'pipelineName', label: 'Pipeline Name', type: 'text', placeholder: 'my-pipeline' },
+      { key: 'stageCount', label: 'Stage Count', type: 'number', placeholder: '3' },
+      { key: 'sourceRepository', label: 'Source Repository', type: 'text', placeholder: 'github.com/myrepo' },
+    ],
+  },
+  {
+    id: 'codebuild',
+    name: 'CodeBuild',
+    category: 'devops',
+    icon: 'codebuild',
+    description: 'Fully managed build service',
+    color: '#C925D1',
+    editableAttributes: [
+      { key: 'projectName', label: 'Project Name', type: 'text', placeholder: 'my-build' },
+      { key: 'operatingSystem', label: 'Operating System', type: 'select', options: [
+        { value: 'amazon-linux', label: 'Amazon Linux' },
+        { value: 'ubuntu', label: 'Ubuntu' },
+        { value: 'windows', label: 'Windows Server' },
+      ]},
+      { key: 'computeType', label: 'Compute Type', type: 'select', options: [
+        { value: 'small', label: 'Small (3 GB RAM)' },
+        { value: 'medium', label: 'Medium (7 GB RAM)' },
+        { value: 'large', label: 'Large (15 GB RAM)' },
+      ]},
+    ],
+  },
+  {
+    id: 'codedeploy',
+    name: 'CodeDeploy',
+    category: 'devops',
+    icon: 'codedeploy',
+    description: 'Application deployment automation',
+    color: '#C925D1',
+    editableAttributes: [
+      { key: 'applicationName', label: 'Application Name', type: 'text', placeholder: 'my-app' },
+      { key: 'deploymentGroupName', label: 'Deployment Group Name', type: 'text', placeholder: 'prod' },
+      { key: 'deploymentConfigName', label: 'Deployment Config', type: 'select', options: [
+        { value: 'CodeDeployDefault.OneAtATime', label: 'One at a Time' },
+        { value: 'CodeDeployDefault.HalfAtATime', label: 'Half at a Time' },
+        { value: 'CodeDeployDefault.AllAtOnce', label: 'All at Once' },
+      ]},
+    ],
+  },
+
+  // Analytics & Query
+  {
+    id: 'athena',
+    name: 'Athena',
+    category: 'analytics',
+    icon: 'athena',
+    description: 'Interactive SQL query service',
+    color: '#FF4F8B',
+    editableAttributes: [
+      { key: 'workgroupName', label: 'Workgroup Name', type: 'text', placeholder: 'primary' },
+      { key: 'outputLocation', label: 'Output S3 Location', type: 'text', placeholder: 's3://my-bucket/results/' },
+      { key: 'databaseName', label: 'Database Name', type: 'text', placeholder: 'default' },
+    ],
+  },
 ];
 
 export const categoryLabels: Record<string, string> = {
@@ -387,6 +932,9 @@ export const categoryLabels: Record<string, string> = {
   networking: 'Networking',
   security: 'Security',
   analytics: 'Analytics',
+  messaging: 'Messaging & Events',
+  devops: 'DevOps & IaC',
+  monitoring: 'Monitoring & Logging',
 };
 
 export const categoryColors: Record<string, string> = {
@@ -396,4 +944,7 @@ export const categoryColors: Record<string, string> = {
   networking: '#8C4FFF',
   security: '#DD344C',
   analytics: '#FF4F8B',
+  messaging: '#FF9900',
+  devops: '#C925D1',
+  monitoring: '#FF4F8B',
 };

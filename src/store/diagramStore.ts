@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { Node, Edge, addEdge, applyNodeChanges, applyEdgeChanges, NodeChange, EdgeChange, Connection } from 'reactflow';
 import { ResourceType } from '@/types/diagram';
+import { cloudResources } from '@/data/resources';
 
 interface HistoryState {
   nodes: Node[];
@@ -13,14 +14,16 @@ interface DiagramStore {
   selectedNode: string | null;
   history: HistoryState[];
   historyIndex: number;
-  addNode: (resourceType: ResourceType, position: { x: number; y: number }) => void;
+  addNode: (resourceType: ResourceType, position: { x: number; y: number }, parentId?: string, isContainer?: boolean) => void;
   updateNodes: (changes: NodeChange[]) => void;
   updateEdges: (changes: EdgeChange[]) => void;
   addEdge: (connection: Connection) => void;
+  deleteEdge: (edgeId: string) => void;
   setSelectedNode: (nodeId: string | null) => void;
   deleteNode: (nodeId: string) => void;
   updateNodeLabel: (nodeId: string, label: string) => void;
   updateNodeAttribute: (nodeId: string, attributeKey: string, value: unknown) => void;
+  updateNodeSize: (nodeId: string, width: number, height: number) => void;
   clearDiagram: () => void;
   undo: () => void;
   redo: () => void;
@@ -31,6 +34,70 @@ interface DiagramStore {
 }
 
 let nodeIdCounter = 0;
+
+// Helper function to check if a node is a container/parent type
+const isContainerNode = (node: any): boolean => {
+  return node?.data?.isContainer || 
+         node?.data?.resourceType?.id === 'autoscaling' ||
+         node?.data?.resourceType?.id === 'vpc' ||
+         node?.data?.resourceType?.id === 'subnet' ||
+         node?.data?.resourceType?.id === 'securitygroup' ||
+         node?.data?.resourceType?.id === 'region';
+};
+
+// Helper function to calculate nesting depth for a node
+const calculateNestingDepth = (nodeId: string, allNodes: Node[]): number => {
+  const node = allNodes.find((n) => n.id === nodeId);
+  if (!node?.data?.parentId) {
+    return 0;
+  }
+  return 1 + calculateNestingDepth(node.data.parentId, allNodes);
+};
+
+// Helper function to auto-detect parent nodes based on position
+const autoDetectParents = (nodes: Node[]): Node[] => {
+  return nodes.map((node) => {
+    // Skip if already has a parent
+    if (node.data?.parentId) {
+      return node;
+    }
+
+    // Find all container nodes
+    const containerNodes = nodes.filter((n) => isContainerNode(n));
+
+    // Check if this node is inside any container node (prefer smallest/innermost)
+    for (const parentNode of containerNodes.sort((a, b) => {
+      const aSize = (a.data?.size?.width || 240) * (a.data?.size?.height || 72);
+      const bSize = (b.data?.size?.width || 240) * (b.data?.size?.height || 72);
+      return aSize - bSize; // Smaller first
+    })) {
+      const parentWidth = parentNode.data?.size?.width || 240;
+      const parentHeight = parentNode.data?.size?.height || 72;
+      const nodeWidth = node.data?.size?.width || 64;
+      const nodeHeight = node.data?.size?.height || 64;
+
+      // Check if node is within parent bounds (with padding tolerance)
+      const padding = 15;
+      if (
+        node.position.x >= parentNode.position.x + padding &&
+        node.position.x + nodeWidth <= parentNode.position.x + parentWidth - padding &&
+        node.position.y >= parentNode.position.y + padding &&
+        node.position.y + nodeHeight <= parentNode.position.y + parentHeight - padding &&
+        node.id !== parentNode.id
+      ) {
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            parentId: parentNode.id,
+          },
+        };
+      }
+    }
+
+    return node;
+  });
+};
 
 const saveStateToHistory = (state: DiagramStore) => {
   // Remove any redo history after current index
@@ -55,20 +122,117 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
   history: [{ nodes: [], edges: [] }],
   historyIndex: 0,
 
-  addNode: (resourceType, position) => {
-    const newNode: Node = {
-      id: `node-${++nodeIdCounter}`,
-      type: 'resourceNode',
-      position,
-      data: {
-        label: resourceType.name,
-        resourceType,
-      },
-    };
-
+  addNode: (resourceType, position, parentId, isContainer = false) => {
     set((state) => {
+      // Auto-detect container types for VPC, Subnet, SecurityGroup
+      let shouldBeContainer = isContainer || resourceType.id === 'vpc' || resourceType.id === 'subnet' || resourceType.id === 'securitygroup';
+      
+      let size = undefined;
+      
+      if (shouldBeContainer) {
+        // Container nodes have fixed sizes
+        if (resourceType.id === 'region') {
+          size = { width: 1000, height: 700 };
+        } else if (resourceType.id === 'vpc') {
+          size = { width: 700, height: 500 };
+        } else if (resourceType.id === 'subnet') {
+          size = { width: 450, height: 300 };
+        } else if (resourceType.id === 'securitygroup') {
+          size = { width: 350, height: 250 };
+        }
+      } else if (resourceType?.id === 'autoscaling') {
+        // default size only for autoscaling to make it visible
+        size = { width: 240, height: 72 };
+      }
+      
+      let currentPosition = position;
+      let currentParentId = parentId;
+      let newNodes = [...state.nodes];
+      const padding = 20;
+
+      // Define parent containers for each resource type
+      const parentContainerMap: Record<string, string> = {
+        vpc: 'region',
+        subnet: 'vpc',
+      };
+
+      const containerSizes: Record<string, { width: number; height: number }> = {
+        region: { width: 1000, height: 700 },
+        vpc: { width: 700, height: 500 },
+        subnet: { width: 450, height: 300 },
+      };
+
+      // Auto-create parent containers if needed
+      if (!isContainer && (resourceType.id === 'vpc' || resourceType.id === 'subnet')) {
+        const parentContainerType = parentContainerMap[resourceType.id];
+        
+        if (parentContainerType) {
+          // Check if parent container already exists
+          const existingParent = newNodes.find(
+            (n) => n.data?.resourceType?.id === parentContainerType && n.data?.isContainer
+          );
+
+          if (!existingParent) {
+            // Find the parent resource definition
+            const parentResource = cloudResources.find((r) => r.id === parentContainerType);
+            
+            if (parentResource) {
+              const containerSize = containerSizes[parentContainerType] || { width: 600, height: 400 };
+              const parentPosition = {
+                x: position.x - containerSize.width - padding,
+                y: position.y - padding,
+              };
+
+              const parentNode: Node = {
+                id: `node-${++nodeIdCounter}`,
+                type: 'resourceNode',
+                position: parentPosition,
+                data: {
+                  label: parentResource.name,
+                  resourceType: parentResource,
+                  parentId: currentParentId,
+                  isContainer: true,
+                  size: containerSize,
+                },
+              };
+
+              newNodes = [...newNodes, parentNode];
+              currentParentId = parentNode.id;
+            }
+          } else {
+            // Use existing parent
+            currentParentId = existingParent.id;
+          }
+        }
+      }
+
+      const newNode: Node = {
+        id: `node-${++nodeIdCounter}`,
+        type: 'resourceNode',
+        position: currentPosition,
+        data: {
+          label: resourceType.name,
+          resourceType,
+          parentId: currentParentId,
+          isContainer: shouldBeContainer,
+          size,
+          nestingDepth: 0, // Will be calculated after node is added
+        },
+      };
+
+      newNodes = [...newNodes, newNode];
+      
+      // Calculate nesting depth for all nodes
+      newNodes = newNodes.map((node) => ({
+        ...node,
+        data: {
+          ...node.data,
+          nestingDepth: calculateNestingDepth(node.id, newNodes),
+        },
+      }));
+
       const newState = {
-        nodes: [...state.nodes, newNode],
+        nodes: newNodes,
         edges: state.edges,
         selectedNode: state.selectedNode,
       };
@@ -89,13 +253,125 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
     set((state) => {
       const updatedNodes = applyNodeChanges(changes, state.nodes);
       
+      // Calculate movement for each node
+      const nodeMovementMap: Record<string, { dx: number; dy: number }> = {};
+      const directlyMovedNodeIds = new Set<string>();
+      
+      for (const updatedNode of updatedNodes) {
+        const originalNode = state.nodes.find((n) => n.id === updatedNode.id);
+        if (originalNode) {
+          const dx = updatedNode.position.x - originalNode.position.x;
+          const dy = updatedNode.position.y - originalNode.position.y;
+          
+          // Only track if node actually moved
+          if (dx !== 0 || dy !== 0) {
+            nodeMovementMap[updatedNode.id] = { dx, dy };
+            directlyMovedNodeIds.add(updatedNode.id);
+          }
+        }
+      }
+      
+      // Apply cascading movement to all nodes (including containers) when parent moves
+      const nodesAfterParentMovement = updatedNodes.map((node) => {
+        // Check if this node or any ancestor moved directly
+        let currentParentId = node.data?.parentId;
+        let totalDx = 0;
+        let totalDy = 0;
+        
+        while (currentParentId) {
+          if (nodeMovementMap[currentParentId]) {
+            const { dx, dy } = nodeMovementMap[currentParentId];
+            totalDx += dx;
+            totalDy += dy;
+          }
+          
+          // Move up the hierarchy
+          const parentNode = updatedNodes.find((n) => n.id === currentParentId);
+          currentParentId = parentNode?.data?.parentId;
+        }
+        
+        // If any ancestor moved, move this node accordingly
+        if (totalDx !== 0 || totalDy !== 0) {
+          return {
+            ...node,
+            position: {
+              x: node.position.x + totalDx,
+              y: node.position.y + totalDy,
+            },
+          };
+        }
+        
+        return node;
+      });
+      
+      // Update parent relationships for all nodes that were directly moved
+      const finalNodes = nodesAfterParentMovement.map((node) => {
+        // If this node was directly moved (not as a child), check if it's inside a parent
+        const wasDirectlyMoved = directlyMovedNodeIds.has(node.id);
+        
+        if (wasDirectlyMoved) {
+          // Find all container nodes that could be parents (excluding this node)
+          const parentCandidates = nodesAfterParentMovement.filter(
+            (n) => isContainerNode(n) && n.id !== node.id
+          );
+          
+          let newParentId: string | undefined;
+          
+          // Check each potential parent (prefer smallest/innermost)
+          for (const parentNode of parentCandidates.sort((a, b) => {
+            const aSize = (a.data?.size?.width || 240) * (a.data?.size?.height || 72);
+            const bSize = (b.data?.size?.width || 240) * (b.data?.size?.height || 72);
+            return aSize - bSize; // Smaller first
+          })) {
+            const parentWidth = parentNode.data?.size?.width || 240;
+            const parentHeight = parentNode.data?.size?.height || 72;
+            const nodeWidth = node.data?.size?.width || 64;
+            const nodeHeight = node.data?.size?.height || 64;
+            
+            // Check if node is within parent bounds (with padding)
+            const padding = 15;
+            if (
+              node.position.x >= parentNode.position.x + padding &&
+              node.position.x + nodeWidth <= parentNode.position.x + parentWidth - padding &&
+              node.position.y >= parentNode.position.y + padding &&
+              node.position.y + nodeHeight <= parentNode.position.y + parentHeight - padding
+            ) {
+              newParentId = parentNode.id;
+              break;
+            }
+          }
+          
+          // Update parentId if it changed
+          if (newParentId !== node.data?.parentId) {
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                parentId: newParentId,
+              },
+            };
+          }
+        }
+        
+        return node;
+      });
+      
+      // Calculate nesting depth for each node to fix z-index layering
+      const nodesWithDepth = finalNodes.map((node) => ({
+        ...node,
+        data: {
+          ...node.data,
+          nestingDepth: calculateNestingDepth(node.id, finalNodes),
+        },
+      }));
+      
       const historyUpdate = saveStateToHistory({
         ...state,
-        nodes: updatedNodes,
+        nodes: nodesWithDepth,
       });
 
       return {
-        nodes: updatedNodes,
+        nodes: nodesWithDepth,
         ...historyUpdate,
       };
     });
@@ -122,8 +398,9 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
       ...connection,
       id: `edge-${Date.now()}`,
       type: 'smoothstep',
-      animated: true,
+      animated: false,
       style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+      markerEnd: { type: 'arrowclosed' as any },
     };
 
     set((state) => {
@@ -141,16 +418,55 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
     });
   },
 
+  deleteEdge: (edgeId) => {
+    set((state) => {
+      const updatedEdges = state.edges.filter((edge) => edge.id !== edgeId);
+      
+      const historyUpdate = saveStateToHistory({
+        ...state,
+        edges: updatedEdges,
+      });
+
+      return {
+        edges: updatedEdges,
+        ...historyUpdate,
+      };
+    });
+  },
+
   setSelectedNode: (nodeId) => {
-    set({ selectedNode: nodeId });
+    set((state) => {
+      const updatedNodes = state.nodes.map((node) =>
+        node.id === nodeId ? { ...node, selected: true } : { ...node, selected: false }
+      );
+
+      const historyUpdate = saveStateToHistory({
+        ...state,
+        nodes: updatedNodes,
+        selectedNode: nodeId,
+      });
+
+      return {
+        nodes: updatedNodes,
+        selectedNode: nodeId,
+        ...historyUpdate,
+      };
+    });
   },
 
   deleteNode: (nodeId) => {
     set((state) => {
+      // Get all child nodes that should also be deleted
+      const childNodeIds = state.nodes
+        .filter((node) => node.data?.parentId === nodeId)
+        .map((node) => node.id);
+      
+      const nodeIdsToDelete = [nodeId, ...childNodeIds];
+      
       const newState = {
-        nodes: state.nodes.filter((node) => node.id !== nodeId),
+        nodes: state.nodes.filter((node) => !nodeIdsToDelete.includes(node.id)),
         edges: state.edges.filter(
-          (edge) => edge.source !== nodeId && edge.target !== nodeId
+          (edge) => !nodeIdsToDelete.includes(edge.source) && !nodeIdsToDelete.includes(edge.target)
         ),
         selectedNode: state.selectedNode === nodeId ? null : state.selectedNode,
       };
@@ -201,6 +517,26 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
                 },
               },
             }
+          : node
+      );
+
+      const historyUpdate = saveStateToHistory({
+        ...state,
+        nodes: updatedNodes,
+      });
+
+      return {
+        nodes: updatedNodes,
+        ...historyUpdate,
+      };
+    });
+  },
+
+  updateNodeSize: (nodeId, width, height) => {
+    set((state) => {
+      const updatedNodes = state.nodes.map((node) =>
+        node.id === nodeId
+          ? { ...node, data: { ...node.data, size: { width, height } } }
           : node
       );
 
@@ -278,8 +614,11 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
 
   loadDiagram: (nodes, edges) => {
     set((state) => {
+      // Auto-detect parent relationships based on node positions
+      const nodesWithParents = autoDetectParents(nodes);
+
       const newState = {
-        nodes,
+        nodes: nodesWithParents,
         edges,
         selectedNode: null,
       };

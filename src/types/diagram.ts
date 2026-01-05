@@ -1,4 +1,4 @@
-export type ResourceCategory = 'compute' | 'storage' | 'database' | 'networking' | 'security' | 'analytics';
+export type ResourceCategory = 'compute' | 'storage' | 'database' | 'networking' | 'security' | 'analytics' | 'messaging' | 'devops' | 'monitoring';
 
 export type AttributeType = 'text' | 'number' | 'select' | 'boolean' | 'textarea';
 
@@ -31,6 +31,7 @@ export interface DiagramNode {
     label: string;
     resourceType: ResourceType;
     config?: Record<string, unknown>;
+    parentId?: string; // Parent node ID for nested components
   };
 }
 

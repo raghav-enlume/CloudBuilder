@@ -1,14 +1,28 @@
-import { useCallback, useRef } from 'react';
-import { DndContext, DragEndEvent, DragOverlay, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
+import { useCallback, useEffect, useRef } from 'react';
+import { DndContext, DragEndEvent, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
 import { ResourceSidebar } from './ResourceSidebar';
-import { DiagramCanvas } from './DiagramCanvas';
+import { DiagramCanvasWrapper } from './DiagramCanvas';
 import { Toolbar } from './Toolbar';
 import { useDiagramStore } from '@/store/diagramStore';
 import { ResourceType } from '@/types/diagram';
 
+const DiagramBuilderContent = ({ onDragEnd }: { onDragEnd: (event: DragEndEvent) => void }) => {
+  return (
+    <div className="flex h-screen bg-canvas overflow-hidden">
+      <ResourceSidebar />
+      <div className="flex-1 flex flex-col">
+        <Toolbar />
+        <div className="flex-1 flex overflow-hidden">
+          <DiagramCanvasWrapper />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const DiagramBuilder = () => {
   const { addNode } = useDiagramStore();
-  const dragStartPosRef = useRef({ x: 0, y: 0 });
+  const pointerPosRef = useRef({ x: 0, y: 0 });
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -18,6 +32,18 @@ export const DiagramBuilder = () => {
     })
   );
 
+  // Track pointer position globally
+  useEffect(() => {
+    const handlePointerDown = (e: PointerEvent) => {
+      pointerPosRef.current = { x: e.clientX, y: e.clientY };
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown, true);
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown, true);
+    };
+  }, []);
+
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       const { active, over } = event;
@@ -25,48 +51,45 @@ export const DiagramBuilder = () => {
       if (over?.id === 'canvas' && active.data.current) {
         const resourceType = active.data.current as ResourceType;
         
-        // Get the canvas element
-        const canvasElement = document.querySelector('.react-flow__viewport') as HTMLElement;
+        // Get the canvas element to convert coordinates
+        const canvasElement = document.querySelector('.react-flow__viewport');
         if (!canvasElement) {
-          console.error('Canvas element not found');
+          console.warn('Canvas element not found');
+          // Fallback: use basic positioning
+          const position = {
+            x: pointerPosRef.current.x + event.delta.x,
+            y: pointerPosRef.current.y + event.delta.y,
+          };
+          addNode(resourceType, position);
           return;
         }
-
-        // Get the canvas rect and transform
-        const canvasRect = canvasElement.getBoundingClientRect();
         
-        // Calculate the drop screen position
-        const dropScreenX = dragStartPosRef.current.x + event.delta.x;
-        const dropScreenY = dragStartPosRef.current.y + event.delta.y;
+        // Get the drop screen position
+        const dropScreenX = pointerPosRef.current.x + event.delta.x;
+        const dropScreenY = pointerPosRef.current.y + event.delta.y;
         
-        // Convert screen coordinates to canvas local coordinates
-        const canvasX = dropScreenX - canvasRect.left;
-        const canvasY = dropScreenY - canvasRect.top;
+        // Get viewport transform
+        const style = window.getComputedStyle(canvasElement);
+        const transform = style.transform;
+        const match = transform.match(/matrix\((.+)\)/);
+        let scale = 1;
+        let offsetX = 0;
+        let offsetY = 0;
         
-        // Get the canvas transform (scale and pan)
-        const transform = canvasElement.style.transform;
-        const matrixMatch = transform.match(/matrix\(([^)]+)\)/);
-        
-        let scaleX = 1;
-        let scaleY = 1;
-        let panX = 0;
-        let panY = 0;
-        
-        if (matrixMatch) {
-          const values = matrixMatch[1].split(', ').map(Number);
-          scaleX = values[0];
-          scaleY = values[3];
-          panX = values[4];
-          panY = values[5];
+        if (match) {
+          const values = match[1].split(', ').map(Number);
+          scale = values[0];
+          offsetX = values[4];
+          offsetY = values[5];
         }
         
-        // Convert to flow coordinates
-        const flowX = (canvasX - panX) / scaleX;
-        const flowY = (canvasY - panY) / scaleY;
+        // Get canvas bounds
+        const canvasRect = canvasElement.getBoundingClientRect();
         
+        // Convert to flow coordinates
         const position = {
-          x: flowX,
-          y: flowY,
+          x: (dropScreenX - canvasRect.left - offsetX) / scale,
+          y: (dropScreenY - canvasRect.top - offsetY) / scale,
         };
         
         console.log('Drop position:', position);
@@ -76,34 +99,12 @@ export const DiagramBuilder = () => {
     [addNode]
   );
 
-  // Track the initial drag start position
-  const handleDragStart = useCallback(
-    (event: any) => {
-      const element = event.active.node.activatorNode as HTMLElement;
-      const rect = element.getBoundingClientRect();
-      dragStartPosRef.current = {
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2,
-      };
-    },
-    []
-  );
-
   return (
     <DndContext 
       sensors={sensors} 
       onDragEnd={handleDragEnd}
-      onDragStart={handleDragStart}
     >
-      <div className="flex h-screen bg-canvas overflow-hidden">
-        <ResourceSidebar />
-        <div className="flex-1 flex flex-col">
-          <Toolbar />
-          <div className="flex-1 flex overflow-hidden">
-            <DiagramCanvas />
-          </div>
-        </div>
-      </div>
+      <DiagramBuilderContent onDragEnd={handleDragEnd} />
     </DndContext>
   );
 };

@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState, useMemo } from 'react';
 import ReactFlow, {
   Background,
   Controls,
@@ -6,6 +6,7 @@ import ReactFlow, {
   NodeTypes,
   useReactFlow,
   ReactFlowProvider,
+  MarkerType,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { useDroppable } from '@dnd-kit/core';
@@ -20,12 +21,28 @@ const nodeTypes: NodeTypes = {
 
 const DiagramCanvasInner = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  const { nodes, edges, updateNodes, updateEdges, addEdge, setSelectedNode } = useDiagramStore();
+  const { nodes, edges, updateNodes, updateEdges, addEdge, setSelectedNode, deleteEdge } = useDiagramStore();
   const { screenToFlowPosition } = useReactFlow();
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; edgeId: string } | null>(null);
 
   const { setNodeRef, isOver } = useDroppable({
     id: 'canvas',
   });
+
+  // Enhanced edges with better arrow markers
+  const enhancedEdges = useMemo(() => {
+    return edges.map((edge: any) => ({
+      ...edge,
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+        color: 'hsl(210, 100%, 50%)',
+      },
+      style: {
+        stroke: 'hsl(210, 100%, 50%)',
+        strokeWidth: 2.5,
+      },
+    }));
+  }, [edges]);
 
   const onNodesChange = useCallback(
     (changes: any) => {
@@ -57,7 +74,23 @@ const DiagramCanvasInner = () => {
 
   const onPaneClick = useCallback(() => {
     setSelectedNode(null);
+    setContextMenu(null);
   }, [setSelectedNode]);
+
+  const onEdgeContextMenu = useCallback(
+    (event: React.MouseEvent, edge: any) => {
+      event.preventDefault();
+      setContextMenu({ x: event.clientX, y: event.clientY, edgeId: edge.id });
+    },
+    []
+  );
+
+  const handleDeleteEdge = useCallback(() => {
+    if (contextMenu) {
+      deleteEdge(contextMenu.edgeId);
+      setContextMenu(null);
+    }
+  }, [contextMenu, deleteEdge]);
 
   return (
     <div
@@ -72,21 +105,25 @@ const DiagramCanvasInner = () => {
     >
       <ReactFlow
         nodes={nodes}
-        edges={edges}
+        edges={enhancedEdges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onNodeClick={onNodeClick}
         onPaneClick={onPaneClick}
+        onEdgeContextMenu={onEdgeContextMenu}
         nodeTypes={nodeTypes}
         fitView
         snapToGrid
         snapGrid={[20, 20]}
         defaultEdgeOptions={{
           type: 'smoothstep',
-          animated: true,
-          style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
-          markerEnd: { type: 'arrowclosed' as any },
+          animated: false,
+          style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2.5 },
+          markerEnd: {
+            type: MarkerType.ArrowClosed,
+            color: 'hsl(210, 100%, 50%)',
+          },
         }}
         proOptions={{ hideAttribution: true }}
         className="canvas-grid"
@@ -110,11 +147,36 @@ const DiagramCanvasInner = () => {
       <div className="absolute top-0 left-0 right-0 z-50">
         <TopPropertiesBar />
       </div>
+
+      {/* Context Menu for Edges */}
+      {contextMenu && (
+        <>
+          <div
+            className="fixed inset-0"
+            onClick={() => setContextMenu(null)}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              setContextMenu(null);
+            }}
+          />
+          <div
+            className="fixed bg-card border border-border rounded-md shadow-lg py-1 z-50"
+            style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
+          >
+            <button
+              onClick={handleDeleteEdge}
+              className="w-full px-4 py-2 text-sm text-left text-red-500 hover:bg-secondary transition-colors"
+            >
+              Delete Connection
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
 
-export const DiagramCanvas = () => {
+export const DiagramCanvasWrapper = () => {
   return (
     <ReactFlowProvider>
       <DiagramCanvasInner />

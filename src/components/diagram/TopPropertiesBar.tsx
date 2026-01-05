@@ -1,5 +1,6 @@
 import { X, Plus, MapPin, ChevronRight } from 'lucide-react';
 import { useDiagramStore } from '@/store/diagramStore';
+import { cloudResources } from '@/data/resources';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -11,8 +12,21 @@ import {
 import { Input } from '@/components/ui/input';
 import { getIconComponent } from '@/lib/iconMapper';
 
+// Map resource types to their parent container types
+const parentContainerMap: Record<string, string> = {
+  vpc: 'region',
+  subnet: 'vpc',
+  securitygroup: 'subnet',
+};
+
+const containerSizes: Record<string, { width: number; height: number }> = {
+  region: { width: 1000, height: 700 },
+  vpc: { width: 700, height: 500 },
+  subnet: { width: 450, height: 300 },
+};
+
 export const TopPropertiesBar = () => {
-  const { nodes, selectedNode, updateNodeAttribute, setSelectedNode } = useDiagramStore();
+  const { nodes, selectedNode, updateNodeAttribute, setSelectedNode, addNode } = useDiagramStore();
 
   const node = nodes.find((n) => n.id === selectedNode);
 
@@ -20,13 +34,42 @@ export const TopPropertiesBar = () => {
     return null;
   }
 
-  const { label, resourceType, config = {} } = node.data;
+  const { label, resourceType, config = {}, isContainer } = node.data;
   const { editableAttributes = [] } = resourceType;
   const IconComponent = getIconComponent(resourceType.icon);
 
   // Group attributes into rows (first 4 in first row, rest in second row)
   const firstRowAttrs = editableAttributes.slice(0, 4);
   const secondRowAttrs = editableAttributes.slice(4);
+
+  // Check if this resource type can have a parent container
+  const parentResourceId = parentContainerMap[resourceType.id];
+  const parentResource = parentResourceId ? cloudResources.find((r) => r.id === parentResourceId) : null;
+
+  const handleAddParentContainer = () => {
+    if (!parentResource || !node.id) {
+      console.error('Cannot create parent container:', { parentResource, nodeId: node?.id });
+      return;
+    }
+
+    // Calculate position for the parent container (to the left and slightly above)
+    const containerSize = containerSizes[parentResource.id] || { width: 600, height: 400 };
+    const padding = 20;
+    const parentPosition = {
+      x: node.position.x - containerSize.width - padding,
+      y: node.position.y - padding,
+    };
+
+    console.log('Creating parent container:', {
+      resourceId: parentResource.id,
+      name: parentResource.name,
+      position: parentPosition,
+      size: containerSize,
+    });
+
+    // Add the parent container node with isContainer flag
+    addNode(parentResource, parentPosition, undefined, true);
+  };
 
   const renderAttributeField = (attr: any, index: number) => {
     const value = config[attr.key];
@@ -67,13 +110,17 @@ export const TopPropertiesBar = () => {
               placeholder={attr.placeholder}
               className="h-7 w-28 text-xs border-0 bg-transparent font-semibold p-0"
             />
-            <Button
-              size="sm"
-              variant="ghost"
-              className="h-6 w-6 p-0 rounded-full"
-            >
-              <Plus className="w-4 h-4" />
-            </Button>
+            {parentResource && (
+              <Button
+                onClick={handleAddParentContainer}
+                size="sm"
+                variant="outline"
+                className="h-6 w-6 p-0 rounded-full flex items-center justify-center flex-shrink-0"
+                title={`Add ${parentResource.name} container`}
+              >
+                <Plus className="w-4 h-4" />
+              </Button>
+            )}
           </div>
         );
 
