@@ -24,6 +24,7 @@ interface DiagramStore {
   updateNodeLabel: (nodeId: string, label: string) => void;
   updateNodeAttribute: (nodeId: string, attributeKey: string, value: unknown) => void;
   updateNodeSize: (nodeId: string, width: number, height: number) => void;
+  cloneNode: (nodeId: string, offsetX?: number, offsetY?: number) => void;
   clearDiagram: () => void;
   undo: () => void;
   redo: () => void;
@@ -547,6 +548,96 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
 
       return {
         nodes: updatedNodes,
+        ...historyUpdate,
+      };
+    });
+  },
+
+  cloneNode: (nodeId, offsetX = 20, offsetY = 20) => {
+    set((state) => {
+      const nodeToClone = state.nodes.find((n) => n.id === nodeId);
+      if (!nodeToClone) return state;
+
+      // Map of old node IDs to new node IDs
+      const idMap = new Map<string, string>();
+
+      // Get all children of the node being cloned
+      const getChildren = (parentId: string): Node[] => {
+        return state.nodes.filter((n) => n.data?.parentId === parentId);
+      };
+
+      // Recursively collect all nodes to clone (node and all descendants)
+      const nodesToClone: Node[] = [];
+      const edgesToClone: Edge[] = [];
+      
+      const collectNodes = (node: Node) => {
+        nodesToClone.push(node);
+        const children = getChildren(node.id);
+        children.forEach(collectNodes);
+      };
+
+      collectNodes(nodeToClone);
+
+      // Collect edges between cloned nodes
+      edgesToClone.push(
+        ...state.edges.filter((edge) => {
+          const sourceIsCloned = nodesToClone.some((n) => n.id === edge.source);
+          const targetIsCloned = nodesToClone.some((n) => n.id === edge.target);
+          return sourceIsCloned && targetIsCloned;
+        })
+      );
+
+      // Create cloned nodes with new IDs and adjusted positions
+      const clonedNodes = nodesToClone.map((node) => {
+        const newId = `node-${++nodeIdCounter}`;
+        idMap.set(node.id, newId);
+
+        return {
+          ...node,
+          id: newId,
+          position: {
+            x: node.position.x + offsetX,
+            y: node.position.y + offsetY,
+          },
+          data: {
+            ...node.data,
+            // Update parent ID if it's one of the cloned nodes
+            parentId: node.data?.parentId && idMap.has(node.data.parentId)
+              ? idMap.get(node.data.parentId)!
+              : node.data?.parentId,
+          },
+        };
+      });
+
+      // Create cloned edges with new node IDs
+      const clonedEdges = edgesToClone.map((edge) => ({
+        ...edge,
+        id: `edge-${Math.random().toString(36).substr(2, 9)}`,
+        source: idMap.get(edge.source)!,
+        target: idMap.get(edge.target)!,
+      }));
+
+      const newNodes = [...state.nodes, ...clonedNodes];
+      const newEdges = [...state.edges, ...clonedEdges];
+
+      // Calculate nesting depth for all new nodes
+      const updatedNodes = newNodes.map((node) => ({
+        ...node,
+        data: {
+          ...node.data,
+          nestingDepth: calculateNestingDepth(node.id, newNodes),
+        },
+      }));
+
+      const historyUpdate = saveStateToHistory({
+        ...state,
+        nodes: updatedNodes,
+        edges: newEdges,
+      });
+
+      return {
+        nodes: updatedNodes,
+        edges: newEdges,
         ...historyUpdate,
       };
     });

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, useMemo } from 'react';
+import { useCallback, useRef, useState, useMemo, useEffect } from 'react';
 import ReactFlow, {
   Background,
   Controls,
@@ -21,28 +21,71 @@ const nodeTypes: NodeTypes = {
 
 const DiagramCanvasInner = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  const { nodes, edges, updateNodes, updateEdges, addEdge, setSelectedNode, deleteEdge } = useDiagramStore();
+  const { nodes, edges, updateNodes, updateEdges, addEdge, setSelectedNode, deleteEdge, deleteNode } = useDiagramStore();
   const { screenToFlowPosition } = useReactFlow();
-  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; edgeId: string } | null>(null);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; edgeId?: string; nodeId?: string } | null>(null);
+  const [hoveredEdgeId, setHoveredEdgeId] = useState<string | null>(null);
 
   const { setNodeRef, isOver } = useDroppable({
     id: 'canvas',
   });
 
-  // Enhanced edges with better arrow markers
+  // Ensure edges always appear on top of all layers and receive events
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      .react-flow__edge {
+        z-index: 10000 !important;
+        pointer-events: auto !important;
+      }
+      .react-flow__edge-path {
+        z-index: 10000 !important;
+        pointer-events: auto !important;
+      }
+      .react-flow__edge-background {
+        z-index: 10000 !important;
+        pointer-events: auto !important;
+      }
+      .react-flow__edge-label {
+        z-index: 10000 !important;
+        pointer-events: auto !important;
+      }
+      .react-flow__node {
+        z-index: -1 !important;
+      }
+      .react-flow__node-resourceNode {
+        z-index: -1 !important;
+      }
+      .react-flow__node-resourceNode[data-isContainer="true"] {
+        z-index: -1 !important;
+      }
+      .nopan {
+        z-index: -1 !important;
+      }
+      .selectable {
+        z-index: -1 !important;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
+  // Enhanced edges with better arrow markers and hover effects
   const enhancedEdges = useMemo(() => {
     return edges.map((edge: any) => ({
       ...edge,
       markerEnd: {
         type: MarkerType.ArrowClosed,
-        color: 'hsl(210, 100%, 50%)',
+        color: hoveredEdgeId === edge.id ? 'hsl(40, 100%, 50%)' : 'hsl(210, 100%, 50%)',
       },
       style: {
-        stroke: 'hsl(210, 100%, 50%)',
-        strokeWidth: 2.5,
+        stroke: hoveredEdgeId === edge.id ? 'hsl(40, 100%, 50%)' : 'hsl(210, 100%, 50%)',
+        strokeWidth: hoveredEdgeId === edge.id ? 3.5 : 2.5,
       },
     }));
-  }, [edges]);
+  }, [edges, hoveredEdgeId]);
 
   const onNodesChange = useCallback(
     (changes: any) => {
@@ -79,18 +122,37 @@ const DiagramCanvasInner = () => {
 
   const onEdgeContextMenu = useCallback(
     (event: React.MouseEvent, edge: any) => {
+      console.log('Edge context menu:', edge);
       event.preventDefault();
       setContextMenu({ x: event.clientX, y: event.clientY, edgeId: edge.id });
     },
     []
   );
 
+  const onEdgeMouseEnter = useCallback(
+    (_: any, edge: any) => {
+      setHoveredEdgeId(edge.id);
+    },
+    []
+  );
+
+  const onEdgeMouseLeave = useCallback(() => {
+    setHoveredEdgeId(null);
+  }, []);
+
   const handleDeleteEdge = useCallback(() => {
-    if (contextMenu) {
+    if (contextMenu?.edgeId) {
       deleteEdge(contextMenu.edgeId);
       setContextMenu(null);
     }
   }, [contextMenu, deleteEdge]);
+
+  const handleDeleteNode = useCallback(() => {
+    if (contextMenu?.nodeId) {
+      deleteNode(contextMenu.nodeId);
+      setContextMenu(null);
+    }
+  }, [contextMenu, deleteNode]);
 
   return (
     <div
@@ -112,8 +174,9 @@ const DiagramCanvasInner = () => {
         onNodeClick={onNodeClick}
         onPaneClick={onPaneClick}
         onEdgeContextMenu={onEdgeContextMenu}
+        onEdgeMouseEnter={onEdgeMouseEnter}
+        onEdgeMouseLeave={onEdgeMouseLeave}
         nodeTypes={nodeTypes}
-        fitView
         snapToGrid
         snapGrid={[20, 20]}
         defaultEdgeOptions={{
@@ -148,7 +211,7 @@ const DiagramCanvasInner = () => {
         <TopPropertiesBar />
       </div>
 
-      {/* Context Menu for Edges */}
+      {/* Context Menu for Edges and Nodes */}
       {contextMenu && (
         <>
           <div
@@ -163,12 +226,22 @@ const DiagramCanvasInner = () => {
             className="fixed bg-card border border-border rounded-md shadow-lg py-1 z-50"
             style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
           >
-            <button
-              onClick={handleDeleteEdge}
-              className="w-full px-4 py-2 text-sm text-left text-red-500 hover:bg-secondary transition-colors"
-            >
-              Delete Connection
-            </button>
+            {contextMenu.edgeId && (
+              <button
+                onClick={handleDeleteEdge}
+                className="w-full px-4 py-2 text-sm text-left text-red-500 hover:bg-secondary transition-colors"
+              >
+                Delete Connection
+              </button>
+            )}
+            {contextMenu.nodeId && (
+              <button
+                onClick={handleDeleteNode}
+                className="w-full px-4 py-2 text-sm text-left text-red-500 hover:bg-secondary transition-colors"
+              >
+                Delete Container
+              </button>
+            )}
           </div>
         </>
       )}
