@@ -21,7 +21,7 @@ const DiagramBuilderContent = ({ onDragEnd }: { onDragEnd: (event: DragEndEvent)
 };
 
 export const DiagramBuilder = () => {
-  const { addNode } = useDiagramStore();
+  const { addNode, addTextLabel } = useDiagramStore();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -36,8 +36,6 @@ export const DiagramBuilder = () => {
       const { active, over } = event;
 
       if (over?.id === 'canvas' && active.data.current) {
-        const resourceType = active.data.current as ResourceType;
-        
         // Get the canvas viewport element
         const canvasElement = document.querySelector('.react-flow__viewport');
         if (!canvasElement) {
@@ -83,10 +81,18 @@ export const DiagramBuilder = () => {
         };
         
         console.log('Drop position:', position);
-        addNode(resourceType, position);
+        
+        // Check if it's a text label
+        if (active.data.current?.type === 'textLabel') {
+          addTextLabel(position);
+        } else {
+          // It's a resource
+          const resourceType = active.data.current as ResourceType;
+          addNode(resourceType, position);
+        }
       }
     },
-    [addNode]
+    [addNode, addTextLabel]
   );
 
   return (

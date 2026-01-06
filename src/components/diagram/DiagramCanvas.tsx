@@ -12,11 +12,13 @@ import 'reactflow/dist/style.css';
 import { useDroppable } from '@dnd-kit/core';
 import { useDiagramStore } from '@/store/diagramStore';
 import ResourceNode from './ResourceNode';
+import TextLabel from './TextLabel';
 import { TopPropertiesBar } from './TopPropertiesBar';
 import { cn } from '@/lib/utils';
 
 const nodeTypes: NodeTypes = {
   resourceNode: ResourceNode,
+  textLabel: TextLabel,
 };
 
 const DiagramCanvasInner = () => {
@@ -78,11 +80,11 @@ const DiagramCanvasInner = () => {
       ...edge,
       markerEnd: {
         type: MarkerType.ArrowClosed,
-        color: hoveredEdgeId === edge.id ? 'hsl(40, 100%, 50%)' : 'hsl(210, 100%, 50%)',
+        color: hoveredEdgeId === edge.id ? '#000000' : '#000000',
       },
       style: {
-        stroke: hoveredEdgeId === edge.id ? 'hsl(40, 100%, 50%)' : 'hsl(210, 100%, 50%)',
-        strokeWidth: hoveredEdgeId === edge.id ? 3.5 : 2.5,
+        stroke: hoveredEdgeId === edge.id ? '#000000' : '#000000',
+        strokeWidth: hoveredEdgeId === edge.id ? 1.5 : 1,
       },
     }));
   }, [edges, hoveredEdgeId]);

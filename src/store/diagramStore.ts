@@ -15,6 +15,7 @@ interface DiagramStore {
   history: HistoryState[];
   historyIndex: number;
   addNode: (resourceType: ResourceType, position: { x: number; y: number }, parentId?: string, isContainer?: boolean) => void;
+  addTextLabel: (position: { x: number; y: number }, text?: string) => void;
   updateNodes: (changes: NodeChange[]) => void;
   updateEdges: (changes: EdgeChange[]) => void;
   addEdge: (connection: Connection) => void;
@@ -23,6 +24,7 @@ interface DiagramStore {
   deleteNode: (nodeId: string) => void;
   updateNodeLabel: (nodeId: string, label: string) => void;
   updateNodeAttribute: (nodeId: string, attributeKey: string, value: unknown) => void;
+  updateTextLabelStyle: (nodeId: string, fontSize?: number, fontWeight?: string, color?: string) => void;
   updateNodeSize: (nodeId: string, width: number, height: number) => void;
   cloneNode: (nodeId: string, offsetX?: number, offsetY?: number) => void;
   clearDiagram: () => void;
@@ -126,7 +128,7 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
   addNode: (resourceType, position, parentId, isContainer = false) => {
     set((state) => {
       // Auto-detect container types for VPC, Subnet, SecurityGroup
-      let shouldBeContainer = isContainer || resourceType.id === 'vpc' || resourceType.id === 'subnet' || resourceType.id === 'securitygroup';
+      const shouldBeContainer = isContainer || resourceType.id === 'vpc' || resourceType.id === 'subnet' || resourceType.id === 'securitygroup';
       
       let size = undefined;
       
@@ -146,7 +148,7 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
         size = { width: 240, height: 72 };
       }
       
-      let currentPosition = position;
+      const currentPosition = position;
       let currentParentId = parentId;
       let newNodes = [...state.nodes];
       const padding = 20;
@@ -245,6 +247,35 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
 
       return {
         ...newState,
+        ...historyUpdate,
+      };
+    });
+  },
+
+  addTextLabel: (position, text = 'Double click to edit') => {
+    set((state) => {
+      const newNode: Node = {
+        id: `text-${++nodeIdCounter}`,
+        type: 'textLabel',
+        position,
+        data: {
+          text,
+          fontSize: 14,
+          fontWeight: '400',
+          color: '#000000',
+          textAlign: 'left',
+        },
+      };
+
+      const newNodes = [...state.nodes, newNode];
+      const historyUpdate = saveStateToHistory({
+        ...state,
+        nodes: newNodes,
+      });
+
+      return {
+        nodes: newNodes,
+        selectedNode: newNode.id,
         ...historyUpdate,
       };
     });
@@ -538,6 +569,34 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
       const updatedNodes = state.nodes.map((node) =>
         node.id === nodeId
           ? { ...node, data: { ...node.data, size: { width, height } } }
+          : node
+      );
+
+      const historyUpdate = saveStateToHistory({
+        ...state,
+        nodes: updatedNodes,
+      });
+
+      return {
+        nodes: updatedNodes,
+        ...historyUpdate,
+      };
+    });
+  },
+
+  updateTextLabelStyle: (nodeId, fontSize, fontWeight, color) => {
+    set((state) => {
+      const updatedNodes = state.nodes.map((node) =>
+        node.id === nodeId
+          ? {
+              ...node,
+              data: {
+                ...node.data,
+                ...(fontSize !== undefined && { fontSize }),
+                ...(fontWeight !== undefined && { fontWeight }),
+                ...(color !== undefined && { color }),
+              },
+            }
           : node
       );
 

@@ -1,5 +1,6 @@
 import { cloudResources, categoryLabels, categoryColors } from '@/data/resources';
 import { DraggableResource } from './DraggableResource';
+import { DraggableTextLabel } from './DraggableTextLabel';
 import { ResourceCategory } from '@/types/diagram';
 import { Server, Database, HardDrive, Network, Shield, BarChart3, GripVertical, MessageSquare, GitBranch, Eye, Search, X } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -67,6 +68,20 @@ export const ResourceSidebar = () => {
       </div>
       
       <ScrollArea className="flex-1 px-3 py-2">
+        {/* Text Label Section */}
+        <div className="sidebar-section mb-4">
+          <div className="flex items-center gap-2 px-2 mb-2">
+            <div className="p-1.5 rounded" style={{ backgroundColor: '#9333ea20', color: '#9333ea' }}>
+            </div>
+            <span className="text-xs font-semibold uppercase tracking-wider text-sidebar-foreground/70">
+              Annotations
+            </span>
+          </div>
+          <div className="space-y-2">
+            <DraggableTextLabel />
+          </div>
+        </div>
+
         {hasResults ? (
           Object.entries(groupedResources).map(([category, resources]) => (
             <div key={category} className="sidebar-section">

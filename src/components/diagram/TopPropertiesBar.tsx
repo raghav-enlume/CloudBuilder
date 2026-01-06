@@ -34,6 +34,11 @@ export const TopPropertiesBar = () => {
     return null;
   }
 
+  // Handle text label nodes
+  if (node.type === 'textLabel') {
+    return null;
+  }
+
   const { label, resourceType, config = {}, isContainer } = node.data;
   const { editableAttributes = [] } = resourceType;
   const IconComponent = getIconComponent(resourceType.icon);

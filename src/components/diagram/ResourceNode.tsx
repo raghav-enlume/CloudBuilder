@@ -251,13 +251,13 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
         <Handle
           type="target"
           position={Position.Top}
-          className="!w-2 !h-2 !bg-primary !border-2 !border-primary-foreground"
-          style={{ pointerEvents: 'auto' }}
+          className="!w-2.5 !h-2.5 !bg-primary !border-2 !border-primary-foreground"
+          style={{ pointerEvents: 'auto', zIndex: 1000 }}
         />
         <Handle
           type="source"
           position={Position.Bottom}
-          className="!w-2 !h-2 !bg-primary !border-2 !border-primary-foreground"
+          className="!w-2.5 !h-2.5 !bg-primary !border-2 !border-primary-foreground"
           style={{ pointerEvents: 'auto' }}
         />
 
@@ -385,15 +385,15 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
             borderRadius: '8px',
             border: selected ? `2px solid ${color}` : '2px solid transparent',
             boxShadow: selected ? `0 0 0 3px ${color}30, inset 0 0 8px ${color}15` : 'none',
-            padding: '4px',
+            padding: '0px',
             pointerEvents: 'auto',
           }}
         >
           <Handle
             type="target"
             position={Position.Top}
-            className="!w-2 !h-2 !bg-primary !border-2 !border-primary-foreground"
-            style={{ zIndex: 1000 }}
+            className="!w-2.5 !h-2.5 !bg-primary !border-2 !border-primary-foreground"
+            style={{ zIndex: 1000, pointerEvents: 'auto' }}
           />
 
           {iconId === 'autoscaling' ? (
@@ -414,32 +414,34 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
           <Handle
             type="source"
             position={Position.Bottom}
-            className="!w-2 !h-2 !bg-primary !border-2 !border-primary-foreground"
-            style={{ zIndex: 1000 }}
+            className="!w-2.5 !h-2.5 !bg-primary !border-2 !border-primary-foreground"
+            style={{ zIndex: 1000, pointerEvents: 'auto' }}
           />
 
-          {/* Actions outside the icon - top right */}
-          <div className="absolute -top-2 -right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-            <button
-              onClick={() => cloneNode(id)}
-              className="p-1 rounded-full bg-secondary shadow-md border border-border hover:bg-blue-500 hover:text-blue-foreground transition-colors"
-              title="Clone this resource and all its children"
-            >
-              <Copy className="w-3 h-3" />
-            </button>
-            <button
-              onClick={() => setIsEditing(true)}
-              className="p-1 rounded-full bg-secondary shadow-md border border-border hover:bg-primary hover:text-primary-foreground transition-colors"
-            >
-              <Pencil className="w-3 h-3" />
-            </button>
-            <button
-              onClick={() => deleteNode(id)}
-              className="p-1 rounded-full bg-secondary shadow-md border border-border hover:bg-destructive hover:text-destructive-foreground transition-colors"
-            >
-              <Trash2 className="w-3 h-3" />
-            </button>
-          </div>
+          {/* Actions outside the icon - top right - only show on selection */}
+          {selected && (
+            <div className="absolute -top-2 -right-2 flex gap-1 transition-opacity">
+              <button
+                onClick={() => cloneNode(id)}
+                className="p-1 rounded-full bg-secondary shadow-md border border-border hover:bg-blue-500 hover:text-blue-foreground transition-colors"
+                title="Clone this resource and all its children"
+              >
+                <Copy className="w-3 h-3" />
+              </button>
+              <button
+                onClick={() => setIsEditing(true)}
+                className="p-1 rounded-full bg-secondary shadow-md border border-border hover:bg-primary hover:text-primary-foreground transition-colors"
+              >
+                <Pencil className="w-3 h-3" />
+              </button>
+              <button
+                onClick={() => deleteNode(id)}
+                className="p-1 rounded-full bg-secondary shadow-md border border-border hover:bg-destructive hover:text-destructive-foreground transition-colors"
+              >
+                <Trash2 className="w-3 h-3" />
+              </button>
+            </div>
+          )}
 
           {/* selection handles for autoscaling nodes */}
           {selected && iconId === 'autoscaling' && (
