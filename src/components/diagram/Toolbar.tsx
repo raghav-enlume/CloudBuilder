@@ -23,7 +23,7 @@ import { parseAWSDataJSON } from '@/lib/awsDataParser';
 import { ARCHITECTURE_TEMPLATES } from '@/data/templates';
 
 export const Toolbar = () => {
-  const { nodes, edges, clearDiagram, undo, redo, canUndo, canRedo, loadDiagram } = useDiagramStore();
+  const { nodes, edges, areas, clearDiagram, undo, redo, canUndo, canRedo, loadDiagram } = useDiagramStore();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const architectureFileInputRef = useRef<HTMLInputElement>(null);
@@ -32,7 +32,7 @@ export const Toolbar = () => {
   const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
 
   const handleExportJSON = () => {
-    const data = { nodes, edges };
+    const data = { nodes, edges, areas };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -59,8 +59,8 @@ export const Toolbar = () => {
 
     const zip = new JSZip();
     
-    // Add diagram data as JSON
-    const diagramData = { nodes, edges, exportedAt: new Date().toISOString() };
+    // Add diagram data as JSON (including areas)
+    const diagramData = { nodes, edges, areas, exportedAt: new Date().toISOString() };
     zip.file('diagram.json', JSON.stringify(diagramData, null, 2));
     
     // Add a README file
@@ -69,11 +69,12 @@ export const Toolbar = () => {
 Exported on: ${new Date().toLocaleString()}
 
 ## Contents
-- diagram.json: The diagram data (nodes and connections)
+- diagram.json: The diagram data (nodes, connections, and areas)
 
 ## Statistics
 - Nodes: ${nodes.length}
 - Connections: ${edges.length}
+- Areas (VPCs, Subnets, etc.): ${areas.length}
 
 ## How to Import
 1. Open the Architecture Diagram Builder
@@ -135,12 +136,12 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
         return;
       }
 
-      // Load the diagram
-      loadDiagram(data.nodes as Node[], data.edges as Edge[]);
+      // Load the diagram with areas if available
+      loadDiagram(data.nodes as Node[], data.edges as Edge[], data.areas || []);
 
       toast({
         title: 'Diagram imported',
-        description: `Loaded ${data.nodes.length} nodes and ${data.edges.length} connections.`,
+        description: `Loaded ${data.nodes.length} nodes, ${data.edges.length} connections, and ${(data.areas || []).length} areas.`,
       });
     } catch (error) {
       toast({
@@ -239,32 +240,57 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
 
       // Validate the AWS data format (should have region keys with vpcs, subnets, instances)
       const isValidAWSData = Object.values(data).some((region: any) => 
-        region.vpcs && region.subnets && region.instances
+        Array.isArray(region.vpcs) && Array.isArray(region.subnets) && Array.isArray(region.instances)
       );
 
       if (!isValidAWSData) {
         toast({
           title: 'Invalid AWS data format',
-          description: 'The file must contain AWS region data with vpcs, subnets, and instances.',
+          description: 'The file must contain AWS region data with vpcs, subnets, and instances arrays.',
           variant: 'destructive',
         });
         return;
       }
 
       // Parse AWS data to nodes and edges
-      const { nodes: parsedNodes, edges: parsedEdges } = parseAWSDataJSON(data);
+      const { nodes: parsedNodes, edges: parsedEdges, areas: parsedAreas } = parseAWSDataJSON(data);
+
+      console.log('Parsed AWS data:', { 
+        nodes: parsedNodes, 
+        edges: parsedEdges, 
+        // areasCount: parsedAreas.length,
+        areas: parsedAreas 
+      });
 
       // Load the diagram
-      loadDiagram(parsedNodes, parsedEdges);
+      loadDiagram(parsedNodes, parsedEdges, parsedAreas);
 
-      // Count resources
-      const vpcCount = parsedNodes.filter(n => n.id.startsWith('vpc-')).length;
-      const subnetCount = parsedNodes.filter(n => n.id.startsWith('subnet-')).length;
+      // Count all resources
       const instanceCount = parsedNodes.filter(n => n.id.startsWith('instance-')).length;
+      const igwCount = parsedNodes.filter(n => n.id.startsWith('igw-')).length;
+      const rtCount = parsedNodes.filter(n => n.id.startsWith('rt-')).length;
+      const sgCount = parsedNodes.filter(n => n.id.startsWith('sg-')).length;
+      const natCount = parsedNodes.filter(n => n.id.startsWith('nat-')).length;
+      const lbCount = parsedNodes.filter(n => n.id.startsWith('lb-')).length;
+      const vpcCount = parsedAreas.filter(a => a.areaType === 'vpc').length;
+      const subnetCount = parsedAreas.filter(a => a.areaType === 'subnet').length;
+      const regionCount = parsedAreas.filter(a => a.areaType === 'region').length;
+
+      console.log('Resource counts:', { 
+        vpcCount, 
+        subnetCount, 
+        instanceCount, 
+        igwCount, 
+        rtCount, 
+        sgCount, 
+        natCount, 
+        lbCount, 
+        regionCount 
+      });
 
       toast({
         title: 'AWS data imported',
-        description: `Loaded ${vpcCount} VPCs, ${subnetCount} Subnets, and ${instanceCount} EC2 Instances with ${parsedEdges.length} connections.`,
+        description: `Loaded ${regionCount} Region(s), ${vpcCount} VPCs, ${subnetCount} Subnets, ${instanceCount} EC2 Instances, ${igwCount} IGW(s), ${rtCount} Route Table(s), ${sgCount} Security Group(s), ${natCount} NAT Gateway(s), ${lbCount} Load Balancer(s).`,
       });
 
       setIsImportDialogOpen(false);

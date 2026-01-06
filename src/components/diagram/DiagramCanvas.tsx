@@ -14,6 +14,7 @@ import { useDiagramStore } from '@/store/diagramStore';
 import ResourceNode from './ResourceNode';
 import TextLabel from './TextLabel';
 import { TopPropertiesBar } from './TopPropertiesBar';
+import { AreaRenderer } from './AreaRenderer';
 import { cn } from '@/lib/utils';
 
 const nodeTypes: NodeTypes = {
@@ -23,8 +24,8 @@ const nodeTypes: NodeTypes = {
 
 const DiagramCanvasInner = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  const { nodes, edges, updateNodes, updateEdges, addEdge, setSelectedNode, deleteEdge, deleteNode } = useDiagramStore();
-  const { screenToFlowPosition } = useReactFlow();
+  const { nodes, edges, areas, updateNodes, updateEdges, addEdge, setSelectedNode, deleteEdge, deleteNode } = useDiagramStore();
+  const { screenToFlowPosition, fitView } = useReactFlow();
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; edgeId?: string; nodeId?: string } | null>(null);
   const [hoveredEdgeId, setHoveredEdgeId] = useState<string | null>(null);
 
@@ -75,6 +76,20 @@ const DiagramCanvasInner = () => {
   }, []);
 
   // Enhanced edges with better arrow markers and hover effects
+  // Don't convert areas to nodes - instead keep them separate and render with original renderer
+  // This is simpler and doesn't require special node styling
+  
+  // Auto-fit view when nodes or areas are loaded
+  useEffect(() => {
+    if (nodes.length > 0 || areas.length > 0) {
+      // Small delay to ensure React Flow has rendered the nodes
+      setTimeout(() => {
+        fitView({ padding: 0.2, duration: 500 });
+      }, 150);
+    }
+  }, [nodes.length, areas.length, fitView]);
+
+  // Enhanced edges with better arrow markers
   const enhancedEdges = useMemo(() => {
     return edges.map((edge: any) => ({
       ...edge,
@@ -207,6 +222,9 @@ const DiagramCanvasInner = () => {
           className="!bg-card !border-border !shadow-md"
         />
       </ReactFlow>
+
+      {/* Render areas (VPCs, Subnets, etc.) inside the canvas div but outside ReactFlow - areas zoom with viewport via CSS transform */}
+      <AreaRenderer areas={areas} />
       
       {/* Top Properties Bar Overlay */}
       <div className="absolute top-0 left-0 right-0 z-50">

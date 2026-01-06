@@ -3,14 +3,33 @@ import { Node, Edge, addEdge, applyNodeChanges, applyEdgeChanges, NodeChange, Ed
 import { ResourceType } from '@/types/diagram';
 import { cloudResources } from '@/data/resources';
 
+export interface AreaElement {
+  id: string;
+  type: 'area';
+  label: string;
+  areaType: string;
+  color: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  opacity: number;
+  borderColor: string;
+  borderWidth: number;
+  borderStyle: 'solid' | 'dashed' | 'dotted';
+  description?: string;
+}
+
 interface HistoryState {
   nodes: Node[];
   edges: Edge[];
+  areas: AreaElement[];
 }
 
 interface DiagramStore {
   nodes: Node[];
   edges: Edge[];
+  areas: AreaElement[];
   selectedNode: string | null;
   history: HistoryState[];
   historyIndex: number;
@@ -32,7 +51,10 @@ interface DiagramStore {
   redo: () => void;
   canUndo: () => boolean;
   canRedo: () => boolean;
-  loadDiagram: (nodes: Node[], edges: Edge[]) => void;
+  loadDiagram: (nodes: Node[], edges: Edge[], areas?: AreaElement[]) => void;
+  addArea: (area: AreaElement) => void;
+  updateArea: (areaId: string, updates: Partial<AreaElement>) => void;
+  deleteArea: (areaId: string) => void;
   saveHistory: () => void;
 }
 
@@ -121,8 +143,9 @@ const saveStateToHistory = (state: DiagramStore) => {
 export const useDiagramStore = create<DiagramStore>((set, get) => ({
   nodes: [],
   edges: [],
+  areas: [],
   selectedNode: null,
-  history: [{ nodes: [], edges: [] }],
+  history: [{ nodes: [], edges: [], areas: [] }],
   historyIndex: 0,
 
   addNode: (resourceType, position, parentId, isContainer = false) => {
@@ -762,7 +785,7 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
     return state.historyIndex < state.history.length - 1;
   },
 
-  loadDiagram: (nodes, edges) => {
+  loadDiagram: (nodes, edges, areas = []) => {
     set((state) => {
       // Auto-detect parent relationships based on node positions
       const nodesWithParents = autoDetectParents(nodes);
@@ -770,6 +793,7 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
       const newState = {
         nodes: nodesWithParents,
         edges,
+        areas,
         selectedNode: null,
       };
 
@@ -793,6 +817,23 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
         ...historyUpdate,
       };
     });
+  },
+
+  addArea: (area: AreaElement) => {
+    set((state) => ({ areas: [...state.areas, area] }));
+    get().saveHistory();
+  },
+
+  updateArea: (areaId: string, updates: Partial<AreaElement>) => {
+    set((state) => ({
+      areas: state.areas.map((area) => (area.id === areaId ? { ...area, ...updates } : area)),
+    }));
+    get().saveHistory();
+  },
+
+  deleteArea: (areaId: string) => {
+    set((state) => ({ areas: state.areas.filter((area) => area.id !== areaId) }));
+    get().saveHistory();
   },
 
   saveHistory: () => {

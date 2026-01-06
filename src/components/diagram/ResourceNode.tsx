@@ -6,7 +6,7 @@ import { getIconComponent } from '@/lib/iconMapper';
 import { cn } from '@/lib/utils';
 
 const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
-  const { resourceType, label, isContainer } = data;
+  const { resourceType, label, isContainer, isHidden } = data;
   const { deleteNode, updateNodeLabel, setSelectedNode, updateNodeSize, cloneNode } = useDiagramStore();
   const [isEditing, setIsEditing] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -19,6 +19,25 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
   const startY = useRef(0);
   const startW = useRef(0);
   const startH = useRef(0);
+  // Hide hidden nodes completely
+  if (isHidden) {
+    return (
+      <div style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', width: 0, height: 0 }}>
+        <Handle
+          type="target"
+          position={Position.Top}
+          className="!w-0 !h-0"
+          style={{ pointerEvents: 'none' }}
+        />
+        <Handle
+          type="source"
+          position={Position.Bottom}
+          className="!w-0 !h-0"
+          style={{ pointerEvents: 'none' }}
+        />
+      </div>
+    );
+  }
   
   // Handle both old string format and new object format for resourceType
   const iconId = typeof resourceType === 'object' ? resourceType?.icon : resourceType;
@@ -320,6 +339,21 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
         return <Shield size={32} style={{ color }} />;
       case 'region':
         return <Cloud size={32} style={{ color }} />;
+      case 'internetgateway':
+      case 'igw':
+        return <Network size={32} style={{ color }} />;
+      case 'securitygroup':
+      case 'sg':
+        return <Shield size={32} style={{ color }} />;
+      case 'routetable':
+      case 'rt':
+        return <Network size={32} style={{ color }} />;
+      case 'natgateway':
+      case 'nat':
+        return <Network size={32} style={{ color }} />;
+      case 'alb':
+      case 'lb':
+        return <Server size={32} style={{ color }} />;
       default:
         return <span className="text-2xl">⚙️</span>;
     }

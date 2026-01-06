@@ -21,7 +21,7 @@ const DiagramBuilderContent = ({ onDragEnd }: { onDragEnd: (event: DragEndEvent)
 };
 
 export const DiagramBuilder = () => {
-  const { addNode, addTextLabel } = useDiagramStore();
+  const { addNode, addTextLabel, addArea } = useDiagramStore();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -88,11 +88,67 @@ export const DiagramBuilder = () => {
         } else {
           // It's a resource
           const resourceType = active.data.current as ResourceType;
-          addNode(resourceType, position);
+          
+          // Create areas for container-like resources (VPC, Subnet, Region)
+          if (['vpc', 'subnet', 'region'].includes(resourceType.id)) {
+            // Define area dimensions and styling based on resource type
+            const areaConfig: Record<string, any> = {
+              vpc: {
+                width: 600,
+                height: 400,
+                borderColor: '#FFA000',
+                borderWidth: 2,
+                borderStyle: 'solid' as const,
+                opacity: 0.05,
+                areaType: 'vpc',
+              },
+              subnet: {
+                width: 500,
+                height: 300,
+                borderColor: '#455A64',
+                borderWidth: 2,
+                borderStyle: 'solid' as const,
+                opacity: 0.05,
+                areaType: 'subnet',
+              },
+              region: {
+                width: 800,
+                height: 600,
+                borderColor: '#3949AB',
+                borderWidth: 2,
+                borderStyle: 'solid' as const,
+                opacity: 0.02,
+                areaType: 'region',
+              },
+            };
+
+            const config = areaConfig[resourceType.id];
+            if (config) {
+              addArea({
+                id: `area-${Date.now()}`,
+                type: 'area',
+                label: resourceType.name,
+                areaType: config.areaType,
+                color: resourceType.color,
+                x: position.x - config.width / 2,
+                y: position.y - config.height / 2,
+                width: config.width,
+                height: config.height,
+                opacity: config.opacity,
+                borderColor: config.borderColor,
+                borderWidth: config.borderWidth,
+                borderStyle: config.borderStyle,
+                description: resourceType.description,
+              });
+            }
+          } else {
+            // Regular resource - create a node
+            addNode(resourceType, position);
+          }
         }
       }
     },
-    [addNode, addTextLabel]
+    [addNode, addTextLabel, addArea]
   );
 
   return (

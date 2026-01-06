@@ -1,0 +1,225 @@
+{
+    "ap-northeast-2": {
+        "region": "ap-northeast-2",
+        "vpcs": [
+            {
+                "OwnerId": "338220915527",
+                "InstanceTenancy": "default",
+                "CidrBlockAssociationSet": [
+                    {
+                        "AssociationId": "vpc-cidr-assoc-0bb7198ed7d465cde",
+                        "CidrBlock": "172.31.0.0/16",
+                        "CidrBlockState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "IsDefault": true,
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "VpcId": "vpc-09268c8c9f22622d7",
+                "State": "available",
+                "CidrBlock": "172.31.0.0/16",
+                "DhcpOptionsId": "dopt-0b63c79f314ef0368"
+            }
+        ],
+        "subnets": [
+            {
+                "AvailabilityZoneId": "apne2-az4",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "338220915527",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "SubnetArn": "arn:aws:ec2:ap-northeast-2:338220915527:subnet/subnet-00cf3fa181f7a0851",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-00cf3fa181f7a0851",
+                "State": "available",
+                "VpcId": "vpc-09268c8c9f22622d7",
+                "CidrBlock": "172.31.48.0/20",
+                "AvailableIpAddressCount": 4091,
+                "AvailabilityZone": "ap-northeast-2d",
+                "DefaultForAz": true,
+                "MapPublicIpOnLaunch": true
+            },
+            {
+                "AvailabilityZoneId": "apne2-az1",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "338220915527",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "SubnetArn": "arn:aws:ec2:ap-northeast-2:338220915527:subnet/subnet-0f9032b72b03970bd",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-0f9032b72b03970bd",
+                "State": "available",
+                "VpcId": "vpc-09268c8c9f22622d7",
+                "CidrBlock": "172.31.0.0/20",
+                "AvailableIpAddressCount": 4091,
+                "AvailabilityZone": "ap-northeast-2a",
+                "DefaultForAz": true,
+                "MapPublicIpOnLaunch": true
+            },
+            {
+                "AvailabilityZoneId": "apne2-az3",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "338220915527",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "SubnetArn": "arn:aws:ec2:ap-northeast-2:338220915527:subnet/subnet-0eb48fe6630be93f2",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-0eb48fe6630be93f2",
+                "State": "available",
+                "VpcId": "vpc-09268c8c9f22622d7",
+                "CidrBlock": "172.31.32.0/20",
+                "AvailableIpAddressCount": 4091,
+                "AvailabilityZone": "ap-northeast-2c",
+                "DefaultForAz": true,
+                "MapPublicIpOnLaunch": true
+            },
+            {
+                "AvailabilityZoneId": "apne2-az2",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "338220915527",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "SubnetArn": "arn:aws:ec2:ap-northeast-2:338220915527:subnet/subnet-0d9789563f2af45d4",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-0d9789563f2af45d4",
+                "State": "available",
+                "VpcId": "vpc-09268c8c9f22622d7",
+                "CidrBlock": "172.31.16.0/20",
+                "AvailableIpAddressCount": 4091,
+                "AvailabilityZone": "ap-northeast-2b",
+                "DefaultForAz": true,
+                "MapPublicIpOnLaunch": true
+            }
+        ],
+        "instances": [],
+        "route_tables": [
+            {
+                "Associations": [
+                    {
+                        "Main": true,
+                        "RouteTableAssociationId": "rtbassoc-03029c49c32baad3d",
+                        "RouteTableId": "rtb-0e7e9b27375078eaf",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "PropagatingVgws": [],
+                "RouteTableId": "rtb-0e7e9b27375078eaf",
+                "Routes": [
+                    {
+                        "DestinationCidrBlock": "172.31.0.0/16",
+                        "GatewayId": "local",
+                        "Origin": "CreateRouteTable",
+                        "State": "active"
+                    },
+                    {
+                        "DestinationCidrBlock": "0.0.0.0/0",
+                        "GatewayId": "igw-0abed7a1b3bea7d41",
+                        "Origin": "CreateRoute",
+                        "State": "active"
+                    }
+                ],
+                "Tags": [],
+                "VpcId": "vpc-09268c8c9f22622d7",
+                "OwnerId": "338220915527"
+            }
+        ],
+        "igws": [
+            {
+                "Attachments": [
+                    {
+                        "State": "available",
+                        "VpcId": "vpc-09268c8c9f22622d7"
+                    }
+                ],
+                "VpcId": "vpc-09268c8c9f22622d7",
+                "InternetGatewayId": "igw-0abed7a1b3bea7d41",
+                "OwnerId": "338220915527",
+                "Tags": []
+            }
+        ],
+        "nat_gateways": [],
+        "security_groups": [
+            {
+                "GroupId": "sg-0f1356435e0702a9e",
+                "IpPermissionsEgress": [
+                    {
+                        "IpProtocol": "-1",
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    }
+                ],
+                "VpcId": "vpc-09268c8c9f22622d7",
+                "SecurityGroupArn": "arn:aws:ec2:ap-northeast-2:338220915527:security-group/sg-0f1356435e0702a9e",
+                "OwnerId": "338220915527",
+                "GroupName": "default group",
+                "Description": "default VPC security group",
+                "IpPermissions": [
+                    {
+                        "IpProtocol": "-1",
+                        "UserIdGroupPairs": [
+                            {
+                                "UserId": "338220915527",
+                                "GroupId": "sg-0f1356435e0702a9e"
+                            }
+                        ],
+                        "IpRanges": [],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    }
+                ]
+            }
+        ],
+        "classic_lbs": [],
+        "lbs_v2": [],
+        "target_groups": [],
+        "tg_targets": {},
+        "rds_instances": []
+    }
+}

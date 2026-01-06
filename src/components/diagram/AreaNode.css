@@ -1,0 +1,35 @@
+/* Area Node Styles */
+.area-node-wrapper {
+  display: block !important;
+  position: relative !important;
+  pointer-events: none !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Ensure React Flow container doesn't hide area nodes */
+.react-flow__node[data-id*="area-"] {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  overflow: visible !important;
+  z-index: 0 !important;
+}
+
+.react-flow__node[data-id*="area-"] > div {
+  pointer-events: none !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Make sure resource nodes are above area nodes */
+.react-flow__node:not([data-id*="area-"]) {
+  z-index: 10 !important;
+}
+
