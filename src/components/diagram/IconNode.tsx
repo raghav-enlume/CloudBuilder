@@ -58,12 +58,12 @@ export function IconNode({
 
   // Calculate node dimensions and background based on icon size
   const getNodeDimensions = () => {
-    const padding = size * 0.4;
+    const padding = size * 0.15;
     return size + padding * 2;
   };
 
   const getBackgroundStyle = () => {
-    const padding = size * 0.4;
+    const padding = size * 0.15;
     const bgSize = size + padding * 2;
 
     const baseStyle = {
@@ -135,7 +135,6 @@ export function IconNode({
             title="Edit icon"
           >
             <Pencil size={14} />
-            Edit
           </Button>
           <Button
             size="sm"
