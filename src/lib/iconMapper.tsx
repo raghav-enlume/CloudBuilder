@@ -46,7 +46,7 @@ const iconComponents: Record<string, any> = {
   redshift: (AwsIcons as any).ArchitectureServiceAmazonRedshift,
   securitygroup: (AwsIcons as any).ArchitectureGroupVirtualprivatecloudVPC,
   networkacl: (AwsIcons as any).ArchitectureGroupVirtualprivatecloudVPC,
-  internetgateway: (AwsIcons as any).ArchitectureGroupInternetGateway,
+  internetgateway: (AwsIcons as any).ArchitectureServiceAmazonInternetGateway || (AwsIcons as any).ArchitectureGroupInternetGateway || (AwsIcons as any).ArchitectureGroupVirtualprivatecloudVPC,
   natgateway: (AwsIcons as any).ArchitectureGroupVirtualprivatecloudVPC,
   route53: (AwsIcons as any).ArchitectureServiceAmazonRoute53,
   vpcpeering: (AwsIcons as any).ArchitectureGroupVirtualprivatecloudVPC,
