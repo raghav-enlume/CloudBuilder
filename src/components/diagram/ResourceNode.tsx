@@ -247,19 +247,23 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
           </div>
         )}
 
-        {/* Handles for connections */}
-        <Handle
-          type="target"
-          position={Position.Top}
-          className="!w-2.5 !h-2.5 !bg-primary !border-2 !border-primary-foreground"
-          style={{ pointerEvents: 'auto', zIndex: 1000 }}
-        />
-        <Handle
-          type="source"
-          position={Position.Bottom}
-          className="!w-2.5 !h-2.5 !bg-primary !border-2 !border-primary-foreground"
-          style={{ pointerEvents: 'auto' }}
-        />
+        {/* Handles for connections - hidden for containers */}
+        {!isContainer && (
+          <>
+            <Handle
+              type="target"
+              position={Position.Top}
+              className="!w-2.5 !h-2.5 !bg-primary !border-2 !border-primary-foreground"
+              style={{ pointerEvents: 'auto', zIndex: 1000 }}
+            />
+            <Handle
+              type="source"
+              position={Position.Bottom}
+              className="!w-2.5 !h-2.5 !bg-primary !border-2 !border-primary-foreground"
+              style={{ pointerEvents: 'auto' }}
+            />
+          </>
+        )}
 
         {/* Resize handles for containers */}
         {selected && (
