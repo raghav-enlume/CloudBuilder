@@ -21,7 +21,7 @@ const DiagramBuilderContent = ({ onDragEnd }: { onDragEnd: (event: DragEndEvent)
 };
 
 export const DiagramBuilder = () => {
-  const { addNode, addTextLabel } = useDiagramStore();
+  const { addNode, addTextLabel, addIconNode } = useDiagramStore();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -82,9 +82,11 @@ export const DiagramBuilder = () => {
         
         console.log('Drop position:', position);
         
-        // Check if it's a text label
+        // Check the drop type
         if (active.data.current?.type === 'textLabel') {
           addTextLabel(position);
+        } else if (active.data.current?.type === 'iconNode') {
+          addIconNode(position);
         } else {
           // It's a resource
           const resourceType = active.data.current as ResourceType;
@@ -92,7 +94,7 @@ export const DiagramBuilder = () => {
         }
       }
     },
-    [addNode, addTextLabel]
+    [addNode, addTextLabel, addIconNode]
   );
 
   return (

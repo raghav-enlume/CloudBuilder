@@ -39,6 +39,11 @@ export const TopPropertiesBar = () => {
     return null;
   }
 
+  // Handle icon nodes
+  if (node.type === 'iconNode') {
+    return null;
+  }
+
   const { label, resourceType, config = {}, isContainer } = node.data;
   const { editableAttributes = [] } = resourceType;
   const IconComponent = getIconComponent(resourceType.icon);

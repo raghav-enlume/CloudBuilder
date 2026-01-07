@@ -16,6 +16,7 @@ interface DiagramStore {
   historyIndex: number;
   addNode: (resourceType: ResourceType, position: { x: number; y: number }, parentId?: string, isContainer?: boolean) => void;
   addTextLabel: (position: { x: number; y: number }, text?: string) => void;
+  addIconNode: (position: { x: number; y: number }, iconName?: string) => void;
   updateNodes: (changes: NodeChange[]) => void;
   updateEdges: (changes: EdgeChange[]) => void;
   addEdge: (connection: Connection) => void;
@@ -24,6 +25,7 @@ interface DiagramStore {
   deleteNode: (nodeId: string) => void;
   updateNodeLabel: (nodeId: string, label: string) => void;
   updateNodeAttribute: (nodeId: string, attributeKey: string, value: unknown) => void;
+  updateNodeData: (nodeId: string, data: Record<string, unknown>) => void;
   updateTextLabelStyle: (nodeId: string, fontSize?: number, fontWeight?: string, color?: string) => void;
   updateNodeSize: (nodeId: string, width: number, height: number) => void;
   cloneNode: (nodeId: string, offsetX?: number, offsetY?: number) => void;
@@ -264,6 +266,35 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
           fontWeight: '400',
           color: '#000000',
           textAlign: 'left',
+        },
+      };
+
+      const newNodes = [...state.nodes, newNode];
+      const historyUpdate = saveStateToHistory({
+        ...state,
+        nodes: newNodes,
+      });
+
+      return {
+        nodes: newNodes,
+        selectedNode: newNode.id,
+        ...historyUpdate,
+      };
+    });
+  },
+
+  addIconNode: (position, iconName = 'address-card') => {
+    set((state) => {
+      const newNode: Node = {
+        id: `icon-${++nodeIdCounter}`,
+        type: 'iconNode',
+        position,
+        data: {
+          iconName,
+          iconSet: 'font-awesome',
+          size: 48,
+          color: '#000000',
+          background: 'none',
         },
       };
 
@@ -547,6 +578,32 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
                   ...node.data.config,
                   [attributeKey]: value,
                 },
+              },
+            }
+          : node
+      );
+
+      const historyUpdate = saveStateToHistory({
+        ...state,
+        nodes: updatedNodes,
+      });
+
+      return {
+        nodes: updatedNodes,
+        ...historyUpdate,
+      };
+    });
+  },
+
+  updateNodeData: (nodeId, data) => {
+    set((state) => {
+      const updatedNodes = state.nodes.map((node) =>
+        node.id === nodeId
+          ? {
+              ...node,
+              data: {
+                ...node.data,
+                ...data,
               },
             }
           : node

@@ -1,6 +1,7 @@
 import { cloudResources, categoryLabels, categoryColors } from '@/data/resources';
 import { DraggableResource } from './DraggableResource';
 import { DraggableTextLabel } from './DraggableTextLabel';
+import { DraggableIconNode } from './DraggableIconNode';
 import { ResourceCategory } from '@/types/diagram';
 import { Server, Database, HardDrive, Network, Shield, BarChart3, GripVertical, MessageSquare, GitBranch, Eye, Search, X } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -79,6 +80,7 @@ export const ResourceSidebar = () => {
           </div>
           <div className="space-y-2">
             <DraggableTextLabel />
+            <DraggableIconNode />
           </div>
         </div>
 

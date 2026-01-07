@@ -13,20 +13,30 @@ import { useDroppable } from '@dnd-kit/core';
 import { useDiagramStore } from '@/store/diagramStore';
 import ResourceNode from './ResourceNode';
 import TextLabel from './TextLabel';
+import { IconNode } from './IconNode';
 import { TopPropertiesBar } from './TopPropertiesBar';
 import { cn } from '@/lib/utils';
 
 const nodeTypes: NodeTypes = {
   resourceNode: ResourceNode,
   textLabel: TextLabel,
+  iconNode: IconNode,
 };
 
 const DiagramCanvasInner = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
-  const { nodes, edges, updateNodes, updateEdges, addEdge, setSelectedNode, deleteEdge, deleteNode } = useDiagramStore();
+  const { nodes: storeNodes, edges, updateNodes, updateEdges, addEdge, setSelectedNode, selectedNode, deleteEdge, deleteNode } = useDiagramStore();
   const { screenToFlowPosition } = useReactFlow();
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; edgeId?: string; nodeId?: string } | null>(null);
   const [hoveredEdgeId, setHoveredEdgeId] = useState<string | null>(null);
+
+  // Compute nodes with selected property based on store's selectedNode
+  const nodes = useMemo(() => {
+    return storeNodes.map((node) => ({
+      ...node,
+      selected: node.id === selectedNode,
+    }));
+  }, [storeNodes, selectedNode]);
 
   const { setNodeRef, isOver } = useDroppable({
     id: 'canvas',
