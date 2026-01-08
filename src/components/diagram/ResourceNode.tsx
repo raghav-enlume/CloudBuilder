@@ -22,7 +22,15 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
   
   // Handle both old string format and new object format for resourceType
   const iconId = typeof resourceType === 'object' ? resourceType?.icon : resourceType;
-  const color = typeof resourceType === 'object' ? resourceType?.color : '#FF9900';
+  let color = typeof resourceType === 'object' ? resourceType?.color : '#FF9900';
+  
+  // Use specific colors for different resource types
+  if (id.startsWith('vpc-')) {
+    color = '#FFA000';
+  } else if (id.startsWith('subnet-')) {
+    color = '#455A64';
+  }
+  
   const IconComponent = getIconComponent(iconId);
 
   // Resize handler for all nodes
@@ -125,7 +133,7 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
             height: '100%',
             border: `3px solid ${color}`,
             borderRadius: '4px',
-            backgroundColor: selected ? `${color}20` : `${color}08`,
+            backgroundColor: selected ? `${color}20` : 'transparent',
             position: 'absolute',
             top: 0,
             left: 0,
@@ -140,26 +148,7 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
         {/* Click area - thin border divs for selecting container without blocking edges */}
         {/* Removed - using click detection on parent instead to avoid blocking edge hover */}
 
-        {/* Icon in center - won't block children */}
-        {IconComponent && (
-          <div 
-            style={{ 
-              color, 
-              opacity: selected ? 0.5 : 0.3,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'opacity 0.2s ease',
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              pointerEvents: 'none',
-              zIndex: 0,
-            }}
-          >
-            <IconComponent size={50} />
-          </div>
-        )}
+
 
         {/* Content area - allows children to be clickable */}
         <div

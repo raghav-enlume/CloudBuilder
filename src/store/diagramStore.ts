@@ -14,6 +14,7 @@ interface DiagramStore {
   selectedNode: string | null;
   history: HistoryState[];
   historyIndex: number;
+  loadedSecurityGroups: Record<string, unknown>[];
   addNode: (resourceType: ResourceType, position: { x: number; y: number }, parentId?: string, isContainer?: boolean) => void;
   addTextLabel: (position: { x: number; y: number }, text?: string) => void;
   addIconNode: (position: { x: number; y: number }, iconName?: string) => void;
@@ -35,6 +36,7 @@ interface DiagramStore {
   canUndo: () => boolean;
   canRedo: () => boolean;
   loadDiagram: (nodes: Node[], edges: Edge[]) => void;
+  setLoadedSecurityGroups: (groups: Record<string, unknown>[]) => void;
   saveHistory: () => void;
 }
 
@@ -126,6 +128,7 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
   selectedNode: null,
   history: [{ nodes: [], edges: [] }],
   historyIndex: 0,
+  loadedSecurityGroups: [],
 
   addNode: (resourceType, position, parentId, isContainer = false) => {
     set((state) => {
@@ -854,5 +857,9 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
 
   saveHistory: () => {
     set((state) => saveStateToHistory(state));
+  },
+
+  setLoadedSecurityGroups: (groups: any[]) => {
+    set({ loadedSecurityGroups: groups });
   },
 }));
