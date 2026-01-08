@@ -1260,10 +1260,10 @@
         "region": "ap-south-1",
         "isContainer": true,
         "width": 890.0,
-        "height": 958,
+        "height": 928,
         "size": {
           "width": 890.0,
-          "height": 958
+          "height": 928
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -1272,7 +1272,7 @@
         "nestingDepth": 0
       },
       "width": 890.0,
-      "height": 958
+      "height": 928
     },
     {
       "id": "vpc-vpc-0e43c58d00b7df35a",
@@ -1375,7 +1375,7 @@
         "isContainer": true,
         "size": {
           "width": 300.0,
-          "height": 778
+          "height": 748
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -1388,7 +1388,7 @@
         "parentId": "region-ap-south-1"
       },
       "width": 300.0,
-      "height": 778
+      "height": 748
     },
     {
       "id": "subnet-subnet-09653db24781c57ff",
@@ -1858,7 +1858,7 @@
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 3662
+        "y": 3632
       },
       "data": {
         "label": "blazeops-agent-staging-agent",
@@ -1906,7 +1906,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 3882
+        "y": 3852
       },
       "data": {
         "label": "Region: ap-southeast-1",
@@ -1952,7 +1952,7 @@
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 4022
+        "y": 3992
       },
       "data": {
         "label": "vpc-03368d110e05fa944",
@@ -2010,7 +2010,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 4142
+        "y": 4112
       },
       "data": {
         "label": "subnet-05962e09dbdd215b0",
@@ -2062,7 +2062,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 4242
+        "y": 4212
       },
       "data": {
         "label": "subnet-0d717d2f591d0425c",
@@ -2114,7 +2114,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 4342
+        "y": 4312
       },
       "data": {
         "label": "subnet-0cc9a39c5e96abff5",
@@ -2166,7 +2166,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 4042
+        "y": 4012
       },
       "data": {
         "label": "igw-06e90884eb59f7b9c",
@@ -2207,7 +2207,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 4462
+        "y": 4432
       },
       "data": {
         "label": "rtb-038363b1c1952edf9",
@@ -2250,7 +2250,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 4590
+        "y": 4560
       },
       "data": {
         "label": "default",
@@ -2298,7 +2298,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 4810
+        "y": 4780
       },
       "data": {
         "label": "Region: ap-southeast-2",
@@ -2344,7 +2344,7 @@
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 4950
+        "y": 4920
       },
       "data": {
         "label": "vpc-081f34e74947ec96d",
@@ -2402,7 +2402,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 5070
+        "y": 5040
       },
       "data": {
         "label": "subnet-0c36e299858917e65",
@@ -2454,7 +2454,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 5170
+        "y": 5140
       },
       "data": {
         "label": "subnet-022ef323c26a65006",
@@ -2506,7 +2506,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 5270
+        "y": 5240
       },
       "data": {
         "label": "subnet-0cee4ce87e526c4f6",
@@ -2558,7 +2558,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 4970
+        "y": 4940
       },
       "data": {
         "label": "igw-01ae3570c813af69f",
@@ -2599,7 +2599,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 5390
+        "y": 5360
       },
       "data": {
         "label": "rtb-03b3ed4a45d7b83e9",
@@ -2642,7 +2642,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 5518
+        "y": 5488
       },
       "data": {
         "label": "default",
@@ -2690,7 +2690,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 5738
+        "y": 5708
       },
       "data": {
         "label": "Region: ca-central-1",
@@ -2736,7 +2736,7 @@
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 5878
+        "y": 5848
       },
       "data": {
         "label": "vpc-0dae079ab2ef8c81b",
@@ -2794,7 +2794,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 5998
+        "y": 5968
       },
       "data": {
         "label": "subnet-0804f5ea892d8c930",
@@ -2846,7 +2846,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 6098
+        "y": 6068
       },
       "data": {
         "label": "subnet-0b678df84d6d52733",
@@ -2898,7 +2898,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 6198
+        "y": 6168
       },
       "data": {
         "label": "subnet-0057418bf78c2ef50",
@@ -2950,7 +2950,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 5898
+        "y": 5868
       },
       "data": {
         "label": "igw-069082c94acc7e1a2",
@@ -2991,7 +2991,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 6318
+        "y": 6288
       },
       "data": {
         "label": "rtb-08c7982b8eef4c4e9",
@@ -3034,7 +3034,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 6446
+        "y": 6416
       },
       "data": {
         "label": "default",
@@ -3082,7 +3082,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 6666
+        "y": 6636
       },
       "data": {
         "label": "Region: eu-central-1",
@@ -3128,7 +3128,7 @@
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 6806
+        "y": 6776
       },
       "data": {
         "label": "vpc-00af4cf8c7d9427ea",
@@ -3186,7 +3186,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 6926
+        "y": 6896
       },
       "data": {
         "label": "subnet-03ff6b3d0692657f9",
@@ -3238,7 +3238,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 7026
+        "y": 6996
       },
       "data": {
         "label": "subnet-0735b31c9b21f431e",
@@ -3290,7 +3290,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 7126
+        "y": 7096
       },
       "data": {
         "label": "subnet-01055720a300d09f8",
@@ -3342,7 +3342,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 6826
+        "y": 6796
       },
       "data": {
         "label": "igw-0f1f51cf9758016d6",
@@ -3383,7 +3383,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 7246
+        "y": 7216
       },
       "data": {
         "label": "rtb-0bb32f2ff685af33b",
@@ -3426,7 +3426,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 7374
+        "y": 7344
       },
       "data": {
         "label": "default",
@@ -3474,7 +3474,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 7594
+        "y": 7564
       },
       "data": {
         "label": "Region: eu-north-1",
@@ -3520,7 +3520,7 @@
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 7734
+        "y": 7704
       },
       "data": {
         "label": "vpc-076666e216f7c0c55",
@@ -3578,7 +3578,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 7854
+        "y": 7824
       },
       "data": {
         "label": "subnet-02c40c452157fcb35",
@@ -3630,7 +3630,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 7954
+        "y": 7924
       },
       "data": {
         "label": "subnet-0b98309688848b497",
@@ -3682,7 +3682,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 8054
+        "y": 8024
       },
       "data": {
         "label": "subnet-0fd2647e5a62fdf73",
@@ -3734,7 +3734,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 7754
+        "y": 7724
       },
       "data": {
         "label": "igw-01fc16fc60f59e24d",
@@ -3775,7 +3775,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 8174
+        "y": 8144
       },
       "data": {
         "label": "rtb-06c7e889afecc232c",
@@ -3818,7 +3818,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 8302
+        "y": 8272
       },
       "data": {
         "label": "default",
@@ -3866,7 +3866,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 8522
+        "y": 8492
       },
       "data": {
         "label": "Region: eu-west-1",
@@ -3912,7 +3912,7 @@
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 8662
+        "y": 8632
       },
       "data": {
         "label": "vpc-003030af810af1eb5",
@@ -3970,7 +3970,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 8782
+        "y": 8752
       },
       "data": {
         "label": "subnet-0020ab2c83fd4b029",
@@ -4022,7 +4022,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 8882
+        "y": 8852
       },
       "data": {
         "label": "subnet-065433cf0895865d1",
@@ -4074,7 +4074,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 8982
+        "y": 8952
       },
       "data": {
         "label": "subnet-0ddf547e9f96e89a8",
@@ -4126,7 +4126,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 8682
+        "y": 8652
       },
       "data": {
         "label": "igw-0a991724eab3b3767",
@@ -4167,7 +4167,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 9102
+        "y": 9072
       },
       "data": {
         "label": "rtb-02b046212c852e516",
@@ -4210,7 +4210,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 9230
+        "y": 9200
       },
       "data": {
         "label": "default",
@@ -4258,7 +4258,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 9450
+        "y": 9420
       },
       "data": {
         "label": "Region: eu-west-2",
@@ -4304,7 +4304,7 @@
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 9590
+        "y": 9560
       },
       "data": {
         "label": "vpc-066b8aaa62cf85b3b",
@@ -4362,7 +4362,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 9710
+        "y": 9680
       },
       "data": {
         "label": "subnet-0812669bc2fd92263",
@@ -4414,7 +4414,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 9810
+        "y": 9780
       },
       "data": {
         "label": "subnet-04d706b627e8e317e",
@@ -4466,7 +4466,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 9910
+        "y": 9880
       },
       "data": {
         "label": "subnet-0c9bf04dbe1e7803f",
@@ -4518,7 +4518,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 9610
+        "y": 9580
       },
       "data": {
         "label": "igw-0efa864fb6398f084",
@@ -4559,7 +4559,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 10030
+        "y": 10000
       },
       "data": {
         "label": "rtb-047ad625867d472b7",
@@ -4602,7 +4602,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 10158
+        "y": 10128
       },
       "data": {
         "label": "default",
@@ -4650,7 +4650,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 10378
+        "y": 10348
       },
       "data": {
         "label": "Region: eu-west-3",
@@ -4696,7 +4696,7 @@
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 10518
+        "y": 10488
       },
       "data": {
         "label": "vpc-0eaad500ad62c288d",
@@ -4754,7 +4754,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 10638
+        "y": 10608
       },
       "data": {
         "label": "subnet-035844fd1cd6628fb",
@@ -4806,7 +4806,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 10738
+        "y": 10708
       },
       "data": {
         "label": "subnet-04c02d922b215a643",
@@ -4858,7 +4858,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 10838
+        "y": 10808
       },
       "data": {
         "label": "subnet-09688fc77fc8fff26",
@@ -4910,7 +4910,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 10538
+        "y": 10508
       },
       "data": {
         "label": "igw-0387bae71d73062f5",
@@ -4951,7 +4951,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 10958
+        "y": 10928
       },
       "data": {
         "label": "rtb-0967cfd058894f942",
@@ -4994,7 +4994,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 11086
+        "y": 11056
       },
       "data": {
         "label": "default",
@@ -5042,7 +5042,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 11306
+        "y": 11276
       },
       "data": {
         "label": "Region: sa-east-1",
@@ -5088,7 +5088,7 @@
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 11446
+        "y": 11416
       },
       "data": {
         "label": "vpc-0b21ed051e654ca24",
@@ -5146,7 +5146,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 11566
+        "y": 11536
       },
       "data": {
         "label": "subnet-0fc8c7451ee88c938",
@@ -5198,7 +5198,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 11666
+        "y": 11636
       },
       "data": {
         "label": "subnet-078beffc6dc67caa2",
@@ -5250,7 +5250,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 11766
+        "y": 11736
       },
       "data": {
         "label": "subnet-01c41d819e6a80d6b",
@@ -5302,7 +5302,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 11466
+        "y": 11436
       },
       "data": {
         "label": "igw-06c4e6bd6ba5b22e9",
@@ -5343,7 +5343,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 11886
+        "y": 11856
       },
       "data": {
         "label": "rtb-05b93793b5cee32ed",
@@ -5386,7 +5386,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 12014
+        "y": 11984
       },
       "data": {
         "label": "default",
@@ -5434,7 +5434,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 12234
+        "y": 12204
       },
       "data": {
         "label": "Region: us-east-1",
@@ -5480,7 +5480,7 @@
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 12374
+        "y": 12344
       },
       "data": {
         "label": "vpc-07862969a03b130a1",
@@ -5538,7 +5538,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 12494
+        "y": 12464
       },
       "data": {
         "label": "subnet-00cef5d53a5365b3e",
@@ -5590,7 +5590,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 12594
+        "y": 12564
       },
       "data": {
         "label": "subnet-039447774e07b1ac8",
@@ -5642,7 +5642,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 12694
+        "y": 12664
       },
       "data": {
         "label": "subnet-0d3245bebbac3c1e4",
@@ -5694,7 +5694,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 12794
+        "y": 12764
       },
       "data": {
         "label": "subnet-0b194e9c4efdf117d",
@@ -5746,7 +5746,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 12894
+        "y": 12864
       },
       "data": {
         "label": "subnet-06738b99747c70787",
@@ -5798,7 +5798,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 12994
+        "y": 12964
       },
       "data": {
         "label": "subnet-028d24fff5a666009",
@@ -5850,7 +5850,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 12394
+        "y": 12364
       },
       "data": {
         "label": "igw-0b8d4f12ed9149dde",
@@ -5891,7 +5891,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 13114
+        "y": 13084
       },
       "data": {
         "label": "rtb-006b0197109522e54",
@@ -5934,7 +5934,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 13242
+        "y": 13212
       },
       "data": {
         "label": "default",
@@ -5982,7 +5982,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 13462
+        "y": 13432
       },
       "data": {
         "label": "Region: us-east-2",
@@ -6009,10 +6009,10 @@
         "region": "us-east-2",
         "isContainer": true,
         "width": 1790.0,
-        "height": 1116,
+        "height": 1134,
         "size": {
           "width": 1790.0,
-          "height": 1116
+          "height": 1134
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -6021,14 +6021,14 @@
         "nestingDepth": 0
       },
       "width": 1790.0,
-      "height": 1116
+      "height": 1134
     },
     {
       "id": "vpc-vpc-06cc31a57a405feb8",
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 13602
+        "y": 13572
       },
       "data": {
         "label": "vpc-06cc31a57a405feb8",
@@ -6065,8 +6065,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 330,
-          "height": 936
+          "width": 300.0,
+          "height": 954
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -6078,15 +6078,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 330,
-      "height": 936
+      "width": 300.0,
+      "height": 954
     },
     {
       "id": "vpc-vpc-0010db00d5f9b6d24",
       "type": "resourceNode",
       "position": {
         "x": 550,
-        "y": 13602
+        "y": 13572
       },
       "data": {
         "label": "vpc-0010db00d5f9b6d24",
@@ -6144,7 +6144,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1000,
-        "y": 13602
+        "y": 13572
       },
       "data": {
         "label": "vpc-0b71e8dcdd9a40ef8",
@@ -6182,7 +6182,7 @@
         "isContainer": true,
         "size": {
           "width": 300.0,
-          "height": 858
+          "height": 828
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -6195,14 +6195,14 @@
         "parentId": "region-us-east-2"
       },
       "width": 300.0,
-      "height": 858
+      "height": 828
     },
     {
       "id": "vpc-vpc-0eb8eab8fc060589d",
       "type": "resourceNode",
       "position": {
         "x": 1450,
-        "y": 13602
+        "y": 13572
       },
       "data": {
         "label": "vpc-0eb8eab8fc060589d",
@@ -6240,7 +6240,7 @@
         "isContainer": true,
         "size": {
           "width": 300.0,
-          "height": 858
+          "height": 828
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -6253,14 +6253,14 @@
         "parentId": "region-us-east-2"
       },
       "width": 300.0,
-      "height": 858
+      "height": 828
     },
     {
       "id": "subnet-subnet-0d7e95372896d77e8",
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 13722
+        "y": 13692
       },
       "data": {
         "label": "subnet-0d7e95372896d77e8",
@@ -6312,7 +6312,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 13822
+        "y": 13792
       },
       "data": {
         "label": "subnet-0f74cb72353a2b237",
@@ -6364,7 +6364,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 13922
+        "y": 13892
       },
       "data": {
         "label": "subnet-0caaa7cee2f392f8d",
@@ -6416,7 +6416,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1490,
-        "y": 13722
+        "y": 13692
       },
       "data": {
         "label": "subnet-0cc22aef01a024a4a",
@@ -6468,7 +6468,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1490,
-        "y": 13822
+        "y": 13792
       },
       "data": {
         "label": "subnet-01c723a4e0cd68d4f",
@@ -6520,7 +6520,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 13722
+        "y": 13692
       },
       "data": {
         "label": "subnet-0da1a05dfc8b55dc3",
@@ -6572,7 +6572,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 13900
+        "y": 13870
       },
       "data": {
         "label": "subnet-09a9db2e951c22a88",
@@ -6624,7 +6624,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 13722
+        "y": 13692
       },
       "data": {
         "label": "subnet-0381aa2076a4bb590",
@@ -6676,7 +6676,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 13822
+        "y": 13792
       },
       "data": {
         "label": "subnet-03f6049180d037062",
@@ -6727,8 +6727,8 @@
       "id": "instance-i-0525e04aaef702279",
       "type": "resourceNode",
       "position": {
-        "x": 240,
-        "y": 14100
+        "x": 190,
+        "y": 14248
       },
       "data": {
         "label": "blazeops-agent-staging-backend-api",
@@ -6792,7 +6792,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 13622
+        "y": 13592
       },
       "data": {
         "label": "igw-01d5c14d9e2b4b9c8",
@@ -6833,7 +6833,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1140.0,
-        "y": 13622
+        "y": 13592
       },
       "data": {
         "label": "igw-0a13a84d2fd72a28d",
@@ -6874,7 +6874,7 @@
       "type": "resourceNode",
       "position": {
         "x": 690.0,
-        "y": 13622
+        "y": 13592
       },
       "data": {
         "label": "igw-0b3cd3490eb35a07c",
@@ -6915,7 +6915,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1590.0,
-        "y": 13622
+        "y": 13592
       },
       "data": {
         "label": "igw-0eefc716b166cc3f6",
@@ -6956,7 +6956,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 14020
+        "y": 13990
       },
       "data": {
         "label": "rtb-01acacde45952b958",
@@ -6999,7 +6999,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 14120
+        "y": 14090
       },
       "data": {
         "label": "rtb-0f5539d37304dfe0a",
@@ -7042,7 +7042,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 14042
+        "y": 14012
       },
       "data": {
         "label": "rtb-09467ba9741ae03be",
@@ -7085,7 +7085,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 13942
+        "y": 13912
       },
       "data": {
         "label": "rtb-051150827cea9acd3",
@@ -7128,7 +7128,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 14042
+        "y": 14012
       },
       "data": {
         "label": "rtb-04c6172af2a46c76f",
@@ -7171,7 +7171,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1490,
-        "y": 13942
+        "y": 13912
       },
       "data": {
         "label": "rtb-02e5b59e28181011c",
@@ -7214,7 +7214,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1490,
-        "y": 14042
+        "y": 14012
       },
       "data": {
         "label": "rtb-066fcdc4ec8cdb638",
@@ -7257,7 +7257,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1060,
-        "y": 14170
+        "y": 14140
       },
       "data": {
         "label": "blazeops-agent-staging-agent",
@@ -7305,7 +7305,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1060,
-        "y": 14320
+        "y": 14260
       },
       "data": {
         "label": "default",
@@ -7353,7 +7353,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 14248
+        "y": 14218
       },
       "data": {
         "label": "blazeops-agent-staging-agent",
@@ -7380,8 +7380,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -30
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -7393,15 +7393,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
-      "width": 230,
-      "height": -30
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-0600c5b0821b89013",
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 14398
+        "y": 14386
       },
       "data": {
         "label": "default",
@@ -7449,7 +7449,7 @@
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 14170
+        "y": 14140
       },
       "data": {
         "label": "default",
@@ -7497,7 +7497,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1510,
-        "y": 14170
+        "y": 14140
       },
       "data": {
         "label": "default",
@@ -7545,7 +7545,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1510,
-        "y": 14320
+        "y": 14260
       },
       "data": {
         "label": "blazeops-agent-staging-agent",
@@ -7593,7 +7593,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 14618
+        "y": 14606
       },
       "data": {
         "label": "Region: us-west-1",
@@ -7619,11 +7619,11 @@
         },
         "region": "us-west-1",
         "isContainer": true,
-        "width": 470,
-        "height": 886,
+        "width": 440.0,
+        "height": 1034,
         "size": {
-          "width": 470,
-          "height": 886
+          "width": 440.0,
+          "height": 1034
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -7631,15 +7631,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 470,
-      "height": 886
+      "width": 440.0,
+      "height": 1034
     },
     {
       "id": "vpc-vpc-069c5c4fce175e261",
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 14758
+        "y": 14746
       },
       "data": {
         "label": "vpc-069c5c4fce175e261",
@@ -7676,8 +7676,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 330,
-          "height": 706
+          "width": 300.0,
+          "height": 854
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -7689,15 +7689,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-1"
       },
-      "width": 330,
-      "height": 706
+      "width": 300.0,
+      "height": 854
     },
     {
       "id": "subnet-subnet-07381de9820f7a33d",
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 14878
+        "y": 14866
       },
       "data": {
         "label": "subnet-07381de9820f7a33d",
@@ -7749,7 +7749,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 14978
+        "y": 14966
       },
       "data": {
         "label": "subnet-07bea2196296fadfb",
@@ -7800,8 +7800,8 @@
       "id": "instance-i-038eaa07332e6dfdc",
       "type": "resourceNode",
       "position": {
-        "x": 240,
-        "y": 15306
+        "x": 190,
+        "y": 15442
       },
       "data": {
         "label": "devops-rnd",
@@ -7865,7 +7865,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 14778
+        "y": 14766
       },
       "data": {
         "label": "igw-027755f7812b41e9b",
@@ -7906,7 +7906,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 15176
+        "y": 15164
       },
       "data": {
         "label": "rtb-0553145506ae0e240",
@@ -7949,7 +7949,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 15304
+        "y": 15292
       },
       "data": {
         "label": "default",
@@ -7997,7 +7997,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 15454
+        "y": 15412
       },
       "data": {
         "label": "launch-wizard-1",
@@ -8024,8 +8024,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -30
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -8037,15 +8037,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-069c5c4fce175e261"
       },
-      "width": 230,
-      "height": -30
+      "width": 180,
+      "height": 148
     },
     {
       "id": "region-us-west-2",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 15544
+        "y": 15680
       },
       "data": {
         "label": "Region: us-west-2",
@@ -8071,11 +8071,11 @@
         },
         "region": "us-west-2",
         "isContainer": true,
-        "width": 3170,
-        "height": 3250,
+        "width": 3140.0,
+        "height": 3396,
         "size": {
-          "width": 3170,
-          "height": 3250
+          "width": 3140.0,
+          "height": 3396
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -8083,15 +8083,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 3170,
-      "height": 3250
+      "width": 3140.0,
+      "height": 3396
     },
     {
       "id": "vpc-vpc-0b203175fc017bf03",
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 15684
+        "y": 15820
       },
       "data": {
         "label": "vpc-0b203175fc017bf03",
@@ -8128,8 +8128,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 330,
-          "height": 2086
+          "width": 300.0,
+          "height": 2014
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -8141,15 +8141,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 330,
-      "height": 2086
+      "width": 300.0,
+      "height": 2014
     },
     {
       "id": "vpc-vpc-0396b67c9d7d3abe3",
       "type": "resourceNode",
       "position": {
         "x": 550,
-        "y": 15684
+        "y": 15820
       },
       "data": {
         "label": "vpc-0396b67c9d7d3abe3",
@@ -8186,8 +8186,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 330,
-          "height": 2436
+          "width": 300.0,
+          "height": 2462
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -8199,15 +8199,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 330,
-      "height": 2436
+      "width": 300.0,
+      "height": 2462
     },
     {
       "id": "vpc-vpc-02a17d33150568759",
       "type": "resourceNode",
       "position": {
         "x": 1000,
-        "y": 15684
+        "y": 15820
       },
       "data": {
         "label": "vpc-02a17d33150568759",
@@ -8245,7 +8245,7 @@
         "isContainer": true,
         "size": {
           "width": 300.0,
-          "height": 2008
+          "height": 1888
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -8258,14 +8258,14 @@
         "parentId": "region-us-west-2"
       },
       "width": 300.0,
-      "height": 2008
+      "height": 1888
     },
     {
       "id": "vpc-vpc-0c40204d45db5ab27",
       "type": "resourceNode",
       "position": {
         "x": 1450,
-        "y": 15684
+        "y": 15820
       },
       "data": {
         "label": "vpc-0c40204d45db5ab27",
@@ -8302,8 +8302,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 330,
-          "height": 986
+          "width": 300.0,
+          "height": 974
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -8315,15 +8315,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 330,
-      "height": 986
+      "width": 300.0,
+      "height": 974
     },
     {
       "id": "vpc-vpc-05f5252d25e5b83a3",
       "type": "resourceNode",
       "position": {
         "x": 1900,
-        "y": 15684
+        "y": 15820
       },
       "data": {
         "label": "vpc-05f5252d25e5b83a3",
@@ -8360,8 +8360,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 330,
-          "height": 856
+          "width": 300.0,
+          "height": 874
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -8373,15 +8373,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 330,
-      "height": 856
+      "width": 300.0,
+      "height": 874
     },
     {
       "id": "vpc-vpc-0a4c8e6538393c98d",
       "type": "resourceNode",
       "position": {
         "x": 2350,
-        "y": 15684
+        "y": 15820
       },
       "data": {
         "label": "vpc-0a4c8e6538393c98d",
@@ -8418,8 +8418,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 330,
-          "height": 3070
+          "width": 300.0,
+          "height": 3216
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -8431,15 +8431,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 330,
-      "height": 3070
+      "width": 300.0,
+      "height": 3216
     },
     {
       "id": "vpc-vpc-07636c778ebc026ab",
       "type": "resourceNode",
       "position": {
         "x": 2800,
-        "y": 15684
+        "y": 15820
       },
       "data": {
         "label": "vpc-07636c778ebc026ab",
@@ -8476,8 +8476,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 330,
-          "height": 1236
+          "width": 300.0,
+          "height": 1642
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -8489,15 +8489,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 330,
-      "height": 1236
+      "width": 300.0,
+      "height": 1642
     },
     {
       "id": "subnet-subnet-0083864b23c842daa",
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 15804
+        "y": 15940
       },
       "data": {
         "label": "subnet-0083864b23c842daa",
@@ -8549,7 +8549,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 15904
+        "y": 16040
       },
       "data": {
         "label": "subnet-067ec4c1840793997",
@@ -8601,7 +8601,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 16004
+        "y": 16140
       },
       "data": {
         "label": "subnet-00e7ae4144372865b",
@@ -8653,7 +8653,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 16182
+        "y": 16318
       },
       "data": {
         "label": "subnet-09d9910760fc6cd92",
@@ -8705,7 +8705,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 15804
+        "y": 15940
       },
       "data": {
         "label": "subnet-0acf56c6e86160836",
@@ -8757,7 +8757,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 15904
+        "y": 16040
       },
       "data": {
         "label": "subnet-083f58538e91bf96a",
@@ -8809,7 +8809,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 16082
+        "y": 16218
       },
       "data": {
         "label": "subnet-0b04c6920ec5670bd",
@@ -8861,7 +8861,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 16182
+        "y": 16318
       },
       "data": {
         "label": "subnet-03544f2ff91e6498c",
@@ -8913,7 +8913,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 16282
+        "y": 16418
       },
       "data": {
         "label": "subnet-02e8cb59f20b482f5",
@@ -8965,7 +8965,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 16382
+        "y": 16518
       },
       "data": {
         "label": "subnet-0f4580f8731a0d613",
@@ -9017,7 +9017,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2840,
-        "y": 15804
+        "y": 15940
       },
       "data": {
         "label": "subnet-06376dcc5f8f79f3d",
@@ -9069,7 +9069,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2840,
-        "y": 15904
+        "y": 16040
       },
       "data": {
         "label": "subnet-035f4e215708e170a",
@@ -9121,7 +9121,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2840,
-        "y": 16004
+        "y": 16140
       },
       "data": {
         "label": "subnet-0a75f8fbc67475887",
@@ -9173,7 +9173,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2840,
-        "y": 16182
+        "y": 16318
       },
       "data": {
         "label": "subnet-05e363a73b3306d3a",
@@ -9225,7 +9225,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 15804
+        "y": 15940
       },
       "data": {
         "label": "subnet-05108c24c5b4d18a1",
@@ -9277,7 +9277,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 15904
+        "y": 16040
       },
       "data": {
         "label": "subnet-05d37d18d84d12adc",
@@ -9329,7 +9329,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 16004
+        "y": 16140
       },
       "data": {
         "label": "subnet-09f18daeda9ec6500",
@@ -9381,7 +9381,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 16104
+        "y": 16240
       },
       "data": {
         "label": "subnet-00eca9095c60e8af6",
@@ -9433,7 +9433,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 16204
+        "y": 16340
       },
       "data": {
         "label": "subnet-0c56f4f6cb21e6c13",
@@ -9485,7 +9485,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 16304
+        "y": 16440
       },
       "data": {
         "label": "subnet-02230cd9b5bb07647",
@@ -9537,7 +9537,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2390,
-        "y": 15804
+        "y": 15940
       },
       "data": {
         "label": "subnet-0b0205a4864ec89a8",
@@ -9589,7 +9589,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2390,
-        "y": 15982
+        "y": 16118
       },
       "data": {
         "label": "subnet-0b74c69db4723fde1",
@@ -9641,7 +9641,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2390,
-        "y": 16160
+        "y": 16296
       },
       "data": {
         "label": "subnet-0d362ee0cc9afcf50",
@@ -9693,7 +9693,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2390,
-        "y": 16338
+        "y": 16474
       },
       "data": {
         "label": "subnet-07e8c88d32e1a951a",
@@ -9745,7 +9745,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1490,
-        "y": 15804
+        "y": 15940
       },
       "data": {
         "label": "subnet-0265700385bb267bb",
@@ -9797,7 +9797,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1490,
-        "y": 15982
+        "y": 16118
       },
       "data": {
         "label": "subnet-013a1a6db56cb129a",
@@ -9849,7 +9849,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1940,
-        "y": 15804
+        "y": 15940
       },
       "data": {
         "label": "subnet-0bc3c76cec5af834e",
@@ -9900,8 +9900,8 @@
       "id": "instance-i-0b99704a35eacb9da",
       "type": "resourceNode",
       "position": {
-        "x": 690,
-        "y": 17182
+        "x": 640,
+        "y": 17664
       },
       "data": {
         "label": "atom-UAT-Instance",
@@ -9964,8 +9964,8 @@
       "id": "instance-i-041b43802bd697249",
       "type": "resourceNode",
       "position": {
-        "x": 2940,
-        "y": 16582
+        "x": 2890,
+        "y": 17036
       },
       "data": {
         "label": "Nexus-UAT-Instance",
@@ -10028,8 +10028,8 @@
       "id": "instance-i-0240e33f5fb28017f",
       "type": "resourceNode",
       "position": {
-        "x": 1590,
-        "y": 16232
+        "x": 1540,
+        "y": 16516
       },
       "data": {
         "label": "ELK-Monitoring-Instance",
@@ -10092,8 +10092,8 @@
       "id": "instance-i-0fb8674109c4c217c",
       "type": "resourceNode",
       "position": {
-        "x": 2490,
-        "y": 16082
+        "x": 2440,
+        "y": 16930
       },
       "data": {
         "label": "Turn Server HQ",
@@ -10156,8 +10156,8 @@
       "id": "instance-i-0a6d1ee8ff4b61f09",
       "type": "resourceNode",
       "position": {
-        "x": 2490,
-        "y": 17732
+        "x": 2440,
+        "y": 18590
       },
       "data": {
         "label": "Live camera stream proxy server",
@@ -10220,8 +10220,8 @@
       "id": "instance-i-081a27b59573c1065",
       "type": "resourceNode",
       "position": {
-        "x": 2040,
-        "y": 16382
+        "x": 1990,
+        "y": 16536
       },
       "data": {
         "label": "Simulator",
@@ -10284,8 +10284,8 @@
       "id": "instance-i-03f012b9cb690019d",
       "type": "resourceNode",
       "position": {
-        "x": 2940,
-        "y": 16732
+        "x": 2890,
+        "y": 17304
       },
       "data": {
         "label": "nexus-blf-to-csv-UAT",
@@ -10348,8 +10348,8 @@
       "id": "instance-i-0c0b47963bfd443a8",
       "type": "resourceNode",
       "position": {
-        "x": 2490,
-        "y": 17582
+        "x": 2440,
+        "y": 18422
       },
       "data": {
         "label": "test",
@@ -10412,8 +10412,8 @@
       "id": "instance-i-05bdf6ab891877602",
       "type": "resourceNode",
       "position": {
-        "x": 2490,
-        "y": 16682
+        "x": 2440,
+        "y": 17558
       },
       "data": {
         "label": "Basestation-Testing",
@@ -10476,8 +10476,8 @@
       "id": "instance-i-025856bb4684afce5",
       "type": "resourceNode",
       "position": {
-        "x": 690,
-        "y": 16432
+        "x": 640,
+        "y": 16916
       },
       "data": {
         "label": "atom-Sg-UAT-Instance",
@@ -10540,8 +10540,8 @@
       "id": "instance-i-0ab8e3c47989109b0",
       "type": "resourceNode",
       "position": {
-        "x": 2490,
-        "y": 16082
+        "x": 2440,
+        "y": 16830
       },
       "data": {
         "label": "Turn Server For Demo",
@@ -10604,8 +10604,8 @@
       "id": "instance-i-0f84e378aa0ea6a83",
       "type": "resourceNode",
       "position": {
-        "x": 2490,
-        "y": 16082
+        "x": 2440,
+        "y": 17030
       },
       "data": {
         "label": "Turn Server template",
@@ -10668,8 +10668,8 @@
       "id": "instance-i-01349d7a7ebab446c",
       "type": "resourceNode",
       "position": {
-        "x": 240,
-        "y": 16632
+        "x": 190,
+        "y": 17316
       },
       "data": {
         "label": "html-pdf-conversion-1-linux-nodes-Node",
@@ -10732,8 +10732,8 @@
       "id": "instance-i-0305800c59298a9db",
       "type": "resourceNode",
       "position": {
-        "x": 2490,
-        "y": 16832
+        "x": 2440,
+        "y": 17726
       },
       "data": {
         "label": "devops-rnd-n1",
@@ -10796,8 +10796,8 @@
       "id": "instance-i-082672cedf7b4bc58",
       "type": "resourceNode",
       "position": {
-        "x": 690,
-        "y": 16432
+        "x": 640,
+        "y": 17016
       },
       "data": {
         "label": "atom-Sg-UAT-Instance",
@@ -10860,8 +10860,8 @@
       "id": "instance-i-04f83f83dd1407752",
       "type": "resourceNode",
       "position": {
-        "x": 2490,
-        "y": 17882
+        "x": 2440,
+        "y": 18758
       },
       "data": {
         "label": "devops-rnd-x1",
@@ -10924,8 +10924,8 @@
       "id": "instance-i-0f2368f258fab5b22",
       "type": "resourceNode",
       "position": {
-        "x": 690,
-        "y": 17182
+        "x": 640,
+        "y": 17764
       },
       "data": {
         "label": "atom_uat_instance",
@@ -10988,8 +10988,8 @@
       "id": "instance-i-09d8928f2e46588d2",
       "type": "resourceNode",
       "position": {
-        "x": 2490,
-        "y": 16982
+        "x": 2440,
+        "y": 17894
       },
       "data": {
         "label": "blf_conversion_emr",
@@ -11052,8 +11052,8 @@
       "id": "instance-i-07117e2efaf720cf0",
       "type": "resourceNode",
       "position": {
-        "x": 2940,
-        "y": 16582
+        "x": 2890,
+        "y": 17136
       },
       "data": {
         "label": "UAT-NEXUS-INSTANCE",
@@ -11117,7 +11117,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2490.0,
-        "y": 15704
+        "y": 15840
       },
       "data": {
         "label": "igw-028e1f24ac98f323f",
@@ -11158,7 +11158,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2040.0,
-        "y": 15704
+        "y": 15840
       },
       "data": {
         "label": "igw-069c417a24ff58e15",
@@ -11199,7 +11199,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1590.0,
-        "y": 15704
+        "y": 15840
       },
       "data": {
         "label": "igw-072e12d5dbdc1e401",
@@ -11240,7 +11240,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2940.0,
-        "y": 15704
+        "y": 15840
       },
       "data": {
         "label": "igw-08d5d753909185ce9",
@@ -11281,7 +11281,7 @@
       "type": "resourceNode",
       "position": {
         "x": 690.0,
-        "y": 15704
+        "y": 15840
       },
       "data": {
         "label": "igw-08fa23b99521f9103",
@@ -11322,7 +11322,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1140.0,
-        "y": 15704
+        "y": 15840
       },
       "data": {
         "label": "igw-09581f2a8d9b8630a",
@@ -11363,7 +11363,7 @@
       "type": "resourceNode",
       "position": {
         "x": 240.0,
-        "y": 15704
+        "y": 15840
       },
       "data": {
         "label": "igw-0b892ac0d6e800a55",
@@ -11404,7 +11404,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 16424
+        "y": 16560
       },
       "data": {
         "label": "rtb-02798c61e7000b356",
@@ -11447,7 +11447,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 16524
+        "y": 16660
       },
       "data": {
         "label": "rtb-00726dba9cb1c960e",
@@ -11490,7 +11490,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 16624
+        "y": 16760
       },
       "data": {
         "label": "rtb-0a1d9e30ef223ad40",
@@ -11533,7 +11533,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 16724
+        "y": 16860
       },
       "data": {
         "label": "rtb-0ea13752abfd1cfd6",
@@ -11576,7 +11576,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 16824
+        "y": 16960
       },
       "data": {
         "label": "rtb-02e69ec2c839f9991",
@@ -11619,7 +11619,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 16502
+        "y": 16638
       },
       "data": {
         "label": "rtb-0c225af6af303e01d",
@@ -11662,7 +11662,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 16602
+        "y": 16738
       },
       "data": {
         "label": "rtb-0080c5a262f07d35d",
@@ -11705,7 +11705,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 16702
+        "y": 16838
       },
       "data": {
         "label": "rtb-07b23e4c2b86dc82a",
@@ -11748,7 +11748,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 16802
+        "y": 16938
       },
       "data": {
         "label": "rtb-0ec2182ba2265c24b",
@@ -11791,7 +11791,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 16902
+        "y": 17038
       },
       "data": {
         "label": "rtb-04862bd48de1d358d",
@@ -11834,7 +11834,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1490,
-        "y": 16102
+        "y": 16238
       },
       "data": {
         "label": "rtb-0ae5119b9e1a9fe08",
@@ -11877,7 +11877,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 16302
+        "y": 16438
       },
       "data": {
         "label": "rtb-0e075ffac6dd93130",
@@ -11920,7 +11920,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 16402
+        "y": 16538
       },
       "data": {
         "label": "rtb-092e5c0bf5895014f",
@@ -11963,7 +11963,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 16502
+        "y": 16638
       },
       "data": {
         "label": "rtb-02338a985345af632",
@@ -12006,7 +12006,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2390,
-        "y": 16536
+        "y": 16672
       },
       "data": {
         "label": "rtb-06168f1d1a677f366",
@@ -12049,7 +12049,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2840,
-        "y": 16302
+        "y": 16438
       },
       "data": {
         "label": "rtb-077887a686e6fa26d",
@@ -12092,7 +12092,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2840,
-        "y": 16402
+        "y": 16538
       },
       "data": {
         "label": "rtb-0d368079ca2804c0f",
@@ -12135,7 +12135,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2840,
-        "y": 16502
+        "y": 16638
       },
       "data": {
         "label": "rtb-022d0631b7874c7a1",
@@ -12178,7 +12178,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1940,
-        "y": 16002
+        "y": 16138
       },
       "data": {
         "label": "rtb-0f76e2c46ddfa5dfb",
@@ -12221,7 +12221,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 16664
+        "y": 16800
       },
       "data": {
         "label": "launch-wizard-7",
@@ -12248,8 +12248,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -464
+          "width": 180,
+          "height": 348
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -12261,15 +12261,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": 230,
-      "height": -464
+      "width": 180,
+      "height": 348
     },
     {
       "id": "sg-sg-03e77294127fbafbf",
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 16814
+        "y": 17168
       },
       "data": {
         "label": "launch-wizard-16",
@@ -12317,7 +12317,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 16964
+        "y": 17288
       },
       "data": {
         "label": "launch-wizard-20",
@@ -12365,7 +12365,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 17114
+        "y": 17408
       },
       "data": {
         "label": "launch-wizard-19",
@@ -12413,7 +12413,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 17264
+        "y": 17528
       },
       "data": {
         "label": "launch-wizard-14",
@@ -12440,8 +12440,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -464
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -12453,15 +12453,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": 230,
-      "height": -464
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-080d1a687f5653642",
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 17414
+        "y": 17696
       },
       "data": {
         "label": "launch-wizard-21",
@@ -12488,8 +12488,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -464
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -12501,15 +12501,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": 230,
-      "height": -464
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-0719086ee15c2bd59",
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 17564
+        "y": 17864
       },
       "data": {
         "label": "ElasticMapReduce-master",
@@ -12536,8 +12536,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -464
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -12549,15 +12549,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": 230,
-      "height": -464
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-0488def5620f4b9e5",
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 17714
+        "y": 18032
       },
       "data": {
         "label": "launch-wizard-12",
@@ -12605,7 +12605,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 17864
+        "y": 18152
       },
       "data": {
         "label": "default",
@@ -12653,7 +12653,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 18014
+        "y": 18272
       },
       "data": {
         "label": "ElasticMapReduce-slave",
@@ -12701,7 +12701,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 18164
+        "y": 18392
       },
       "data": {
         "label": "launch-wizard-18",
@@ -12728,8 +12728,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -464
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -12741,15 +12741,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": 230,
-      "height": -464
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-0519f8817ee57c23d",
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 18314
+        "y": 18560
       },
       "data": {
         "label": "launch-wizard-6",
@@ -12776,8 +12776,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -464
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -12789,15 +12789,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": 230,
-      "height": -464
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-0c60d1e914d4e929e",
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 18464
+        "y": 18728
       },
       "data": {
         "label": "launch-wizard-22",
@@ -12824,8 +12824,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -464
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -12837,15 +12837,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": 230,
-      "height": -464
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-06bca6ec14d7c1c06",
       "type": "resourceNode",
       "position": {
         "x": 2410,
-        "y": 18614
+        "y": 18896
       },
       "data": {
         "label": "Turnserver_sg",
@@ -12893,7 +12893,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2860,
-        "y": 16630
+        "y": 16766
       },
       "data": {
         "label": "Nexus-UAT-rds-sg",
@@ -12941,7 +12941,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2860,
-        "y": 16780
+        "y": 16886
       },
       "data": {
         "label": "default",
@@ -12989,7 +12989,7 @@
       "type": "resourceNode",
       "position": {
         "x": 2860,
-        "y": 16930
+        "y": 17006
       },
       "data": {
         "label": "launch-wizard-5",
@@ -13016,8 +13016,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -230
+          "width": 180,
+          "height": 248
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -13029,15 +13029,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-07636c778ebc026ab"
       },
-      "width": 230,
-      "height": -230
+      "width": 180,
+      "height": 248
     },
     {
       "id": "sg-sg-04b42dab094c09c0d",
       "type": "resourceNode",
       "position": {
         "x": 2860,
-        "y": 17080
+        "y": 17274
       },
       "data": {
         "label": "launch-wizard-15",
@@ -13064,8 +13064,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -230
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -13077,15 +13077,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-07636c778ebc026ab"
       },
-      "width": 230,
-      "height": -230
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-093cfa3a759ef6422",
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 17030
+        "y": 17166
       },
       "data": {
         "label": "eksctl-html-pdf-conversion-1-cluster-ClusterSharedNodeSecurityGroup-27n5BrGjTakq",
@@ -13133,7 +13133,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 17180
+        "y": 17286
       },
       "data": {
         "label": "eks-cluster-sg-html-pdf-conversion-1-1578806249",
@@ -13160,8 +13160,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -430
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -13173,15 +13173,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0b203175fc017bf03"
       },
-      "width": 230,
-      "height": -430
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-0c1da1b640a7a5226",
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 17330
+        "y": 17454
       },
       "data": {
         "label": "default",
@@ -13229,7 +13229,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 17480
+        "y": 17574
       },
       "data": {
         "label": "k8s-elb-a6ea46ae204d349f29ed76d4c38c6a0d",
@@ -13277,7 +13277,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 17630
+        "y": 17694
       },
       "data": {
         "label": "eksctl-html-pdf-conversion-1-cluster-ControlPlaneSecurityGroup-d9THYlbsI8W8",
@@ -13325,7 +13325,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1960,
-        "y": 16130
+        "y": 16266
       },
       "data": {
         "label": "default",
@@ -13373,7 +13373,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1960,
-        "y": 16280
+        "y": 16386
       },
       "data": {
         "label": "launch-wizard-17",
@@ -13421,7 +13421,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1960,
-        "y": 16430
+        "y": 16506
       },
       "data": {
         "label": "launch-wizard-11",
@@ -13448,8 +13448,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": 70
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -13461,15 +13461,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-05f5252d25e5b83a3"
       },
-      "width": 230,
-      "height": 70
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-0cd950ac5e64678ee",
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 16630
+        "y": 16766
       },
       "data": {
         "label": "launch-wizard-2",
@@ -13517,7 +13517,7 @@
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 16780
+        "y": 16886
       },
       "data": {
         "label": "launch-wizard-13",
@@ -13544,8 +13544,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -230
+          "width": 180,
+          "height": 248
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -13557,15 +13557,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0396b67c9d7d3abe3"
       },
-      "width": 230,
-      "height": -230
+      "width": 180,
+      "height": 248
     },
     {
       "id": "sg-sg-02ea8e17f3dfd60d1",
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 16930
+        "y": 17154
       },
       "data": {
         "label": "launch-wizard-3",
@@ -13613,7 +13613,7 @@
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 17080
+        "y": 17274
       },
       "data": {
         "label": "ElasticMapReduce-master",
@@ -13661,7 +13661,7 @@
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 17230
+        "y": 17394
       },
       "data": {
         "label": "default",
@@ -13709,7 +13709,7 @@
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 17380
+        "y": 17514
       },
       "data": {
         "label": "launch-wizard-1",
@@ -13757,7 +13757,7 @@
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 17530
+        "y": 17634
       },
       "data": {
         "label": "launch-wizard-4",
@@ -13784,8 +13784,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -230
+          "width": 180,
+          "height": 248
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -13797,15 +13797,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0396b67c9d7d3abe3"
       },
-      "width": 230,
-      "height": -230
+      "width": 180,
+      "height": 248
     },
     {
       "id": "sg-sg-0409c59e0a7a792b2",
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 17680
+        "y": 17902
       },
       "data": {
         "label": "launch-wizard-10",
@@ -13853,7 +13853,7 @@
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 17830
+        "y": 18022
       },
       "data": {
         "label": "ElasticMapReduce-slave",
@@ -13901,7 +13901,7 @@
       "type": "resourceNode",
       "position": {
         "x": 610,
-        "y": 17980
+        "y": 18142
       },
       "data": {
         "label": "Atom-UAT-rds-sg",
@@ -13949,7 +13949,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1060,
-        "y": 16952
+        "y": 17088
       },
       "data": {
         "label": "eks-cluster-sg-html-pdf-conversion-1615048909",
@@ -13997,7 +13997,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1060,
-        "y": 17102
+        "y": 17208
       },
       "data": {
         "label": "default",
@@ -14045,7 +14045,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1060,
-        "y": 17252
+        "y": 17328
       },
       "data": {
         "label": "eksctl-html-pdf-conversion-cluster-ClusterSharedNodeSecurityGroup-igve9DIlzqlV",
@@ -14093,7 +14093,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1060,
-        "y": 17402
+        "y": 17448
       },
       "data": {
         "label": "k8s-elb-affda2edcf32c4a3dbfdab626010eb7d",
@@ -14141,7 +14141,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1060,
-        "y": 17552
+        "y": 17568
       },
       "data": {
         "label": "eksctl-html-pdf-conversion-cluster-ControlPlaneSecurityGroup-jqmDuzitfzJ3",
@@ -14189,7 +14189,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1510,
-        "y": 16230
+        "y": 16366
       },
       "data": {
         "label": "default",
@@ -14237,7 +14237,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1510,
-        "y": 16380
+        "y": 16486
       },
       "data": {
         "label": "launch-wizard-9",
@@ -14264,8 +14264,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -30
+          "width": 180,
+          "height": 148
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -14277,15 +14277,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0c40204d45db5ab27"
       },
-      "width": 230,
-      "height": -30
+      "width": 180,
+      "height": 148
     },
     {
       "id": "sg-sg-053764af1e2f07abc",
       "type": "resourceNode",
       "position": {
         "x": 1510,
-        "y": 16530
+        "y": 16654
       },
       "data": {
         "label": "launch-wizard-8",
