@@ -1,0 +1,227 @@
+╔═══════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                    AWS ARCHITECTURE - COMPLETE CONTAINMENT TREE                                   ║
+║                              (Parent → Children Relationships)                                    ║
+╚═══════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+🔲 = Container Node (can hold children)  |  ◉ = Leaf Node (no children)  |  ➜ = Points to child
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════
+
+📍 LEVEL 0: ROOT CONTAINER
+
+🔲 region-us-east-2
+   Position: (0, 0) | Size: 4715 × 865px | IsDefault: false | Owner: 720150001470
+   ├─ Contains: 4 VPCs (all positioned at Y=140)
+   └─ nestingDepth: 0
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════
+
+📍 LEVEL 1: VPC CONTAINERS (4 Total)
+
+├─ 🔲 vpc-vpc-06cc31a57a405feb8
+│  ├─ Label: blazeops-agent-staging-vpc
+│  ├─ Position: (100, 140) | Size: 915 × 625px
+│  ├─ CIDR: 10.0.0.0/16 | IsDefault: false
+│  ├─ nestingDepth: 1
+│  ├─ Owner: 720150001470
+│  │
+│  └─ Contains 8 Direct Children:
+│     ├─ 🔲 subnet-subnet-0da1a05dfc8b55dc3 [SUBNET]
+│     │  ├─ Position: (140, 310) | Size: 380 × 200px
+│     │  ├─ CIDR: 10.0.1.0/24 | AZ: us-east-2a
+│     │  ├─ nestingDepth: 2
+│     │  └─ Contains 1 Grandchild:
+│     │     └─ ◉ instance-i-0525e04aaef702279 [EC2 INSTANCE]
+│     │        ├─ Label: blazeops-agent-staging-backend-api
+│     │        ├─ Type: t3.small | State: running
+│     │        ├─ Position: (150, 340) | Size: 120 × 88px
+│     │        ├─ Private IP: 10.0.1.119 | Public IP: 3.142.252.53
+│     │        ├─ nestingDepth: 3
+│     │        └─ ImageId: ami-0e83be366243f524a
+│     │
+│     ├─ 🔲 subnet-subnet-09a9db2e951c22a88 [SUBNET]
+│     │  ├─ Position: (140, 310) | Size: 380 × 200px
+│     │  ├─ CIDR: 10.0.2.0/24 | AZ: us-east-2b
+│     │  ├─ nestingDepth: 2
+│     │  └─ Contains: Nothing (empty subnet)
+│     │
+│     ├─ ◉ igw-igw-01d5c14d9e2b4b9c8 [INTERNET GATEWAY]
+│     │  ├─ Label: blazeops-agent-staging-vpc
+│     │  ├─ Position: (140, 180) | Size: 120 × 88px
+│     │  ├─ nestingDepth: 2
+│     │  └─ Owner: 720150001470
+│     │
+│     ├─ ◉ rt-rtb-01acacde45952b958 [ROUTE TABLE]
+│     │  ├─ Label: blazeops-agent-staging-vpc
+│     │  ├─ Position: (140, 535) | Size: 120 × 88px
+│     │  ├─ nestingDepth: 2
+│     │  └─ Routes: 1 (10.0.0.0/16 → local)
+│     │
+│     ├─ ◉ rt-rtb-0f5539d37304dfe0a [ROUTE TABLE]
+│     │  ├─ Label: blazeops-agent-staging-vpc
+│     │  ├─ Position: (445, 535) | Size: 120 × 88px
+│     │  ├─ nestingDepth: 2
+│     │  └─ Routes: 2 (10.0.0.0/16 → local, 0.0.0.0/0 → igw)
+│     │
+│     ├─ ◉ sg-sg-0c7910417aebd89b9 [SECURITY GROUP]
+│     │  ├─ Name: blazeops-agent-staging-agent
+│     │  ├─ Position: (445, 615) | Size: 120 × 88px
+│     │  ├─ nestingDepth: 2
+│     │  └─ Rules: SSH(22), HTTP(80), Custom(8000)
+│     │
+│     └─ ◉ sg-sg-0600c5b0821b89013 [SECURITY GROUP]
+│        ├─ Name: default
+│        ├─ Position: (750, 615) | Size: 120 × 88px
+│        ├─ nestingDepth: 2
+│        └─ Rules: (default VPC rules)
+│
+│
+├─ 🔲 vpc-vpc-0010db00d5f9b6d24 [DEFAULT VPC]
+│  ├─ Label: vpc-0010db00d5f9b6d24
+│  ├─ Position: (1300, 140) | Size: 915 × 625px
+│  ├─ CIDR: 172.31.0.0/16 | IsDefault: TRUE
+│  ├─ nestingDepth: 1
+│  ├─ Owner: 720150001470
+│  │
+│  └─ Contains 6 Direct Children:
+│     ├─ 🔲 subnet-subnet-0d7e95372896d77e8 [SUBNET-2A]
+│     │  ├─ Position: (1340, 310) | Size: 380 × 200px
+│     │  ├─ CIDR: 172.31.0.0/20 | AZ: us-east-2a
+│     │  ├─ MapPublicIpOnLaunch: true
+│     │  ├─ nestingDepth: 2
+│     │  └─ Contains: Nothing (empty)
+│     │
+│     ├─ 🔲 subnet-subnet-0f74cb72353a2b237 [SUBNET-2B]
+│     │  ├─ Position: (1340, 310) | Size: 380 × 200px
+│     │  ├─ CIDR: 172.31.16.0/20 | AZ: us-east-2b
+│     │  ├─ MapPublicIpOnLaunch: true
+│     │  ├─ nestingDepth: 2
+│     │  └─ Contains: Nothing (empty)
+│     │
+│     ├─ 🔲 subnet-subnet-0caaa7cee2f392f8d [SUBNET-2C]
+│     │  ├─ Position: (1340, 310) | Size: 380 × 200px
+│     │  ├─ CIDR: 172.31.32.0/20 | AZ: us-east-2c
+│     │  ├─ MapPublicIpOnLaunch: true
+│     │  ├─ nestingDepth: 2
+│     │  └─ Contains: Nothing (empty)
+│     │
+│     ├─ ◉ igw-igw-0b3cd3490eb35a07c [INTERNET GATEWAY]
+│     │  ├─ Position: (1340, 180) | Size: 120 × 88px
+│     │  └─ nestingDepth: 2
+│     │
+│     ├─ ◉ rt-rtb-09467ba9741ae03be [ROUTE TABLE]
+│     │  ├─ Position: (1645, 535) | Size: 120 × 88px
+│     │  └─ nestingDepth: 2
+│     │
+│     └─ ◉ sg-sg-0f4187b316b3b1e8e [SECURITY GROUP]
+│        ├─ Name: default
+│        ├─ Position: (1950, 615) | Size: 120 × 88px
+│        └─ nestingDepth: 2
+│
+│
+├─ 🔲 vpc-vpc-0b71e8dcdd9a40ef8
+│  ├─ Label: blazeops-agent-staging-vpc
+│  ├─ Position: (2500, 140) | Size: 915 × 625px
+│  ├─ CIDR: 10.0.0.0/16 | IsDefault: false
+│  ├─ nestingDepth: 1
+│  ├─ Owner: 720150001470
+│  │
+│  └─ Contains 8 Direct Children:
+│     ├─ 🔲 subnet-subnet-0381aa2076a4bb590 [SUBNET-3A]
+│     │  ├─ Position: (2540, 310) | Size: 380 × 200px
+│     │  ├─ CIDR: 10.0.1.0/24 | AZ: us-east-2a
+│     │  ├─ nestingDepth: 2
+│     │  └─ Contains: Nothing (empty)
+│     │
+│     ├─ 🔲 subnet-subnet-03f6049180d037062 [SUBNET-3B]
+│     │  ├─ Position: (2540, 310) | Size: 380 × 200px
+│     │  ├─ CIDR: 10.0.2.0/24 | AZ: us-east-2b
+│     │  ├─ nestingDepth: 2
+│     │  └─ Contains: Nothing (empty)
+│     │
+│     ├─ ◉ igw-igw-0a13a84d2fd72a28d [INTERNET GATEWAY]
+│     │  ├─ Position: (2540, 180) | Size: 120 × 88px
+│     │  └─ nestingDepth: 2
+│     │
+│     ├─ ◉ rt-rtb-051150827cea9acd3 [ROUTE TABLE]
+│     │  ├─ Position: (3150, 535) | Size: 120 × 88px
+│     │  └─ nestingDepth: 2
+│     │
+│     ├─ ◉ rt-rtb-04c6172af2a46c76f [ROUTE TABLE]
+│     │  ├─ Position: (3150, 535) | Size: 120 × 88px
+│     │  └─ nestingDepth: 2
+│     │
+│     ├─ ◉ sg-sg-0297a5b61aa91b7b5 [SECURITY GROUP]
+│     │  ├─ Name: blazeops-agent-staging-agent
+│     │  ├─ Position: (2540, 615) | Size: 120 × 88px
+│     │  └─ nestingDepth: 2
+│     │
+│     └─ ◉ sg-sg-0390d310fdec957a1 [SECURITY GROUP]
+│        ├─ Name: default
+│        ├─ Position: (2540, 615) | Size: 120 × 88px
+│        └─ nestingDepth: 2
+│
+│
+└─ 🔲 vpc-vpc-0eb8eab8fc060589d
+   ├─ Label: blazeops-agent-staging-vpc
+   ├─ Position: (3700, 140) | Size: 915 × 625px
+   ├─ CIDR: 10.0.0.0/16 | IsDefault: false
+   ├─ nestingDepth: 1
+   ├─ Owner: 720150001470
+   │
+   └─ Contains 8 Direct Children:
+      ├─ 🔲 subnet-subnet-0cc22aef01a024a4a [SUBNET-4A]
+      │  ├─ Position: (3740, 310) | Size: 380 × 200px
+      │  ├─ CIDR: 10.0.2.0/24 | AZ: us-east-2b
+      │  ├─ nestingDepth: 2
+      │  └─ Contains: Nothing (empty)
+      │
+      ├─ 🔲 subnet-subnet-01c723a4e0cd68d4f [SUBNET-4B]
+      │  ├─ Position: (3740, 310) | Size: 380 × 200px
+      │  ├─ CIDR: 10.0.1.0/24 | AZ: us-east-2a
+      │  ├─ nestingDepth: 2
+      │  └─ Contains: Nothing (empty)
+      │
+      ├─ ◉ igw-igw-0eefc716b166cc3f6 [INTERNET GATEWAY]
+      │  ├─ Position: (3740, 180) | Size: 120 × 88px
+      │  └─ nestingDepth: 2
+      │
+      ├─ ◉ rt-rtb-02e5b59e28181011c [ROUTE TABLE]
+      │  ├─ Position: (3740, 535) | Size: 120 × 88px
+      │  └─ nestingDepth: 2
+      │
+      ├─ ◉ rt-rtb-066fcdc4ec8cdb638 [ROUTE TABLE]
+      │  ├─ Position: (3740, 535) | Size: 120 × 88px
+      │  └─ nestingDepth: 2
+      │
+      ├─ ◉ sg-sg-0aaefac882ac186cf [SECURITY GROUP]
+      │  ├─ Name: default
+      │  ├─ Position: (3740, 615) | Size: 120 × 88px
+      │  └─ nestingDepth: 2
+      │
+      └─ ◉ sg-sg-0318ab11496d98bb8 [SECURITY GROUP]
+         ├─ Name: blazeops-agent-staging-agent
+         ├─ Position: (4045, 615) | Size: 120 × 88px
+         └─ nestingDepth: 2
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════
+
+SUMMARY STATISTICS
+
+Total Nodes: 33
+├─ Containers: 14 (1 Region + 4 VPCs + 9 Subnets)
+└─ Leaf Nodes: 19 (1 Instance + 4 IGWs + 7 Route Tables + 7 Security Groups)
+
+Total Edges: 17
+├─ VPC → Subnet: 9
+├─ Route Table → Subnet: 6
+├─ Security Group → Instance: 1
+└─ Subnet → Instance: 1
+
+Total Nesting Levels: 4
+├─ Level 0: Region (1)
+├─ Level 1: VPCs (4)
+├─ Level 2: Subnets, IGWs, RTs, SGs (26)
+└─ Level 3: EC2 Instances (1 - only in Subnet-1A)
+
+═══════════════════════════════════════════════════════════════════════════════════════════════════

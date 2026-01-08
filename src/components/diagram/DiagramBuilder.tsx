@@ -5,7 +5,11 @@ import { DiagramCanvasWrapper } from './DiagramCanvas';
 import { Toolbar } from './Toolbar';
 import { useDiagramStore } from '@/store/diagramStore';
 import { ResourceType } from '@/types/diagram';
-import architectureDiagram from '@/lib/architecture-diagram-generated.json';
+import architectureDiagram from '@/lib/graph-upload/onload-diagram.json';
+// import architectureDiagram from '@/lib/graph-upload/full-diagram.json';
+// import architectureDiagram from '@/lib/graph-upload/enlume-full-diagram.json';
+// import architectureDiagram from '@/lib/graph-upload/bo-drone-full-diagram.json';
+// import architectureDiagram from '@/lib/present.json';
 // import { parseAWSDataJSON } from '@/lib/awsDataParser';
 // import onloadData from '@/lib/onload.json';
 

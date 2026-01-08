@@ -15,21 +15,36 @@
           "category": "networking",
           "icon": "vpc",
           "description": "AWS Region",
-          "color": "#3949AB"
+          "color": "#3949AB",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Region Name",
+              "type": "text"
+            },
+            {
+              "key": "region",
+              "label": "Region Code",
+              "type": "text"
+            }
+          ]
         },
+        "region": "us-east-2",
         "isContainer": true,
+        "width": 1890,
+        "height": 1054,
+        "size": {
+          "width": 1890,
+          "height": 1054
+        },
         "config": {
           "originalType": "AWS::EC2::Region",
           "region": "us-east-2"
         },
         "nestingDepth": 0
       },
-      "width": 5240,
-      "height": 768,
-      "size": {
-        "width": 5240,
-        "height": 768
-      }
+      "width": 1890,
+      "height": 1054
     },
     {
       "id": "vpc-vpc-06cc31a57a405feb8",
@@ -39,16 +54,43 @@
         "y": 140
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "vpc-06cc31a57a405feb8",
         "resourceType": {
           "id": "vpc",
           "name": "VPC",
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual private cloud",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "vpcName",
+              "label": "VPC Name",
+              "type": "text",
+              "placeholder": "my-vpc"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text",
+              "placeholder": "10.0.0.0/16"
+            },
+            {
+              "key": "dnsHostnamesEnabled",
+              "label": "DNS Hostnames",
+              "type": "boolean"
+            }
+          ]
         },
+        "vpcId": "vpc-06cc31a57a405feb8",
+        "cidrBlock": "10.0.0.0/16",
+        "state": "available",
+        "isDefault": false,
         "isContainer": true,
+        "size": {
+          "width": 400,
+          "height": 874
+        },
         "config": {
           "originalType": "AWS::EC2::VPC",
           "region": "us-east-2",
@@ -57,20 +99,16 @@
           "dhcpOptionsId": "dopt-006475053db1b9fc4"
         },
         "nestingDepth": 1,
-        "vpc_id": "vpc-06cc31a57a405feb8",
-        "cidr_block": "10.0.0.0/16",
-        "state": "available",
-        "is_default": false,
         "parentId": "region-us-east-2"
       },
-      "width": 1200,
-      "height": 588
+      "width": 400,
+      "height": 874
     },
     {
       "id": "vpc-vpc-0010db00d5f9b6d24",
       "type": "resourceNode",
       "position": {
-        "x": 1400,
+        "x": 550,
         "y": 140
       },
       "data": {
@@ -81,9 +119,36 @@
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual private cloud",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "vpcName",
+              "label": "VPC Name",
+              "type": "text",
+              "placeholder": "my-vpc"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text",
+              "placeholder": "10.0.0.0/16"
+            },
+            {
+              "key": "dnsHostnamesEnabled",
+              "label": "DNS Hostnames",
+              "type": "boolean"
+            }
+          ]
         },
+        "vpcId": "vpc-0010db00d5f9b6d24",
+        "cidrBlock": "172.31.0.0/16",
+        "state": "available",
+        "isDefault": true,
         "isContainer": true,
+        "size": {
+          "width": 400,
+          "height": 696
+        },
         "config": {
           "originalType": "AWS::EC2::VPC",
           "region": "us-east-2",
@@ -92,33 +157,56 @@
           "dhcpOptionsId": "dopt-006475053db1b9fc4"
         },
         "nestingDepth": 1,
-        "vpc_id": "vpc-0010db00d5f9b6d24",
-        "cidr_block": "172.31.0.0/16",
-        "state": "available",
-        "is_default": true,
         "parentId": "region-us-east-2"
       },
-      "width": 1200,
-      "height": 588
+      "width": 400,
+      "height": 696
     },
     {
       "id": "vpc-vpc-0b71e8dcdd9a40ef8",
       "type": "resourceNode",
       "position": {
-        "x": 2700,
+        "x": 1000,
         "y": 140
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "vpc-0b71e8dcdd9a40ef8",
         "resourceType": {
           "id": "vpc",
           "name": "VPC",
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual private cloud",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "vpcName",
+              "label": "VPC Name",
+              "type": "text",
+              "placeholder": "my-vpc"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text",
+              "placeholder": "10.0.0.0/16"
+            },
+            {
+              "key": "dnsHostnamesEnabled",
+              "label": "DNS Hostnames",
+              "type": "boolean"
+            }
+          ]
         },
+        "vpcId": "vpc-0b71e8dcdd9a40ef8",
+        "cidrBlock": "10.0.0.0/16",
+        "state": "available",
+        "isDefault": false,
         "isContainer": true,
+        "size": {
+          "width": 400,
+          "height": 796
+        },
         "config": {
           "originalType": "AWS::EC2::VPC",
           "region": "us-east-2",
@@ -127,33 +215,56 @@
           "dhcpOptionsId": "dopt-006475053db1b9fc4"
         },
         "nestingDepth": 1,
-        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
-        "cidr_block": "10.0.0.0/16",
-        "state": "available",
-        "is_default": false,
         "parentId": "region-us-east-2"
       },
-      "width": 1200,
-      "height": 588
+      "width": 400,
+      "height": 796
     },
     {
       "id": "vpc-vpc-0eb8eab8fc060589d",
       "type": "resourceNode",
       "position": {
-        "x": 4000,
+        "x": 1450,
         "y": 140
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "vpc-0eb8eab8fc060589d",
         "resourceType": {
           "id": "vpc",
           "name": "VPC",
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual private cloud",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "vpcName",
+              "label": "VPC Name",
+              "type": "text",
+              "placeholder": "my-vpc"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text",
+              "placeholder": "10.0.0.0/16"
+            },
+            {
+              "key": "dnsHostnamesEnabled",
+              "label": "DNS Hostnames",
+              "type": "boolean"
+            }
+          ]
         },
+        "vpcId": "vpc-0eb8eab8fc060589d",
+        "cidrBlock": "10.0.0.0/16",
+        "state": "available",
+        "isDefault": false,
         "isContainer": true,
+        "size": {
+          "width": 400,
+          "height": 796
+        },
         "config": {
           "originalType": "AWS::EC2::VPC",
           "region": "us-east-2",
@@ -162,21 +273,17 @@
           "dhcpOptionsId": "dopt-006475053db1b9fc4"
         },
         "nestingDepth": 1,
-        "vpc_id": "vpc-0eb8eab8fc060589d",
-        "cidr_block": "10.0.0.0/16",
-        "state": "available",
-        "is_default": false,
         "parentId": "region-us-east-2"
       },
-      "width": 1200,
-      "height": 588
+      "width": 400,
+      "height": 796
     },
     {
       "id": "subnet-subnet-0d7e95372896d77e8",
       "type": "resourceNode",
       "position": {
-        "x": 1440,
-        "y": 170
+        "x": 590,
+        "y": 260
       },
       "data": {
         "label": "subnet-0d7e95372896d77e8",
@@ -186,9 +293,30 @@
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual Subnet",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
         },
+        "subnetId": "subnet-0d7e95372896d77e8",
+        "vpcId": "vpc-0010db00d5f9b6d24",
+        "cidrBlock": "172.31.0.0/20",
+        "availabilityZone": "us-east-2a",
+        "state": "available",
         "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
         "config": {
           "originalType": "AWS::EC2::Subnet",
           "region": "us-east",
@@ -197,22 +325,17 @@
           "defaultForAz": true
         },
         "nestingDepth": 2,
-        "subnet_id": "subnet-0d7e95372896d77e8",
-        "vpc_id": "vpc-0010db00d5f9b6d24",
-        "cidr_block": "172.31.0.0/20",
-        "availability_zone": "us-east-2a",
-        "state": "available",
         "parentId": "vpc-vpc-0010db00d5f9b6d24"
       },
-      "width": 1120,
-      "height": 160
+      "width": 200,
+      "height": 80
     },
     {
       "id": "subnet-subnet-0f74cb72353a2b237",
       "type": "resourceNode",
       "position": {
-        "x": 1440,
-        "y": 340
+        "x": 590,
+        "y": 360
       },
       "data": {
         "label": "subnet-0f74cb72353a2b237",
@@ -222,9 +345,30 @@
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual Subnet",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
         },
+        "subnetId": "subnet-0f74cb72353a2b237",
+        "vpcId": "vpc-0010db00d5f9b6d24",
+        "cidrBlock": "172.31.16.0/20",
+        "availabilityZone": "us-east-2b",
+        "state": "available",
         "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
         "config": {
           "originalType": "AWS::EC2::Subnet",
           "region": "us-east",
@@ -233,22 +377,17 @@
           "defaultForAz": true
         },
         "nestingDepth": 2,
-        "subnet_id": "subnet-0f74cb72353a2b237",
-        "vpc_id": "vpc-0010db00d5f9b6d24",
-        "cidr_block": "172.31.16.0/20",
-        "availability_zone": "us-east-2b",
-        "state": "available",
         "parentId": "vpc-vpc-0010db00d5f9b6d24"
       },
-      "width": 1120,
-      "height": 160
+      "width": 200,
+      "height": 80
     },
     {
       "id": "subnet-subnet-0caaa7cee2f392f8d",
       "type": "resourceNode",
       "position": {
-        "x": 1440,
-        "y": 510
+        "x": 590,
+        "y": 460
       },
       "data": {
         "label": "subnet-0caaa7cee2f392f8d",
@@ -258,9 +397,30 @@
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual Subnet",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
         },
+        "subnetId": "subnet-0caaa7cee2f392f8d",
+        "vpcId": "vpc-0010db00d5f9b6d24",
+        "cidrBlock": "172.31.32.0/20",
+        "availabilityZone": "us-east-2c",
+        "state": "available",
         "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
         "config": {
           "originalType": "AWS::EC2::Subnet",
           "region": "us-east",
@@ -269,34 +429,50 @@
           "defaultForAz": true
         },
         "nestingDepth": 2,
-        "subnet_id": "subnet-0caaa7cee2f392f8d",
-        "vpc_id": "vpc-0010db00d5f9b6d24",
-        "cidr_block": "172.31.32.0/20",
-        "availability_zone": "us-east-2c",
-        "state": "available",
         "parentId": "vpc-vpc-0010db00d5f9b6d24"
       },
-      "width": 1120,
-      "height": 160
+      "width": 200,
+      "height": 80
     },
     {
       "id": "subnet-subnet-0cc22aef01a024a4a",
       "type": "resourceNode",
       "position": {
-        "x": 4040,
-        "y": 170
+        "x": 1490,
+        "y": 260
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "subnet-0cc22aef01a024a4a",
         "resourceType": {
           "id": "subnet",
           "name": "Subnet",
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual Subnet",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
         },
+        "subnetId": "subnet-0cc22aef01a024a4a",
+        "vpcId": "vpc-0eb8eab8fc060589d",
+        "cidrBlock": "10.0.2.0/24",
+        "availabilityZone": "us-east-2b",
+        "state": "available",
         "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
         "config": {
           "originalType": "AWS::EC2::Subnet",
           "region": "us-east",
@@ -305,34 +481,50 @@
           "defaultForAz": false
         },
         "nestingDepth": 2,
-        "subnet_id": "subnet-0cc22aef01a024a4a",
-        "vpc_id": "vpc-0eb8eab8fc060589d",
-        "cidr_block": "10.0.2.0/24",
-        "availability_zone": "us-east-2b",
-        "state": "available",
         "parentId": "vpc-vpc-0eb8eab8fc060589d"
       },
-      "width": 1120,
-      "height": 160
+      "width": 200,
+      "height": 80
     },
     {
       "id": "subnet-subnet-01c723a4e0cd68d4f",
       "type": "resourceNode",
       "position": {
-        "x": 4040,
-        "y": 340
+        "x": 1490,
+        "y": 360
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "subnet-01c723a4e0cd68d4f",
         "resourceType": {
           "id": "subnet",
           "name": "Subnet",
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual Subnet",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
         },
+        "subnetId": "subnet-01c723a4e0cd68d4f",
+        "vpcId": "vpc-0eb8eab8fc060589d",
+        "cidrBlock": "10.0.1.0/24",
+        "availabilityZone": "us-east-2a",
+        "state": "available",
         "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
         "config": {
           "originalType": "AWS::EC2::Subnet",
           "region": "us-east",
@@ -341,34 +533,50 @@
           "defaultForAz": false
         },
         "nestingDepth": 2,
-        "subnet_id": "subnet-01c723a4e0cd68d4f",
-        "vpc_id": "vpc-0eb8eab8fc060589d",
-        "cidr_block": "10.0.1.0/24",
-        "availability_zone": "us-east-2a",
-        "state": "available",
         "parentId": "vpc-vpc-0eb8eab8fc060589d"
       },
-      "width": 1120,
-      "height": 160
+      "width": 200,
+      "height": 80
     },
     {
       "id": "subnet-subnet-0da1a05dfc8b55dc3",
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 170
+        "y": 260
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "subnet-0da1a05dfc8b55dc3",
         "resourceType": {
           "id": "subnet",
           "name": "Subnet",
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual Subnet",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
         },
+        "subnetId": "subnet-0da1a05dfc8b55dc3",
+        "vpcId": "vpc-06cc31a57a405feb8",
+        "cidrBlock": "10.0.1.0/24",
+        "availabilityZone": "us-east-2a",
+        "state": "available",
         "isContainer": true,
+        "size": {
+          "width": 190,
+          "height": 158
+        },
         "config": {
           "originalType": "AWS::EC2::Subnet",
           "region": "us-east",
@@ -377,34 +585,50 @@
           "defaultForAz": false
         },
         "nestingDepth": 2,
-        "subnet_id": "subnet-0da1a05dfc8b55dc3",
-        "vpc_id": "vpc-06cc31a57a405feb8",
-        "cidr_block": "10.0.1.0/24",
-        "availability_zone": "us-east-2a",
-        "state": "available",
         "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
-      "width": 180,
-      "height": 123
+      "width": 190,
+      "height": 158
     },
     {
       "id": "subnet-subnet-09a9db2e951c22a88",
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 340
+        "y": 438
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "subnet-09a9db2e951c22a88",
         "resourceType": {
           "id": "subnet",
           "name": "Subnet",
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual Subnet",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
         },
+        "subnetId": "subnet-09a9db2e951c22a88",
+        "vpcId": "vpc-06cc31a57a405feb8",
+        "cidrBlock": "10.0.2.0/24",
+        "availabilityZone": "us-east-2b",
+        "state": "available",
         "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
         "config": {
           "originalType": "AWS::EC2::Subnet",
           "region": "us-east",
@@ -413,34 +637,50 @@
           "defaultForAz": false
         },
         "nestingDepth": 2,
-        "subnet_id": "subnet-09a9db2e951c22a88",
-        "vpc_id": "vpc-06cc31a57a405feb8",
-        "cidr_block": "10.0.2.0/24",
-        "availability_zone": "us-east-2b",
-        "state": "available",
         "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
-      "width": 1120,
-      "height": 160
+      "width": 200,
+      "height": 80
     },
     {
       "id": "subnet-subnet-0381aa2076a4bb590",
       "type": "resourceNode",
       "position": {
-        "x": 2740,
-        "y": 170
+        "x": 1040,
+        "y": 260
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "subnet-0381aa2076a4bb590",
         "resourceType": {
           "id": "subnet",
           "name": "Subnet",
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual Subnet",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
         },
+        "subnetId": "subnet-0381aa2076a4bb590",
+        "vpcId": "vpc-0b71e8dcdd9a40ef8",
+        "cidrBlock": "10.0.1.0/24",
+        "availabilityZone": "us-east-2a",
+        "state": "available",
         "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
         "config": {
           "originalType": "AWS::EC2::Subnet",
           "region": "us-east",
@@ -449,34 +689,50 @@
           "defaultForAz": false
         },
         "nestingDepth": 2,
-        "subnet_id": "subnet-0381aa2076a4bb590",
-        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
-        "cidr_block": "10.0.1.0/24",
-        "availability_zone": "us-east-2a",
-        "state": "available",
         "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
       },
-      "width": 1120,
-      "height": 160
+      "width": 200,
+      "height": 80
     },
     {
       "id": "subnet-subnet-03f6049180d037062",
       "type": "resourceNode",
       "position": {
-        "x": 2740,
-        "y": 340
+        "x": 1040,
+        "y": 360
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "subnet-03f6049180d037062",
         "resourceType": {
           "id": "subnet",
           "name": "Subnet",
           "category": "networking",
           "icon": "vpc",
           "description": "Virtual Subnet",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
         },
+        "subnetId": "subnet-03f6049180d037062",
+        "vpcId": "vpc-0b71e8dcdd9a40ef8",
+        "cidrBlock": "10.0.2.0/24",
+        "availabilityZone": "us-east-2b",
+        "state": "available",
         "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
         "config": {
           "originalType": "AWS::EC2::Subnet",
           "region": "us-east",
@@ -485,22 +741,17 @@
           "defaultForAz": false
         },
         "nestingDepth": 2,
-        "subnet_id": "subnet-03f6049180d037062",
-        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
-        "cidr_block": "10.0.2.0/24",
-        "availability_zone": "us-east-2b",
-        "state": "available",
         "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
       },
-      "width": 1120,
-      "height": 160
+      "width": 200,
+      "height": 80
     },
     {
       "id": "instance-i-0525e04aaef702279",
       "type": "resourceNode",
       "position": {
-        "x": 160,
-        "y": 165
+        "x": 170,
+        "y": 290
       },
       "data": {
         "label": "blazeops-agent-staging-backend-api",
@@ -510,9 +761,34 @@
           "category": "compute",
           "icon": "ec2",
           "description": "Virtual server in the cloud",
-          "color": "#FF9900"
+          "color": "#FF9900",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "instanceType",
+              "label": "Instance Type",
+              "type": "text"
+            }
+          ]
         },
+        "instanceId": "i-0525e04aaef702279",
+        "instanceType": "t3.small",
+        "state": "running",
+        "privateIpAddress": "10.0.1.119",
+        "publicIpAddress": "3.142.252.53",
+        "imageId": "ami-0e83be366243f524a",
+        "launchTime": "2025-11-20T13:09:30+00:00",
+        "subnetId": "subnet-0da1a05dfc8b55dc3",
+        "vpcId": "vpc-06cc31a57a405feb8",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::Instance",
           "region": "0da1a05dfc8b55dc3",
@@ -528,15 +804,6 @@
           "keyName": "blazeops-agent-staging-ec2-key"
         },
         "nestingDepth": 3,
-        "instance_id": "i-0525e04aaef702279",
-        "instance_type": "t3.small",
-        "state": "running",
-        "private_ip": "10.0.1.119",
-        "public_ip": "3.142.252.53",
-        "image_id": "ami-0e83be366243f524a",
-        "launch_time": "2025-11-20T13:09:30+00:00",
-        "subnet_id": "subnet-0da1a05dfc8b55dc3",
-        "vpc_id": "vpc-06cc31a57a405feb8",
         "parentId": "subnet-subnet-0da1a05dfc8b55dc3"
       },
       "width": 120,
@@ -546,27 +813,38 @@
       "id": "igw-igw-01d5c14d9e2b4b9c8",
       "type": "resourceNode",
       "position": {
-        "x": 640.0,
-        "y": 150
+        "x": 240.0,
+        "y": 160
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "igw-01d5c14d9e2b4b9c8",
         "resourceType": {
           "id": "internetgateway",
           "name": "Internet Gateway",
           "category": "networking",
           "icon": "elb",
           "description": "Internet Gateway",
-          "color": "#FF9900"
+          "color": "#FF9900",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Gateway ID",
+              "type": "text"
+            }
+          ]
         },
+        "gatewayId": "igw-01d5c14d9e2b4b9c8",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::InternetGateway",
           "region": "06cc31a57a405feb8",
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "gateway_id": "igw-01d5c14d9e2b4b9c8",
         "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
       "width": 120,
@@ -576,27 +854,38 @@
       "id": "igw-igw-0a13a84d2fd72a28d",
       "type": "resourceNode",
       "position": {
-        "x": 3240.0,
-        "y": 150
+        "x": 1140.0,
+        "y": 160
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "igw-0a13a84d2fd72a28d",
         "resourceType": {
           "id": "internetgateway",
           "name": "Internet Gateway",
           "category": "networking",
           "icon": "elb",
           "description": "Internet Gateway",
-          "color": "#FF9900"
+          "color": "#FF9900",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Gateway ID",
+              "type": "text"
+            }
+          ]
         },
+        "gatewayId": "igw-0a13a84d2fd72a28d",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::InternetGateway",
           "region": "0b71e8dcdd9a40ef8",
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "gateway_id": "igw-0a13a84d2fd72a28d",
         "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
       },
       "width": 120,
@@ -606,8 +895,8 @@
       "id": "igw-igw-0b3cd3490eb35a07c",
       "type": "resourceNode",
       "position": {
-        "x": 1940.0,
-        "y": 150
+        "x": 690.0,
+        "y": 160
       },
       "data": {
         "label": "igw-0b3cd3490eb35a07c",
@@ -617,16 +906,27 @@
           "category": "networking",
           "icon": "elb",
           "description": "Internet Gateway",
-          "color": "#FF9900"
+          "color": "#FF9900",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Gateway ID",
+              "type": "text"
+            }
+          ]
         },
+        "gatewayId": "igw-0b3cd3490eb35a07c",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::InternetGateway",
           "region": "0010db00d5f9b6d24",
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "gateway_id": "igw-0b3cd3490eb35a07c",
         "parentId": "vpc-vpc-0010db00d5f9b6d24"
       },
       "width": 120,
@@ -636,27 +936,38 @@
       "id": "igw-igw-0eefc716b166cc3f6",
       "type": "resourceNode",
       "position": {
-        "x": 4540.0,
-        "y": 150
+        "x": 1590.0,
+        "y": 160
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "igw-0eefc716b166cc3f6",
         "resourceType": {
           "id": "internetgateway",
           "name": "Internet Gateway",
           "category": "networking",
           "icon": "elb",
           "description": "Internet Gateway",
-          "color": "#FF9900"
+          "color": "#FF9900",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Gateway ID",
+              "type": "text"
+            }
+          ]
         },
+        "gatewayId": "igw-0eefc716b166cc3f6",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::InternetGateway",
           "region": "0eb8eab8fc060589d",
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "gateway_id": "igw-0eefc716b166cc3f6",
         "parentId": "vpc-vpc-0eb8eab8fc060589d"
       },
       "width": 120,
@@ -666,20 +977,33 @@
       "id": "rt-rtb-01acacde45952b958",
       "type": "resourceNode",
       "position": {
-        "x": 453.33333333333326,
-        "y": 600
+        "x": 140,
+        "y": 558
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "rtb-01acacde45952b958",
         "resourceType": {
           "id": "routetable",
           "name": "Route Table",
           "category": "networking",
           "icon": "vpc",
           "description": "Route Table",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
         },
+        "routeTableId": "rtb-01acacde45952b958",
+        "vpcId": "vpc-06cc31a57a405feb8",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::RouteTable",
           "region": "06cc31a57a405feb8",
@@ -687,16 +1011,6 @@
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "route_table_id": "rtb-01acacde45952b958",
-        "vpc_id": "vpc-06cc31a57a405feb8",
-        "routes": [
-          {
-            "DestinationCidrBlock": "10.0.0.0/16",
-            "GatewayId": "local",
-            "Origin": "CreateRouteTable",
-            "State": "active"
-          }
-        ],
         "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
       "width": 120,
@@ -706,20 +1020,33 @@
       "id": "rt-rtb-0f5539d37304dfe0a",
       "type": "resourceNode",
       "position": {
-        "x": 826.6666666666666,
-        "y": 600
+        "x": 140,
+        "y": 658
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "rtb-0f5539d37304dfe0a",
         "resourceType": {
           "id": "routetable",
           "name": "Route Table",
           "category": "networking",
           "icon": "vpc",
           "description": "Route Table",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
         },
+        "routeTableId": "rtb-0f5539d37304dfe0a",
+        "vpcId": "vpc-06cc31a57a405feb8",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::RouteTable",
           "region": "06cc31a57a405feb8",
@@ -727,22 +1054,6 @@
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "route_table_id": "rtb-0f5539d37304dfe0a",
-        "vpc_id": "vpc-06cc31a57a405feb8",
-        "routes": [
-          {
-            "DestinationCidrBlock": "10.0.0.0/16",
-            "GatewayId": "local",
-            "Origin": "CreateRouteTable",
-            "State": "active"
-          },
-          {
-            "DestinationCidrBlock": "0.0.0.0/0",
-            "GatewayId": "igw-01d5c14d9e2b4b9c8",
-            "Origin": "CreateRoute",
-            "State": "active"
-          }
-        ],
         "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
       "width": 120,
@@ -752,8 +1063,8 @@
       "id": "rt-rtb-09467ba9741ae03be",
       "type": "resourceNode",
       "position": {
-        "x": 1940.0,
-        "y": 600
+        "x": 590,
+        "y": 580
       },
       "data": {
         "label": "rtb-09467ba9741ae03be",
@@ -763,9 +1074,22 @@
           "category": "networking",
           "icon": "vpc",
           "description": "Route Table",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
         },
+        "routeTableId": "rtb-09467ba9741ae03be",
+        "vpcId": "vpc-0010db00d5f9b6d24",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::RouteTable",
           "region": "0010db00d5f9b6d24",
@@ -773,22 +1097,6 @@
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "route_table_id": "rtb-09467ba9741ae03be",
-        "vpc_id": "vpc-0010db00d5f9b6d24",
-        "routes": [
-          {
-            "DestinationCidrBlock": "172.31.0.0/16",
-            "GatewayId": "local",
-            "Origin": "CreateRouteTable",
-            "State": "active"
-          },
-          {
-            "DestinationCidrBlock": "0.0.0.0/0",
-            "GatewayId": "igw-0b3cd3490eb35a07c",
-            "Origin": "CreateRoute",
-            "State": "active"
-          }
-        ],
         "parentId": "vpc-vpc-0010db00d5f9b6d24"
       },
       "width": 120,
@@ -798,20 +1106,33 @@
       "id": "rt-rtb-051150827cea9acd3",
       "type": "resourceNode",
       "position": {
-        "x": 3053.3333333333335,
-        "y": 600
+        "x": 1040,
+        "y": 480
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "rtb-051150827cea9acd3",
         "resourceType": {
           "id": "routetable",
           "name": "Route Table",
           "category": "networking",
           "icon": "vpc",
           "description": "Route Table",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
         },
+        "routeTableId": "rtb-051150827cea9acd3",
+        "vpcId": "vpc-0b71e8dcdd9a40ef8",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::RouteTable",
           "region": "0b71e8dcdd9a40ef8",
@@ -819,22 +1140,6 @@
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "route_table_id": "rtb-051150827cea9acd3",
-        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
-        "routes": [
-          {
-            "DestinationCidrBlock": "10.0.0.0/16",
-            "GatewayId": "local",
-            "Origin": "CreateRouteTable",
-            "State": "active"
-          },
-          {
-            "DestinationCidrBlock": "0.0.0.0/0",
-            "GatewayId": "igw-0a13a84d2fd72a28d",
-            "Origin": "CreateRoute",
-            "State": "active"
-          }
-        ],
         "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
       },
       "width": 120,
@@ -844,20 +1149,33 @@
       "id": "rt-rtb-04c6172af2a46c76f",
       "type": "resourceNode",
       "position": {
-        "x": 3426.6666666666665,
-        "y": 600
+        "x": 1040,
+        "y": 580
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "rtb-04c6172af2a46c76f",
         "resourceType": {
           "id": "routetable",
           "name": "Route Table",
           "category": "networking",
           "icon": "vpc",
           "description": "Route Table",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
         },
+        "routeTableId": "rtb-04c6172af2a46c76f",
+        "vpcId": "vpc-0b71e8dcdd9a40ef8",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::RouteTable",
           "region": "0b71e8dcdd9a40ef8",
@@ -865,16 +1183,6 @@
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "route_table_id": "rtb-04c6172af2a46c76f",
-        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
-        "routes": [
-          {
-            "DestinationCidrBlock": "10.0.0.0/16",
-            "GatewayId": "local",
-            "Origin": "CreateRouteTable",
-            "State": "active"
-          }
-        ],
         "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
       },
       "width": 120,
@@ -884,20 +1192,33 @@
       "id": "rt-rtb-02e5b59e28181011c",
       "type": "resourceNode",
       "position": {
-        "x": 4353.333333333333,
-        "y": 600
+        "x": 1490,
+        "y": 480
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "rtb-02e5b59e28181011c",
         "resourceType": {
           "id": "routetable",
           "name": "Route Table",
           "category": "networking",
           "icon": "vpc",
           "description": "Route Table",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
         },
+        "routeTableId": "rtb-02e5b59e28181011c",
+        "vpcId": "vpc-0eb8eab8fc060589d",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::RouteTable",
           "region": "0eb8eab8fc060589d",
@@ -905,16 +1226,6 @@
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "route_table_id": "rtb-02e5b59e28181011c",
-        "vpc_id": "vpc-0eb8eab8fc060589d",
-        "routes": [
-          {
-            "DestinationCidrBlock": "10.0.0.0/16",
-            "GatewayId": "local",
-            "Origin": "CreateRouteTable",
-            "State": "active"
-          }
-        ],
         "parentId": "vpc-vpc-0eb8eab8fc060589d"
       },
       "width": 120,
@@ -924,20 +1235,33 @@
       "id": "rt-rtb-066fcdc4ec8cdb638",
       "type": "resourceNode",
       "position": {
-        "x": 4726.666666666667,
-        "y": 600
+        "x": 1490,
+        "y": 580
       },
       "data": {
-        "label": "blazeops-agent-staging-vpc",
+        "label": "rtb-066fcdc4ec8cdb638",
         "resourceType": {
           "id": "routetable",
           "name": "Route Table",
           "category": "networking",
           "icon": "vpc",
           "description": "Route Table",
-          "color": "#8C4FFF"
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
         },
+        "routeTableId": "rtb-066fcdc4ec8cdb638",
+        "vpcId": "vpc-0eb8eab8fc060589d",
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::RouteTable",
           "region": "0eb8eab8fc060589d",
@@ -945,22 +1269,6 @@
           "ownerId": "720150001470"
         },
         "nestingDepth": 2,
-        "route_table_id": "rtb-066fcdc4ec8cdb638",
-        "vpc_id": "vpc-0eb8eab8fc060589d",
-        "routes": [
-          {
-            "DestinationCidrBlock": "10.0.0.0/16",
-            "GatewayId": "local",
-            "Origin": "CreateRouteTable",
-            "State": "active"
-          },
-          {
-            "DestinationCidrBlock": "0.0.0.0/0",
-            "GatewayId": "igw-0eefc716b166cc3f6",
-            "Origin": "CreateRoute",
-            "State": "active"
-          }
-        ],
         "parentId": "vpc-vpc-0eb8eab8fc060589d"
       },
       "width": 120,
@@ -970,8 +1278,8 @@
       "id": "sg-sg-0297a5b61aa91b7b5",
       "type": "resourceNode",
       "position": {
-        "x": 3053.3333333333335,
-        "y": 600
+        "x": 1240,
+        "y": 708
       },
       "data": {
         "label": "blazeops-agent-staging-agent",
@@ -981,9 +1289,26 @@
           "category": "security",
           "icon": "waf",
           "description": "Security Group",
-          "color": "#DD344C"
+          "color": "#DD344C",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Security Group Name",
+              "type": "text"
+            }
+          ]
         },
+        "groupId": "sg-0297a5b61aa91b7b5",
+        "groupName": "blazeops-agent-staging-agent",
+        "vpcId": "vpc-0b71e8dcdd9a40ef8",
+        "description": "Allow SSH and HTTP access",
+        "inboundRules": 3,
+        "outboundRules": 1,
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
           "region": "0b71e8dcdd9a40ef8",
@@ -992,12 +1317,6 @@
           "groupName": "blazeops-agent-staging-agent"
         },
         "nestingDepth": 2,
-        "group_id": "sg-0297a5b61aa91b7b5",
-        "group_name": "blazeops-agent-staging-agent",
-        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
-        "description": "Allow SSH and HTTP access",
-        "inbound_rules": 3,
-        "outbound_rules": 1,
         "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
       },
       "width": 120,
@@ -1007,8 +1326,8 @@
       "id": "sg-sg-0390d310fdec957a1",
       "type": "resourceNode",
       "position": {
-        "x": 3426.6666666666665,
-        "y": 600
+        "x": 1240,
+        "y": 808
       },
       "data": {
         "label": "default",
@@ -1018,9 +1337,26 @@
           "category": "security",
           "icon": "waf",
           "description": "Security Group",
-          "color": "#DD344C"
+          "color": "#DD344C",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Security Group Name",
+              "type": "text"
+            }
+          ]
         },
+        "groupId": "sg-0390d310fdec957a1",
+        "groupName": "default",
+        "vpcId": "vpc-0b71e8dcdd9a40ef8",
+        "description": "default VPC security group",
+        "inboundRules": 0,
+        "outboundRules": 0,
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
           "region": "0b71e8dcdd9a40ef8",
@@ -1029,12 +1365,6 @@
           "groupName": "default"
         },
         "nestingDepth": 2,
-        "group_id": "sg-0390d310fdec957a1",
-        "group_name": "default",
-        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
-        "description": "default VPC security group",
-        "inbound_rules": 0,
-        "outbound_rules": 0,
         "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
       },
       "width": 120,
@@ -1044,8 +1374,8 @@
       "id": "sg-sg-0c7910417aebd89b9",
       "type": "resourceNode",
       "position": {
-        "x": 453.33333333333326,
-        "y": 600
+        "x": 340,
+        "y": 786
       },
       "data": {
         "label": "blazeops-agent-staging-agent",
@@ -1055,9 +1385,26 @@
           "category": "security",
           "icon": "waf",
           "description": "Security Group",
-          "color": "#DD344C"
+          "color": "#DD344C",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Security Group Name",
+              "type": "text"
+            }
+          ]
         },
+        "groupId": "sg-0c7910417aebd89b9",
+        "groupName": "blazeops-agent-staging-agent",
+        "vpcId": "vpc-06cc31a57a405feb8",
+        "description": "Allow SSH and HTTP access",
+        "inboundRules": 3,
+        "outboundRules": 1,
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
           "region": "06cc31a57a405feb8",
@@ -1066,12 +1413,6 @@
           "groupName": "blazeops-agent-staging-agent"
         },
         "nestingDepth": 2,
-        "group_id": "sg-0c7910417aebd89b9",
-        "group_name": "blazeops-agent-staging-agent",
-        "vpc_id": "vpc-06cc31a57a405feb8",
-        "description": "Allow SSH and HTTP access",
-        "inbound_rules": 3,
-        "outbound_rules": 1,
         "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
       "width": 120,
@@ -1081,8 +1422,8 @@
       "id": "sg-sg-0600c5b0821b89013",
       "type": "resourceNode",
       "position": {
-        "x": 826.6666666666666,
-        "y": 600
+        "x": 340,
+        "y": 886
       },
       "data": {
         "label": "default",
@@ -1092,9 +1433,26 @@
           "category": "security",
           "icon": "waf",
           "description": "Security Group",
-          "color": "#DD344C"
+          "color": "#DD344C",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Security Group Name",
+              "type": "text"
+            }
+          ]
         },
+        "groupId": "sg-0600c5b0821b89013",
+        "groupName": "default",
+        "vpcId": "vpc-06cc31a57a405feb8",
+        "description": "default VPC security group",
+        "inboundRules": 0,
+        "outboundRules": 0,
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
           "region": "06cc31a57a405feb8",
@@ -1103,12 +1461,6 @@
           "groupName": "default"
         },
         "nestingDepth": 2,
-        "group_id": "sg-0600c5b0821b89013",
-        "group_name": "default",
-        "vpc_id": "vpc-06cc31a57a405feb8",
-        "description": "default VPC security group",
-        "inbound_rules": 0,
-        "outbound_rules": 0,
         "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
       "width": 120,
@@ -1118,8 +1470,8 @@
       "id": "sg-sg-0f4187b316b3b1e8e",
       "type": "resourceNode",
       "position": {
-        "x": 1940.0,
-        "y": 600
+        "x": 790,
+        "y": 708
       },
       "data": {
         "label": "default",
@@ -1129,9 +1481,26 @@
           "category": "security",
           "icon": "waf",
           "description": "Security Group",
-          "color": "#DD344C"
+          "color": "#DD344C",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Security Group Name",
+              "type": "text"
+            }
+          ]
         },
+        "groupId": "sg-0f4187b316b3b1e8e",
+        "groupName": "default",
+        "vpcId": "vpc-0010db00d5f9b6d24",
+        "description": "default VPC security group",
+        "inboundRules": 1,
+        "outboundRules": 1,
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
           "region": "0010db00d5f9b6d24",
@@ -1140,12 +1509,6 @@
           "groupName": "default"
         },
         "nestingDepth": 2,
-        "group_id": "sg-0f4187b316b3b1e8e",
-        "group_name": "default",
-        "vpc_id": "vpc-0010db00d5f9b6d24",
-        "description": "default VPC security group",
-        "inbound_rules": 1,
-        "outbound_rules": 1,
         "parentId": "vpc-vpc-0010db00d5f9b6d24"
       },
       "width": 120,
@@ -1155,8 +1518,8 @@
       "id": "sg-sg-0aaefac882ac186cf",
       "type": "resourceNode",
       "position": {
-        "x": 4353.333333333333,
-        "y": 600
+        "x": 1690,
+        "y": 708
       },
       "data": {
         "label": "default",
@@ -1166,9 +1529,26 @@
           "category": "security",
           "icon": "waf",
           "description": "Security Group",
-          "color": "#DD344C"
+          "color": "#DD344C",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Security Group Name",
+              "type": "text"
+            }
+          ]
         },
+        "groupId": "sg-0aaefac882ac186cf",
+        "groupName": "default",
+        "vpcId": "vpc-0eb8eab8fc060589d",
+        "description": "default VPC security group",
+        "inboundRules": 0,
+        "outboundRules": 0,
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
           "region": "0eb8eab8fc060589d",
@@ -1177,12 +1557,6 @@
           "groupName": "default"
         },
         "nestingDepth": 2,
-        "group_id": "sg-0aaefac882ac186cf",
-        "group_name": "default",
-        "vpc_id": "vpc-0eb8eab8fc060589d",
-        "description": "default VPC security group",
-        "inbound_rules": 0,
-        "outbound_rules": 0,
         "parentId": "vpc-vpc-0eb8eab8fc060589d"
       },
       "width": 120,
@@ -1192,8 +1566,8 @@
       "id": "sg-sg-0318ab11496d98bb8",
       "type": "resourceNode",
       "position": {
-        "x": 4726.666666666667,
-        "y": 600
+        "x": 1690,
+        "y": 808
       },
       "data": {
         "label": "blazeops-agent-staging-agent",
@@ -1203,9 +1577,26 @@
           "category": "security",
           "icon": "waf",
           "description": "Security Group",
-          "color": "#DD344C"
+          "color": "#DD344C",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Security Group Name",
+              "type": "text"
+            }
+          ]
         },
+        "groupId": "sg-0318ab11496d98bb8",
+        "groupName": "blazeops-agent-staging-agent",
+        "vpcId": "vpc-0eb8eab8fc060589d",
+        "description": "Allow SSH and HTTP access",
+        "inboundRules": 3,
+        "outboundRules": 1,
         "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
           "region": "0eb8eab8fc060589d",
@@ -1214,12 +1605,6 @@
           "groupName": "blazeops-agent-staging-agent"
         },
         "nestingDepth": 2,
-        "group_id": "sg-0318ab11496d98bb8",
-        "group_name": "blazeops-agent-staging-agent",
-        "vpc_id": "vpc-0eb8eab8fc060589d",
-        "description": "Allow SSH and HTTP access",
-        "inbound_rules": 3,
-        "outbound_rules": 1,
         "parentId": "vpc-vpc-0eb8eab8fc060589d"
       },
       "width": 120,
