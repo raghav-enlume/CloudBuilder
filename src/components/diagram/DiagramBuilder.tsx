@@ -1,12 +1,49 @@
 import { DndContext, DragEndEvent, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { ResourceSidebar } from './ResourceSidebar';
 import { DiagramCanvasWrapper } from './DiagramCanvas';
 import { Toolbar } from './Toolbar';
 import { useDiagramStore } from '@/store/diagramStore';
 import { ResourceType } from '@/types/diagram';
+import { parseAWSDataJSON } from '@/lib/awsDataParser';
+import onloadData from '@/lib/onload.json';
 
 const DiagramBuilderContent = ({ onDragEnd }: { onDragEnd: (event: DragEndEvent) => void }) => {
+  const { loadDiagram, setLoadedSecurityGroups, nodes } = useDiagramStore();
+
+  // Load onload data on component mount
+  useEffect(() => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { nodes: parsedNodes, edges } = parseAWSDataJSON(onloadData as any);
+      loadDiagram(parsedNodes, edges);
+      console.log('Loaded onload.json data:', { nodes: parsedNodes.length, edges: edges.length });
+      
+      // Extract and store security groups from the loaded data
+      const securityGroups = Object.values(onloadData as Record<string, Record<string, unknown>>).flatMap(
+        (region: Record<string, unknown>) => (region?.security_groups as Record<string, unknown>[]) || []
+      );
+      setLoadedSecurityGroups(securityGroups);
+      
+      // Trigger fitView after a longer delay to ensure DOM is ready and find first region
+      setTimeout(() => {
+        // Find the first region node
+        const firstRegionNode = parsedNodes.find((node) => node.data?.resourceType?.id === 'region');
+        if (firstRegionNode) {
+          window.dispatchEvent(new CustomEvent('fitViewOnLoad', { 
+            detail: { nodeId: firstRegionNode.id } 
+          }));
+          console.log('fitViewOnLoad event dispatched for region:', firstRegionNode.id);
+        } else {
+          window.dispatchEvent(new CustomEvent('fitViewOnLoad'));
+          console.log('fitViewOnLoad event dispatched');
+        }
+      }, 500);
+    } catch (error) {
+      console.error('Failed to load onload.json:', error);
+    }
+  }, [loadDiagram, setLoadedSecurityGroups]);
+
   return (
     <div className="flex h-screen bg-canvas overflow-hidden">
       <ResourceSidebar />

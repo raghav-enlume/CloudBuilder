@@ -1,0 +1,1305 @@
+{
+    "us-east-2": {
+        "region": "us-east-2",
+        "vpcs": [
+            {
+                "OwnerId": "720150001470",
+                "InstanceTenancy": "default",
+                "CidrBlockAssociationSet": [
+                    {
+                        "AssociationId": "vpc-cidr-assoc-0195dfcbb9b87f488",
+                        "CidrBlock": "10.0.0.0/16",
+                        "CidrBlockState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "IsDefault": false,
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    }
+                ],
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "VpcId": "vpc-06cc31a57a405feb8",
+                "State": "available",
+                "CidrBlock": "10.0.0.0/16",
+                "DhcpOptionsId": "dopt-006475053db1b9fc4"
+            },
+            {
+                "OwnerId": "720150001470",
+                "InstanceTenancy": "default",
+                "CidrBlockAssociationSet": [
+                    {
+                        "AssociationId": "vpc-cidr-assoc-042b6fb5abd9652ff",
+                        "CidrBlock": "172.31.0.0/16",
+                        "CidrBlockState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "IsDefault": true,
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "VpcId": "vpc-0010db00d5f9b6d24",
+                "State": "available",
+                "CidrBlock": "172.31.0.0/16",
+                "DhcpOptionsId": "dopt-006475053db1b9fc4"
+            },
+            {
+                "OwnerId": "720150001470",
+                "InstanceTenancy": "default",
+                "CidrBlockAssociationSet": [
+                    {
+                        "AssociationId": "vpc-cidr-assoc-0ae9d691db4b329b2",
+                        "CidrBlock": "10.0.0.0/16",
+                        "CidrBlockState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "IsDefault": false,
+                "Tags": [
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    }
+                ],
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "VpcId": "vpc-0b71e8dcdd9a40ef8",
+                "State": "available",
+                "CidrBlock": "10.0.0.0/16",
+                "DhcpOptionsId": "dopt-006475053db1b9fc4"
+            },
+            {
+                "OwnerId": "720150001470",
+                "InstanceTenancy": "default",
+                "CidrBlockAssociationSet": [
+                    {
+                        "AssociationId": "vpc-cidr-assoc-07fb80cadb7e18e39",
+                        "CidrBlock": "10.0.0.0/16",
+                        "CidrBlockState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "IsDefault": false,
+                "Tags": [
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    }
+                ],
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "VpcId": "vpc-0eb8eab8fc060589d",
+                "State": "available",
+                "CidrBlock": "10.0.0.0/16",
+                "DhcpOptionsId": "dopt-006475053db1b9fc4"
+            }
+        ],
+        "subnets": [
+            {
+                "AvailabilityZoneId": "use2-az1",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "720150001470",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "SubnetArn": "arn:aws:ec2:us-east-2:720150001470:subnet/subnet-0d7e95372896d77e8",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-0d7e95372896d77e8",
+                "State": "available",
+                "VpcId": "vpc-0010db00d5f9b6d24",
+                "CidrBlock": "172.31.0.0/20",
+                "AvailableIpAddressCount": 4091,
+                "AvailabilityZone": "us-east-2a",
+                "DefaultForAz": true,
+                "MapPublicIpOnLaunch": true
+            },
+            {
+                "AvailabilityZoneId": "use2-az2",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "720150001470",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "Tags": [
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    }
+                ],
+                "SubnetArn": "arn:aws:ec2:us-east-2:720150001470:subnet/subnet-0cc22aef01a024a4a",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-0cc22aef01a024a4a",
+                "State": "available",
+                "VpcId": "vpc-0eb8eab8fc060589d",
+                "CidrBlock": "10.0.2.0/24",
+                "AvailableIpAddressCount": 251,
+                "AvailabilityZone": "us-east-2b",
+                "DefaultForAz": false,
+                "MapPublicIpOnLaunch": false
+            },
+            {
+                "AvailabilityZoneId": "use2-az1",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "720150001470",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "Tags": [
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    }
+                ],
+                "SubnetArn": "arn:aws:ec2:us-east-2:720150001470:subnet/subnet-0da1a05dfc8b55dc3",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-0da1a05dfc8b55dc3",
+                "State": "available",
+                "VpcId": "vpc-06cc31a57a405feb8",
+                "CidrBlock": "10.0.1.0/24",
+                "AvailableIpAddressCount": 250,
+                "AvailabilityZone": "us-east-2a",
+                "DefaultForAz": false,
+                "MapPublicIpOnLaunch": false
+            },
+            {
+                "AvailabilityZoneId": "use2-az2",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "720150001470",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "SubnetArn": "arn:aws:ec2:us-east-2:720150001470:subnet/subnet-0f74cb72353a2b237",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-0f74cb72353a2b237",
+                "State": "available",
+                "VpcId": "vpc-0010db00d5f9b6d24",
+                "CidrBlock": "172.31.16.0/20",
+                "AvailableIpAddressCount": 4091,
+                "AvailabilityZone": "us-east-2b",
+                "DefaultForAz": true,
+                "MapPublicIpOnLaunch": true
+            },
+            {
+                "AvailabilityZoneId": "use2-az1",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "720150001470",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "Tags": [
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    }
+                ],
+                "SubnetArn": "arn:aws:ec2:us-east-2:720150001470:subnet/subnet-01c723a4e0cd68d4f",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-01c723a4e0cd68d4f",
+                "State": "available",
+                "VpcId": "vpc-0eb8eab8fc060589d",
+                "CidrBlock": "10.0.1.0/24",
+                "AvailableIpAddressCount": 251,
+                "AvailabilityZone": "us-east-2a",
+                "DefaultForAz": false,
+                "MapPublicIpOnLaunch": false
+            },
+            {
+                "AvailabilityZoneId": "use2-az3",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "720150001470",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "SubnetArn": "arn:aws:ec2:us-east-2:720150001470:subnet/subnet-0caaa7cee2f392f8d",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-0caaa7cee2f392f8d",
+                "State": "available",
+                "VpcId": "vpc-0010db00d5f9b6d24",
+                "CidrBlock": "172.31.32.0/20",
+                "AvailableIpAddressCount": 4091,
+                "AvailabilityZone": "us-east-2c",
+                "DefaultForAz": true,
+                "MapPublicIpOnLaunch": true
+            },
+            {
+                "AvailabilityZoneId": "use2-az1",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "720150001470",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    }
+                ],
+                "SubnetArn": "arn:aws:ec2:us-east-2:720150001470:subnet/subnet-0381aa2076a4bb590",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-0381aa2076a4bb590",
+                "State": "available",
+                "VpcId": "vpc-0b71e8dcdd9a40ef8",
+                "CidrBlock": "10.0.1.0/24",
+                "AvailableIpAddressCount": 251,
+                "AvailabilityZone": "us-east-2a",
+                "DefaultForAz": false,
+                "MapPublicIpOnLaunch": false
+            },
+            {
+                "AvailabilityZoneId": "use2-az2",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "720150001470",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "Tags": [
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    }
+                ],
+                "SubnetArn": "arn:aws:ec2:us-east-2:720150001470:subnet/subnet-03f6049180d037062",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-03f6049180d037062",
+                "State": "available",
+                "VpcId": "vpc-0b71e8dcdd9a40ef8",
+                "CidrBlock": "10.0.2.0/24",
+                "AvailableIpAddressCount": 251,
+                "AvailabilityZone": "us-east-2b",
+                "DefaultForAz": false,
+                "MapPublicIpOnLaunch": false
+            },
+            {
+                "AvailabilityZoneId": "use2-az2",
+                "MapCustomerOwnedIpOnLaunch": false,
+                "OwnerId": "720150001470",
+                "AssignIpv6AddressOnCreation": false,
+                "Ipv6CidrBlockAssociationSet": [],
+                "Tags": [
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    }
+                ],
+                "SubnetArn": "arn:aws:ec2:us-east-2:720150001470:subnet/subnet-09a9db2e951c22a88",
+                "EnableDns64": false,
+                "Ipv6Native": false,
+                "PrivateDnsNameOptionsOnLaunch": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "BlockPublicAccessStates": {
+                    "InternetGatewayBlockMode": "off"
+                },
+                "SubnetId": "subnet-09a9db2e951c22a88",
+                "State": "available",
+                "VpcId": "vpc-06cc31a57a405feb8",
+                "CidrBlock": "10.0.2.0/24",
+                "AvailableIpAddressCount": 251,
+                "AvailabilityZone": "us-east-2b",
+                "DefaultForAz": false,
+                "MapPublicIpOnLaunch": false
+            }
+        ],
+        "instances": [
+            {
+                "Architecture": "x86_64",
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sda1",
+                        "Ebs": {
+                            "AttachTime": "2025-11-20T13:09:31+00:00",
+                            "DeleteOnTermination": true,
+                            "Status": "attached",
+                            "VolumeId": "vol-03f1ae823195e081f"
+                        }
+                    }
+                ],
+                "ClientToken": "terraform-20251120130929801000000006",
+                "EbsOptimized": false,
+                "EnaSupport": true,
+                "Hypervisor": "xen",
+                "IamInstanceProfile": {
+                    "Arn": "arn:aws:iam::720150001470:instance-profile/ec2-inline-policy-instance-profile",
+                    "Id": "AIPA2PLCI647IQ4ERMC36"
+                },
+                "NetworkInterfaces": [
+                    {
+                        "Association": {
+                            "IpOwnerId": "amazon",
+                            "PublicDnsName": "ec2-3-142-252-53.us-east-2.compute.amazonaws.com",
+                            "PublicIp": "3.142.252.53"
+                        },
+                        "Attachment": {
+                            "AttachTime": "2025-11-20T13:09:30+00:00",
+                            "AttachmentId": "eni-attach-09d5f3d7c62ecbf71",
+                            "DeleteOnTermination": true,
+                            "DeviceIndex": 0,
+                            "Status": "attached",
+                            "NetworkCardIndex": 0
+                        },
+                        "Description": "",
+                        "Groups": [
+                            {
+                                "GroupId": "sg-0c7910417aebd89b9",
+                                "GroupName": "blazeops-agent-staging-agent"
+                            }
+                        ],
+                        "Ipv6Addresses": [],
+                        "MacAddress": "02:be:49:73:c6:5d",
+                        "NetworkInterfaceId": "eni-03c5d2b3b89eba431",
+                        "OwnerId": "720150001470",
+                        "PrivateDnsName": "ip-10-0-1-119.us-east-2.compute.internal",
+                        "PrivateIpAddress": "10.0.1.119",
+                        "PrivateIpAddresses": [
+                            {
+                                "Association": {
+                                    "IpOwnerId": "amazon",
+                                    "PublicDnsName": "ec2-3-142-252-53.us-east-2.compute.amazonaws.com",
+                                    "PublicIp": "3.142.252.53"
+                                },
+                                "Primary": true,
+                                "PrivateDnsName": "ip-10-0-1-119.us-east-2.compute.internal",
+                                "PrivateIpAddress": "10.0.1.119"
+                            }
+                        ],
+                        "SourceDestCheck": true,
+                        "Status": "in-use",
+                        "SubnetId": "subnet-0da1a05dfc8b55dc3",
+                        "VpcId": "vpc-06cc31a57a405feb8",
+                        "InterfaceType": "interface",
+                        "Operator": {
+                            "Managed": false
+                        }
+                    }
+                ],
+                "RootDeviceName": "/dev/sda1",
+                "RootDeviceType": "ebs",
+                "SecurityGroups": [
+                    {
+                        "GroupId": "sg-0c7910417aebd89b9",
+                        "GroupName": "blazeops-agent-staging-agent"
+                    }
+                ],
+                "SourceDestCheck": true,
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-backend-api"
+                    }
+                ],
+                "VirtualizationType": "hvm",
+                "CpuOptions": {
+                    "CoreCount": 1,
+                    "ThreadsPerCore": 2
+                },
+                "CapacityReservationSpecification": {
+                    "CapacityReservationPreference": "open"
+                },
+                "HibernationOptions": {
+                    "Configured": false
+                },
+                "MetadataOptions": {
+                    "State": "applied",
+                    "HttpTokens": "optional",
+                    "HttpPutResponseHopLimit": 1,
+                    "HttpEndpoint": "enabled",
+                    "HttpProtocolIpv6": "disabled",
+                    "InstanceMetadataTags": "disabled"
+                },
+                "EnclaveOptions": {
+                    "Enabled": false
+                },
+                "PlatformDetails": "Linux/UNIX",
+                "UsageOperation": "RunInstances",
+                "UsageOperationUpdateTime": "2025-11-20T13:09:30+00:00",
+                "PrivateDnsNameOptions": {
+                    "HostnameType": "ip-name",
+                    "EnableResourceNameDnsARecord": false,
+                    "EnableResourceNameDnsAAAARecord": false
+                },
+                "MaintenanceOptions": {
+                    "AutoRecovery": "default",
+                    "RebootMigration": "default"
+                },
+                "CurrentInstanceBootMode": "legacy-bios",
+                "NetworkPerformanceOptions": {
+                    "BandwidthWeighting": "default"
+                },
+                "Operator": {
+                    "Managed": false
+                },
+                "InstanceId": "i-0525e04aaef702279",
+                "ImageId": "ami-0e83be366243f524a",
+                "State": {
+                    "Code": 16,
+                    "Name": "running"
+                },
+                "PrivateDnsName": "ip-10-0-1-119.us-east-2.compute.internal",
+                "PublicDnsName": "ec2-3-142-252-53.us-east-2.compute.amazonaws.com",
+                "StateTransitionReason": "",
+                "KeyName": "blazeops-agent-staging-ec2-key",
+                "AmiLaunchIndex": 0,
+                "ProductCodes": [],
+                "InstanceType": "t3.small",
+                "LaunchTime": "2025-11-20T13:09:30+00:00",
+                "Placement": {
+                    "AvailabilityZoneId": "use2-az1",
+                    "GroupName": "",
+                    "Tenancy": "default",
+                    "AvailabilityZone": "us-east-2a"
+                },
+                "Monitoring": {
+                    "State": "disabled"
+                },
+                "SubnetId": "subnet-0da1a05dfc8b55dc3",
+                "VpcId": "vpc-06cc31a57a405feb8",
+                "PrivateIpAddress": "10.0.1.119",
+                "PublicIpAddress": "3.142.252.53"
+            }
+        ],
+        "route_tables": [
+            {
+                "Associations": [
+                    {
+                        "Main": true,
+                        "RouteTableAssociationId": "rtbassoc-00806db328fd0300c",
+                        "RouteTableId": "rtb-01acacde45952b958",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "PropagatingVgws": [],
+                "RouteTableId": "rtb-01acacde45952b958",
+                "Routes": [
+                    {
+                        "DestinationCidrBlock": "10.0.0.0/16",
+                        "GatewayId": "local",
+                        "Origin": "CreateRouteTable",
+                        "State": "active"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    }
+                ],
+                "VpcId": "vpc-06cc31a57a405feb8",
+                "OwnerId": "720150001470"
+            },
+            {
+                "Associations": [
+                    {
+                        "Main": true,
+                        "RouteTableAssociationId": "rtbassoc-057256a0547329ec9",
+                        "RouteTableId": "rtb-09467ba9741ae03be",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "PropagatingVgws": [],
+                "RouteTableId": "rtb-09467ba9741ae03be",
+                "Routes": [
+                    {
+                        "DestinationCidrBlock": "172.31.0.0/16",
+                        "GatewayId": "local",
+                        "Origin": "CreateRouteTable",
+                        "State": "active"
+                    },
+                    {
+                        "DestinationCidrBlock": "0.0.0.0/0",
+                        "GatewayId": "igw-0b3cd3490eb35a07c",
+                        "Origin": "CreateRoute",
+                        "State": "active"
+                    }
+                ],
+                "Tags": [],
+                "VpcId": "vpc-0010db00d5f9b6d24",
+                "OwnerId": "720150001470"
+            },
+            {
+                "Associations": [
+                    {
+                        "Main": false,
+                        "RouteTableAssociationId": "rtbassoc-0572a164c69b41475",
+                        "RouteTableId": "rtb-051150827cea9acd3",
+                        "SubnetId": "subnet-03f6049180d037062",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    },
+                    {
+                        "Main": false,
+                        "RouteTableAssociationId": "rtbassoc-0bb84448a0973d431",
+                        "RouteTableId": "rtb-051150827cea9acd3",
+                        "SubnetId": "subnet-0381aa2076a4bb590",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "PropagatingVgws": [],
+                "RouteTableId": "rtb-051150827cea9acd3",
+                "Routes": [
+                    {
+                        "DestinationCidrBlock": "10.0.0.0/16",
+                        "GatewayId": "local",
+                        "Origin": "CreateRouteTable",
+                        "State": "active"
+                    },
+                    {
+                        "DestinationCidrBlock": "0.0.0.0/0",
+                        "GatewayId": "igw-0a13a84d2fd72a28d",
+                        "Origin": "CreateRoute",
+                        "State": "active"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    }
+                ],
+                "VpcId": "vpc-0b71e8dcdd9a40ef8",
+                "OwnerId": "720150001470"
+            },
+            {
+                "Associations": [
+                    {
+                        "Main": true,
+                        "RouteTableAssociationId": "rtbassoc-0c73248175ef7be9f",
+                        "RouteTableId": "rtb-02e5b59e28181011c",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "PropagatingVgws": [],
+                "RouteTableId": "rtb-02e5b59e28181011c",
+                "Routes": [
+                    {
+                        "DestinationCidrBlock": "10.0.0.0/16",
+                        "GatewayId": "local",
+                        "Origin": "CreateRouteTable",
+                        "State": "active"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    }
+                ],
+                "VpcId": "vpc-0eb8eab8fc060589d",
+                "OwnerId": "720150001470"
+            },
+            {
+                "Associations": [
+                    {
+                        "Main": false,
+                        "RouteTableAssociationId": "rtbassoc-0bffdb66bfb839160",
+                        "RouteTableId": "rtb-0f5539d37304dfe0a",
+                        "SubnetId": "subnet-09a9db2e951c22a88",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    },
+                    {
+                        "Main": false,
+                        "RouteTableAssociationId": "rtbassoc-0034d2c5eb1bb850c",
+                        "RouteTableId": "rtb-0f5539d37304dfe0a",
+                        "SubnetId": "subnet-0da1a05dfc8b55dc3",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "PropagatingVgws": [],
+                "RouteTableId": "rtb-0f5539d37304dfe0a",
+                "Routes": [
+                    {
+                        "DestinationCidrBlock": "10.0.0.0/16",
+                        "GatewayId": "local",
+                        "Origin": "CreateRouteTable",
+                        "State": "active"
+                    },
+                    {
+                        "DestinationCidrBlock": "0.0.0.0/0",
+                        "GatewayId": "igw-01d5c14d9e2b4b9c8",
+                        "Origin": "CreateRoute",
+                        "State": "active"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    }
+                ],
+                "VpcId": "vpc-06cc31a57a405feb8",
+                "OwnerId": "720150001470"
+            },
+            {
+                "Associations": [
+                    {
+                        "Main": true,
+                        "RouteTableAssociationId": "rtbassoc-077a51584e178c465",
+                        "RouteTableId": "rtb-04c6172af2a46c76f",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "PropagatingVgws": [],
+                "RouteTableId": "rtb-04c6172af2a46c76f",
+                "Routes": [
+                    {
+                        "DestinationCidrBlock": "10.0.0.0/16",
+                        "GatewayId": "local",
+                        "Origin": "CreateRouteTable",
+                        "State": "active"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    }
+                ],
+                "VpcId": "vpc-0b71e8dcdd9a40ef8",
+                "OwnerId": "720150001470"
+            },
+            {
+                "Associations": [
+                    {
+                        "Main": false,
+                        "RouteTableAssociationId": "rtbassoc-01d3633e1cd15390d",
+                        "RouteTableId": "rtb-066fcdc4ec8cdb638",
+                        "SubnetId": "subnet-0cc22aef01a024a4a",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    },
+                    {
+                        "Main": false,
+                        "RouteTableAssociationId": "rtbassoc-0a7ae2ba550faca5c",
+                        "RouteTableId": "rtb-066fcdc4ec8cdb638",
+                        "SubnetId": "subnet-01c723a4e0cd68d4f",
+                        "AssociationState": {
+                            "State": "associated"
+                        }
+                    }
+                ],
+                "PropagatingVgws": [],
+                "RouteTableId": "rtb-066fcdc4ec8cdb638",
+                "Routes": [
+                    {
+                        "DestinationCidrBlock": "10.0.0.0/16",
+                        "GatewayId": "local",
+                        "Origin": "CreateRouteTable",
+                        "State": "active"
+                    },
+                    {
+                        "DestinationCidrBlock": "0.0.0.0/0",
+                        "GatewayId": "igw-0eefc716b166cc3f6",
+                        "Origin": "CreateRoute",
+                        "State": "active"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    }
+                ],
+                "VpcId": "vpc-0eb8eab8fc060589d",
+                "OwnerId": "720150001470"
+            }
+        ],
+        "igws": [
+            {
+                "Attachments": [
+                    {
+                        "State": "available",
+                        "VpcId": "vpc-06cc31a57a405feb8"
+                    }
+                ],
+                "InternetGatewayId": "igw-01d5c14d9e2b4b9c8",
+                "OwnerId": "720150001470",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    }
+                ]
+            },
+            {
+                "Attachments": [
+                    {
+                        "State": "available",
+                        "VpcId": "vpc-0b71e8dcdd9a40ef8"
+                    }
+                ],
+                "InternetGatewayId": "igw-0a13a84d2fd72a28d",
+                "OwnerId": "720150001470",
+                "Tags": [
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    }
+                ]
+            },
+            {
+                "Attachments": [
+                    {
+                        "State": "available",
+                        "VpcId": "vpc-0010db00d5f9b6d24"
+                    }
+                ],
+                "InternetGatewayId": "igw-0b3cd3490eb35a07c",
+                "OwnerId": "720150001470",
+                "Tags": []
+            },
+            {
+                "Attachments": [
+                    {
+                        "State": "available",
+                        "VpcId": "vpc-0eb8eab8fc060589d"
+                    }
+                ],
+                "InternetGatewayId": "igw-0eefc716b166cc3f6",
+                "OwnerId": "720150001470",
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    }
+                ]
+            }
+        ],
+        "nat_gateways": [],
+        "security_groups": [
+            {
+                "GroupId": "sg-0297a5b61aa91b7b5",
+                "IpPermissionsEgress": [
+                    {
+                        "IpProtocol": "-1",
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    }
+                ],
+                "VpcId": "vpc-0b71e8dcdd9a40ef8",
+                "SecurityGroupArn": "arn:aws:ec2:us-east-2:720150001470:security-group/sg-0297a5b61aa91b7b5",
+                "OwnerId": "720150001470",
+                "GroupName": "blazeops-agent-staging-agent",
+                "Description": "Allow SSH and HTTP access",
+                "IpPermissions": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 80,
+                        "ToPort": 80,
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 8000,
+                        "ToPort": 8000,
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    }
+                ]
+            },
+            {
+                "GroupId": "sg-0c7910417aebd89b9",
+                "IpPermissionsEgress": [
+                    {
+                        "IpProtocol": "-1",
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    }
+                ],
+                "VpcId": "vpc-06cc31a57a405feb8",
+                "SecurityGroupArn": "arn:aws:ec2:us-east-2:720150001470:security-group/sg-0c7910417aebd89b9",
+                "OwnerId": "720150001470",
+                "GroupName": "blazeops-agent-staging-agent",
+                "Description": "Allow SSH and HTTP access",
+                "IpPermissions": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 80,
+                        "ToPort": 80,
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 8000,
+                        "ToPort": 8000,
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    }
+                ]
+            },
+            {
+                "GroupId": "sg-0f4187b316b3b1e8e",
+                "IpPermissionsEgress": [
+                    {
+                        "IpProtocol": "-1",
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    }
+                ],
+                "VpcId": "vpc-0010db00d5f9b6d24",
+                "SecurityGroupArn": "arn:aws:ec2:us-east-2:720150001470:security-group/sg-0f4187b316b3b1e8e",
+                "OwnerId": "720150001470",
+                "GroupName": "default",
+                "Description": "default VPC security group",
+                "IpPermissions": [
+                    {
+                        "IpProtocol": "-1",
+                        "UserIdGroupPairs": [
+                            {
+                                "UserId": "720150001470",
+                                "GroupId": "sg-0f4187b316b3b1e8e"
+                            }
+                        ],
+                        "IpRanges": [],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    }
+                ]
+            },
+            {
+                "GroupId": "sg-0aaefac882ac186cf",
+                "IpPermissionsEgress": [],
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    }
+                ],
+                "VpcId": "vpc-0eb8eab8fc060589d",
+                "SecurityGroupArn": "arn:aws:ec2:us-east-2:720150001470:security-group/sg-0aaefac882ac186cf",
+                "OwnerId": "720150001470",
+                "GroupName": "default",
+                "Description": "default VPC security group",
+                "IpPermissions": []
+            },
+            {
+                "GroupId": "sg-0318ab11496d98bb8",
+                "IpPermissionsEgress": [
+                    {
+                        "IpProtocol": "-1",
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    }
+                ],
+                "VpcId": "vpc-0eb8eab8fc060589d",
+                "SecurityGroupArn": "arn:aws:ec2:us-east-2:720150001470:security-group/sg-0318ab11496d98bb8",
+                "OwnerId": "720150001470",
+                "GroupName": "blazeops-agent-staging-agent",
+                "Description": "Allow SSH and HTTP access",
+                "IpPermissions": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 80,
+                        "ToPort": 80,
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 8000,
+                        "ToPort": 8000,
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "UserIdGroupPairs": [],
+                        "IpRanges": [
+                            {
+                                "CidrIp": "0.0.0.0/0"
+                            }
+                        ],
+                        "Ipv6Ranges": [],
+                        "PrefixListIds": []
+                    }
+                ]
+            },
+            {
+                "GroupId": "sg-0600c5b0821b89013",
+                "IpPermissionsEgress": [],
+                "Tags": [
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    },
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    }
+                ],
+                "VpcId": "vpc-06cc31a57a405feb8",
+                "SecurityGroupArn": "arn:aws:ec2:us-east-2:720150001470:security-group/sg-0600c5b0821b89013",
+                "OwnerId": "720150001470",
+                "GroupName": "default",
+                "Description": "default VPC security group",
+                "IpPermissions": []
+            },
+            {
+                "GroupId": "sg-0390d310fdec957a1",
+                "IpPermissionsEgress": [],
+                "Tags": [
+                    {
+                        "Key": "App",
+                        "Value": "blazeops-agent"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": "blazeops-agent-staging-vpc"
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": "staging"
+                    }
+                ],
+                "VpcId": "vpc-0b71e8dcdd9a40ef8",
+                "SecurityGroupArn": "arn:aws:ec2:us-east-2:720150001470:security-group/sg-0390d310fdec957a1",
+                "OwnerId": "720150001470",
+                "GroupName": "default",
+                "Description": "default VPC security group",
+                "IpPermissions": []
+            }
+        ],
+        "classic_lbs": [],
+        "lbs_v2": [],
+        "target_groups": [],
+        "tg_targets": {},
+        "rds_instances": []
+    }
+}

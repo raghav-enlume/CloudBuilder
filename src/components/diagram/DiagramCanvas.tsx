@@ -26,7 +26,7 @@ const nodeTypes: NodeTypes = {
 const DiagramCanvasInner = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const { nodes: storeNodes, edges, updateNodes, updateEdges, addEdge, setSelectedNode, selectedNode, deleteEdge, deleteNode } = useDiagramStore();
-  const { screenToFlowPosition } = useReactFlow();
+  const { screenToFlowPosition, fitView } = useReactFlow();
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; edgeId?: string; nodeId?: string } | null>(null);
   const [hoveredEdgeId, setHoveredEdgeId] = useState<string | null>(null);
 
@@ -41,6 +41,20 @@ const DiagramCanvasInner = () => {
   const { setNodeRef, isOver } = useDroppable({
     id: 'canvas',
   });
+
+  // Listen for fitView event from page load
+  useEffect(() => {
+    const handleFitViewOnLoad = () => {
+      console.log('fitViewOnLoad event received, calling fitView');
+      setTimeout(() => {
+        fitView({ padding: 0.15, minZoom: 0.05, maxZoom: 1 });
+        console.log('fitView called');
+      }, 300);
+    };
+    
+    window.addEventListener('fitViewOnLoad', handleFitViewOnLoad);
+    return () => window.removeEventListener('fitViewOnLoad', handleFitViewOnLoad);
+  }, [fitView]);
 
   // Ensure edges always appear on top of all layers and receive events
   useEffect(() => {
