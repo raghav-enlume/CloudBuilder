@@ -30,13 +30,14 @@ JSON diagram specification containing:
 - Styling (colors, stroke styles)
 
 ### 1.4 Key Features
-- ✅ Automatic collision-free positioning
+- ✅ Automatic collision-free positioning (with two-pass subnet repositioning)
 - ✅ Dynamic container sizing
-- ✅ Multi-level hierarchy (4 levels)
-- ✅ 4 edge types with distinct styling
+- ✅ Multi-level hierarchy (5 levels: Region → VPC → Subnet → SG → Instance)
+- ✅ 5 edge types with distinct styling
 - ✅ Comprehensive validation
 - ✅ Region stacking support
 - ✅ Recursive parent-child adjustment
+- ✅ Zero subnet overlap prevention with 50px minimum spacing
 
 ---
 
@@ -164,7 +165,9 @@ All nodes must have:
   "vpcId": "vpc-123456",
   "description": "Description",
   "inboundRules": 3,
-  "outboundRules": 1
+  "outboundRules": 1,
+  "minHeight": 120,
+  "minWidth": 120
 }
 ```
 
@@ -205,21 +208,35 @@ All nodes must have:
 }
 ```
 
-#### Type 2: Subnet (area) → EC2 Instance (node) (Containment)
+#### Type 2: Subnet → Security Group (Containment)
 ```json
 {
-  "id": "subnet-to-instance-subnet-456-instance-789",
+  "id": "subnet-to-sg-subnet-456-sg-789",
   "source": "subnet-subnet-456",
-  "target": "instance-i-789",
+  "target": "sg-sg-789",
   "type": "smoothstep",
   "style": {
-    "stroke": "#FF9900",
+    "stroke": "#FF6B35",
     "strokeWidth": 2
   }
 }
 ```
 
-#### Type 3: Route Table → Subnet (Association)
+#### Type 3: Security Group → EC2 Instance (Containment)
+```json
+{
+  "id": "sg-to-instance-sg-789-instance-012",
+  "source": "sg-sg-789",
+  "target": "instance-i-012",
+  "type": "smoothstep",
+  "style": {
+    "stroke": "#DD344C",
+    "strokeWidth": 2
+  }
+}
+```
+
+#### Type 4: Route Table → Subnet (Association)
 ```json
 {
   "id": "rt-to-subnet-rt-123-subnet-456",
@@ -234,17 +251,17 @@ All nodes must have:
 }
 ```
 
-#### Type 4: Security Group (node) → EC2 Instance (node) (Association)
+#### Type 5: Internet Gateway → VPC (Attachment)
 ```json
 {
-  "id": "sg-to-instance-sg-123-instance-456",
-  "source": "sg-sg-123",
-  "target": "instance-i-456",
+  "id": "igw-to-vpc-igw-123-vpc-456",
+  "source": "igw-igw-123",
+  "target": "vpc-vpc-456",
   "type": "smoothstep",
   "style": {
-    "stroke": "#DD344C",
-    "strokeWidth": 1,
-    "strokeDasharray": "5,5"
+    "stroke": "#FFC107",
+    "strokeWidth": 2,
+    "strokeDasharray": "4,4"
   }
 }
 ```
@@ -284,51 +301,42 @@ Initial:
   position.x = vpc.x + padding(40px)
   position.y = vpc.y + 120px
 
-After collision detection:
+After collision detection (Two-Pass Repositioning):
   position.x = vpc.x + padding(40px)
-  position.y = previous_subnet.y + previous_subnet.height + margin(20px)
+  position.y = previous_subnet.y + previous_subnet.height + min_spacing(50px)
 
 width = 200px (default) OR max(children) + padding(30px)
 height = 80px (default) OR max(children) + padding(30px)
+
+Notes:
+  - First pass: Vertical stacking with 50px minimum spacing
+  - Second pass: Reposition after subnet size expansion from SGs
+  - Prevents collisions even when children are added later
 ```
 
-#### Internet Gateway
+#### Security Group (Container inside Subnet)
 ```
-position.x = vpc.x + padding(40px) + ((index + 1) * spacing) - 60px
-position.y = vpc.y + 20px
-width = 120px (fixed)
-height = 88px (fixed)
+position.x = subnet.x + padding(30px)
+position.y = subnet.y + padding(30px)
+width = 120px (minimum, can expand for children)
+height = 120px (minimum, can expand for children)
 
-spacing = (vpc.width - 80px) / (igw_count + 1)
-```
-
-#### Route Table
-```
-position.x = vpc.x + padding(40px)
-position.y = vpc.y + 260px + (index * 100px)
-width = 120px (fixed)
-height = 88px (fixed)
-
-Note: Y position recalculated after subnet repositioning
-      to start after last subnet
-```
-
-#### Security Group
-```
-position.x = vpc.x + vpc.width - padding(40px) - 120px
-position.y = max(last_rt_bottom) + margin(20px) + (index * 100px)
-width = 120px (fixed)
-height = 88px (fixed)
-
-Note: Y position calculated dynamically based on actual RT positions
+Container Role:
+  - Acts as protective boundary for EC2 instances
+  - Can contain multiple instances
+  - Only SGs protecting instances are created (orphaned SGs filtered)
 ```
 
 #### EC2 Instance
 ```
-position.x = subnet.x + padding(30px)
-position.y = subnet.y + padding(30px)
+position.x = sg.x + padding(20px)  OR  subnet.x + padding(30px) (if no SG)
+position.y = sg.y + padding(20px)  OR  subnet.y + padding(30px) (if no SG)
 width = 120px (fixed)
 height = 88px (fixed)
+
+Placement:
+  - Primary: Inside Security Group (nested within SG container)
+  - Fallback: Directly in Subnet (if no SG)
 ```
 
 ### 4.3 Coordinate Transformations
@@ -394,9 +402,22 @@ height = max(vpc.y + vpc.height) + padding(40px)
 |-----------|---------|-------|
 | Region | 40px | All sides |
 | VPC | 40px | All sides |
-| Subnet | 30px | Instance placement |
-| Subnet spacing | 20px | Minimum margin between subnets |
-| RT/SG spacing | 100px | Vertical spacing |
+| Subnet | 30px | Instance/SG placement |
+| Subnet spacing | 50px | Minimum margin between subnets (increased from 20px) |
+| Security Group | 20px | Instance placement within SG |
+| RT/IGW spacing | 100px | Vertical spacing |
+
+### 5.3 Minimum Size Constraints
+
+| Resource Type | Min Width | Min Height | Notes |
+|---------------|-----------|------------|-------|
+| Security Group | 120px | 120px | Acts as container for instances |
+| EC2 Instance | 120px | 88px | Fixed size |
+| Route Table | 120px | 88px | Fixed size |
+| Internet Gateway | 120px | 88px | Fixed size |
+| Subnet | 200px | 80px | Expands with children |
+| VPC | 400px | 300px | Expands with children |
+| Region | Dynamic | Dynamic | Expands with VPCs |
 
 ---
 

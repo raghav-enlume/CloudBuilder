@@ -125,6 +125,7 @@ class AWSToCloudBuilderConverter:
         self.vpc_node_map: Dict[str, str] = {}  # vpc_id -> node_id
         self.subnet_node_map: Dict[str, Tuple[str, str]] = {}  # subnet_id -> (node_id, vpc_node_id)
         self.sg_node_map: Dict[str, str] = {}  # sg_id -> node_id
+        self.sg_vpc_map: Dict[str, str] = {}  # sg_id -> vpc_id (for tracking which VPC an SG belongs to)
         self.rt_node_map: Dict[str, str] = {}  # rt_id -> node_id
         self.position_counter = {"vpc": 0, "subnet": 0, "instance": 0, "rt": 0, "sg": 0}
         self.vpc_count = 0
@@ -155,20 +156,22 @@ class AWSToCloudBuilderConverter:
         # Fourth-B pass: Recalculate VPC sizes after subnet repositioning
         self._recalculate_vpc_sizes()
         
-        # Fourth-C pass: Reposition RTs and SGs BEFORE moving instances
-        self._reposition_route_tables_and_security_groups()
+        # Fourth-C pass: Position security groups inside subnets and move instances into them
+        self._position_security_groups_inside_subnets()
         
-        # Fourth-D pass: Move instances inside security groups (after SGs are repositioned)
-        self._move_instances_inside_security_groups()
+        # Fourth-C-2 pass: Position orphaned SGs (those without instances) at VPC level
+        self._position_orphaned_security_groups()
         
-        # Fourth-E pass: Recalculate SG sizes based on their children BEFORE collision prevention
-        self._recalculate_security_group_sizes()
+        # Fourth-D pass: Recalculate subnet sizes to accommodate SGs and instances
+        self._recalculate_subnet_sizes()
         
-        # Fourth-F pass: Reposition SGs to prevent collisions after instances and sizes are finalized
-        self._reposition_security_groups_to_prevent_collision()
+        # Fourth-D-2 pass: REPOSITION SUBNETS AGAIN after their sizes changed
+        self._reposition_subnets_to_prevent_collision()
         
-        # Fourth-G pass: Recalculate VPC and Region sizes after SG repositioning
-        self._recalculate_security_group_sizes()
+        # Fourth-E pass: Reposition RTs after SGs are positioned inside subnets
+        self._reposition_route_tables()
+        
+        # Fourth-F pass: Recalculate VPC sizes again
         self._recalculate_vpc_sizes()
         self._update_region_size()
         
@@ -195,11 +198,14 @@ class AWSToCloudBuilderConverter:
         region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
         
         for region_node in region_nodes:
+            # Get the current position of the region before moving
+            original_y = region_node["position"]["y"]
+            
             # Set region y position
             region_node["position"]["y"] = current_y
             
             # Update all children positions (VPCs, IGWs, RTs, SGs, and their children)
-            self._adjust_children_positions(region_node["id"], 0, current_y)
+            self._adjust_children_positions(region_node["id"], original_y, current_y)
             
             # Move next region down by current region's height + padding
             current_y += region_node["height"] + padding
@@ -377,7 +383,10 @@ class AWSToCloudBuilderConverter:
                 )
     
     def _process_instances(self, instances: List[Dict]):
-        """Process EC2 Instances - positioned initially in subnets, will be moved to SGs later"""
+        """Process EC2 Instances - positioned inside security groups which are inside subnets
+        
+        Hierarchy: Subnet → SecurityGroup → Instance
+        """
         for instance in instances:
             instance_id = instance.get("InstanceId")
             subnet_id = instance.get("SubnetId")
@@ -393,32 +402,26 @@ class AWSToCloudBuilderConverter:
             subnet_node = self.node_map.get(subnet_node_id)
             subnet_x = subnet_node["position"]["x"]
             subnet_y = subnet_node["position"]["y"]
-            subnet_width = subnet_node["width"]
-            subnet_height = subnet_node["height"]
-            
-            # Position instance inside subnet with margins (will be repositioned inside SG later)
-            padding = 30  # Padding from parent edges
-            instance_width = 120
-            instance_height = 88
-            x_pos = subnet_x + padding
-            y_pos = subnet_y + padding  # Add top padding instead of centering
-            
-            # Ensure instance doesn't exceed subnet width
-            if x_pos + instance_width > subnet_x + subnet_width - padding:
-                x_pos = subnet_x + subnet_width - instance_width - padding
             
             # Store security group ID for later linking
             sg_info = instance.get("SecurityGroups", [{}])[0]
             sg_id = sg_info.get("GroupId")
+            
+            # Position instance initially at subnet location (will move to SG later)
+            padding = 30
+            instance_width = 120
+            instance_height = 88
+            x_pos = subnet_x + padding
+            y_pos = subnet_y + padding
             
             self._create_node(
                 node_id=node_id,
                 label=instance_name,
                 resource_type="instance",
                 position={"x": x_pos, "y": y_pos},
-                size={"width": 120, "height": 88},
+                size={"width": instance_width, "height": instance_height},
                 is_container=False,
-                parent_id=subnet_node_id,  # Initially parent is subnet
+                parent_id=subnet_node_id,  # Initially parent is subnet, will change to SG
                 config={
                     "originalType": "AWS::EC2::Instance",
                     "region": subnet_id.split('-')[1] if len(subnet_id.split('-')) > 1 else "unknown",
@@ -434,19 +437,19 @@ class AWSToCloudBuilderConverter:
                     "keyName": instance.get("KeyName")
                 },
                 nesting_depth=3,
-                instanceId=instance_id,  # Use camelCase
-                instanceType=instance.get("InstanceType"),  # Use camelCase
+                instanceId=instance_id,
+                instanceType=instance.get("InstanceType"),
                 state=instance.get("State", {}).get("Name"),
-                privateIpAddress=instance.get("PrivateIpAddress"),  # Use camelCase
-                publicIpAddress=instance.get("PublicIpAddress"),  # Use camelCase
-                imageId=instance.get("ImageId"),  # Use camelCase
-                launchTime=instance.get("LaunchTime"),  # Use camelCase
-                subnetId=subnet_id,  # Use camelCase
-                vpcId=instance.get("VpcId"),  # Use camelCase
+                privateIpAddress=instance.get("PrivateIpAddress"),
+                publicIpAddress=instance.get("PublicIpAddress"),
+                imageId=instance.get("ImageId"),
+                launchTime=instance.get("LaunchTime"),
+                subnetId=subnet_id,
+                vpcId=instance.get("VpcId"),
                 securityGroup=sg_id  # Store for later parent assignment
             )
             
-            # Create Subnet -> Instance edge
+            # Create Subnet → Instance edge (will add SG → Instance edge later)
             self._create_edge(
                 source=subnet_node_id,
                 target=node_id,
@@ -564,62 +567,60 @@ class AWSToCloudBuilderConverter:
                 )
     
     def _process_security_groups(self, sgs: List[Dict]):
-        """Process Security Groups - Create as containers instead of nodes"""
-        # Group security groups by VPC
+        """Process Security Groups - Create as containers inside subnets instead of at VPC level
+        
+        Hierarchy: VPC → Subnet → SecurityGroup → Instance
+        
+        NOTE: Only SGs that protect instances are created. Orphaned SGs are skipped since they
+        don't affect the architecture visualization.
+        """
+        # Collect all SGs referenced by instances
+        instances_sgs = set()
+        for inst in self.nodes:
+            if inst["data"].get("resourceType", {}).get("id") == "ec2":
+                sg_id = inst["data"].get("securityGroup")
+                if sg_id:
+                    instances_sgs.add(sg_id)
+        
+        # Group security groups by VPC (only for SGs with instances)
         sg_by_vpc: Dict[str, List[Dict]] = {}
+        
         for sg in sgs:
+            sg_id = sg.get("GroupId")
+            # Only process SGs that protect instances
+            if sg_id not in instances_sgs:
+                continue
+                
             vpc_id = sg.get("VpcId")
             if vpc_id not in sg_by_vpc:
                 sg_by_vpc[vpc_id] = []
             sg_by_vpc[vpc_id].append(sg)
         
-        # Position security groups per VPC
+        # Now create SG nodes - initially positioned at subnet level
+        # We'll reposition them after instances are created
         for vpc_id, vpc_sgs in sg_by_vpc.items():
             vpc_node_id = self.vpc_node_map.get(vpc_id)
             
             if not vpc_node_id:
                 continue
             
-            vpc_node = self.node_map.get(vpc_node_id)
-            vpc_x = vpc_node["position"]["x"]
-            vpc_y = vpc_node["position"]["y"]
-            vpc_width = vpc_node["width"]
-            vpc_height = vpc_node["height"]
-            
-            # Position SGs in a column on the right side of the VPC, offset below RTs
-            padding = 40
-            sg_x = vpc_x + vpc_width - padding - 250  # Right side positioning (accounting for larger width for container)
-            
-            # Find the furthest Y position of existing RTs to avoid overlap
-            existing_rts = [n for n in self.nodes if n['data'].get('resourceType', {}).get('id') == 'routetable' and n['data'].get('parentId') == vpc_node_id]
-            if existing_rts:
-                # Find the bottommost RT
-                max_rt_bottom = max([n['position']['y'] + n['height'] for n in existing_rts])
-                # Start SGs after the bottommost RT with 20px margin
-                sg_y_start = max_rt_bottom + 20
-            else:
-                # No RTs, start at standard position
-                sg_y_start = vpc_y + 260
-            
-            sg_vertical_spacing = 150  # Space between SGs (increased for container height)
-            
-            for idx, sg in enumerate(vpc_sgs):
+            for sg in vpc_sgs:
                 sg_id = sg.get("GroupId")
                 sg_name = sg.get("GroupName", sg_id)
                 node_id = f"sg-{sg_id}"
                 self.sg_node_map[sg_id] = node_id
+                self.sg_vpc_map[sg_id] = vpc_id  # Track which VPC this SG belongs to
                 
-                sg_y = sg_y_start + (idx * sg_vertical_spacing)
-                
-                # Create SG as a container with minimal size (will be expanded based on children)
+                # Create SG as a container with minimal size
+                # Parent will be updated when we position instances
                 self._create_node(
                     node_id=node_id,
-                    label=sg_name,  # Keep name as label for SG (from present.json)
+                    label=sg_name,
                     resource_type="security_group",
-                    position={"x": sg_x, "y": sg_y},
-                    size={"width": 200, "height": 100},  # Larger minimal size for container
-                    is_container=True,  # SG is now a container
-                    parent_id=vpc_node_id,
+                    position={"x": 0, "y": 0},  # Will be repositioned later
+                    size={"width": 150, "height": 80},  # Minimal size for container
+                    is_container=True,
+                    parent_id=vpc_node_id,  # Initially at VPC level
                     config={
                         "originalType": "AWS::EC2::SecurityGroup",
                         "region": vpc_id.split('-')[1] if len(vpc_id.split('-')) > 1 else "unknown",
@@ -628,12 +629,12 @@ class AWSToCloudBuilderConverter:
                         "groupName": sg_name
                     },
                     nesting_depth=2,
-                    groupId=sg_id,  # Use camelCase
-                    groupName=sg_name,  # Use camelCase
-                    vpcId=vpc_id,  # Use camelCase
+                    groupId=sg_id,
+                    groupName=sg_name,
+                    vpcId=vpc_id,
                     description=sg.get("Description"),
-                    inboundRules=len(sg.get("IpPermissions", [])),  # Use camelCase
-                    outboundRules=len(sg.get("IpPermissionsEgress", []))  # Use camelCase
+                    inboundRules=len(sg.get("IpPermissions", [])),
+                    outboundRules=len(sg.get("IpPermissionsEgress", []))
                 )
     
     def _create_rt_subnet_edges(self, route_tables: List[Dict]):
@@ -660,6 +661,7 @@ class AWSToCloudBuilderConverter:
         """Create edges from Security Groups to Instances"""
         for instance in instances:
             instance_id = instance.get("InstanceId")
+            subnet_id = instance.get("SubnetId")
             instance_node_id = f"instance-{instance_id}"
             
             if instance_node_id not in self.node_map:
@@ -668,6 +670,17 @@ class AWSToCloudBuilderConverter:
             for sg in instance.get("SecurityGroups", []):
                 sg_id = sg.get("GroupId")
                 sg_node_id = self.sg_node_map.get(sg_id)
+                
+                # If SG node doesn't exist yet, we may need to create it
+                # Also ensure sg_vpc_map is populated for all SGs referenced by instances
+                if sg_id not in self.sg_vpc_map:
+                    # Get VPC ID from the instance's subnet
+                    subnet_node_info = self.subnet_node_map.get(subnet_id)
+                    if subnet_node_info:
+                        _, vpc_node_id = subnet_node_info
+                        # Extract VPC ID from node_id (format: vpc-{vpc_id})
+                        vpc_id = vpc_node_id.replace("vpc-", "")
+                        self.sg_vpc_map[sg_id] = vpc_id
                 
                 if sg_node_id:
                     self._create_edge(
@@ -857,7 +870,7 @@ class AWSToCloudBuilderConverter:
     
     def _reposition_subnets_to_prevent_collision(self):
         """Reposition subnets within each VPC to prevent vertical collisions after sizing"""
-        padding = 20  # Margin between subnets
+        min_spacing = 50  # Minimum gap between subnet bottom and next subnet top
         
         # Find all VPC nodes
         vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
@@ -876,29 +889,46 @@ class AWSToCloudBuilderConverter:
             # Sort subnets by their current y position
             subnets.sort(key=lambda n: n["position"]["y"])
             
-            # Reposition subnets vertically to prevent overlap
+            # Reposition subnets vertically with guaranteed spacing
             current_y = vpc_y + 120  # Start position for subnets (below IGWs)
             
-            for subnet in subnets:
+            for subnet_idx, subnet in enumerate(subnets):
                 subnet_id = subnet["id"]
                 old_y = subnet["position"]["y"]
+                old_x = subnet["position"]["x"]
+                
+                # Align all subnets to left with padding
+                new_x = vpc_x + 40
                 new_y = current_y
                 
                 # Update subnet position
+                subnet["position"]["x"] = new_x
                 subnet["position"]["y"] = new_y
                 
                 # Adjust all children of this subnet
+                x_offset = new_x - old_x
                 y_offset = new_y - old_y
-                self._adjust_children_y_position(subnet_id, y_offset)
+                self._adjust_children_position_both(subnet_id, x_offset, y_offset)
                 
-                # Move next subnet down by current subnet's height + padding
-                current_y = new_y + subnet["height"] + padding
+                # Calculate next position: current position + height + spacing
+                subnet_bottom = new_y + subnet["height"]
+                current_y = subnet_bottom + min_spacing
     
     def _adjust_children_y_position(self, parent_id: str, y_offset: float):
         """Adjust only y position of direct children when parent moves vertically"""
         for node in self.nodes:
             if node["data"].get("parentId") == parent_id:
                 node["position"]["y"] += y_offset
+    
+    def _adjust_children_position_both(self, parent_id: str, x_offset: float, y_offset: float):
+        """Adjust both x and y position of all descendants when parent moves"""
+        # Find direct children and recursively adjust their descendants
+        for node in self.nodes:
+            if node["data"].get("parentId") == parent_id:
+                node["position"]["x"] += x_offset
+                node["position"]["y"] += y_offset
+                # Recursively adjust children of this node
+                self._adjust_children_position_both(node["id"], x_offset, y_offset)
     
     def _recalculate_vpc_sizes(self):
         """Recalculate VPC sizes after subnet repositioning to ensure they fit all children"""
@@ -981,93 +1011,231 @@ class AWSToCloudBuilderConverter:
                 sg["position"]["x"] = sg_x
                 current_sg_y += sg_vertical_spacing
     
-    def _move_instances_inside_security_groups(self):
-        """Move EC2 instances to be children of security groups instead of subnets
+    def _position_security_groups_inside_subnets(self):
+        """Position security groups inside their respective subnets and move instances into them
         
-        This happens AFTER SGs have been repositioned, so we use SG's current position.
+        This creates the hierarchy: Subnet → SecurityGroup → Instance
+        Multiple SGs per subnet are arranged in columns to avoid overlap.
         """
-        # Group instances by their associated security group
-        sg_instances: Dict[str, List] = {}
+        padding = 20
+        sg_spacing = 20
+        inst_height = 88
+        inst_spacing = 15
         
-        for instance_node in [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "ec2"]:
-            sg_id = instance_node["data"].get("securityGroup")
+        # Find all subnets
+        subnet_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "subnet"]
+        
+        for subnet_node in subnet_nodes:
+            subnet_id = subnet_node["id"]
+            subnet_x = subnet_node["position"]["x"]
+            subnet_y = subnet_node["position"]["y"]
+            subnet_width = subnet_node["width"]
             
-            if sg_id and sg_id in self.sg_node_map:
-                if sg_id not in sg_instances:
-                    sg_instances[sg_id] = []
-                sg_instances[sg_id].append(instance_node)
-        
-        # Reposition instances inside their security groups
-        padding = 30
-        vertical_spacing = 100  # Space between instances in same SG
-        
-        for sg_id, instances in sg_instances.items():
-            sg_node_id = self.sg_node_map[sg_id]
-            sg_node = self.node_map.get(sg_node_id)
+            # Find all instances in this subnet
+            subnet_instances = [n for n in self.nodes if n["data"].get("parentId") == subnet_id and n["data"].get("resourceType", {}).get("id") == "ec2"]
             
-            if not sg_node:
+            if not subnet_instances:
                 continue
             
-            sg_x = sg_node["position"]["x"]
-            sg_y = sg_node["position"]["y"]
+            # Group instances by their security group
+            instances_by_sg: Dict[str, List] = {}
+            for inst in subnet_instances:
+                sg_id = inst["data"].get("securityGroup")
+                if sg_id:
+                    if sg_id not in instances_by_sg:
+                        instances_by_sg[sg_id] = []
+                    instances_by_sg[sg_id].append(inst)
             
-            # Sort instances by their current position for consistent ordering
-            instances.sort(key=lambda n: n["position"]["y"])
+            if not instances_by_sg:
+                continue
             
-            # Position each instance inside the SG
-            for idx, instance_node in enumerate(instances):
-                # Update parent
-                instance_node["data"]["parentId"] = sg_node_id
-                instance_node["data"]["nestingDepth"] = 3
+            # Arrange SGs in columns to fit inside subnet
+            available_width = subnet_width - (padding * 2)
+            sg_default_width = 160
+            sgs_per_column = max(1, int(available_width / (sg_default_width + sg_spacing)))
+            
+            col_index = 0
+            row_index = 0
+            sg_x = subnet_x + padding
+            sg_y = subnet_y + padding
+            max_col_height = 0
+            
+            for sg_idx, (sg_id, instances) in enumerate(instances_by_sg.items()):
+                # Calculate column position
+                if col_index >= sgs_per_column and sgs_per_column > 0:
+                    col_index = 0
+                    row_index += 1
+                    sg_y = subnet_y + padding + (row_index * (max_col_height + sg_spacing))
+                    max_col_height = 0
                 
-                # Position instance with padding from SG edges
-                instance_x = sg_x + padding
-                instance_y = sg_y + padding + (idx * vertical_spacing)
+                sg_col_x = subnet_x + padding + (col_index * (sg_default_width + sg_spacing))
                 
-                instance_node["position"]["x"] = instance_x
-                instance_node["position"]["y"] = instance_y
+                sg_node_id = self.sg_node_map.get(sg_id)
+                if not sg_node_id:
+                    col_index += 1
+                    continue
+                
+                sg_node = self.node_map.get(sg_node_id)
+                if not sg_node:
+                    col_index += 1
+                    continue
+                
+                # Position SG inside subnet
+                sg_node["position"]["x"] = sg_col_x
+                sg_node["position"]["y"] = sg_y
+                sg_node["data"]["parentId"] = subnet_id  # Move SG to be child of subnet
+                sg_node["data"]["nestingDepth"] = 3
+                
+                # Position instances inside this SG with vertical stacking
+                inst_padding = 15
+                inst_x = sg_col_x + inst_padding
+                current_inst_y = sg_y + inst_padding
+                
+                for idx, inst_node in enumerate(instances):
+                    # Move instance to be child of SG
+                    inst_node["data"]["parentId"] = sg_node_id
+                    inst_node["data"]["nestingDepth"] = 4
+                    
+                    # Position instance inside SG
+                    inst_node["position"]["x"] = inst_x
+                    inst_node["position"]["y"] = current_inst_y + (idx * (inst_height + inst_spacing))
+                
+                # Calculate SG size based on its instances
+                if instances:
+                    inst_widths = [i["width"] for i in instances]
+                    inst_heights = [i["height"] for i in instances]
+                    
+                    max_inst_width = max(inst_widths) if inst_widths else 60
+                    total_inst_height = sum(inst_heights) + ((len(instances) - 1) * inst_spacing)
+                    
+                    sg_width = max_inst_width + (inst_padding * 2)
+                    sg_height = total_inst_height + (inst_padding * 2)
+                    
+                    sg_node["width"] = max(sg_width, 140)
+                    sg_node["height"] = max(sg_height, 120)
+                else:
+                    sg_node["width"] = 140
+                    sg_node["height"] = 120
+                
+                sg_node["data"]["size"] = {"width": sg_node["width"], "height": sg_node["height"]}
+                
+                # Track max height in column
+                max_col_height = max(max_col_height, sg_node["height"])
+                
+                col_index += 1
     
-    def _recalculate_security_group_sizes(self):
-        """Recalculate security group sizes based on their children (instances)"""
-        padding = 30  # Padding inside SG container
+    def _position_orphaned_security_groups(self):
+        """Position security groups that don't protect any instances
         
-        # Find all SG nodes
-        sg_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "securityGroup"]
-        
-        for sg_node in sg_nodes:
-            sg_id = sg_node["id"]
-            sg_x = sg_node["position"]["x"]
-            sg_y = sg_node["position"]["y"]
-            
-            # Find all children (instances) of this SG
-            children = [n for n in self.nodes if n["data"].get("parentId") == sg_id]
-            
-            if children:
-                # Calculate size based on children
-                max_right = max([n["position"]["x"] + n["width"] for n in children])
-                max_bottom = max([n["position"]["y"] + n["height"] for n in children])
-                
-                new_width = max_right - sg_x + padding
-                new_height = max_bottom - sg_y + padding
-                
-                sg_node["width"] = new_width
-                sg_node["height"] = new_height
-                sg_node["data"]["size"] = {"width": new_width, "height": new_height}
-            else:
-                # No children, use default size
-                sg_node["width"] = 200
-                sg_node["height"] = 100
-                sg_node["data"]["size"] = {"width": 200, "height": 100}
-    
-    def _reposition_security_groups_to_prevent_collision(self):
-        """Reposition security groups vertically within each VPC to prevent overlaps
-        
-        This method is called after instances are placed in SGs, so SG sizes are based on their content.
+        These orphaned SGs are positioned at the VPC level, alongside RTs and IGWs.
         """
         padding = 40
-        margin = 20  # Margin between SGs
+        sg_width = 150
+        sg_height = 100
+        sg_spacing = 25
         
-        # Find all VPC nodes
+        # Find all SGs that have been moved to subnets (those with instances)
+        positioned_sgs = set()
+        for subnet_node in [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "subnet"]:
+            sgs_in_subnet = [n for n in self.nodes if n["data"].get("parentId") == subnet_node["id"] and 
+                           n["data"].get("resourceType", {}).get("id") == "securityGroup"]
+            for sg in sgs_in_subnet:
+                positioned_sgs.add(sg["id"])
+        
+        # Find all SGs (orphaned ones will not be in positioned_sgs)
+        all_sgs = {n["id"]: n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "securityGroup"}
+        
+        # Position orphaned SGs by VPC
+        vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
+        
+        for vpc_node in vpc_nodes:
+            vpc_id = vpc_node["id"]
+            vpc_x = vpc_node["position"]["x"]
+            vpc_y = vpc_node["position"]["y"]
+            vpc_width = vpc_node["width"]
+            vpc_height = vpc_node.get("height", 500)
+            
+            # Find orphaned SGs in this VPC
+            orphaned_sgs = []
+            for sg_id in self.sg_vpc_map:
+                if self.sg_vpc_map[sg_id] == vpc_id and sg_id not in positioned_sgs:
+                    sg_node = all_sgs.get(f"sg-{sg_id}")
+                    if sg_node:
+                        orphaned_sgs.append(sg_node)
+            
+            if not orphaned_sgs:
+                continue
+            
+            # Find the lowest subnets/RTs to position orphaned SGs below them
+            subnets = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and 
+                      n["data"].get("resourceType", {}).get("id") == "subnet"]
+            rts = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and 
+                   n["data"].get("resourceType", {}).get("id") == "routetable"]
+            
+            all_children = subnets + rts
+            if all_children:
+                max_y = max([n["position"]["y"] + n.get("height", 100) for n in all_children])
+                orphaned_y_start = max_y + padding
+            else:
+                # If no subnets/RTs, position after IGWs (which are at top)
+                orphaned_y_start = vpc_y + 120
+            
+            # Position orphaned SGs in a grid pattern
+            available_width = vpc_width - (padding * 2)
+            sgs_per_row = max(1, int(available_width / (sg_width + sg_spacing)))
+            
+            for idx, sg_node in enumerate(orphaned_sgs):
+                col = idx % sgs_per_row
+                row = idx // sgs_per_row
+                
+                x = vpc_x + padding + (col * (sg_width + sg_spacing))
+                y = orphaned_y_start + (row * (sg_height + sg_spacing))
+                
+                sg_node["position"]["x"] = x
+                sg_node["position"]["y"] = y
+                sg_node["data"]["parentId"] = vpc_id
+                sg_node["data"]["nestingDepth"] = 2
+                sg_node["width"] = sg_width
+                sg_node["height"] = sg_height
+                sg_node["data"]["size"] = {"width": sg_width, "height": sg_height}
+    
+    def _recalculate_subnet_sizes(self):
+        """Recalculate subnet sizes to fit all children (SGs and instances inside SGs)"""
+        padding = 20
+        
+        subnet_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "subnet"]
+        
+        for subnet_node in subnet_nodes:
+            subnet_id = subnet_node["id"]
+            subnet_x = subnet_node["position"]["x"]
+            subnet_y = subnet_node["position"]["y"]
+            
+            # Find all direct children of subnet (SGs and instances)
+            children = [n for n in self.nodes if n["data"].get("parentId") == subnet_id]
+            
+            # Also find instances inside SGs to include in sizing
+            all_descendants = children.copy()
+            for child in children:
+                if child["data"].get("resourceType", {}).get("id") == "securityGroup":
+                    sg_children = [n for n in self.nodes if n["data"].get("parentId") == child["id"]]
+                    all_descendants.extend(sg_children)
+            
+            if all_descendants:
+                max_right = max([n["position"]["x"] + n["width"] for n in all_descendants])
+                max_bottom = max([n["position"]["y"] + n["height"] for n in all_descendants])
+                
+                new_width = max_right - subnet_x + padding
+                new_height = max_bottom - subnet_y + padding
+                
+                subnet_node["width"] = max(new_width, 200)
+                subnet_node["height"] = max(new_height, 100)
+                subnet_node["data"]["size"] = {"width": subnet_node["width"], "height": subnet_node["height"]}
+    
+    def _reposition_route_tables(self):
+        """Reposition route tables to avoid overlapping with subnets and SGs"""
+        padding = 40
+        rt_vertical_spacing = 100
+        
         vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
         
         for vpc_node in vpc_nodes:
@@ -1076,51 +1244,26 @@ class AWSToCloudBuilderConverter:
             vpc_y = vpc_node["position"]["y"]
             vpc_width = vpc_node["width"]
             
-            # Find all SGs in this VPC (that might have instances)
-            sg_nodes = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and n["data"].get("resourceType", {}).get("id") == "securityGroup"]
+            # Find all subnets in this VPC to determine where they end
+            subnets = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and n["data"].get("resourceType", {}).get("id") == "subnet"]
             
-            if not sg_nodes:
-                continue
+            # Determine RT start position (after last subnet)
+            if subnets:
+                subnets.sort(key=lambda n: n["position"]["y"] + n["height"], reverse=True)
+                last_subnet = subnets[0]
+                rt_y_start = last_subnet["position"]["y"] + last_subnet["height"] + padding
+            else:
+                rt_y_start = vpc_y + 260
             
-            # Sort SGs by current Y position
-            sg_nodes.sort(key=lambda n: n["position"]["y"])
-            
-            # Determine starting Y position (after RTs if they exist)
+            # Reposition RTs
             route_tables = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and n["data"].get("resourceType", {}).get("id") == "routetable"]
             
-            if route_tables:
-                route_tables.sort(key=lambda n: n["position"]["y"] + n["height"], reverse=True)
-                last_rt = route_tables[0]
-                sg_y_start = last_rt["position"]["y"] + last_rt["height"] + padding
-            else:
-                # Find subnets to position after them
-                subnets = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and n["data"].get("resourceType", {}).get("id") == "subnet"]
-                if subnets:
-                    subnets.sort(key=lambda n: n["position"]["y"] + n["height"], reverse=True)
-                    last_subnet = subnets[0]
-                    sg_y_start = last_subnet["position"]["y"] + last_subnet["height"] + padding
-                else:
-                    sg_y_start = vpc_y + 260
+            rt_x = vpc_x + padding
+            current_rt_y = rt_y_start
             
-            # Position SGs right side, vertically stacked with collision prevention
-            sg_x = vpc_x + vpc_width - padding - 250
-            current_sg_y = sg_y_start
-            
-            for sg in sg_nodes:
-                old_sg_y = sg["position"]["y"]
-                sg["position"]["x"] = sg_x
-                sg["position"]["y"] = current_sg_y
-                
-                # Calculate offset for child instance repositioning
-                y_offset = current_sg_y - old_sg_y
-                
-                # Update positions of instances inside this SG
-                children = [n for n in self.nodes if n["data"].get("parentId") == sg["id"]]
-                for child in children:
-                    child["position"]["y"] += y_offset
-                
-                # Move to next SG position
-                current_sg_y += sg["height"] + margin
+            for rt in route_tables:
+                rt["position"]["y"] = current_rt_y
+                current_rt_y += rt_vertical_spacing
     
     def _verify_container_bounds(self):
         """Verify that all children are within their parent container bounds (optional verification)"""

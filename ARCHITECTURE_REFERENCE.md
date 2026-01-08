@@ -19,44 +19,53 @@ This document provides a comprehensive reference for CloudBuilder's architecture
 
 ## Hierarchy Tree
 
-### 4-Level Architecture
+### 5-Level Architecture (Nested SG)
 
 ```
 Level 0: REGION (Container)
 │        └─ Ultimate boundary for all infrastructure
-│        └─ Stacked vertically with other regions
+│        └─ Stacked vertically with other regions (40px spacing)
 │
 ├── Level 1: VPC (Network Boundary)
 │   │        └─ Parent: Region
-│   │        └─ Siblings: 1-4 per region (450px spacing)
+│   │        └─ Siblings: 1-4 per region
 │   │        └─ Properties: CIDR block, DNS settings, default status
+│   │        └─ Size: Auto-calculated based on children
 │   │
-│   ├── Level 2a: SUBNET (Container)
-│   │   │          └─ Parent: VPC
-│   │   │          └─ Default Size: 200×80px
-│   │   │          └─ Expanded: If contains EC2 instances
+│   ├── Level 2: SUBNET (Container)
+│   │   │        └─ Parent: VPC
+│   │   │        └─ Default Size: 200×80px (expandable)
+│   │   │        └─ Spacing: 50px minimum between subnets
+│   │   │        └─ Position: Vertically stacked to prevent overlaps
+│   │   │        └─ Size: Expands to fit SGs and instances
 │   │   │
-│   │   └── Level 3: EC2 INSTANCE (Leaf)
-│   │                └─ Parent: Subnet
-│   │                └─ Fixed Size: 120×88px
-│   │                └─ Padding: 30px from subnet edges
+│   │   ├── Level 3: SECURITY GROUP (Container)
+│   │   │   │        └─ Parent: Subnet
+│   │   │   │        └─ Default Size: 150×120px (expandable)
+│   │   │   │        └─ Minimum Size: 150×120px
+│   │   │   │        └─ Multiple SGs per subnet supported
+│   │   │   │        └─ Size: Expands based on contained instances
+│   │   │   │
+│   │   │   └── Level 4: EC2 INSTANCE (Leaf)
+│   │   │                └─ Parent: Security Group
+│   │   │                └─ Fixed Size: 120×88px
+│   │   │                └─ Padding inside SG: 15px vertical spacing
+│   │   │                └─ Multiple instances per SG supported
+│   │   │
+│   │   ├── Level 3b: INTERNET GATEWAY (Leaf) [Optional]
+│   │   │             └─ Parent: VPC
+│   │   │             └─ Position: Top of VPC (y=vpc_y+20)
+│   │   │             └─ Fixed Size: 120×88px
+│   │   │
+│   │   └── Level 3c: ROUTE TABLE (Leaf) [Optional]
+│   │                 └─ Parent: VPC
+│   │                 └─ Position: After last subnet
+│   │                 └─ Fixed Size: 120×88px
 │   │
-│   ├── Level 2b: INTERNET GATEWAY (Leaf)
-│   │              └─ Parent: VPC
-│   │              └─ Position: Top of VPC (y=vpc_y+20)
-│   │              └─ Fixed Size: 120×88px
-│   │
-│   ├── Level 2c: ROUTE TABLE (Leaf)
-│   │              └─ Parent: VPC
-│   │              └─ Position: LEFT side (x=vpc_x+40)
-│   │              └─ Vertical Stack: 100px spacing
-│   │              └─ Fixed Size: 120×88px
-│   │
-│   └── Level 2d: SECURITY GROUP (Leaf)
-│                  └─ Parent: VPC
-│                  └─ Position: RIGHT side (x=vpc_x+width-160)
-│                  └─ Vertical Stack: 100px spacing (below RTs)
-│                  └─ Fixed Size: 120×88px
+│   └── Level 2b: ORPHANED SECURITY GROUPS (Filtered)
+│                 └─ Status: NOT CREATED (no instances)
+│                 └─ Reason: Filtered during conversion
+│                 └─ Result: Cleaner diagrams (53 fewer nodes in enlume-full)
 ```
 
 ### Nesting Depth
@@ -90,28 +99,46 @@ Depth 3: EC2 Instance (0 or more per subnet)
 - **Semantic:** Subnet is contained within VPC
 - **Count:** 1 per subnet (automatically created)
 - **Visual Purpose:** Shows network hierarchy
+- **Nesting:** Subnet is direct child of VPC
 
 **Creation Rules:**
 - One edge created for each subnet
 - Automatic - no manual configuration needed
 - Represents strict containment relationship
 
-#### 2. Subnet → EC2 Instance (Containment Edge)
-- **Style ID:** `subnet-to-instance`
+#### 2. Subnet → Security Group (Containment Edge) [NEW]
+- **Style ID:** `subnet-to-sg`
 - **Source:** Subnet
-- **Target:** EC2 Instance
+- **Target:** Security Group
 - **Line Style:** Solid 2px
-- **Color:** `#FF9900` (Orange)
-- **Semantic:** Instance is deployed in subnet
+- **Color:** `#DD344C` (Red)
+- **Semantic:** Security group protects instances within subnet
+- **Count:** Variable (1+ per subnet with instances)
+- **Visual Purpose:** Shows security boundary
+- **Nesting:** SG is direct child of Subnet (NEW hierarchy)
+
+**Creation Rules:**
+- Created for each SG protecting instances in the subnet
+- Only for SGs with instances (orphaned SGs filtered out)
+- Represents security domain relationship
+
+#### 3. Security Group → EC2 Instance (Containment Edge) [NEW]
+- **Style ID:** `sg-to-instance`
+- **Source:** Security Group
+- **Target:** EC2 Instance
+- **Line Style:** Solid 1px
+- **Color:** `#DD344C` (Red)
+- **Semantic:** Instance is protected by security group
 - **Count:** 1 per instance (automatically created)
-- **Visual Purpose:** Shows instance placement
+- **Visual Purpose:** Shows access control
+- **Nesting:** Instance is direct child of SG (NEW hierarchy)
 
 **Creation Rules:**
 - One edge created for each EC2 instance
-- Automatic - no manual configuration needed
+- Automatic - derived from instance security group assignment
 - Represents strict containment relationship
 
-#### 3. Route Table → Subnet (Association Edge)
+#### 4. Route Table → Subnet (Association Edge)
 - **Style ID:** `rt-to-subnet`
 - **Source:** Route Table
 - **Target:** Subnet
@@ -126,19 +153,6 @@ Depth 3: EC2 Instance (0 or more per subnet)
 - Multiple RTs can connect to same subnet
 - Dashed line indicates functional (not structural) relationship
 - Non-destructive - doesn't affect layout
-
-#### 4. Security Group → EC2 Instance (Association Edge)
-- **Style ID:** `sg-to-instance`
-- **Source:** Security Group
-- **Target:** EC2 Instance
-- **Line Style:** Dashed 1px (5,5 pattern)
-- **Color:** `#DD344C` (Red)
-- **Semantic:** Security group rules applied to instance
-- **Count:** Variable (instances can have multiple SGs)
-- **Visual Purpose:** Shows access control relationship
-
-**Creation Rules:**
-- Created from Security Group assignments in AWS data
 - Multiple SGs can apply to same instance
 - Thin dashed line indicates lightweight functional relationship
 - Non-destructive - doesn't affect layout

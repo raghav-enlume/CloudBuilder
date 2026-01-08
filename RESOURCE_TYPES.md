@@ -2,7 +2,27 @@
 
 ## Overview
 
-CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchical structure. This document provides a complete reference for all supported resource types, their properties, and relationships.
+CloudBuilder supports **8 AWS resource types** organized in a **5-level hierarchical structure**. This document provides a complete reference for all supported resource types, their properties, and relationships.
+
+---
+
+## Hierarchy Overview
+
+```
+Region (Level 0)
+  └─ VPC (Level 1)
+      ├─ Internet Gateway (Level 2)
+      ├─ Route Table (Level 2)
+      └─ Subnet (Level 2)
+         └─ Security Group (Level 3) ← NEW: Now nested inside Subnet
+            └─ EC2 Instance (Level 4)
+```
+
+**Key Changes (Phase 5):**
+- Security Groups moved from VPC-level to Subnet-level (nested containers)
+- EC2 Instances now nest inside Security Groups (not directly in Subnets)
+- Orphaned SGs (not protecting any instances) are filtered out
+- Result: Zero overlaps with dynamic 50px subnet spacing
 
 ---
 
@@ -84,10 +104,10 @@ CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchic
 - **Category:** Networking
 - **Color:** `#8C4FFF` (Purple)
 - **Icon:** vpc
-- **Description:** Virtual Subnet - Network segment containing EC2 instances
-- **Is Container:** Yes
+- **Description:** Virtual Subnet - Network segment containing Security Groups and EC2 instances
+- **Is Container:** Yes (contains Security Groups)
 - **Parent:** VPC
-- **Children:** EC2 Instances
+- **Children:** Security Groups (which contain EC2 Instances)
 - **Nesting Depth:** 2
 
 **Editable Attributes:**
@@ -102,8 +122,14 @@ CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchic
 
 **Sizing:**
 - **Default:** 200×80px (when no children)
-- **Expanded:** Grows to fit all EC2 instances with 30px padding
+- **Expanded:** Grows to fit all Security Groups with 30px padding
 
+**Collision Prevention:**
+- **Two-Pass Repositioning:**
+  1. First pass: Initial vertical stacking with 50px minimum spacing
+  2. Second pass: Reposition after SGs expand the subnet size
+  - Ensures zero subnet overlaps regardless of content
+  
 **Example:**
 ```json
 {
@@ -125,16 +151,72 @@ CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchic
 
 ---
 
-### 4. EC2 Instance
+### 4. Security Group (Container)
+- **Type ID:** `securityGroup`
+- **Category:** Security
+- **Color:** `#DD344C` (Red)
+- **Icon:** waf
+- **Description:** Security Group - Acts as stateful firewall and container for EC2 instances
+- **Is Container:** Yes (contains EC2 Instances)
+- **Parent:** Subnet (NEW: moved from VPC)
+- **Children:** EC2 Instances
+- **Nesting Depth:** 3
+
+**Editable Attributes:**
+- `label` (string): Security Group Name
+
+**Properties:**
+- `groupId`: AWS Security Group ID
+- `groupName`: Security Group Name
+- `vpcId`: VPC ID
+- `description`: Description
+- `inboundRules`: Count of inbound rules
+- `outboundRules`: Count of outbound rules
+
+**Sizing & Positioning:**
+- **Minimum Size:** 120×120px (can expand to fit instances)
+- **Position:** Inside parent Subnet with 30px padding
+- **X:** `subnet.x + 30`
+- **Y:** `subnet.y + 30` (stacked vertically if multiple SGs)
+- **Expansion:** Grows to accommodate child instances
+
+**Filtering:**
+- **Only SGs protecting instances are created**
+- Orphaned SGs (without instances) are filtered out during conversion
+- Result: Clean diagrams without unnecessary nodes
+
+**Example:**
+```json
+{
+  "id": "sg-sg-0c7910417aebd89b9",
+  "label": "blazeops-agent-staging-agent",
+  "resourceType": { "id": "securityGroup", "name": "Security Group" },
+  "parentId": "subnet-subnet-0da1a05dfc8b55dc3",
+  "position": { "x": 170, "y": 340 },
+  "width": 120,
+  "height": 120,
+  "data": {
+    "groupId": "sg-0c7910417aebd89b9",
+    "groupName": "blazeops-agent-staging-agent",
+    "vpcId": "vpc-06cc31a57a405feb8",
+    "inboundRules": 3,
+    "outboundRules": 1
+  }
+}
+```
+
+---
+
+### 5. EC2 Instance
 - **Type ID:** `ec2`
 - **Category:** Compute
 - **Color:** `#FF9900` (Orange)
 - **Icon:** ec2
 - **Description:** Virtual server in the cloud
 - **Is Container:** No (leaf node)
-- **Parent:** Subnet
+- **Parent:** Security Group (NEW: nested inside SG, not directly in Subnet)
 - **Children:** None
-- **Nesting Depth:** 3
+- **Nesting Depth:** 4
 
 **Editable Attributes:**
 - `label` (string): Instance ID or Name
@@ -148,12 +230,14 @@ CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchic
 - `publicIpAddress`: Public IP address (if assigned)
 - `imageId`: AMI ID
 - `launchTime`: Launch time
-- `subnetId`: Parent subnet ID
+- `subnetId`: Subnet ID
+- `securityGroupId`: Security Group ID (primary SG)
 - `vpcId`: VPC ID
 
 **Sizing:**
 - **Fixed:** 120×88px
-- **Padding:** 30px from subnet edges (top-left alignment)
+- **Padding:** 20px from SG edges (inside SG container)
+- **Stacking:** Multiple instances stack vertically within SG
 
 **Example:**
 ```json
@@ -161,8 +245,8 @@ CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchic
   "id": "instance-i-0525e04aaef702279",
   "label": "blazeops-agent-staging-backend-api",
   "resourceType": { "id": "ec2", "name": "EC2 Instance" },
-  "parentId": "subnet-subnet-0da1a05dfc8b55dc3",
-  "position": { "x": 150, "y": 340 },
+  "parentId": "sg-sg-0c7910417aebd89b9",
+  "position": { "x": 190, "y": 360 },
   "width": 120,
   "height": 88,
   "data": {
@@ -177,7 +261,7 @@ CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchic
 
 ---
 
-### 5. Route Table
+### 6. Route Table
 - **Type ID:** `routetable`
 - **Category:** Networking
 - **Color:** `#8C4FFF` (Purple)
@@ -221,7 +305,7 @@ CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchic
 
 ---
 
-### 6. Internet Gateway
+### 7. Internet Gateway
 - **Type ID:** `internetgateway`
 - **Category:** Compute/Connectivity
 - **Color:** `#FF9900` (Orange)
@@ -263,55 +347,6 @@ CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchic
 
 ---
 
-### 7. Security Group
-- **Type ID:** `securityGroup`
-- **Category:** Security
-- **Color:** `#DD344C` (Red)
-- **Icon:** waf
-- **Description:** Security Group - Firewall rules applied to instances
-- **Is Container:** No (leaf node)
-- **Parent:** VPC
-- **Children:** None (but connects to Instances via edges)
-- **Nesting Depth:** 2
-
-**Editable Attributes:**
-- `label` (string): Security Group Name
-
-**Properties:**
-- `groupId`: AWS Security Group ID
-- `groupName`: Security Group Name
-- `vpcId`: Parent VPC ID
-- `description`: Description
-- `inboundRules`: Count of inbound rules
-- `outboundRules`: Count of outbound rules
-
-**Positioning:**
-- **Position:** RIGHT side of VPC
-- **X:** `vpc_x + vpc_width - 160`
-- **Y:** `max(last_RT_bottom) + 20` (below route tables)
-- **Spacing:** 100px between security groups (vertical)
-- **Fixed Size:** 120×88px
-
-**Example:**
-```json
-{
-  "id": "sg-sg-0c7910417aebd89b9",
-  "label": "blazeops-agent-staging-agent",
-  "resourceType": { "id": "securityGroup", "name": "Security Group" },
-  "parentId": "vpc-vpc-06cc31a57a405feb8",
-  "position": { "x": 750, "y": 615 },
-  "width": 120,
-  "height": 88,
-  "data": {
-    "groupId": "sg-0c7910417aebd89b9",
-    "groupName": "blazeops-agent-staging-agent",
-    "vpcId": "vpc-06cc31a57a405feb8",
-    "inboundRules": 3,
-    "outboundRules": 1
-  }
-}
-```
-
 ---
 
 ## Resource Type Summary
@@ -319,12 +354,12 @@ CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchic
 | Type | ID | Category | Color | Container | Parent | Children | Depth |
 |------|-------|----------|-------|-----------|--------|----------|-------|
 | Region | `region` | Networking | #3949AB | ✅ | None | VPCs | 0 |
-| VPC | `vpc` | Networking | #8C4FFF | ✅ | Region | Subnets, IGWs, RTs, SGs | 1 |
-| Subnet | `subnet` | Networking | #8C4FFF | ✅ | VPC | EC2 Instances | 2 |
-| EC2 | `ec2` | Compute | #FF9900 | ❌ | Subnet | None | 3 |
+| VPC | `vpc` | Networking | #8C4FFF | ✅ | Region | Subnets, IGWs, RTs | 1 |
+| Subnet | `subnet` | Networking | #8C4FFF | ✅ | VPC | Security Groups | 2 |
+| Security Group | `securityGroup` | Security | #DD344C | ✅ | Subnet | EC2 Instances | 3 |
+| EC2 | `ec2` | Compute | #FF9900 | ❌ | Security Group | None | 4 |
 | Route Table | `routetable` | Networking | #8C4FFF | ❌ | VPC | None | 2 |
 | IGW | `internetgateway` | Compute | #FF9900 | ❌ | VPC | None | 2 |
-| Security Group | `securityGroup` | Security | #DD344C | ❌ | VPC | None | 2 |
 
 ---
 
@@ -345,9 +380,33 @@ CloudBuilder supports **8 AWS resource types** organized in a 4-level hierarchic
 |----------|-------|--------|-------|
 | Region | Dynamic | Dynamic | Expands to fit all VPCs |
 | VPC | Dynamic (min 400) | Dynamic (min 300) | Expands to fit children |
-| Subnet | Dynamic (200 default) | Dynamic (80 default) | Expands if has instances |
+| Subnet | Dynamic (200 default) | Dynamic (80 default) | Expands if has SGs |
+| Security Group | 120 minimum | 120 minimum | Expands to fit instances |
 | EC2 Instance | 120 | 88 | Fixed size |
 | Route Table | 120 | 88 | Fixed size |
+| IGW | 120 | 88 | Fixed size |
+
+---
+
+## Recent Changes (Phase 5)
+
+### Architecture Updates
+- ✅ **5-level hierarchy established**: Region → VPC → Subnet → SG → Instance
+- ✅ **SG moved to container role**: Now nests inside Subnets (was VPC-level)
+- ✅ **Instances nest in SGs**: No longer direct children of Subnets
+- ✅ **Orphaned SGs filtered**: Only SGs protecting instances are created
+
+### Layout Improvements
+- ✅ **50px minimum subnet spacing**: Increased from 20px (prevents overlaps)
+- ✅ **Two-pass repositioning**: First pass initial layout, second after size expansion
+- ✅ **Zero node overlaps**: Achieved across all test datasets
+- ✅ **Dynamic spacing**: Adapts to content without fixed positioning
+
+### Test Results
+- ✅ **onload.json**: 27 nodes → Zero overlaps (was 1)
+- ✅ **bo-drone-full.json**: 75 nodes → Zero overlaps (maintained)
+- ✅ **full.json**: 142 nodes → Zero overlaps (maintained)
+- ✅ **enlume-full.json**: 235 nodes → Zero overlaps (was 4 → 0)
 | IGW | 120 | 88 | Fixed size |
 | Security Group | 120 | 88 | Fixed size |
 

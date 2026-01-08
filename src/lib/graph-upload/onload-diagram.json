@@ -32,10 +32,10 @@
         "region": "us-east-2",
         "isContainer": true,
         "width": 1790.0,
-        "height": 1116,
+        "height": 858,
         "size": {
           "width": 1790.0,
-          "height": 1116
+          "height": 858
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -44,7 +44,7 @@
         "nestingDepth": 0
       },
       "width": 1790.0,
-      "height": 1116
+      "height": 858
     },
     {
       "id": "vpc-vpc-06cc31a57a405feb8",
@@ -88,8 +88,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 330,
-          "height": 936
+          "width": 300.0,
+          "height": 678
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -101,8 +101,8 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 330,
-      "height": 936
+      "width": 300.0,
+      "height": 678
     },
     {
       "id": "vpc-vpc-0010db00d5f9b6d24",
@@ -147,7 +147,7 @@
         "isContainer": true,
         "size": {
           "width": 300.0,
-          "height": 708
+          "height": 628
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -160,7 +160,7 @@
         "parentId": "region-us-east-2"
       },
       "width": 300.0,
-      "height": 708
+      "height": 628
     },
     {
       "id": "vpc-vpc-0b71e8dcdd9a40ef8",
@@ -205,7 +205,7 @@
         "isContainer": true,
         "size": {
           "width": 300.0,
-          "height": 858
+          "height": 598
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -218,7 +218,7 @@
         "parentId": "region-us-east-2"
       },
       "width": 300.0,
-      "height": 858
+      "height": 598
     },
     {
       "id": "vpc-vpc-0eb8eab8fc060589d",
@@ -263,7 +263,7 @@
         "isContainer": true,
         "size": {
           "width": 300.0,
-          "height": 858
+          "height": 598
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -276,7 +276,7 @@
         "parentId": "region-us-east-2"
       },
       "width": 300.0,
-      "height": 858
+      "height": 598
     },
     {
       "id": "subnet-subnet-0d7e95372896d77e8",
@@ -335,7 +335,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 360
+        "y": 390
       },
       "data": {
         "label": "subnet-0f74cb72353a2b237",
@@ -387,7 +387,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 460
+        "y": 520
       },
       "data": {
         "label": "subnet-0caaa7cee2f392f8d",
@@ -491,7 +491,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1490,
-        "y": 360
+        "y": 390
       },
       "data": {
         "label": "subnet-01c723a4e0cd68d4f",
@@ -574,8 +574,8 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": 200,
-          "height": 80
+          "width": 210,
+          "height": 180
         },
         "config": {
           "originalType": "AWS::EC2::Subnet",
@@ -587,15 +587,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
-      "width": 200,
-      "height": 80
+      "width": 210,
+      "height": 180
     },
     {
       "id": "subnet-subnet-09a9db2e951c22a88",
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 438
+        "y": 470
       },
       "data": {
         "label": "subnet-09a9db2e951c22a88",
@@ -699,7 +699,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 360
+        "y": 390
       },
       "data": {
         "label": "subnet-03f6049180d037062",
@@ -750,8 +750,8 @@
       "id": "instance-i-0525e04aaef702279",
       "type": "resourceNode",
       "position": {
-        "x": 240,
-        "y": 638
+        "x": 175,
+        "y": 295
       },
       "data": {
         "label": "blazeops-agent-staging-backend-api",
@@ -804,7 +804,7 @@
           "rootDeviceType": "ebs",
           "keyName": "blazeops-agent-staging-ec2-key"
         },
-        "nestingDepth": 3,
+        "nestingDepth": 4,
         "parentId": "sg-sg-0c7910417aebd89b9"
       },
       "width": 120,
@@ -979,7 +979,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 558
+        "y": 590
       },
       "data": {
         "label": "rtb-01acacde45952b958",
@@ -1022,7 +1022,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 658
+        "y": 690
       },
       "data": {
         "label": "rtb-0f5539d37304dfe0a",
@@ -1065,7 +1065,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 580
+        "y": 640
       },
       "data": {
         "label": "rtb-09467ba9741ae03be",
@@ -1108,7 +1108,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 480
+        "y": 510
       },
       "data": {
         "label": "rtb-051150827cea9acd3",
@@ -1151,7 +1151,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1040,
-        "y": 580
+        "y": 610
       },
       "data": {
         "label": "rtb-04c6172af2a46c76f",
@@ -1194,7 +1194,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1490,
-        "y": 480
+        "y": 510
       },
       "data": {
         "label": "rtb-02e5b59e28181011c",
@@ -1237,7 +1237,7 @@
       "type": "resourceNode",
       "position": {
         "x": 1490,
-        "y": 580
+        "y": 610
       },
       "data": {
         "label": "rtb-066fcdc4ec8cdb638",
@@ -1276,107 +1276,11 @@
       "height": 88
     },
     {
-      "id": "sg-sg-0297a5b61aa91b7b5",
-      "type": "resourceNode",
-      "position": {
-        "x": 1060,
-        "y": 708
-      },
-      "data": {
-        "label": "blazeops-agent-staging-agent",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-0297a5b61aa91b7b5",
-        "groupName": "blazeops-agent-staging-agent",
-        "vpcId": "vpc-0b71e8dcdd9a40ef8",
-        "description": "Allow SSH and HTTP access",
-        "inboundRules": 3,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0b71e8dcdd9a40ef8",
-          "ownerId": "720150001470",
-          "vpc": "vpc-0b71e8dcdd9a40ef8",
-          "groupName": "blazeops-agent-staging-agent"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-0390d310fdec957a1",
-      "type": "resourceNode",
-      "position": {
-        "x": 1060,
-        "y": 858
-      },
-      "data": {
-        "label": "default",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-0390d310fdec957a1",
-        "groupName": "default",
-        "vpcId": "vpc-0b71e8dcdd9a40ef8",
-        "description": "default VPC security group",
-        "inboundRules": 0,
-        "outboundRules": 0,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0b71e8dcdd9a40ef8",
-          "ownerId": "720150001470",
-          "vpc": "vpc-0b71e8dcdd9a40ef8",
-          "groupName": "default"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
       "id": "sg-sg-0c7910417aebd89b9",
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 786
+        "y": 280
       },
       "data": {
         "label": "blazeops-agent-staging-agent",
@@ -1403,8 +1307,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 230,
-          "height": -30
+          "width": 150,
+          "height": 120
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -1413,203 +1317,11 @@
           "vpc": "vpc-06cc31a57a405feb8",
           "groupName": "blazeops-agent-staging-agent"
         },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-06cc31a57a405feb8"
+        "nestingDepth": 3,
+        "parentId": "subnet-subnet-0da1a05dfc8b55dc3"
       },
-      "width": 230,
-      "height": -30
-    },
-    {
-      "id": "sg-sg-0600c5b0821b89013",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 936
-      },
-      "data": {
-        "label": "default",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-0600c5b0821b89013",
-        "groupName": "default",
-        "vpcId": "vpc-06cc31a57a405feb8",
-        "description": "default VPC security group",
-        "inboundRules": 0,
-        "outboundRules": 0,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "06cc31a57a405feb8",
-          "ownerId": "720150001470",
-          "vpc": "vpc-06cc31a57a405feb8",
-          "groupName": "default"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-06cc31a57a405feb8"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-0f4187b316b3b1e8e",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 708
-      },
-      "data": {
-        "label": "default",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-0f4187b316b3b1e8e",
-        "groupName": "default",
-        "vpcId": "vpc-0010db00d5f9b6d24",
-        "description": "default VPC security group",
-        "inboundRules": 1,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0010db00d5f9b6d24",
-          "ownerId": "720150001470",
-          "vpc": "vpc-0010db00d5f9b6d24",
-          "groupName": "default"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0010db00d5f9b6d24"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-0aaefac882ac186cf",
-      "type": "resourceNode",
-      "position": {
-        "x": 1510,
-        "y": 708
-      },
-      "data": {
-        "label": "default",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-0aaefac882ac186cf",
-        "groupName": "default",
-        "vpcId": "vpc-0eb8eab8fc060589d",
-        "description": "default VPC security group",
-        "inboundRules": 0,
-        "outboundRules": 0,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0eb8eab8fc060589d",
-          "ownerId": "720150001470",
-          "vpc": "vpc-0eb8eab8fc060589d",
-          "groupName": "default"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0eb8eab8fc060589d"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-0318ab11496d98bb8",
-      "type": "resourceNode",
-      "position": {
-        "x": 1510,
-        "y": 858
-      },
-      "data": {
-        "label": "blazeops-agent-staging-agent",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-0318ab11496d98bb8",
-        "groupName": "blazeops-agent-staging-agent",
-        "vpcId": "vpc-0eb8eab8fc060589d",
-        "description": "Allow SSH and HTTP access",
-        "inboundRules": 3,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0eb8eab8fc060589d",
-          "ownerId": "720150001470",
-          "vpc": "vpc-0eb8eab8fc060589d",
-          "groupName": "blazeops-agent-staging-agent"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0eb8eab8fc060589d"
-      },
-      "width": 200,
-      "height": 100
+      "width": 150,
+      "height": 120
     }
   ],
   "edges": [

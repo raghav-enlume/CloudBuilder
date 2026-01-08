@@ -31,11 +31,11 @@
         },
         "region": "ap-northeast-1",
         "isContainer": true,
-        "width": 890,
-        "height": 1510,
+        "width": 870,
+        "height": 1070,
         "size": {
-          "width": 890,
-          "height": 1510
+          "width": 870,
+          "height": 1070
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -43,8 +43,8 @@
         },
         "nestingDepth": 0
       },
-      "width": 890,
-      "height": 1510
+      "width": 870,
+      "height": 1070
     },
     {
       "id": "vpc-vpc-00132212f1c5c663a",
@@ -88,8 +88,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 1330
+          "width": 280,
+          "height": 890
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -101,8 +101,8 @@
         "nestingDepth": 1,
         "parentId": "region-ap-northeast-1"
       },
-      "width": 300,
-      "height": 1330
+      "width": 280,
+      "height": 890
     },
     {
       "id": "vpc-vpc-0014e926fd3f6611f",
@@ -146,8 +146,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 808
+          "width": 280,
+          "height": 758
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -159,8 +159,8 @@
         "nestingDepth": 1,
         "parentId": "region-ap-northeast-1"
       },
-      "width": 300,
-      "height": 808
+      "width": 280,
+      "height": 758
     },
     {
       "id": "subnet-subnet-aea6361d3503c2d7f",
@@ -219,7 +219,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 360
+        "y": 390
       },
       "data": {
         "label": "subnet-69e5111f2df91e675",
@@ -271,7 +271,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 460
+        "y": 520
       },
       "data": {
         "label": "subnet-70718ada29a0e4a85",
@@ -323,7 +323,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 560
+        "y": 650
       },
       "data": {
         "label": "subnet-95bea5d79dc80a1e1",
@@ -375,7 +375,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 660
+        "y": 780
       },
       "data": {
         "label": "subnet-c326854c1fe2fe627",
@@ -427,7 +427,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 760
+        "y": 910
       },
       "data": {
         "label": "subnet-9f7619facb7827850",
@@ -531,7 +531,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 360
+        "y": 390
       },
       "data": {
         "label": "subnet-9a794d026db790e41",
@@ -583,7 +583,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 460
+        "y": 520
       },
       "data": {
         "label": "subnet-60e8f01a25856cce9",
@@ -635,7 +635,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 560
+        "y": 650
       },
       "data": {
         "label": "subnet-be734a066c357492e",
@@ -683,251 +683,11 @@
       "height": 80
     },
     {
-      "id": "sg-sg-0932613516fe03aca",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 880
-      },
-      "data": {
-        "label": "bo-drone-sg-018",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-0932613516fe03aca",
-        "groupName": "bo-drone-sg-018",
-        "vpcId": "vpc-00132212f1c5c663a",
-        "description": "Security group for BO Drone application 18",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00132212f1c5c663a",
-          "ownerId": null,
-          "vpc": "vpc-00132212f1c5c663a",
-          "groupName": "bo-drone-sg-018"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00132212f1c5c663a"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-ad28fc9c3ecff47cb",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 1030
-      },
-      "data": {
-        "label": "bo-drone-sg-034",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-ad28fc9c3ecff47cb",
-        "groupName": "bo-drone-sg-034",
-        "vpcId": "vpc-00132212f1c5c663a",
-        "description": "Security group for BO Drone application 34",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00132212f1c5c663a",
-          "ownerId": null,
-          "vpc": "vpc-00132212f1c5c663a",
-          "groupName": "bo-drone-sg-034"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00132212f1c5c663a"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-2be21486fed56c28b",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 1180
-      },
-      "data": {
-        "label": "bo-drone-sg-025",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-2be21486fed56c28b",
-        "groupName": "bo-drone-sg-025",
-        "vpcId": "vpc-00132212f1c5c663a",
-        "description": "Security group for BO Drone application 25",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00132212f1c5c663a",
-          "ownerId": null,
-          "vpc": "vpc-00132212f1c5c663a",
-          "groupName": "bo-drone-sg-025"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00132212f1c5c663a"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-d3f2ee416fe14e181",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 1330
-      },
-      "data": {
-        "label": "bo-drone-sg-035",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-d3f2ee416fe14e181",
-        "groupName": "bo-drone-sg-035",
-        "vpcId": "vpc-00132212f1c5c663a",
-        "description": "Security group for BO Drone application 35",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00132212f1c5c663a",
-          "ownerId": null,
-          "vpc": "vpc-00132212f1c5c663a",
-          "groupName": "bo-drone-sg-035"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00132212f1c5c663a"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-2d688a85414b7ec0a",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 808
-      },
-      "data": {
-        "label": "bo-drone-sg-044",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-2d688a85414b7ec0a",
-        "groupName": "bo-drone-sg-044",
-        "vpcId": "vpc-0014e926fd3f6611f",
-        "description": "Security group for BO Drone application 44",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0014e926fd3f6611f",
-          "ownerId": null,
-          "vpc": "vpc-0014e926fd3f6611f",
-          "groupName": "bo-drone-sg-044"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0014e926fd3f6611f"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
       "id": "region-ap-southeast-1",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 1550
+        "y": 1110
       },
       "data": {
         "label": "Region: ap-southeast-1",
@@ -953,11 +713,11 @@
         },
         "region": "ap-southeast-1",
         "isContainer": true,
-        "width": 890,
-        "height": 2160,
+        "width": 870,
+        "height": 810,
         "size": {
-          "width": 890,
-          "height": 2160
+          "width": 870,
+          "height": 810
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -965,15 +725,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 890,
-      "height": 2160
+      "width": 870,
+      "height": 810
     },
     {
       "id": "vpc-vpc-00076762ac00eb6c0",
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 1690
+        "y": 1250
       },
       "data": {
         "label": "vpc-00076762ac00eb6c0",
@@ -1011,7 +771,7 @@
         "isContainer": true,
         "size": {
           "width": 280,
-          "height": 540
+          "height": 630
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -1024,14 +784,14 @@
         "parentId": "region-ap-southeast-1"
       },
       "width": 280,
-      "height": 540
+      "height": 630
     },
     {
       "id": "vpc-vpc-0008368aa506fde61",
       "type": "resourceNode",
       "position": {
         "x": 550,
-        "y": 1690
+        "y": 1250
       },
       "data": {
         "label": "vpc-0008368aa506fde61",
@@ -1068,8 +828,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 1980
+          "width": 280,
+          "height": 370
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -1081,15 +841,15 @@
         "nestingDepth": 1,
         "parentId": "region-ap-southeast-1"
       },
-      "width": 300,
-      "height": 1980
+      "width": 280,
+      "height": 370
     },
     {
       "id": "subnet-subnet-aea16120234661a8b",
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 1810
+        "y": 1370
       },
       "data": {
         "label": "subnet-aea16120234661a8b",
@@ -1141,7 +901,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 1910
+        "y": 1500
       },
       "data": {
         "label": "subnet-d6af901def3eeeb83",
@@ -1193,7 +953,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 2010
+        "y": 1630
       },
       "data": {
         "label": "subnet-cfc65907097ec5a4c",
@@ -1245,7 +1005,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 2110
+        "y": 1760
       },
       "data": {
         "label": "subnet-33f252e629b9dedf1",
@@ -1297,7 +1057,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 1810
+        "y": 1370
       },
       "data": {
         "label": "subnet-afb9aeeea219a6fd6",
@@ -1349,7 +1109,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 1910
+        "y": 1500
       },
       "data": {
         "label": "subnet-0f6a7b8c9d0e12345",
@@ -1397,539 +1157,11 @@
       "height": 80
     },
     {
-      "id": "sg-sg-5ec7b0b5fd31ca69f",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 2030
-      },
-      "data": {
-        "label": "bo-drone-sg-014",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-5ec7b0b5fd31ca69f",
-        "groupName": "bo-drone-sg-014",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 14",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-014"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-15fb39ad2efb155a8",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 2180
-      },
-      "data": {
-        "label": "bo-drone-sg-052",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-15fb39ad2efb155a8",
-        "groupName": "bo-drone-sg-052",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 52",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-052"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-22df8f0399ea21590",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 2330
-      },
-      "data": {
-        "label": "bo-drone-sg-054",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-22df8f0399ea21590",
-        "groupName": "bo-drone-sg-054",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 54",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-054"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-533dbc7bbcd834acf",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 2480
-      },
-      "data": {
-        "label": "bo-drone-sg-015",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-533dbc7bbcd834acf",
-        "groupName": "bo-drone-sg-015",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 15",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-015"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-5601075faa7f84fc0",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 2630
-      },
-      "data": {
-        "label": "bo-drone-sg-023",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-5601075faa7f84fc0",
-        "groupName": "bo-drone-sg-023",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 23",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-023"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-3ff29a63158a082cd",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 2780
-      },
-      "data": {
-        "label": "bo-drone-sg-029",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-3ff29a63158a082cd",
-        "groupName": "bo-drone-sg-029",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 29",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-029"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-2ec3e3fc3bdd55ef3",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 2930
-      },
-      "data": {
-        "label": "bo-drone-sg-031",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-2ec3e3fc3bdd55ef3",
-        "groupName": "bo-drone-sg-031",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 31",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-031"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-72f38ff0b7cfc78a6",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 3080
-      },
-      "data": {
-        "label": "bo-drone-sg-037",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-72f38ff0b7cfc78a6",
-        "groupName": "bo-drone-sg-037",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 37",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-037"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-471dfe3a79b7509e1",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 3230
-      },
-      "data": {
-        "label": "bo-drone-sg-043",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-471dfe3a79b7509e1",
-        "groupName": "bo-drone-sg-043",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 43",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-043"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-9f86aff14fdba30bf",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 3380
-      },
-      "data": {
-        "label": "bo-drone-sg-055",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-9f86aff14fdba30bf",
-        "groupName": "bo-drone-sg-055",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 55",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-055"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-8c12867fe41dbbe30",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 3530
-      },
-      "data": {
-        "label": "bo-drone-sg-059",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-8c12867fe41dbbe30",
-        "groupName": "bo-drone-sg-059",
-        "vpcId": "vpc-0008368aa506fde61",
-        "description": "Security group for BO Drone application 59",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0008368aa506fde61",
-          "ownerId": null,
-          "vpc": "vpc-0008368aa506fde61",
-          "groupName": "bo-drone-sg-059"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0008368aa506fde61"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
       "id": "region-eu-central-1",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 3750
+        "y": 1960
       },
       "data": {
         "label": "Region: eu-central-1",
@@ -1955,11 +1187,11 @@
         },
         "region": "eu-central-1",
         "isContainer": true,
-        "width": 890,
-        "height": 1410,
+        "width": 870,
+        "height": 940,
         "size": {
-          "width": 890,
-          "height": 1410
+          "width": 870,
+          "height": 940
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -1967,15 +1199,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 890,
-      "height": 1410
+      "width": 870,
+      "height": 940
     },
     {
       "id": "vpc-vpc-0011c5ff196d4c440",
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 3890
+        "y": 2100
       },
       "data": {
         "label": "vpc-0011c5ff196d4c440",
@@ -2012,8 +1244,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 1230
+          "width": 280,
+          "height": 760
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -2025,15 +1257,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-central-1"
       },
-      "width": 300,
-      "height": 1230
+      "width": 280,
+      "height": 760
     },
     {
       "id": "vpc-vpc-00121e2a5983e3b3e",
       "type": "resourceNode",
       "position": {
         "x": 550,
-        "y": 3890
+        "y": 2100
       },
       "data": {
         "label": "vpc-00121e2a5983e3b3e",
@@ -2070,8 +1302,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 1230
+          "width": 280,
+          "height": 370
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -2083,15 +1315,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-central-1"
       },
-      "width": 300,
-      "height": 1230
+      "width": 280,
+      "height": 370
     },
     {
       "id": "subnet-subnet-4048da018eb02b845",
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 4010
+        "y": 2220
       },
       "data": {
         "label": "subnet-4048da018eb02b845",
@@ -2143,7 +1375,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 4110
+        "y": 2350
       },
       "data": {
         "label": "subnet-0b2c3d4e5f6a78901",
@@ -2195,7 +1427,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 4010
+        "y": 2220
       },
       "data": {
         "label": "subnet-b012e8a101db87189",
@@ -2247,7 +1479,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 4110
+        "y": 2350
       },
       "data": {
         "label": "subnet-fb328971b2af83295",
@@ -2299,7 +1531,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 4210
+        "y": 2480
       },
       "data": {
         "label": "subnet-4988141516c9bade6",
@@ -2351,7 +1583,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 4310
+        "y": 2610
       },
       "data": {
         "label": "subnet-14ac6c682f292300e",
@@ -2403,7 +1635,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 4410
+        "y": 2740
       },
       "data": {
         "label": "subnet-cbdc84421f408635d",
@@ -2451,491 +1683,11 @@
       "height": 80
     },
     {
-      "id": "sg-sg-0a1b2c3d4e5f67890",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 4230
-      },
-      "data": {
-        "label": "bo-drone-web-sg-east",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-0a1b2c3d4e5f67890",
-        "groupName": "bo-drone-web-sg-east",
-        "vpcId": "vpc-00121e2a5983e3b3e",
-        "description": "BO Drone web tier security group",
-        "inboundRules": 2,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00121e2a5983e3b3e",
-          "ownerId": "123456789012",
-          "vpc": "vpc-00121e2a5983e3b3e",
-          "groupName": "bo-drone-web-sg-east"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00121e2a5983e3b3e"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-9bccb2f40fdd70560",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 4380
-      },
-      "data": {
-        "label": "bo-drone-sg-010",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-9bccb2f40fdd70560",
-        "groupName": "bo-drone-sg-010",
-        "vpcId": "vpc-00121e2a5983e3b3e",
-        "description": "Security group for BO Drone application 10",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00121e2a5983e3b3e",
-          "ownerId": null,
-          "vpc": "vpc-00121e2a5983e3b3e",
-          "groupName": "bo-drone-sg-010"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00121e2a5983e3b3e"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-92658eba50774e476",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 4530
-      },
-      "data": {
-        "label": "bo-drone-sg-026",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-92658eba50774e476",
-        "groupName": "bo-drone-sg-026",
-        "vpcId": "vpc-00121e2a5983e3b3e",
-        "description": "Security group for BO Drone application 26",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00121e2a5983e3b3e",
-          "ownerId": null,
-          "vpc": "vpc-00121e2a5983e3b3e",
-          "groupName": "bo-drone-sg-026"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00121e2a5983e3b3e"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-599b7313b50045f81",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 4680
-      },
-      "data": {
-        "label": "bo-drone-sg-038",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-599b7313b50045f81",
-        "groupName": "bo-drone-sg-038",
-        "vpcId": "vpc-00121e2a5983e3b3e",
-        "description": "Security group for BO Drone application 38",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00121e2a5983e3b3e",
-          "ownerId": null,
-          "vpc": "vpc-00121e2a5983e3b3e",
-          "groupName": "bo-drone-sg-038"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00121e2a5983e3b3e"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-b5ae7e34fd53cd2dd",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 4830
-      },
-      "data": {
-        "label": "bo-drone-sg-040",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-b5ae7e34fd53cd2dd",
-        "groupName": "bo-drone-sg-040",
-        "vpcId": "vpc-00121e2a5983e3b3e",
-        "description": "Security group for BO Drone application 40",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00121e2a5983e3b3e",
-          "ownerId": null,
-          "vpc": "vpc-00121e2a5983e3b3e",
-          "groupName": "bo-drone-sg-040"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00121e2a5983e3b3e"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-0abd47ea1fd3174c2",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 4980
-      },
-      "data": {
-        "label": "bo-drone-sg-011",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-0abd47ea1fd3174c2",
-        "groupName": "bo-drone-sg-011",
-        "vpcId": "vpc-00121e2a5983e3b3e",
-        "description": "Security group for BO Drone application 11",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00121e2a5983e3b3e",
-          "ownerId": null,
-          "vpc": "vpc-00121e2a5983e3b3e",
-          "groupName": "bo-drone-sg-011"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00121e2a5983e3b3e"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-e7e6b51646b1fe705",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 4530
-      },
-      "data": {
-        "label": "bo-drone-sg-012",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-e7e6b51646b1fe705",
-        "groupName": "bo-drone-sg-012",
-        "vpcId": "vpc-0011c5ff196d4c440",
-        "description": "Security group for BO Drone application 12",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0011c5ff196d4c440",
-          "ownerId": null,
-          "vpc": "vpc-0011c5ff196d4c440",
-          "groupName": "bo-drone-sg-012"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0011c5ff196d4c440"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-8ae901d258b6f42be",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 4680
-      },
-      "data": {
-        "label": "bo-drone-sg-042",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-8ae901d258b6f42be",
-        "groupName": "bo-drone-sg-042",
-        "vpcId": "vpc-0011c5ff196d4c440",
-        "description": "Security group for BO Drone application 42",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0011c5ff196d4c440",
-          "ownerId": null,
-          "vpc": "vpc-0011c5ff196d4c440",
-          "groupName": "bo-drone-sg-042"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0011c5ff196d4c440"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-1731d61a6b52fbf50",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 4830
-      },
-      "data": {
-        "label": "bo-drone-sg-050",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-1731d61a6b52fbf50",
-        "groupName": "bo-drone-sg-050",
-        "vpcId": "vpc-0011c5ff196d4c440",
-        "description": "Security group for BO Drone application 50",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0011c5ff196d4c440",
-          "ownerId": null,
-          "vpc": "vpc-0011c5ff196d4c440",
-          "groupName": "bo-drone-sg-050"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0011c5ff196d4c440"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-09f7f9272a0d98068",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 4980
-      },
-      "data": {
-        "label": "bo-drone-sg-027",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-09f7f9272a0d98068",
-        "groupName": "bo-drone-sg-027",
-        "vpcId": "vpc-0011c5ff196d4c440",
-        "description": "Security group for BO Drone application 27",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0011c5ff196d4c440",
-          "ownerId": null,
-          "vpc": "vpc-0011c5ff196d4c440",
-          "groupName": "bo-drone-sg-027"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0011c5ff196d4c440"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
       "id": "region-eu-west-1",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 5200
+        "y": 2940
       },
       "data": {
         "label": "Region: eu-west-1",
@@ -2961,11 +1713,11 @@
         },
         "region": "eu-west-1",
         "isContainer": true,
-        "width": 890,
-        "height": 1110,
+        "width": 870,
+        "height": 680,
         "size": {
-          "width": 890,
-          "height": 1110
+          "width": 870,
+          "height": 680
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -2973,15 +1725,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 890,
-      "height": 1110
+      "width": 870,
+      "height": 680
     },
     {
       "id": "vpc-vpc-000588bd2b6b06e4a",
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 5340
+        "y": 3080
       },
       "data": {
         "label": "vpc-000588bd2b6b06e4a",
@@ -3018,8 +1770,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 930
+          "width": 280,
+          "height": 370
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -3031,15 +1783,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-west-1"
       },
-      "width": 300,
-      "height": 930
+      "width": 280,
+      "height": 370
     },
     {
       "id": "vpc-vpc-00066f5af89a2a3a3",
       "type": "resourceNode",
       "position": {
         "x": 550,
-        "y": 5340
+        "y": 3080
       },
       "data": {
         "label": "vpc-00066f5af89a2a3a3",
@@ -3076,8 +1828,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 730
+          "width": 280,
+          "height": 500
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -3089,15 +1841,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-west-1"
       },
-      "width": 300,
-      "height": 730
+      "width": 280,
+      "height": 500
     },
     {
       "id": "subnet-subnet-40740bb24905b501e",
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 5460
+        "y": 3200
       },
       "data": {
         "label": "subnet-40740bb24905b501e",
@@ -3149,7 +1901,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 5560
+        "y": 3330
       },
       "data": {
         "label": "subnet-bfb1eebb5eaa7d659",
@@ -3201,7 +1953,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 5660
+        "y": 3460
       },
       "data": {
         "label": "subnet-02c9b48fc59f6197a",
@@ -3253,7 +2005,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 5460
+        "y": 3200
       },
       "data": {
         "label": "subnet-0c97e3866710528ca",
@@ -3305,7 +2057,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 5560
+        "y": 3330
       },
       "data": {
         "label": "subnet-e4829d52f38e39eff",
@@ -3353,299 +2105,11 @@
       "height": 80
     },
     {
-      "id": "sg-sg-f8c8003e3efc3f9f2",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 5680
-      },
-      "data": {
-        "label": "bo-drone-sg-028",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-f8c8003e3efc3f9f2",
-        "groupName": "bo-drone-sg-028",
-        "vpcId": "vpc-000588bd2b6b06e4a",
-        "description": "Security group for BO Drone application 28",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "000588bd2b6b06e4a",
-          "ownerId": null,
-          "vpc": "vpc-000588bd2b6b06e4a",
-          "groupName": "bo-drone-sg-028"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-000588bd2b6b06e4a"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-c401290fdc59588ff",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 5830
-      },
-      "data": {
-        "label": "bo-drone-sg-046",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-c401290fdc59588ff",
-        "groupName": "bo-drone-sg-046",
-        "vpcId": "vpc-000588bd2b6b06e4a",
-        "description": "Security group for BO Drone application 46",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "000588bd2b6b06e4a",
-          "ownerId": null,
-          "vpc": "vpc-000588bd2b6b06e4a",
-          "groupName": "bo-drone-sg-046"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-000588bd2b6b06e4a"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-ccd5a42739baa7994",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 5980
-      },
-      "data": {
-        "label": "bo-drone-sg-048",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-ccd5a42739baa7994",
-        "groupName": "bo-drone-sg-048",
-        "vpcId": "vpc-000588bd2b6b06e4a",
-        "description": "Security group for BO Drone application 48",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "000588bd2b6b06e4a",
-          "ownerId": null,
-          "vpc": "vpc-000588bd2b6b06e4a",
-          "groupName": "bo-drone-sg-048"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-000588bd2b6b06e4a"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-6422d66274a993dd7",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 6130
-      },
-      "data": {
-        "label": "bo-drone-sg-041",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-6422d66274a993dd7",
-        "groupName": "bo-drone-sg-041",
-        "vpcId": "vpc-000588bd2b6b06e4a",
-        "description": "Security group for BO Drone application 41",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "000588bd2b6b06e4a",
-          "ownerId": null,
-          "vpc": "vpc-000588bd2b6b06e4a",
-          "groupName": "bo-drone-sg-041"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-000588bd2b6b06e4a"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-1e05b1831eefec248",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 5780
-      },
-      "data": {
-        "label": "bo-drone-sg-017",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-1e05b1831eefec248",
-        "groupName": "bo-drone-sg-017",
-        "vpcId": "vpc-00066f5af89a2a3a3",
-        "description": "Security group for BO Drone application 17",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00066f5af89a2a3a3",
-          "ownerId": null,
-          "vpc": "vpc-00066f5af89a2a3a3",
-          "groupName": "bo-drone-sg-017"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00066f5af89a2a3a3"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-26f0506f110d83bb3",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 5930
-      },
-      "data": {
-        "label": "bo-drone-sg-049",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-26f0506f110d83bb3",
-        "groupName": "bo-drone-sg-049",
-        "vpcId": "vpc-00066f5af89a2a3a3",
-        "description": "Security group for BO Drone application 49",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00066f5af89a2a3a3",
-          "ownerId": null,
-          "vpc": "vpc-00066f5af89a2a3a3",
-          "groupName": "bo-drone-sg-049"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00066f5af89a2a3a3"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
       "id": "region-us-central-1",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 6350
+        "y": 3660
       },
       "data": {
         "label": "Region: us-central-1",
@@ -3671,11 +2135,11 @@
         },
         "region": "us-central-1",
         "isContainer": true,
-        "width": 890,
-        "height": 1360,
+        "width": 870,
+        "height": 940,
         "size": {
-          "width": 890,
-          "height": 1360
+          "width": 870,
+          "height": 940
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -3683,15 +2147,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 890,
-      "height": 1360
+      "width": 870,
+      "height": 940
     },
     {
       "id": "vpc-vpc-0009e5f7aa321aa49",
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 6490
+        "y": 3800
       },
       "data": {
         "label": "vpc-0009e5f7aa321aa49",
@@ -3728,8 +2192,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 930
+          "width": 280,
+          "height": 760
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -3741,15 +2205,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-central-1"
       },
-      "width": 300,
-      "height": 930
+      "width": 280,
+      "height": 760
     },
     {
       "id": "vpc-vpc-0010294f1555eed37",
       "type": "resourceNode",
       "position": {
         "x": 550,
-        "y": 6490
+        "y": 3800
       },
       "data": {
         "label": "vpc-0010294f1555eed37",
@@ -3786,8 +2250,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 1180
+          "width": 280,
+          "height": 500
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -3799,15 +2263,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-central-1"
       },
-      "width": 300,
-      "height": 1180
+      "width": 280,
+      "height": 500
     },
     {
       "id": "subnet-subnet-3fe2111b886a47ba6",
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 6610
+        "y": 3920
       },
       "data": {
         "label": "subnet-3fe2111b886a47ba6",
@@ -3859,7 +2323,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 6710
+        "y": 4050
       },
       "data": {
         "label": "subnet-1f51d9a399eda6af4",
@@ -3911,7 +2375,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 6810
+        "y": 4180
       },
       "data": {
         "label": "subnet-09442feb37f057132",
@@ -3963,7 +2427,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 6910
+        "y": 4310
       },
       "data": {
         "label": "subnet-7433015295393b6f9",
@@ -4015,7 +2479,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 7010
+        "y": 4440
       },
       "data": {
         "label": "subnet-c13ddaa8936a8fcc0",
@@ -4067,7 +2531,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 6610
+        "y": 3920
       },
       "data": {
         "label": "subnet-0932e3a6345f87b11",
@@ -4119,7 +2583,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 6710
+        "y": 4050
       },
       "data": {
         "label": "subnet-ff4e9895b0837a092",
@@ -4171,7 +2635,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 6810
+        "y": 4180
       },
       "data": {
         "label": "subnet-6f2227b803e51c30e",
@@ -4219,347 +2683,11 @@
       "height": 80
     },
     {
-      "id": "sg-sg-5dbda21d8cb5dfb18",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 6930
-      },
-      "data": {
-        "label": "bo-drone-sg-020",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-5dbda21d8cb5dfb18",
-        "groupName": "bo-drone-sg-020",
-        "vpcId": "vpc-0010294f1555eed37",
-        "description": "Security group for BO Drone application 20",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0010294f1555eed37",
-          "ownerId": null,
-          "vpc": "vpc-0010294f1555eed37",
-          "groupName": "bo-drone-sg-020"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0010294f1555eed37"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-3295ea3f047513c3b",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 7080
-      },
-      "data": {
-        "label": "bo-drone-sg-024",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-3295ea3f047513c3b",
-        "groupName": "bo-drone-sg-024",
-        "vpcId": "vpc-0010294f1555eed37",
-        "description": "Security group for BO Drone application 24",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0010294f1555eed37",
-          "ownerId": null,
-          "vpc": "vpc-0010294f1555eed37",
-          "groupName": "bo-drone-sg-024"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0010294f1555eed37"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-3da5b564772a406e1",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 7230
-      },
-      "data": {
-        "label": "bo-drone-sg-030",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-3da5b564772a406e1",
-        "groupName": "bo-drone-sg-030",
-        "vpcId": "vpc-0010294f1555eed37",
-        "description": "Security group for BO Drone application 30",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0010294f1555eed37",
-          "ownerId": null,
-          "vpc": "vpc-0010294f1555eed37",
-          "groupName": "bo-drone-sg-030"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0010294f1555eed37"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-d7ec509c0c18aa0c4",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 7380
-      },
-      "data": {
-        "label": "bo-drone-sg-032",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-d7ec509c0c18aa0c4",
-        "groupName": "bo-drone-sg-032",
-        "vpcId": "vpc-0010294f1555eed37",
-        "description": "Security group for BO Drone application 32",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0010294f1555eed37",
-          "ownerId": null,
-          "vpc": "vpc-0010294f1555eed37",
-          "groupName": "bo-drone-sg-032"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0010294f1555eed37"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-5d8825310d89eee7f",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 7530
-      },
-      "data": {
-        "label": "bo-drone-sg-036",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-5d8825310d89eee7f",
-        "groupName": "bo-drone-sg-036",
-        "vpcId": "vpc-0010294f1555eed37",
-        "description": "Security group for BO Drone application 36",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0010294f1555eed37",
-          "ownerId": null,
-          "vpc": "vpc-0010294f1555eed37",
-          "groupName": "bo-drone-sg-036"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0010294f1555eed37"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-a800a83c3bfd7600c",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 7130
-      },
-      "data": {
-        "label": "bo-drone-sg-019",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-a800a83c3bfd7600c",
-        "groupName": "bo-drone-sg-019",
-        "vpcId": "vpc-0009e5f7aa321aa49",
-        "description": "Security group for BO Drone application 19",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0009e5f7aa321aa49",
-          "ownerId": null,
-          "vpc": "vpc-0009e5f7aa321aa49",
-          "groupName": "bo-drone-sg-019"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0009e5f7aa321aa49"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-b39ff2b6bb34f9e7a",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 7280
-      },
-      "data": {
-        "label": "bo-drone-sg-047",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-b39ff2b6bb34f9e7a",
-        "groupName": "bo-drone-sg-047",
-        "vpcId": "vpc-0009e5f7aa321aa49",
-        "description": "Security group for BO Drone application 47",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "0009e5f7aa321aa49",
-          "ownerId": null,
-          "vpc": "vpc-0009e5f7aa321aa49",
-          "groupName": "bo-drone-sg-047"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0009e5f7aa321aa49"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
       "id": "region-us-east-1",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 7750
+        "y": 4640
       },
       "data": {
         "label": "Region: us-east-1",
@@ -4585,11 +2713,11 @@
         },
         "region": "us-east-1",
         "isContainer": true,
-        "width": 890,
-        "height": 1910,
+        "width": 870,
+        "height": 810,
         "size": {
-          "width": 890,
-          "height": 1910
+          "width": 870,
+          "height": 810
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -4597,15 +2725,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 890,
-      "height": 1910
+      "width": 870,
+      "height": 810
     },
     {
       "id": "vpc-vpc-00017e718dcd12e07",
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 7890
+        "y": 4780
       },
       "data": {
         "label": "vpc-00017e718dcd12e07",
@@ -4642,8 +2770,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 1730
+          "width": 280,
+          "height": 630
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -4655,15 +2783,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-1"
       },
-      "width": 300,
-      "height": 1730
+      "width": 280,
+      "height": 630
     },
     {
       "id": "vpc-vpc-000256c6b84bd583c",
       "type": "resourceNode",
       "position": {
         "x": 550,
-        "y": 7890
+        "y": 4780
       },
       "data": {
         "label": "vpc-000256c6b84bd583c",
@@ -4700,8 +2828,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 680
+          "width": 280,
+          "height": 630
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -4713,15 +2841,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-1"
       },
-      "width": 300,
-      "height": 680
+      "width": 280,
+      "height": 630
     },
     {
       "id": "subnet-subnet-095498e1865aa6211",
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 8010
+        "y": 4900
       },
       "data": {
         "label": "subnet-095498e1865aa6211",
@@ -4773,7 +2901,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 8110
+        "y": 5030
       },
       "data": {
         "label": "subnet-60e1b7dc21355771b",
@@ -4825,7 +2953,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 8210
+        "y": 5160
       },
       "data": {
         "label": "subnet-614a2fbf347e446af",
@@ -4877,7 +3005,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 8310
+        "y": 5290
       },
       "data": {
         "label": "subnet-ab586baa6bda9bb38",
@@ -4929,7 +3057,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 8010
+        "y": 4900
       },
       "data": {
         "label": "subnet-001f39f1dba23d51c",
@@ -4981,7 +3109,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 8110
+        "y": 5030
       },
       "data": {
         "label": "subnet-e6efbf63c8085a13c",
@@ -5033,7 +3161,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 8210
+        "y": 5160
       },
       "data": {
         "label": "subnet-ce7d70bb576aa9726",
@@ -5085,7 +3213,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 8310
+        "y": 5290
       },
       "data": {
         "label": "subnet-dac3969f3e85d470b",
@@ -5137,7 +3265,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 680
+        "y": 770
       },
       "data": {
         "label": "rtb-0a1b2c3d4e5f67890",
@@ -5176,443 +3304,11 @@
       "height": 88
     },
     {
-      "id": "sg-sg-6d722aeebdd7b86a1",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 8430
-      },
-      "data": {
-        "label": "bo-drone-sg-022",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-6d722aeebdd7b86a1",
-        "groupName": "bo-drone-sg-022",
-        "vpcId": "vpc-000256c6b84bd583c",
-        "description": "Security group for BO Drone application 22",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "000256c6b84bd583c",
-          "ownerId": null,
-          "vpc": "vpc-000256c6b84bd583c",
-          "groupName": "bo-drone-sg-022"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-000256c6b84bd583c"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-ece2b2049df9ca85d",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 8430
-      },
-      "data": {
-        "label": "bo-drone-sg-056",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-ece2b2049df9ca85d",
-        "groupName": "bo-drone-sg-056",
-        "vpcId": "vpc-00017e718dcd12e07",
-        "description": "Security group for BO Drone application 56",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00017e718dcd12e07",
-          "ownerId": null,
-          "vpc": "vpc-00017e718dcd12e07",
-          "groupName": "bo-drone-sg-056"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00017e718dcd12e07"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-07fdc51b0e1005855",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 8580
-      },
-      "data": {
-        "label": "bo-drone-sg-058",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-07fdc51b0e1005855",
-        "groupName": "bo-drone-sg-058",
-        "vpcId": "vpc-00017e718dcd12e07",
-        "description": "Security group for BO Drone application 58",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00017e718dcd12e07",
-          "ownerId": null,
-          "vpc": "vpc-00017e718dcd12e07",
-          "groupName": "bo-drone-sg-058"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00017e718dcd12e07"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-0f6a7b8c9d0e12345",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 8730
-      },
-      "data": {
-        "label": "bo-drone-app-sg-west",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-0f6a7b8c9d0e12345",
-        "groupName": "bo-drone-app-sg-west",
-        "vpcId": "vpc-00017e718dcd12e07",
-        "description": "BO Drone application tier security group",
-        "inboundRules": 1,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00017e718dcd12e07",
-          "ownerId": "123456789012",
-          "vpc": "vpc-00017e718dcd12e07",
-          "groupName": "bo-drone-app-sg-west"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00017e718dcd12e07"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-6d18cd4d6efd6e119",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 8880
-      },
-      "data": {
-        "label": "bo-drone-sg-021",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-6d18cd4d6efd6e119",
-        "groupName": "bo-drone-sg-021",
-        "vpcId": "vpc-00017e718dcd12e07",
-        "description": "Security group for BO Drone application 21",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00017e718dcd12e07",
-          "ownerId": null,
-          "vpc": "vpc-00017e718dcd12e07",
-          "groupName": "bo-drone-sg-021"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00017e718dcd12e07"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-b07dcebdf9ac951fa",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 9030
-      },
-      "data": {
-        "label": "bo-drone-sg-033",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-b07dcebdf9ac951fa",
-        "groupName": "bo-drone-sg-033",
-        "vpcId": "vpc-00017e718dcd12e07",
-        "description": "Security group for BO Drone application 33",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00017e718dcd12e07",
-          "ownerId": null,
-          "vpc": "vpc-00017e718dcd12e07",
-          "groupName": "bo-drone-sg-033"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00017e718dcd12e07"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-e383c278b57c33b39",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 9180
-      },
-      "data": {
-        "label": "bo-drone-sg-045",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-e383c278b57c33b39",
-        "groupName": "bo-drone-sg-045",
-        "vpcId": "vpc-00017e718dcd12e07",
-        "description": "Security group for BO Drone application 45",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00017e718dcd12e07",
-          "ownerId": null,
-          "vpc": "vpc-00017e718dcd12e07",
-          "groupName": "bo-drone-sg-045"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00017e718dcd12e07"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-6dfc8ba590b8a0ff6",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 9330
-      },
-      "data": {
-        "label": "bo-drone-sg-051",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-6dfc8ba590b8a0ff6",
-        "groupName": "bo-drone-sg-051",
-        "vpcId": "vpc-00017e718dcd12e07",
-        "description": "Security group for BO Drone application 51",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00017e718dcd12e07",
-          "ownerId": null,
-          "vpc": "vpc-00017e718dcd12e07",
-          "groupName": "bo-drone-sg-051"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00017e718dcd12e07"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-33504ebd81fec6cbe",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 9480
-      },
-      "data": {
-        "label": "bo-drone-sg-053",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-33504ebd81fec6cbe",
-        "groupName": "bo-drone-sg-053",
-        "vpcId": "vpc-00017e718dcd12e07",
-        "description": "Security group for BO Drone application 53",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00017e718dcd12e07",
-          "ownerId": null,
-          "vpc": "vpc-00017e718dcd12e07",
-          "groupName": "bo-drone-sg-053"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00017e718dcd12e07"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
       "id": "region-us-west-2",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 9700
+        "y": 5490
       },
       "data": {
         "label": "Region: us-west-2",
@@ -5638,11 +3334,11 @@
         },
         "region": "us-west-2",
         "isContainer": true,
-        "width": 890,
-        "height": 1060,
+        "width": 870,
+        "height": 1070,
         "size": {
-          "width": 890,
-          "height": 1060
+          "width": 870,
+          "height": 1070
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -5650,15 +3346,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 890,
-      "height": 1060
+      "width": 870,
+      "height": 1070
     },
     {
       "id": "vpc-vpc-00035c254391aa4ba",
       "type": "resourceNode",
       "position": {
         "x": 100,
-        "y": 9840
+        "y": 5630
       },
       "data": {
         "label": "vpc-00035c254391aa4ba",
@@ -5695,8 +3391,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 880
+          "width": 280,
+          "height": 890
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -5708,15 +3404,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 300,
-      "height": 880
+      "width": 280,
+      "height": 890
     },
     {
       "id": "vpc-vpc-00044fca21ebe63d7",
       "type": "resourceNode",
       "position": {
         "x": 550,
-        "y": 9840
+        "y": 5630
       },
       "data": {
         "label": "vpc-00044fca21ebe63d7",
@@ -5753,8 +3449,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300,
-          "height": 880
+          "width": 280,
+          "height": 500
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -5766,15 +3462,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 300,
-      "height": 880
+      "width": 280,
+      "height": 500
     },
     {
       "id": "subnet-subnet-0a1b2c3d4e5f67890",
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 9960
+        "y": 5750
       },
       "data": {
         "label": "subnet-0a1b2c3d4e5f67890",
@@ -5826,7 +3522,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 10060
+        "y": 5880
       },
       "data": {
         "label": "subnet-46799203b300bc94d",
@@ -5878,7 +3574,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 10160
+        "y": 6010
       },
       "data": {
         "label": "subnet-f04e858657460c0f7",
@@ -5930,7 +3626,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 10260
+        "y": 6140
       },
       "data": {
         "label": "subnet-de645ce5e6692ca23",
@@ -5982,7 +3678,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 10360
+        "y": 6270
       },
       "data": {
         "label": "subnet-50811ee2aa95db6a1",
@@ -6034,7 +3730,7 @@
       "type": "resourceNode",
       "position": {
         "x": 140,
-        "y": 10460
+        "y": 6400
       },
       "data": {
         "label": "subnet-e404cb4ecd78d32aa",
@@ -6086,7 +3782,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 9960
+        "y": 5750
       },
       "data": {
         "label": "subnet-f665827803bb06e3c",
@@ -6138,7 +3834,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 10060
+        "y": 5880
       },
       "data": {
         "label": "subnet-82e4cc8896baccefb",
@@ -6190,7 +3886,7 @@
       "type": "resourceNode",
       "position": {
         "x": 590,
-        "y": 10160
+        "y": 6010
       },
       "data": {
         "label": "subnet-0dd1b59a25f1c2ecc",
@@ -6236,198 +3932,6 @@
       },
       "width": 200,
       "height": 80
-    },
-    {
-      "id": "sg-sg-5ca8fca520daeadf0",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 10280
-      },
-      "data": {
-        "label": "bo-drone-sg-016",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-5ca8fca520daeadf0",
-        "groupName": "bo-drone-sg-016",
-        "vpcId": "vpc-00044fca21ebe63d7",
-        "description": "Security group for BO Drone application 16",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00044fca21ebe63d7",
-          "ownerId": null,
-          "vpc": "vpc-00044fca21ebe63d7",
-          "groupName": "bo-drone-sg-016"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00044fca21ebe63d7"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-e671c3d7470f2b782",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 10430
-      },
-      "data": {
-        "label": "bo-drone-sg-013",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-e671c3d7470f2b782",
-        "groupName": "bo-drone-sg-013",
-        "vpcId": "vpc-00044fca21ebe63d7",
-        "description": "Security group for BO Drone application 13",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00044fca21ebe63d7",
-          "ownerId": null,
-          "vpc": "vpc-00044fca21ebe63d7",
-          "groupName": "bo-drone-sg-013"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00044fca21ebe63d7"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-97fe7386d97fd792d",
-      "type": "resourceNode",
-      "position": {
-        "x": 610,
-        "y": 10580
-      },
-      "data": {
-        "label": "bo-drone-sg-057",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-97fe7386d97fd792d",
-        "groupName": "bo-drone-sg-057",
-        "vpcId": "vpc-00044fca21ebe63d7",
-        "description": "Security group for BO Drone application 57",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00044fca21ebe63d7",
-          "ownerId": null,
-          "vpc": "vpc-00044fca21ebe63d7",
-          "groupName": "bo-drone-sg-057"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00044fca21ebe63d7"
-      },
-      "width": 200,
-      "height": 100
-    },
-    {
-      "id": "sg-sg-4cdcea5fde0f59819",
-      "type": "resourceNode",
-      "position": {
-        "x": 160,
-        "y": 10580
-      },
-      "data": {
-        "label": "bo-drone-sg-039",
-        "resourceType": {
-          "id": "securityGroup",
-          "name": "Security Group",
-          "category": "security",
-          "icon": "waf",
-          "description": "Security Group",
-          "color": "#DD344C",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Security Group Name",
-              "type": "text"
-            }
-          ]
-        },
-        "groupId": "sg-4cdcea5fde0f59819",
-        "groupName": "bo-drone-sg-039",
-        "vpcId": "vpc-00035c254391aa4ba",
-        "description": "Security group for BO Drone application 39",
-        "inboundRules": 0,
-        "outboundRules": 1,
-        "isContainer": true,
-        "size": {
-          "width": 200,
-          "height": 100
-        },
-        "config": {
-          "originalType": "AWS::EC2::SecurityGroup",
-          "region": "00035c254391aa4ba",
-          "ownerId": null,
-          "vpc": "vpc-00035c254391aa4ba",
-          "groupName": "bo-drone-sg-039"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-00035c254391aa4ba"
-      },
-      "width": 200,
-      "height": 100
     }
   ],
   "edges": [
