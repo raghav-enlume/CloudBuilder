@@ -1,0 +1,1425 @@
+{
+  "nodes": [
+    {
+      "id": "region-us-east-2",
+      "type": "resourceNode",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "label": "Region: us-east-2",
+        "resourceType": {
+          "id": "region",
+          "name": "Region",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "AWS Region",
+          "color": "#3949AB"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::Region",
+          "region": "us-east-2"
+        },
+        "nestingDepth": 0
+      },
+      "width": 5240,
+      "height": 768,
+      "size": {
+        "width": 5240,
+        "height": 768
+      }
+    },
+    {
+      "id": "vpc-vpc-06cc31a57a405feb8",
+      "type": "resourceNode",
+      "position": {
+        "x": 100,
+        "y": 140
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "vpc",
+          "name": "VPC",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual private cloud",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::VPC",
+          "region": "us-east-2",
+          "ownerId": "720150001470",
+          "instanceTenancy": "default",
+          "dhcpOptionsId": "dopt-006475053db1b9fc4"
+        },
+        "nestingDepth": 1,
+        "vpc_id": "vpc-06cc31a57a405feb8",
+        "cidr_block": "10.0.0.0/16",
+        "state": "available",
+        "is_default": false,
+        "parentId": "region-us-east-2"
+      },
+      "width": 1200,
+      "height": 588
+    },
+    {
+      "id": "vpc-vpc-0010db00d5f9b6d24",
+      "type": "resourceNode",
+      "position": {
+        "x": 1400,
+        "y": 140
+      },
+      "data": {
+        "label": "vpc-0010db00d5f9b6d24",
+        "resourceType": {
+          "id": "vpc",
+          "name": "VPC",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual private cloud",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::VPC",
+          "region": "us-east-2",
+          "ownerId": "720150001470",
+          "instanceTenancy": "default",
+          "dhcpOptionsId": "dopt-006475053db1b9fc4"
+        },
+        "nestingDepth": 1,
+        "vpc_id": "vpc-0010db00d5f9b6d24",
+        "cidr_block": "172.31.0.0/16",
+        "state": "available",
+        "is_default": true,
+        "parentId": "region-us-east-2"
+      },
+      "width": 1200,
+      "height": 588
+    },
+    {
+      "id": "vpc-vpc-0b71e8dcdd9a40ef8",
+      "type": "resourceNode",
+      "position": {
+        "x": 2700,
+        "y": 140
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "vpc",
+          "name": "VPC",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual private cloud",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::VPC",
+          "region": "us-east-2",
+          "ownerId": "720150001470",
+          "instanceTenancy": "default",
+          "dhcpOptionsId": "dopt-006475053db1b9fc4"
+        },
+        "nestingDepth": 1,
+        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
+        "cidr_block": "10.0.0.0/16",
+        "state": "available",
+        "is_default": false,
+        "parentId": "region-us-east-2"
+      },
+      "width": 1200,
+      "height": 588
+    },
+    {
+      "id": "vpc-vpc-0eb8eab8fc060589d",
+      "type": "resourceNode",
+      "position": {
+        "x": 4000,
+        "y": 140
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "vpc",
+          "name": "VPC",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual private cloud",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::VPC",
+          "region": "us-east-2",
+          "ownerId": "720150001470",
+          "instanceTenancy": "default",
+          "dhcpOptionsId": "dopt-006475053db1b9fc4"
+        },
+        "nestingDepth": 1,
+        "vpc_id": "vpc-0eb8eab8fc060589d",
+        "cidr_block": "10.0.0.0/16",
+        "state": "available",
+        "is_default": false,
+        "parentId": "region-us-east-2"
+      },
+      "width": 1200,
+      "height": 588
+    },
+    {
+      "id": "subnet-subnet-0d7e95372896d77e8",
+      "type": "resourceNode",
+      "position": {
+        "x": 1440,
+        "y": 170
+      },
+      "data": {
+        "label": "subnet-0d7e95372896d77e8",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": "720150001470",
+          "availabilityZoneId": "use2-az1",
+          "defaultForAz": true
+        },
+        "nestingDepth": 2,
+        "subnet_id": "subnet-0d7e95372896d77e8",
+        "vpc_id": "vpc-0010db00d5f9b6d24",
+        "cidr_block": "172.31.0.0/20",
+        "availability_zone": "us-east-2a",
+        "state": "available",
+        "parentId": "vpc-vpc-0010db00d5f9b6d24"
+      },
+      "width": 1120,
+      "height": 160
+    },
+    {
+      "id": "subnet-subnet-0f74cb72353a2b237",
+      "type": "resourceNode",
+      "position": {
+        "x": 1440,
+        "y": 340
+      },
+      "data": {
+        "label": "subnet-0f74cb72353a2b237",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": "720150001470",
+          "availabilityZoneId": "use2-az2",
+          "defaultForAz": true
+        },
+        "nestingDepth": 2,
+        "subnet_id": "subnet-0f74cb72353a2b237",
+        "vpc_id": "vpc-0010db00d5f9b6d24",
+        "cidr_block": "172.31.16.0/20",
+        "availability_zone": "us-east-2b",
+        "state": "available",
+        "parentId": "vpc-vpc-0010db00d5f9b6d24"
+      },
+      "width": 1120,
+      "height": 160
+    },
+    {
+      "id": "subnet-subnet-0caaa7cee2f392f8d",
+      "type": "resourceNode",
+      "position": {
+        "x": 1440,
+        "y": 510
+      },
+      "data": {
+        "label": "subnet-0caaa7cee2f392f8d",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": "720150001470",
+          "availabilityZoneId": "use2-az3",
+          "defaultForAz": true
+        },
+        "nestingDepth": 2,
+        "subnet_id": "subnet-0caaa7cee2f392f8d",
+        "vpc_id": "vpc-0010db00d5f9b6d24",
+        "cidr_block": "172.31.32.0/20",
+        "availability_zone": "us-east-2c",
+        "state": "available",
+        "parentId": "vpc-vpc-0010db00d5f9b6d24"
+      },
+      "width": 1120,
+      "height": 160
+    },
+    {
+      "id": "subnet-subnet-0cc22aef01a024a4a",
+      "type": "resourceNode",
+      "position": {
+        "x": 4040,
+        "y": 170
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": "720150001470",
+          "availabilityZoneId": "use2-az2",
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "subnet_id": "subnet-0cc22aef01a024a4a",
+        "vpc_id": "vpc-0eb8eab8fc060589d",
+        "cidr_block": "10.0.2.0/24",
+        "availability_zone": "us-east-2b",
+        "state": "available",
+        "parentId": "vpc-vpc-0eb8eab8fc060589d"
+      },
+      "width": 1120,
+      "height": 160
+    },
+    {
+      "id": "subnet-subnet-01c723a4e0cd68d4f",
+      "type": "resourceNode",
+      "position": {
+        "x": 4040,
+        "y": 340
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": "720150001470",
+          "availabilityZoneId": "use2-az1",
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "subnet_id": "subnet-01c723a4e0cd68d4f",
+        "vpc_id": "vpc-0eb8eab8fc060589d",
+        "cidr_block": "10.0.1.0/24",
+        "availability_zone": "us-east-2a",
+        "state": "available",
+        "parentId": "vpc-vpc-0eb8eab8fc060589d"
+      },
+      "width": 1120,
+      "height": 160
+    },
+    {
+      "id": "subnet-subnet-0da1a05dfc8b55dc3",
+      "type": "resourceNode",
+      "position": {
+        "x": 140,
+        "y": 170
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": "720150001470",
+          "availabilityZoneId": "use2-az1",
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "subnet_id": "subnet-0da1a05dfc8b55dc3",
+        "vpc_id": "vpc-06cc31a57a405feb8",
+        "cidr_block": "10.0.1.0/24",
+        "availability_zone": "us-east-2a",
+        "state": "available",
+        "parentId": "vpc-vpc-06cc31a57a405feb8"
+      },
+      "width": 180,
+      "height": 123
+    },
+    {
+      "id": "subnet-subnet-09a9db2e951c22a88",
+      "type": "resourceNode",
+      "position": {
+        "x": 140,
+        "y": 340
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": "720150001470",
+          "availabilityZoneId": "use2-az2",
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "subnet_id": "subnet-09a9db2e951c22a88",
+        "vpc_id": "vpc-06cc31a57a405feb8",
+        "cidr_block": "10.0.2.0/24",
+        "availability_zone": "us-east-2b",
+        "state": "available",
+        "parentId": "vpc-vpc-06cc31a57a405feb8"
+      },
+      "width": 1120,
+      "height": 160
+    },
+    {
+      "id": "subnet-subnet-0381aa2076a4bb590",
+      "type": "resourceNode",
+      "position": {
+        "x": 2740,
+        "y": 170
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": "720150001470",
+          "availabilityZoneId": "use2-az1",
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "subnet_id": "subnet-0381aa2076a4bb590",
+        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
+        "cidr_block": "10.0.1.0/24",
+        "availability_zone": "us-east-2a",
+        "state": "available",
+        "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
+      },
+      "width": 1120,
+      "height": 160
+    },
+    {
+      "id": "subnet-subnet-03f6049180d037062",
+      "type": "resourceNode",
+      "position": {
+        "x": 2740,
+        "y": 340
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF"
+        },
+        "isContainer": true,
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": "720150001470",
+          "availabilityZoneId": "use2-az2",
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "subnet_id": "subnet-03f6049180d037062",
+        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
+        "cidr_block": "10.0.2.0/24",
+        "availability_zone": "us-east-2b",
+        "state": "available",
+        "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
+      },
+      "width": 1120,
+      "height": 160
+    },
+    {
+      "id": "instance-i-0525e04aaef702279",
+      "type": "resourceNode",
+      "position": {
+        "x": 160,
+        "y": 165
+      },
+      "data": {
+        "label": "blazeops-agent-staging-backend-api",
+        "resourceType": {
+          "id": "ec2",
+          "name": "EC2 Instance",
+          "category": "compute",
+          "icon": "ec2",
+          "description": "Virtual server in the cloud",
+          "color": "#FF9900"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::Instance",
+          "region": "0da1a05dfc8b55dc3",
+          "vpc": "vpc-06cc31a57a405feb8",
+          "subnet": "subnet-0da1a05dfc8b55dc3",
+          "securityGroup": "sg-0c7910417aebd89b9",
+          "instanceType": "t3.small",
+          "architecture": "x86_64",
+          "hypervisor": "xen",
+          "virtualizationType": "hvm",
+          "rootDeviceName": "/dev/sda1",
+          "rootDeviceType": "ebs",
+          "keyName": "blazeops-agent-staging-ec2-key"
+        },
+        "nestingDepth": 3,
+        "instance_id": "i-0525e04aaef702279",
+        "instance_type": "t3.small",
+        "state": "running",
+        "private_ip": "10.0.1.119",
+        "public_ip": "3.142.252.53",
+        "image_id": "ami-0e83be366243f524a",
+        "launch_time": "2025-11-20T13:09:30+00:00",
+        "subnet_id": "subnet-0da1a05dfc8b55dc3",
+        "vpc_id": "vpc-06cc31a57a405feb8",
+        "parentId": "subnet-subnet-0da1a05dfc8b55dc3"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "igw-igw-01d5c14d9e2b4b9c8",
+      "type": "resourceNode",
+      "position": {
+        "x": 640.0,
+        "y": 150
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "internetgateway",
+          "name": "Internet Gateway",
+          "category": "networking",
+          "icon": "elb",
+          "description": "Internet Gateway",
+          "color": "#FF9900"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::InternetGateway",
+          "region": "06cc31a57a405feb8",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "gateway_id": "igw-01d5c14d9e2b4b9c8",
+        "parentId": "vpc-vpc-06cc31a57a405feb8"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "igw-igw-0a13a84d2fd72a28d",
+      "type": "resourceNode",
+      "position": {
+        "x": 3240.0,
+        "y": 150
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "internetgateway",
+          "name": "Internet Gateway",
+          "category": "networking",
+          "icon": "elb",
+          "description": "Internet Gateway",
+          "color": "#FF9900"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::InternetGateway",
+          "region": "0b71e8dcdd9a40ef8",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "gateway_id": "igw-0a13a84d2fd72a28d",
+        "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "igw-igw-0b3cd3490eb35a07c",
+      "type": "resourceNode",
+      "position": {
+        "x": 1940.0,
+        "y": 150
+      },
+      "data": {
+        "label": "igw-0b3cd3490eb35a07c",
+        "resourceType": {
+          "id": "internetgateway",
+          "name": "Internet Gateway",
+          "category": "networking",
+          "icon": "elb",
+          "description": "Internet Gateway",
+          "color": "#FF9900"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::InternetGateway",
+          "region": "0010db00d5f9b6d24",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "gateway_id": "igw-0b3cd3490eb35a07c",
+        "parentId": "vpc-vpc-0010db00d5f9b6d24"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "igw-igw-0eefc716b166cc3f6",
+      "type": "resourceNode",
+      "position": {
+        "x": 4540.0,
+        "y": 150
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "internetgateway",
+          "name": "Internet Gateway",
+          "category": "networking",
+          "icon": "elb",
+          "description": "Internet Gateway",
+          "color": "#FF9900"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::InternetGateway",
+          "region": "0eb8eab8fc060589d",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "gateway_id": "igw-0eefc716b166cc3f6",
+        "parentId": "vpc-vpc-0eb8eab8fc060589d"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-01acacde45952b958",
+      "type": "resourceNode",
+      "position": {
+        "x": 453.33333333333326,
+        "y": 600
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "06cc31a57a405feb8",
+          "vpcId": "vpc-06cc31a57a405feb8",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "route_table_id": "rtb-01acacde45952b958",
+        "vpc_id": "vpc-06cc31a57a405feb8",
+        "routes": [
+          {
+            "DestinationCidrBlock": "10.0.0.0/16",
+            "GatewayId": "local",
+            "Origin": "CreateRouteTable",
+            "State": "active"
+          }
+        ],
+        "parentId": "vpc-vpc-06cc31a57a405feb8"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-0f5539d37304dfe0a",
+      "type": "resourceNode",
+      "position": {
+        "x": 826.6666666666666,
+        "y": 600
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "06cc31a57a405feb8",
+          "vpcId": "vpc-06cc31a57a405feb8",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "route_table_id": "rtb-0f5539d37304dfe0a",
+        "vpc_id": "vpc-06cc31a57a405feb8",
+        "routes": [
+          {
+            "DestinationCidrBlock": "10.0.0.0/16",
+            "GatewayId": "local",
+            "Origin": "CreateRouteTable",
+            "State": "active"
+          },
+          {
+            "DestinationCidrBlock": "0.0.0.0/0",
+            "GatewayId": "igw-01d5c14d9e2b4b9c8",
+            "Origin": "CreateRoute",
+            "State": "active"
+          }
+        ],
+        "parentId": "vpc-vpc-06cc31a57a405feb8"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-09467ba9741ae03be",
+      "type": "resourceNode",
+      "position": {
+        "x": 1940.0,
+        "y": 600
+      },
+      "data": {
+        "label": "rtb-09467ba9741ae03be",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "0010db00d5f9b6d24",
+          "vpcId": "vpc-0010db00d5f9b6d24",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "route_table_id": "rtb-09467ba9741ae03be",
+        "vpc_id": "vpc-0010db00d5f9b6d24",
+        "routes": [
+          {
+            "DestinationCidrBlock": "172.31.0.0/16",
+            "GatewayId": "local",
+            "Origin": "CreateRouteTable",
+            "State": "active"
+          },
+          {
+            "DestinationCidrBlock": "0.0.0.0/0",
+            "GatewayId": "igw-0b3cd3490eb35a07c",
+            "Origin": "CreateRoute",
+            "State": "active"
+          }
+        ],
+        "parentId": "vpc-vpc-0010db00d5f9b6d24"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-051150827cea9acd3",
+      "type": "resourceNode",
+      "position": {
+        "x": 3053.3333333333335,
+        "y": 600
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "0b71e8dcdd9a40ef8",
+          "vpcId": "vpc-0b71e8dcdd9a40ef8",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "route_table_id": "rtb-051150827cea9acd3",
+        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
+        "routes": [
+          {
+            "DestinationCidrBlock": "10.0.0.0/16",
+            "GatewayId": "local",
+            "Origin": "CreateRouteTable",
+            "State": "active"
+          },
+          {
+            "DestinationCidrBlock": "0.0.0.0/0",
+            "GatewayId": "igw-0a13a84d2fd72a28d",
+            "Origin": "CreateRoute",
+            "State": "active"
+          }
+        ],
+        "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-04c6172af2a46c76f",
+      "type": "resourceNode",
+      "position": {
+        "x": 3426.6666666666665,
+        "y": 600
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "0b71e8dcdd9a40ef8",
+          "vpcId": "vpc-0b71e8dcdd9a40ef8",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "route_table_id": "rtb-04c6172af2a46c76f",
+        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
+        "routes": [
+          {
+            "DestinationCidrBlock": "10.0.0.0/16",
+            "GatewayId": "local",
+            "Origin": "CreateRouteTable",
+            "State": "active"
+          }
+        ],
+        "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-02e5b59e28181011c",
+      "type": "resourceNode",
+      "position": {
+        "x": 4353.333333333333,
+        "y": 600
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "0eb8eab8fc060589d",
+          "vpcId": "vpc-0eb8eab8fc060589d",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "route_table_id": "rtb-02e5b59e28181011c",
+        "vpc_id": "vpc-0eb8eab8fc060589d",
+        "routes": [
+          {
+            "DestinationCidrBlock": "10.0.0.0/16",
+            "GatewayId": "local",
+            "Origin": "CreateRouteTable",
+            "State": "active"
+          }
+        ],
+        "parentId": "vpc-vpc-0eb8eab8fc060589d"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-066fcdc4ec8cdb638",
+      "type": "resourceNode",
+      "position": {
+        "x": 4726.666666666667,
+        "y": 600
+      },
+      "data": {
+        "label": "blazeops-agent-staging-vpc",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "0eb8eab8fc060589d",
+          "vpcId": "vpc-0eb8eab8fc060589d",
+          "ownerId": "720150001470"
+        },
+        "nestingDepth": 2,
+        "route_table_id": "rtb-066fcdc4ec8cdb638",
+        "vpc_id": "vpc-0eb8eab8fc060589d",
+        "routes": [
+          {
+            "DestinationCidrBlock": "10.0.0.0/16",
+            "GatewayId": "local",
+            "Origin": "CreateRouteTable",
+            "State": "active"
+          },
+          {
+            "DestinationCidrBlock": "0.0.0.0/0",
+            "GatewayId": "igw-0eefc716b166cc3f6",
+            "Origin": "CreateRoute",
+            "State": "active"
+          }
+        ],
+        "parentId": "vpc-vpc-0eb8eab8fc060589d"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "sg-sg-0297a5b61aa91b7b5",
+      "type": "resourceNode",
+      "position": {
+        "x": 3053.3333333333335,
+        "y": 600
+      },
+      "data": {
+        "label": "blazeops-agent-staging-agent",
+        "resourceType": {
+          "id": "securityGroup",
+          "name": "Security Group",
+          "category": "security",
+          "icon": "waf",
+          "description": "Security Group",
+          "color": "#DD344C"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::SecurityGroup",
+          "region": "0b71e8dcdd9a40ef8",
+          "ownerId": "720150001470",
+          "vpc": "vpc-0b71e8dcdd9a40ef8",
+          "groupName": "blazeops-agent-staging-agent"
+        },
+        "nestingDepth": 2,
+        "group_id": "sg-0297a5b61aa91b7b5",
+        "group_name": "blazeops-agent-staging-agent",
+        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
+        "description": "Allow SSH and HTTP access",
+        "inbound_rules": 3,
+        "outbound_rules": 1,
+        "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "sg-sg-0390d310fdec957a1",
+      "type": "resourceNode",
+      "position": {
+        "x": 3426.6666666666665,
+        "y": 600
+      },
+      "data": {
+        "label": "default",
+        "resourceType": {
+          "id": "securityGroup",
+          "name": "Security Group",
+          "category": "security",
+          "icon": "waf",
+          "description": "Security Group",
+          "color": "#DD344C"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::SecurityGroup",
+          "region": "0b71e8dcdd9a40ef8",
+          "ownerId": "720150001470",
+          "vpc": "vpc-0b71e8dcdd9a40ef8",
+          "groupName": "default"
+        },
+        "nestingDepth": 2,
+        "group_id": "sg-0390d310fdec957a1",
+        "group_name": "default",
+        "vpc_id": "vpc-0b71e8dcdd9a40ef8",
+        "description": "default VPC security group",
+        "inbound_rules": 0,
+        "outbound_rules": 0,
+        "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "sg-sg-0c7910417aebd89b9",
+      "type": "resourceNode",
+      "position": {
+        "x": 453.33333333333326,
+        "y": 600
+      },
+      "data": {
+        "label": "blazeops-agent-staging-agent",
+        "resourceType": {
+          "id": "securityGroup",
+          "name": "Security Group",
+          "category": "security",
+          "icon": "waf",
+          "description": "Security Group",
+          "color": "#DD344C"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::SecurityGroup",
+          "region": "06cc31a57a405feb8",
+          "ownerId": "720150001470",
+          "vpc": "vpc-06cc31a57a405feb8",
+          "groupName": "blazeops-agent-staging-agent"
+        },
+        "nestingDepth": 2,
+        "group_id": "sg-0c7910417aebd89b9",
+        "group_name": "blazeops-agent-staging-agent",
+        "vpc_id": "vpc-06cc31a57a405feb8",
+        "description": "Allow SSH and HTTP access",
+        "inbound_rules": 3,
+        "outbound_rules": 1,
+        "parentId": "vpc-vpc-06cc31a57a405feb8"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "sg-sg-0600c5b0821b89013",
+      "type": "resourceNode",
+      "position": {
+        "x": 826.6666666666666,
+        "y": 600
+      },
+      "data": {
+        "label": "default",
+        "resourceType": {
+          "id": "securityGroup",
+          "name": "Security Group",
+          "category": "security",
+          "icon": "waf",
+          "description": "Security Group",
+          "color": "#DD344C"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::SecurityGroup",
+          "region": "06cc31a57a405feb8",
+          "ownerId": "720150001470",
+          "vpc": "vpc-06cc31a57a405feb8",
+          "groupName": "default"
+        },
+        "nestingDepth": 2,
+        "group_id": "sg-0600c5b0821b89013",
+        "group_name": "default",
+        "vpc_id": "vpc-06cc31a57a405feb8",
+        "description": "default VPC security group",
+        "inbound_rules": 0,
+        "outbound_rules": 0,
+        "parentId": "vpc-vpc-06cc31a57a405feb8"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "sg-sg-0f4187b316b3b1e8e",
+      "type": "resourceNode",
+      "position": {
+        "x": 1940.0,
+        "y": 600
+      },
+      "data": {
+        "label": "default",
+        "resourceType": {
+          "id": "securityGroup",
+          "name": "Security Group",
+          "category": "security",
+          "icon": "waf",
+          "description": "Security Group",
+          "color": "#DD344C"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::SecurityGroup",
+          "region": "0010db00d5f9b6d24",
+          "ownerId": "720150001470",
+          "vpc": "vpc-0010db00d5f9b6d24",
+          "groupName": "default"
+        },
+        "nestingDepth": 2,
+        "group_id": "sg-0f4187b316b3b1e8e",
+        "group_name": "default",
+        "vpc_id": "vpc-0010db00d5f9b6d24",
+        "description": "default VPC security group",
+        "inbound_rules": 1,
+        "outbound_rules": 1,
+        "parentId": "vpc-vpc-0010db00d5f9b6d24"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "sg-sg-0aaefac882ac186cf",
+      "type": "resourceNode",
+      "position": {
+        "x": 4353.333333333333,
+        "y": 600
+      },
+      "data": {
+        "label": "default",
+        "resourceType": {
+          "id": "securityGroup",
+          "name": "Security Group",
+          "category": "security",
+          "icon": "waf",
+          "description": "Security Group",
+          "color": "#DD344C"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::SecurityGroup",
+          "region": "0eb8eab8fc060589d",
+          "ownerId": "720150001470",
+          "vpc": "vpc-0eb8eab8fc060589d",
+          "groupName": "default"
+        },
+        "nestingDepth": 2,
+        "group_id": "sg-0aaefac882ac186cf",
+        "group_name": "default",
+        "vpc_id": "vpc-0eb8eab8fc060589d",
+        "description": "default VPC security group",
+        "inbound_rules": 0,
+        "outbound_rules": 0,
+        "parentId": "vpc-vpc-0eb8eab8fc060589d"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "sg-sg-0318ab11496d98bb8",
+      "type": "resourceNode",
+      "position": {
+        "x": 4726.666666666667,
+        "y": 600
+      },
+      "data": {
+        "label": "blazeops-agent-staging-agent",
+        "resourceType": {
+          "id": "securityGroup",
+          "name": "Security Group",
+          "category": "security",
+          "icon": "waf",
+          "description": "Security Group",
+          "color": "#DD344C"
+        },
+        "isContainer": false,
+        "config": {
+          "originalType": "AWS::EC2::SecurityGroup",
+          "region": "0eb8eab8fc060589d",
+          "ownerId": "720150001470",
+          "vpc": "vpc-0eb8eab8fc060589d",
+          "groupName": "blazeops-agent-staging-agent"
+        },
+        "nestingDepth": 2,
+        "group_id": "sg-0318ab11496d98bb8",
+        "group_name": "blazeops-agent-staging-agent",
+        "vpc_id": "vpc-0eb8eab8fc060589d",
+        "description": "Allow SSH and HTTP access",
+        "inbound_rules": 3,
+        "outbound_rules": 1,
+        "parentId": "vpc-vpc-0eb8eab8fc060589d"
+      },
+      "width": 120,
+      "height": 88
+    }
+  ],
+  "edges": [
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0010db00d5f9b6d24-subnet-subnet-0d7e95372896d77e8",
+      "source": "vpc-vpc-0010db00d5f9b6d24",
+      "target": "subnet-subnet-0d7e95372896d77e8",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0010db00d5f9b6d24-subnet-subnet-0f74cb72353a2b237",
+      "source": "vpc-vpc-0010db00d5f9b6d24",
+      "target": "subnet-subnet-0f74cb72353a2b237",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0010db00d5f9b6d24-subnet-subnet-0caaa7cee2f392f8d",
+      "source": "vpc-vpc-0010db00d5f9b6d24",
+      "target": "subnet-subnet-0caaa7cee2f392f8d",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0eb8eab8fc060589d-subnet-subnet-0cc22aef01a024a4a",
+      "source": "vpc-vpc-0eb8eab8fc060589d",
+      "target": "subnet-subnet-0cc22aef01a024a4a",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0eb8eab8fc060589d-subnet-subnet-01c723a4e0cd68d4f",
+      "source": "vpc-vpc-0eb8eab8fc060589d",
+      "target": "subnet-subnet-01c723a4e0cd68d4f",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-06cc31a57a405feb8-subnet-subnet-0da1a05dfc8b55dc3",
+      "source": "vpc-vpc-06cc31a57a405feb8",
+      "target": "subnet-subnet-0da1a05dfc8b55dc3",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-06cc31a57a405feb8-subnet-subnet-09a9db2e951c22a88",
+      "source": "vpc-vpc-06cc31a57a405feb8",
+      "target": "subnet-subnet-09a9db2e951c22a88",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0b71e8dcdd9a40ef8-subnet-subnet-0381aa2076a4bb590",
+      "source": "vpc-vpc-0b71e8dcdd9a40ef8",
+      "target": "subnet-subnet-0381aa2076a4bb590",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0b71e8dcdd9a40ef8-subnet-subnet-03f6049180d037062",
+      "source": "vpc-vpc-0b71e8dcdd9a40ef8",
+      "target": "subnet-subnet-03f6049180d037062",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "subnet-to-instance-subnet-subnet-0da1a05dfc8b55dc3-instance-i-0525e04aaef702279",
+      "source": "subnet-subnet-0da1a05dfc8b55dc3",
+      "target": "instance-i-0525e04aaef702279",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF9900",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-051150827cea9acd3-subnet-subnet-03f6049180d037062",
+      "source": "rt-rtb-051150827cea9acd3",
+      "target": "subnet-subnet-03f6049180d037062",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-051150827cea9acd3-subnet-subnet-0381aa2076a4bb590",
+      "source": "rt-rtb-051150827cea9acd3",
+      "target": "subnet-subnet-0381aa2076a4bb590",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-0f5539d37304dfe0a-subnet-subnet-09a9db2e951c22a88",
+      "source": "rt-rtb-0f5539d37304dfe0a",
+      "target": "subnet-subnet-09a9db2e951c22a88",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-0f5539d37304dfe0a-subnet-subnet-0da1a05dfc8b55dc3",
+      "source": "rt-rtb-0f5539d37304dfe0a",
+      "target": "subnet-subnet-0da1a05dfc8b55dc3",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-066fcdc4ec8cdb638-subnet-subnet-0cc22aef01a024a4a",
+      "source": "rt-rtb-066fcdc4ec8cdb638",
+      "target": "subnet-subnet-0cc22aef01a024a4a",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-066fcdc4ec8cdb638-subnet-subnet-01c723a4e0cd68d4f",
+      "source": "rt-rtb-066fcdc4ec8cdb638",
+      "target": "subnet-subnet-01c723a4e0cd68d4f",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "sg-to-instance-sg-sg-0c7910417aebd89b9-instance-i-0525e04aaef702279",
+      "source": "sg-sg-0c7910417aebd89b9",
+      "target": "instance-i-0525e04aaef702279",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#DD344C",
+        "strokeWidth": 1,
+        "strokeDasharray": "5,5"
+      }
+    }
+  ]
+}
