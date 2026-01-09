@@ -6,7 +6,8 @@ import { Toolbar } from './Toolbar';
 import { useDiagramStore } from '@/store/diagramStore';
 import { ResourceType } from '@/types/diagram';
 // Vertically stacked full diagram
-import architectureDiagram from '@/lib/graph-upload/web.json';
+// import architectureDiagram from '@/lib/graph-upload/web.json';
+import architectureDiagram from '@/lib/graph-upload/enl-web-diagram.json';
 // import architectureDiagram from '@/lib/graph-upload/onload.json';
 // import architectureDiagram from '@/lib/graph-upload/full.json';
 // import architectureDiagram from '@/lib/graph-upload/enlume-full.json';

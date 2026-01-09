@@ -532,7 +532,7 @@ class AWSToCloudBuilderConverter:
             )
     
     def _process_igws(self, igws: List[Dict]):
-        """Process Internet Gateways"""
+        """Process Internet Gateways - positioned outside VPC on the right side"""
         # Group IGWs by VPC
         igw_by_vpc: Dict[str, List[Dict]] = {}
         for igw in igws:
@@ -557,18 +557,19 @@ class AWSToCloudBuilderConverter:
             vpc_x = vpc_node["position"]["x"]
             vpc_y = vpc_node["position"]["y"]
             vpc_width = vpc_node["width"]
+            vpc_height = vpc_node["height"]
             
-            # Position IGWs horizontally at the top with proper spacing
-            padding = 40
-            igw_spacing = (vpc_width - (padding * 2)) / (len(vpc_igws) + 1)
+            # Position IGWs to the RIGHT of VPC with spacing
+            igw_offset_x = vpc_width + 100  # 100px to the right of VPC
+            igw_y_spacing = 120
             
             for igw_idx, igw in enumerate(vpc_igws):
                 igw_id = igw.get("InternetGatewayId")
                 igw_name = self._get_tag_value(igw.get("Tags", []), "Name", igw_id)
                 node_id = f"igw-{igw_id}"
                 
-                x_pos = vpc_x + padding + ((igw_idx + 1) * igw_spacing) - 60
-                y_pos = vpc_y + 20  # 20px from the top of the VPC
+                x_pos = vpc_x + igw_offset_x
+                y_pos = vpc_y + 40 + (igw_idx * igw_y_spacing)  # Stack vertically
                 
                 self._create_node(
                     node_id=node_id,
@@ -588,7 +589,7 @@ class AWSToCloudBuilderConverter:
                 )
     
     def _process_route_tables(self, route_tables: List[Dict]):
-        """Process Route Tables"""
+        """Process Route Tables - positioned outside VPC on the right side"""
         # Group route tables by VPC
         rt_by_vpc: Dict[str, List[Dict]] = {}
         for rt in route_tables:
@@ -612,11 +613,9 @@ class AWSToCloudBuilderConverter:
             vpc_width = vpc_node["width"]
             vpc_height = vpc_node["height"]
             
-            # Position RTs in a column on the left side of the VPC
-            padding = 40
-            rt_x = vpc_x + padding  # Left side positioning
-            rt_y_start = vpc_y + 260  # Start below subnets
-            rt_vertical_spacing = 100  # Space between RTs
+            # Position RTs to the RIGHT of VPC with spacing
+            rt_offset_x = vpc_width + 100  # 100px to the right of VPC
+            rt_y_spacing = 120
             
             for idx, rt in enumerate(vpc_rts):
                 rt_id = rt.get("RouteTableId")
@@ -624,7 +623,8 @@ class AWSToCloudBuilderConverter:
                 node_id = f"rt-{rt_id}"
                 self.rt_node_map[rt_id] = node_id
                 
-                rt_y = rt_y_start + (idx * rt_vertical_spacing)
+                rt_x = vpc_x + rt_offset_x
+                rt_y = vpc_y + vpc_height + 40 + (idx * rt_y_spacing)  # Below VPC, stacked vertically
                 
                 self._create_node(
                     node_id=node_id,
@@ -727,11 +727,10 @@ class AWSToCloudBuilderConverter:
                 )
     
     def _process_nat_gateways(self, nat_gateways: List[Dict]):
-        """Process NAT Gateways - positioned in their respective subnets"""
-        padding = 30
+        """Process NAT Gateways - positioned outside subnet on the right side"""
         nat_width = 120
         nat_height = 88
-        nat_spacing = 20
+        nat_spacing = 120
         
         for nat_gw in nat_gateways:
             nat_gw_id = nat_gw.get("nat_gateway_id") or nat_gw.get("NatGatewayId")
@@ -754,13 +753,14 @@ class AWSToCloudBuilderConverter:
             
             subnet_x = subnet_node["position"]["x"]
             subnet_y = subnet_node["position"]["y"]
+            subnet_width = subnet_node["width"]
             
             node_id = f"nat-{nat_gw_id}"
             self.nat_gw_node_map[nat_gw_id] = node_id
             
-            # Position NAT Gateway at the bottom of the subnet
-            x_pos = subnet_x + padding
-            y_pos = subnet_y + subnet_node["height"] + nat_spacing
+            # Position NAT Gateway to the RIGHT of the subnet
+            x_pos = subnet_x + subnet_width + 50  # 50px to the right of subnet
+            y_pos = subnet_y + 30  # Aligned with subnet top area
             
             self._create_node(
                 node_id=node_id,

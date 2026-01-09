@@ -1,0 +1,207 @@
+{
+  "us-west-2": {
+    "vpcs": [
+      {
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "CidrBlock": "10.0.0.0/16"
+      }
+    ],
+    "subnets": [
+      {
+        "SubnetId": "subnet-073ef49609e45baae",
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "CidrBlock": "10.0.1.0/24",
+        "AvailabilityZone": "us-west-2a",
+        "Type": "public",
+        "RouteTableId": "rtb-0bff65edc339ff6de"
+      },
+      {
+        "SubnetId": "subnet-09f866b987b0b0ee4",
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "CidrBlock": "10.0.2.0/24",
+        "AvailabilityZone": "us-west-2a",
+        "Type": "public",
+        "RouteTableId": "rtb-0bff65edc339ff6de"
+      },
+      {
+        "SubnetId": "subnet-015e78643cad449b1",
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "CidrBlock": "10.0.4.0/24",
+        "AvailabilityZone": "us-west-2b",
+        "Type": "private",
+        "RouteTableId": "rtb-01409b82181bbb38f"
+      },
+      {
+        "SubnetId": "subnet-09f403328962fd4af",
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "CidrBlock": "10.0.3.0/24",
+        "AvailabilityZone": "us-west-2b",
+        "Type": "private",
+        "RouteTableId": "rtb-01409b82181bbb38f"
+      }
+    ],
+    "securityGroups": [
+      {
+        "GroupId": "sg-0a662e1623f9592c5",
+        "GroupName": "ec2_sg",
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "Description": "ec2_sg security group",
+        "IpPermissions": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 22,
+            "ToPort": 22,
+            "IpRanges": [
+              {
+                "CidrIp": "admin-ip"
+              }
+            ],
+            "UserIdGroupPairs": []
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 8000,
+            "ToPort": 8000,
+            "IpRanges": [
+              {
+                "CidrIp": "0.0.0.0/0"
+              }
+            ],
+            "UserIdGroupPairs": []
+          }
+        ],
+        "IpPermissionsEgress": [
+          {
+            "IpProtocol": "-1",
+            "IpRanges": [
+              {
+                "CidrIp": "0.0.0.0/0"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "GroupId": "sg-0c88bd30e77f3ebbd",
+        "GroupName": "rds_sg",
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "Description": "rds_sg security group",
+        "IpPermissions": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 5432,
+            "ToPort": 5432,
+            "IpRanges": [],
+            "UserIdGroupPairs": [
+              {
+                "GroupId": "sg-0a662e1623f9592c5"
+              }
+            ]
+          }
+        ],
+        "IpPermissionsEgress": [
+          {
+            "IpProtocol": "-1",
+            "IpRanges": [
+              {
+                "CidrIp": "0.0.0.0/0"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "instances": [
+      {
+        "InstanceId": "i-backend",
+        "InstanceType": "t3.medium",
+        "SubnetId": "subnet-073ef49609e45baae",
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "SecurityGroups": [
+          {
+            "GroupId": "sg-0a662e1623f9592c5"
+          }
+        ],
+        "State": {
+          "Name": "running"
+        },
+        "PublicIpAddress": "10.0.1.10",
+        "PrivateIpAddress": "10.0.1.10",
+        "Name": "blazeops-backend-api"
+      }
+    ],
+    "routeTables": [
+      {
+        "RouteTableId": "rtb-0bff65edc339ff6de",
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "Type": "public",
+        "Routes": [
+          {
+            "destination": "0.0.0.0/0",
+            "target": "igw-01d6f9713399da5ca"
+          },
+          {
+            "destination": "10.0.0.0/16",
+            "target": "local"
+          }
+        ]
+      },
+      {
+        "RouteTableId": "rtb-01409b82181bbb38f",
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "Type": "private",
+        "Routes": [
+          {
+            "destination": "0.0.0.0/0",
+            "target": "nat-08f50d3bafb9d5043"
+          },
+          {
+            "destination": "10.0.0.0/16",
+            "target": "local"
+          }
+        ]
+      }
+    ],
+    "internetGateways": [
+      {
+        "InternetGatewayId": "igw-01d6f9713399da5ca",
+        "Attachments": [
+          {
+            "VpcId": "vpc-0d872966b39f4ea8d",
+            "State": "available"
+          }
+        ]
+      }
+    ],
+    "natGateways": [
+      {
+        "NatGatewayId": "nat-08f50d3bafb9d5043",
+        "SubnetId": "subnet-073ef49609e45baae",
+        "State": "available"
+      }
+    ],
+    "rdsInstances": [
+      {
+        "DBInstanceIdentifier": "db-database",
+        "Engine": "postgresql",
+        "DBInstanceClass": "db.t3.micro",
+        "AllocatedStorage": 20,
+        "Port": 5432,
+        "SubnetId": "subnet-015e78643cad449b1",
+        "VpcId": "vpc-0d872966b39f4ea8d",
+        "SecurityGroups": [
+          {
+            "GroupId": "sg-0c88bd30e77f3ebbd"
+          }
+        ],
+        "DBInstanceStatus": "available",
+        "VpcSecurityGroups": [
+          {
+            "VpcSecurityGroupId": "sg-0c88bd30e77f3ebbd",
+            "Status": "active"
+          }
+        ]
+      }
+    ]
+  }
+}

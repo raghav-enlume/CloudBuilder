@@ -1,0 +1,437 @@
+{
+  "nodes": [
+    {
+      "id": "region-us-west-2",
+      "type": "resourceNode",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "label": "Region: us-west-2",
+        "resourceType": {
+          "id": "region",
+          "name": "Region",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "AWS Region",
+          "color": "#3949AB",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Region Name",
+              "type": "text"
+            },
+            {
+              "key": "region",
+              "label": "Region Code",
+              "type": "text"
+            }
+          ]
+        },
+        "region": "us-west-2",
+        "isContainer": true,
+        "width": 536.25,
+        "height": 873,
+        "size": {
+          "width": 536.25,
+          "height": 873
+        },
+        "config": {
+          "originalType": "AWS::EC2::Region",
+          "region": "us-west-2"
+        },
+        "nestingDepth": 0
+      },
+      "width": 536.25,
+      "height": 873
+    },
+    {
+      "id": "vpc-vpc-0d872966b39f4ea8d",
+      "type": "resourceNode",
+      "position": {
+        "x": 40,
+        "y": 140
+      },
+      "data": {
+        "label": "vpc-0d872966b39f4ea8d",
+        "resourceType": {
+          "id": "vpc",
+          "name": "VPC",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual private cloud",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "vpcName",
+              "label": "VPC Name",
+              "type": "text",
+              "placeholder": "my-vpc"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text",
+              "placeholder": "10.0.0.0/16"
+            },
+            {
+              "key": "dnsHostnamesEnabled",
+              "label": "DNS Hostnames",
+              "type": "boolean"
+            }
+          ]
+        },
+        "vpcId": "vpc-0d872966b39f4ea8d",
+        "cidrBlock": "10.0.0.0/16",
+        "state": null,
+        "isDefault": false,
+        "isContainer": true,
+        "size": {
+          "width": 446.25,
+          "height": 683
+        },
+        "config": {
+          "originalType": "AWS::EC2::VPC",
+          "region": "us-west-2",
+          "ownerId": null,
+          "instanceTenancy": null,
+          "dhcpOptionsId": null
+        },
+        "nestingDepth": 1,
+        "parentId": "region-us-west-2"
+      },
+      "width": 446.25,
+      "height": 683
+    },
+    {
+      "id": "subnet-subnet-073ef49609e45baae",
+      "type": "resourceNode",
+      "position": {
+        "x": 80,
+        "y": 260
+      },
+      "data": {
+        "label": "subnet-073ef49609e45baae",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
+        },
+        "subnetId": "subnet-073ef49609e45baae",
+        "vpcId": "vpc-0d872966b39f4ea8d",
+        "cidrBlock": "10.0.1.0/24",
+        "availabilityZone": "us-west-2a",
+        "state": null,
+        "isContainer": true,
+        "size": {
+          "width": 260,
+          "height": 168
+        },
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-west",
+          "ownerId": null,
+          "availabilityZoneId": null,
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0d872966b39f4ea8d"
+      },
+      "width": 260,
+      "height": 168
+    },
+    {
+      "id": "subnet-subnet-09f866b987b0b0ee4",
+      "type": "resourceNode",
+      "position": {
+        "x": 251.25,
+        "y": 448
+      },
+      "data": {
+        "label": "subnet-09f866b987b0b0ee4",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
+        },
+        "subnetId": "subnet-09f866b987b0b0ee4",
+        "vpcId": "vpc-0d872966b39f4ea8d",
+        "cidrBlock": "10.0.2.0/24",
+        "availabilityZone": "us-west-2a",
+        "state": null,
+        "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-west",
+          "ownerId": null,
+          "availabilityZoneId": null,
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0d872966b39f4ea8d"
+      },
+      "width": 200,
+      "height": 80
+    },
+    {
+      "id": "subnet-subnet-015e78643cad449b1",
+      "type": "resourceNode",
+      "position": {
+        "x": 80,
+        "y": 578
+      },
+      "data": {
+        "label": "subnet-015e78643cad449b1",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
+        },
+        "subnetId": "subnet-015e78643cad449b1",
+        "vpcId": "vpc-0d872966b39f4ea8d",
+        "cidrBlock": "10.0.4.0/24",
+        "availabilityZone": "us-west-2b",
+        "state": null,
+        "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-west",
+          "ownerId": null,
+          "availabilityZoneId": null,
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0d872966b39f4ea8d"
+      },
+      "width": 200,
+      "height": 80
+    },
+    {
+      "id": "subnet-subnet-09f403328962fd4af",
+      "type": "resourceNode",
+      "position": {
+        "x": 251.25,
+        "y": 708
+      },
+      "data": {
+        "label": "subnet-09f403328962fd4af",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
+        },
+        "subnetId": "subnet-09f403328962fd4af",
+        "vpcId": "vpc-0d872966b39f4ea8d",
+        "cidrBlock": "10.0.3.0/24",
+        "availabilityZone": "us-west-2b",
+        "state": null,
+        "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-west",
+          "ownerId": null,
+          "availabilityZoneId": null,
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0d872966b39f4ea8d"
+      },
+      "width": 200,
+      "height": 80
+    },
+    {
+      "id": "instance-i-backend",
+      "type": "resourceNode",
+      "position": {
+        "x": 150.0,
+        "y": 285.0
+      },
+      "data": {
+        "label": "i-backend",
+        "resourceType": {
+          "id": "ec2",
+          "name": "EC2 Instance",
+          "category": "compute",
+          "icon": "ec2",
+          "description": "Virtual server in the cloud",
+          "color": "#FF9900",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "instanceType",
+              "label": "Instance Type",
+              "type": "text"
+            }
+          ]
+        },
+        "instanceId": "i-backend",
+        "instanceType": "t3.medium",
+        "state": "running",
+        "privateIpAddress": "10.0.1.10",
+        "publicIpAddress": "10.0.1.10",
+        "imageId": null,
+        "launchTime": null,
+        "subnetId": "subnet-073ef49609e45baae",
+        "vpcId": "vpc-0d872966b39f4ea8d",
+        "securityGroup": "sg-0a662e1623f9592c5",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::EC2::Instance",
+          "region": "073ef49609e45baae",
+          "vpc": "vpc-0d872966b39f4ea8d",
+          "subnet": "subnet-073ef49609e45baae",
+          "securityGroup": "sg-0a662e1623f9592c5",
+          "instanceType": "t3.medium",
+          "architecture": null,
+          "hypervisor": null,
+          "virtualizationType": null,
+          "rootDeviceName": null,
+          "rootDeviceType": null,
+          "keyName": null
+        },
+        "nestingDepth": 3,
+        "parentId": "subnet-subnet-073ef49609e45baae"
+      },
+      "width": 120,
+      "height": 88
+    }
+  ],
+  "edges": [
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0d872966b39f4ea8d-subnet-subnet-073ef49609e45baae",
+      "source": "vpc-vpc-0d872966b39f4ea8d",
+      "target": "subnet-subnet-073ef49609e45baae",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0d872966b39f4ea8d-subnet-subnet-09f866b987b0b0ee4",
+      "source": "vpc-vpc-0d872966b39f4ea8d",
+      "target": "subnet-subnet-09f866b987b0b0ee4",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0d872966b39f4ea8d-subnet-subnet-015e78643cad449b1",
+      "source": "vpc-vpc-0d872966b39f4ea8d",
+      "target": "subnet-subnet-015e78643cad449b1",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-0d872966b39f4ea8d-subnet-subnet-09f403328962fd4af",
+      "source": "vpc-vpc-0d872966b39f4ea8d",
+      "target": "subnet-subnet-09f403328962fd4af",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "subnet-to-instance-subnet-subnet-073ef49609e45baae-instance-i-backend",
+      "source": "subnet-subnet-073ef49609e45baae",
+      "target": "instance-i-backend",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF9900",
+        "strokeWidth": 2
+      }
+    }
+  ]
+}
