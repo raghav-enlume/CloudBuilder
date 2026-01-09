@@ -1,0 +1,617 @@
+{
+  "nodes": [
+    {
+      "id": "region-us-east-1",
+      "type": "resourceNode",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "label": "Region: us-east-1",
+        "resourceType": {
+          "id": "region",
+          "name": "Region",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "AWS Region",
+          "color": "#3949AB",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Region Name",
+              "type": "text"
+            },
+            {
+              "key": "region",
+              "label": "Region Code",
+              "type": "text"
+            }
+          ]
+        },
+        "region": "us-east-1",
+        "isContainer": true,
+        "width": 596.25,
+        "height": 1157,
+        "size": {
+          "width": 596.25,
+          "height": 1157
+        },
+        "config": {
+          "originalType": "AWS::EC2::Region",
+          "region": "us-east-1"
+        },
+        "nestingDepth": 0
+      },
+      "width": 596.25,
+      "height": 1157
+    },
+    {
+      "id": "vpc-vpc-10-0-0-0",
+      "type": "resourceNode",
+      "position": {
+        "x": 40,
+        "y": 140
+      },
+      "data": {
+        "label": "vpc-10-0-0-0",
+        "resourceType": {
+          "id": "vpc",
+          "name": "VPC",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual private cloud",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "vpcName",
+              "label": "VPC Name",
+              "type": "text",
+              "placeholder": "my-vpc"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text",
+              "placeholder": "10.0.0.0/16"
+            },
+            {
+              "key": "dnsHostnamesEnabled",
+              "label": "DNS Hostnames",
+              "type": "boolean"
+            }
+          ]
+        },
+        "vpcId": "vpc-10-0-0-0",
+        "cidrBlock": "10.0.0.0/16",
+        "state": null,
+        "isDefault": false,
+        "isContainer": true,
+        "size": {
+          "width": 506.25,
+          "height": 967
+        },
+        "config": {
+          "originalType": "AWS::EC2::VPC",
+          "region": "us-east-1",
+          "ownerId": null,
+          "instanceTenancy": null,
+          "dhcpOptionsId": null
+        },
+        "nestingDepth": 1,
+        "parentId": "region-us-east-1"
+      },
+      "width": 506.25,
+      "height": 967
+    },
+    {
+      "id": "subnet-subnet-public-1",
+      "type": "resourceNode",
+      "position": {
+        "x": 80,
+        "y": 260
+      },
+      "data": {
+        "label": "subnet-public-1",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
+        },
+        "subnetId": "subnet-public-1",
+        "vpcId": "vpc-10-0-0-0",
+        "cidrBlock": "10.0.1.0/24",
+        "availabilityZone": "us-east-1a",
+        "state": null,
+        "isContainer": true,
+        "size": {
+          "width": 260,
+          "height": 238
+        },
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": null,
+          "availabilityZoneId": null,
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-10-0-0-0"
+      },
+      "width": 260,
+      "height": 238
+    },
+    {
+      "id": "subnet-subnet-private-a",
+      "type": "resourceNode",
+      "position": {
+        "x": 251.25,
+        "y": 518
+      },
+      "data": {
+        "label": "subnet-private-a",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
+        },
+        "subnetId": "subnet-private-a",
+        "vpcId": "vpc-10-0-0-0",
+        "cidrBlock": "10.0.2.0/24",
+        "availabilityZone": "us-east-1a",
+        "state": null,
+        "isContainer": true,
+        "size": {
+          "width": 260.0,
+          "height": 168
+        },
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": null,
+          "availabilityZoneId": null,
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-10-0-0-0"
+      },
+      "width": 260.0,
+      "height": 168
+    },
+    {
+      "id": "subnet-subnet-private-b",
+      "type": "resourceNode",
+      "position": {
+        "x": 80,
+        "y": 706
+      },
+      "data": {
+        "label": "subnet-private-b",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
+        },
+        "subnetId": "subnet-private-b",
+        "vpcId": "vpc-10-0-0-0",
+        "cidrBlock": "10.0.3.0/24",
+        "availabilityZone": "us-east-1b",
+        "state": null,
+        "isContainer": true,
+        "size": {
+          "width": 260,
+          "height": 168
+        },
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": null,
+          "availabilityZoneId": null,
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-10-0-0-0"
+      },
+      "width": 260,
+      "height": 168
+    },
+    {
+      "id": "instance-i-ec2-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 321.25,
+        "y": 543.0
+      },
+      "data": {
+        "label": "EC2 Application Server",
+        "resourceType": {
+          "id": "ec2",
+          "name": "EC2 Instance",
+          "category": "compute",
+          "icon": "ec2",
+          "description": "Virtual server in the cloud",
+          "color": "#FF9900",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "instanceType",
+              "label": "Instance Type",
+              "type": "text"
+            }
+          ]
+        },
+        "instanceId": "i-ec2-001",
+        "instanceType": "t3.micro",
+        "state": null,
+        "privateIpAddress": null,
+        "publicIpAddress": null,
+        "imageId": null,
+        "launchTime": null,
+        "subnetId": "subnet-private-a",
+        "vpcId": null,
+        "securityGroup": null,
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::EC2::Instance",
+          "region": "private",
+          "vpc": null,
+          "subnet": "subnet-private-a",
+          "securityGroup": null,
+          "instanceType": "t3.micro",
+          "architecture": null,
+          "hypervisor": null,
+          "virtualizationType": null,
+          "rootDeviceName": null,
+          "rootDeviceType": null,
+          "keyName": null
+        },
+        "nestingDepth": 3,
+        "parentId": "subnet-subnet-private-a"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-public-1",
+      "type": "resourceNode",
+      "position": {
+        "x": 233.125,
+        "y": 393.66666666666663
+      },
+      "data": {
+        "label": "rtb-public-1",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
+        },
+        "routeTableId": "rtb-public-1",
+        "vpcId": "vpc-10-0-0-0",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "10",
+          "vpcId": "vpc-10-0-0-0",
+          "ownerId": null
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-10-0-0-0"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-private-1",
+      "type": "resourceNode",
+      "position": {
+        "x": 233.125,
+        "y": 735.3333333333333
+      },
+      "data": {
+        "label": "rtb-private-1",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
+        },
+        "routeTableId": "rtb-private-1",
+        "vpcId": "vpc-10-0-0-0",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "10",
+          "vpcId": "vpc-10-0-0-0",
+          "ownerId": null
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-10-0-0-0"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "nat-nat-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 150.0,
+        "y": 320.0
+      },
+      "data": {
+        "label": "nat-001",
+        "resourceType": {
+          "id": "natGateway",
+          "name": "NAT Gateway",
+          "category": "networking",
+          "icon": "natgateway",
+          "description": "NAT Gateway",
+          "color": "#17A2B8",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "NAT Gateway ID",
+              "type": "text"
+            }
+          ]
+        },
+        "natGatewayId": "nat-001",
+        "vpcId": null,
+        "subnetId": "subnet-public-1",
+        "state": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::EC2::NatGateway",
+          "region": "public",
+          "vpcId": null,
+          "subnetId": "subnet-public-1"
+        },
+        "nestingDepth": 3,
+        "parentId": "subnet-subnet-public-1"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-rds-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 150.0,
+        "y": 731.0
+      },
+      "data": {
+        "label": "rds-001",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "rds-001",
+        "vpcId": "vpc-10-0-0-0",
+        "engine": "postgres",
+        "dbInstanceClass": "db.t3.micro",
+        "allocatedStorage": 0,
+        "dbInstanceStatus": "unknown",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "rds",
+          "vpcId": "vpc-10-0-0-0",
+          "engine": "postgres"
+        },
+        "nestingDepth": 3,
+        "parentId": "subnet-subnet-private-b"
+      },
+      "width": 120,
+      "height": 88
+    }
+  ],
+  "edges": [
+    {
+      "id": "vpc-to-subnet-vpc-vpc-10-0-0-0-subnet-subnet-public-1",
+      "source": "vpc-vpc-10-0-0-0",
+      "target": "subnet-subnet-public-1",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-10-0-0-0-subnet-subnet-private-a",
+      "source": "vpc-vpc-10-0-0-0",
+      "target": "subnet-subnet-private-a",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-10-0-0-0-subnet-subnet-private-b",
+      "source": "vpc-vpc-10-0-0-0",
+      "target": "subnet-subnet-private-b",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "subnet-to-instance-subnet-subnet-private-a-instance-i-ec2-001",
+      "source": "subnet-subnet-private-a",
+      "target": "instance-i-ec2-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF9900",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-public-1-subnet-subnet-public-1",
+      "source": "rt-rtb-public-1",
+      "target": "subnet-subnet-public-1",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-private-1-subnet-subnet-private-a",
+      "source": "rt-rtb-private-1",
+      "target": "subnet-subnet-private-a",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-private-1-subnet-subnet-private-b",
+      "source": "rt-rtb-private-1",
+      "target": "subnet-subnet-private-b",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-nat-subnet-subnet-public-1-nat-nat-001",
+      "source": "subnet-subnet-public-1",
+      "target": "nat-nat-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#17A2B8",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-10-0-0-0-rds-rds-001",
+      "source": "vpc-vpc-10-0-0-0",
+      "target": "rds-rds-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    }
+  ]
+}

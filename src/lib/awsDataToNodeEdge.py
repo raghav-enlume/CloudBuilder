@@ -90,6 +90,29 @@ RESOURCE_TYPES = {
         "editableAttributes": [
             {"key": "label", "label": "Security Group Name", "type": "text"}
         ]
+    },
+    "nat_gateway": {
+        "id": "natGateway",
+        "name": "NAT Gateway",
+        "category": "networking",
+        "icon": "natgateway",
+        "description": "NAT Gateway",
+        "color": "#17A2B8",
+        "editableAttributes": [
+            {"key": "label", "label": "NAT Gateway ID", "type": "text"}
+        ]
+    },
+    "rds_instance": {
+        "id": "rdsInstance",
+        "name": "RDS Instance",
+        "category": "database",
+        "icon": "rds",
+        "description": "Relational Database Service Instance",
+        "color": "#FF6D00",
+        "editableAttributes": [
+            {"key": "label", "label": "DB Instance ID", "type": "text"},
+            {"key": "engine", "label": "Database Engine", "type": "text"}
+        ]
     }
 }
 
@@ -112,6 +135,16 @@ EDGE_STYLES = {
         "stroke": "#DD344C",
         "strokeWidth": 1,
         "strokeDasharray": "5,5"
+    },
+    "subnet-to-nat": {
+        "stroke": "#17A2B8",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+    },
+    "subnet-to-rds": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
     }
 }
 
@@ -127,9 +160,18 @@ class AWSToCloudBuilderConverter:
         self.sg_node_map: Dict[str, str] = {}  # sg_id -> node_id
         self.sg_vpc_map: Dict[str, str] = {}  # sg_id -> vpc_id (for tracking which VPC an SG belongs to)
         self.rt_node_map: Dict[str, str] = {}  # rt_id -> node_id
+        self.nat_gw_node_map: Dict[str, str] = {}  # nat_gateway_id -> node_id
+        self.rds_node_map: Dict[str, str] = {}  # rds_instance_id -> node_id
         self.position_counter = {"vpc": 0, "subnet": 0, "instance": 0, "rt": 0, "sg": 0}
         self.vpc_count = 0
         self.max_x_position = 0
+    
+    def _get_resource_type_id(self, node: Dict) -> str:
+        """Extract resource type ID from either dict or string format for backwards compatibility"""
+        rt = node["data"].get("resourceType")
+        if isinstance(rt, dict):
+            return rt.get("id", "")
+        return rt if isinstance(rt, str) else ""
     
     def convert(self) -> Dict[str, Any]:
         """Main conversion method"""
@@ -175,6 +217,21 @@ class AWSToCloudBuilderConverter:
         self._recalculate_vpc_sizes()
         self._update_region_size()
         
+        # Fourth-G pass: Reposition VPCs horizontally to prevent overlap (NEW)
+        self._reposition_vpcs_horizontally()
+        
+        # Fourth-H pass: Update region size after VPC repositioning
+        self._update_region_size()
+        
+        # Fourth-I pass: Expand containers to fit their children before repositioning
+        self._expand_containers_to_fit_children()
+        
+        # Fourth-H2 pass: Update region size after container expansion
+        self._update_region_size()
+        
+        # Fourth-J pass: Reposition children (NAT GW, RDS, etc.) inside their parent bounds
+        self._reposition_children_inside_parents()
+        
         # Fifth pass: Stack regions vertically to prevent overlap
         self._stack_regions_vertically()
         
@@ -195,7 +252,7 @@ class AWSToCloudBuilderConverter:
         current_y = 0
         
         # Get all region nodes sorted by their order
-        region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        region_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "region"]
         
         for region_node in region_nodes:
             # Get the current position of the region before moving
@@ -268,11 +325,25 @@ class AWSToCloudBuilderConverter:
         sgs = region_data.get("security_groups", [])
         self._process_security_groups(sgs)
         
+        # Process NAT Gateways
+        nat_gateways = region_data.get("nat_gateways", [])
+        self._process_nat_gateways(nat_gateways)
+        
+        # Process RDS Instances
+        rds_instances = region_data.get("rds_instances", [])
+        self._process_rds_instances(rds_instances)
+        
         # Create edges for route tables to subnets
         self._create_rt_subnet_edges(route_tables)
         
         # Create edges for security groups to instances
         self._create_sg_instance_edges(instances)
+        
+        # Create edges for NAT Gateways to Subnets
+        self._create_nat_subnet_edges(nat_gateways)
+        
+        # Create edges for RDS to Subnets
+        self._create_rds_subnet_edges(rds_instances)
     
     def _process_vpcs(self, region_id: str, vpcs: List[Dict]):
         """Process VPCs"""
@@ -391,6 +462,10 @@ class AWSToCloudBuilderConverter:
             instance_id = instance.get("InstanceId")
             subnet_id = instance.get("SubnetId")
             
+            # Skip instances without subnet information
+            if not subnet_id:
+                continue
+            
             subnet_node_info = self.subnet_node_map.get(subnet_id)
             if not subnet_node_info:
                 continue
@@ -424,7 +499,7 @@ class AWSToCloudBuilderConverter:
                 parent_id=subnet_node_id,  # Initially parent is subnet, will change to SG
                 config={
                     "originalType": "AWS::EC2::Instance",
-                    "region": subnet_id.split('-')[1] if len(subnet_id.split('-')) > 1 else "unknown",
+                    "region": subnet_id.split('-')[1] if subnet_id and len(subnet_id.split('-')) > 1 else "unknown",
                     "vpc": instance.get("VpcId"),
                     "subnet": subnet_id,
                     "securityGroup": sg_id,
@@ -465,6 +540,8 @@ class AWSToCloudBuilderConverter:
             if not attachments:
                 continue
             vpc_id = attachments[0].get("VpcId")
+            if not vpc_id:
+                continue
             if vpc_id not in igw_by_vpc:
                 igw_by_vpc[vpc_id] = []
             igw_by_vpc[vpc_id].append(igw)
@@ -516,6 +593,8 @@ class AWSToCloudBuilderConverter:
         rt_by_vpc: Dict[str, List[Dict]] = {}
         for rt in route_tables:
             vpc_id = rt.get("VpcId")
+            if not vpc_id:
+                continue
             if vpc_id not in rt_by_vpc:
                 rt_by_vpc[vpc_id] = []
             rt_by_vpc[vpc_id].append(rt)
@@ -577,7 +656,14 @@ class AWSToCloudBuilderConverter:
         # Collect all SGs referenced by instances
         instances_sgs = set()
         for inst in self.nodes:
-            if inst["data"].get("resourceType", {}).get("id") == "ec2":
+            resource_type = inst["data"].get("resourceType")
+            # Handle both object and string formats
+            if isinstance(resource_type, dict):
+                is_ec2 = resource_type.get("id") == "ec2"
+            else:
+                is_ec2 = resource_type == "ec2"
+            
+            if is_ec2:
                 sg_id = inst["data"].get("securityGroup")
                 if sg_id:
                     instances_sgs.add(sg_id)
@@ -592,6 +678,8 @@ class AWSToCloudBuilderConverter:
                 continue
                 
             vpc_id = sg.get("VpcId")
+            if not vpc_id:
+                continue
             if vpc_id not in sg_by_vpc:
                 sg_by_vpc[vpc_id] = []
             sg_by_vpc[vpc_id].append(sg)
@@ -611,14 +699,15 @@ class AWSToCloudBuilderConverter:
                 self.sg_node_map[sg_id] = node_id
                 self.sg_vpc_map[sg_id] = vpc_id  # Track which VPC this SG belongs to
                 
-                # Create SG as a container with minimal size
-                # Parent will be updated when we position instances
+                # Create SG as a container with minimal initial size
+                # The actual size will be calculated dynamically based on children
+                # in _update_region_size() to fit all contained instances
                 self._create_node(
                     node_id=node_id,
                     label=sg_name,
                     resource_type="security_group",
                     position={"x": 0, "y": 0},  # Will be repositioned later
-                    size={"width": 150, "height": 80},  # Minimal size for container
+                    size={"width": 100, "height": 60},  # Minimal initial size - will expand dynamically
                     is_container=True,
                     parent_id=vpc_node_id,  # Initially at VPC level
                     config={
@@ -636,6 +725,134 @@ class AWSToCloudBuilderConverter:
                     inboundRules=len(sg.get("IpPermissions", [])),
                     outboundRules=len(sg.get("IpPermissionsEgress", []))
                 )
+    
+    def _process_nat_gateways(self, nat_gateways: List[Dict]):
+        """Process NAT Gateways - positioned in their respective subnets"""
+        padding = 30
+        nat_width = 120
+        nat_height = 88
+        nat_spacing = 20
+        
+        for nat_gw in nat_gateways:
+            nat_gw_id = nat_gw.get("nat_gateway_id") or nat_gw.get("NatGatewayId")
+            vpc_id = nat_gw.get("vpc_id") or nat_gw.get("VpcId")
+            subnet_id = nat_gw.get("subnet_id") or nat_gw.get("SubnetId")
+            
+            if not nat_gw_id or not subnet_id:
+                continue
+            
+            # Get subnet node information
+            subnet_node_info = self.subnet_node_map.get(subnet_id)
+            if not subnet_node_info:
+                continue
+            
+            subnet_node_id, _ = subnet_node_info
+            subnet_node = self.node_map.get(subnet_node_id)
+            
+            if not subnet_node:
+                continue
+            
+            subnet_x = subnet_node["position"]["x"]
+            subnet_y = subnet_node["position"]["y"]
+            
+            node_id = f"nat-{nat_gw_id}"
+            self.nat_gw_node_map[nat_gw_id] = node_id
+            
+            # Position NAT Gateway at the bottom of the subnet
+            x_pos = subnet_x + padding
+            y_pos = subnet_y + subnet_node["height"] + nat_spacing
+            
+            self._create_node(
+                node_id=node_id,
+                label=nat_gw_id,
+                resource_type="nat_gateway",
+                position={"x": x_pos, "y": y_pos},
+                size={"width": nat_width, "height": nat_height},
+                is_container=False,
+                parent_id=subnet_node_id,  # Parent is the subnet
+                config={
+                    "originalType": "AWS::EC2::NatGateway",
+                    "region": subnet_id.split('-')[1] if subnet_id and len(subnet_id.split('-')) > 1 else "unknown",
+                    "vpcId": vpc_id,
+                    "subnetId": subnet_id
+                },
+                nesting_depth=3,
+                natGatewayId=nat_gw_id,
+                vpcId=vpc_id,
+                subnetId=subnet_id,
+                state=nat_gw.get("state") or nat_gw.get("State", "available")
+            )
+    
+    def _process_rds_instances(self, rds_instances: List[Dict]):
+        """Process RDS Instances - positioned in their respective subnets"""
+        padding = 30
+        rds_width = 120
+        rds_height = 88
+        rds_spacing = 20
+        
+        for rds in rds_instances:
+            db_instance_id = rds.get("db_instance_identifier") or rds.get("DBInstanceIdentifier")
+            vpc_id = rds.get("vpc_id") or rds.get("VpcId")
+            subnet_id = rds.get("DBSubnetGroupName") or rds.get("db_subnet_group_name") or rds.get("subnet_id") or rds.get("SubnetId")
+            engine = rds.get("engine") or rds.get("Engine", "Unknown")
+            
+            if not db_instance_id:
+                continue
+            
+            # If subnet_id is available, position in subnet; otherwise position at VPC level
+            if subnet_id and subnet_id in self.subnet_node_map:
+                subnet_node_info = self.subnet_node_map.get(subnet_id)
+                subnet_node_id, vpc_node_id = subnet_node_info
+                parent_id = subnet_node_id
+                nesting_depth = 3
+            elif vpc_id and vpc_id in self.vpc_node_map:
+                vpc_node_id = self.vpc_node_map[vpc_id]
+                parent_id = vpc_node_id
+                nesting_depth = 2
+                subnet_node = None
+            else:
+                continue
+            
+            parent_node = self.node_map.get(parent_id)
+            if not parent_node:
+                continue
+            
+            node_id = f"rds-{db_instance_id}"
+            self.rds_node_map[db_instance_id] = node_id
+            
+            parent_x = parent_node["position"]["x"]
+            parent_y = parent_node["position"]["y"]
+            parent_width = parent_node["width"]
+            parent_height = parent_node["height"]
+            
+            # Position RDS inside parent (centered)
+            # Use a static offset from parent top-left rather than relying on parent_height
+            # which may be adjusted during sizing passes
+            x_pos = parent_x + padding  # Small padding from left
+            y_pos = parent_y + padding  # Small padding from top
+            
+            self._create_node(
+                node_id=node_id,
+                label=db_instance_id,
+                resource_type="rds_instance",
+                position={"x": x_pos, "y": y_pos},
+                size={"width": rds_width, "height": rds_height},
+                is_container=False,
+                parent_id=parent_id,
+                config={
+                    "originalType": "AWS::RDS::DBInstance",
+                    "region": db_instance_id.split('-')[0] if db_instance_id and len(db_instance_id.split('-')) > 0 else "unknown",
+                    "vpcId": vpc_id,
+                    "engine": engine
+                },
+                nesting_depth=nesting_depth,
+                dbInstanceIdentifier=db_instance_id,
+                vpcId=vpc_id,
+                engine=engine,
+                dbInstanceClass=rds.get("db_instance_class") or rds.get("DBInstanceClass", "Unknown"),
+                allocatedStorage=rds.get("allocated_storage") or rds.get("AllocatedStorage", 0),
+                dbInstanceStatus=rds.get("db_instance_status") or rds.get("DBInstanceStatus", "unknown")
+            )
     
     def _create_rt_subnet_edges(self, route_tables: List[Dict]):
         """Create edges from Route Tables to associated Subnets"""
@@ -689,6 +906,60 @@ class AWSToCloudBuilderConverter:
                         edge_type="sg-to-instance"
                     )
     
+    def _create_nat_subnet_edges(self, nat_gateways: List[Dict]):
+        """Create edges from Subnets to NAT Gateways"""
+        for nat_gw in nat_gateways:
+            nat_gw_id = nat_gw.get("nat_gateway_id") or nat_gw.get("NatGatewayId")
+            subnet_id = nat_gw.get("subnet_id") or nat_gw.get("SubnetId")
+            
+            if not nat_gw_id or not subnet_id:
+                continue
+            
+            subnet_node_info = self.subnet_node_map.get(subnet_id)
+            if not subnet_node_info:
+                continue
+            
+            subnet_node_id, _ = subnet_node_info
+            nat_node_id = self.nat_gw_node_map.get(nat_gw_id)
+            
+            if nat_node_id:
+                self._create_edge(
+                    source=subnet_node_id,
+                    target=nat_node_id,
+                    edge_type="subnet-to-nat"
+                )
+    
+    def _create_rds_subnet_edges(self, rds_instances: List[Dict]):
+        """Create edges from Subnets/VPCs to RDS Instances"""
+        for rds in rds_instances:
+            db_instance_id = rds.get("db_instance_identifier") or rds.get("DBInstanceIdentifier")
+            subnet_id = rds.get("db_subnet_group_name") or rds.get("subnet_id") or rds.get("SubnetId")
+            vpc_id = rds.get("vpc_id") or rds.get("VpcId")
+            
+            if not db_instance_id:
+                continue
+            
+            rds_node_id = self.rds_node_map.get(db_instance_id)
+            if not rds_node_id:
+                continue
+            
+            # Create edge from subnet if available, otherwise from VPC
+            if subnet_id and subnet_id in self.subnet_node_map:
+                subnet_node_info = self.subnet_node_map.get(subnet_id)
+                subnet_node_id, _ = subnet_node_info
+                self._create_edge(
+                    source=subnet_node_id,
+                    target=rds_node_id,
+                    edge_type="subnet-to-rds"
+                )
+            elif vpc_id and vpc_id in self.vpc_node_map:
+                vpc_node_id = self.vpc_node_map[vpc_id]
+                self._create_edge(
+                    source=vpc_node_id,
+                    target=rds_node_id,
+                    edge_type="subnet-to-rds"
+                )
+    
     def _create_node(self, node_id: str, label: str, resource_type: str, position: Dict,
                     size: Dict, is_container: bool, parent_id: str, config: Dict,
                     nesting_depth: int, **kwargs):
@@ -698,7 +969,7 @@ class AWSToCloudBuilderConverter:
         # Build data object
         data = {
             "label": label,
-            "resourceType": rt_def,
+            "resourceType": rt_def,  # Store the full resource type definition object, not just the string
         }
         
         # Add resource-specific properties (like vpcId, subnetId, gatewayId, etc.)
@@ -774,35 +1045,145 @@ class AWSToCloudBuilderConverter:
                 return tag.get("Value", default)
         return default
     
+    def _get_dynamic_padding(self, num_children: int, container_type: str = "default") -> int:
+        """Calculate dynamic padding/margin based on number of children and container type
+        
+        Strategy:
+        - Minimum padding: 15px (tight fit for many children)
+        - Maximum padding: 50px (generous spacing for few children)
+        - Adjusts based on child count to maintain visual balance
+        
+        Args:
+            num_children: Number of direct children in the container
+            container_type: Type of container ('region', 'vpc', 'subnet', 'sg', 'default')
+        
+        Returns:
+            Dynamic padding value in pixels
+        """
+        # Base padding values
+        min_padding = 15
+        max_padding = 50
+        
+        # Adjust based on container type
+        if container_type == "region":
+            # Regions with multiple VPCs: use less padding
+            if num_children <= 1:
+                return max_padding
+            elif num_children <= 3:
+                return 40
+            else:
+                return min_padding
+        
+        elif container_type == "vpc":
+            # VPCs with many subnets need tighter spacing
+            if num_children <= 2:
+                return max_padding
+            elif num_children <= 5:
+                return 35
+            else:
+                return min_padding
+        
+        elif container_type == "subnet":
+            # Subnets with multiple children
+            if num_children <= 1:
+                return max_padding
+            elif num_children <= 3:
+                return 30
+            else:
+                return min_padding
+        
+        elif container_type == "sg":
+            # Security groups (usually few children)
+            if num_children <= 1:
+                return max_padding
+            else:
+                return 25
+        
+        else:  # default
+            # Generic calculation: more children = less padding
+            if num_children == 0:
+                return max_padding
+            elif num_children == 1:
+                return max_padding
+            elif num_children <= 3:
+                return 35
+            elif num_children <= 6:
+                return 25
+            else:
+                return min_padding
+    
     def _update_region_size(self):
         """Update all container sizes to fit their children completely inside
         
-        Hierarchy: Region (ultimate boundary) → VPCs → Subnets → Instances
-        Each parent is sized to completely contain all its direct children.
+        Hierarchy: Region → VPCs → Subnets → (Instances, NAT GW, RDS, Security Groups)
+        Each parent is sized to completely contain ALL its direct children.
         The Region is the outermost boundary that encompasses the entire infrastructure.
         Ensures no children collide with each other and all fit within parent boundaries.
         
-        Subnet sizing: Default (200x80) if no children, expanded to fit children if present.
+        Dynamic Margins:
+        - Padding is calculated based on the number of children
+        - Fewer children = more generous spacing
+        - More children = tighter spacing to maintain visual hierarchy
+        
+        Sizing Rules:
+        - Subnet: Sized to fit all direct children (instances, NAT, RDS, security groups) + dynamic padding
+        - VPC: Sized to fit all direct children (subnets, route tables, security groups) + dynamic padding
+        - Region: Sized to fit all VPCs + dynamic padding
+        - Security Group: Sized to fit all instances inside it + dynamic padding
         """
-        padding = 40
         default_subnet_width = 200
         default_subnet_height = 80
         
-        # First pass: Update subnet sizes based on their instances
-        subnet_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "subnet"]
+        def get_resource_type_id(node):
+            """Extract resource type ID from either dict or string format"""
+            rt = node["data"].get("resourceType")
+            if isinstance(rt, dict):
+                return rt.get("id")
+            return rt
+        
+        # Pass 1: Update Security Group sizes (innermost containers)
+        # Security groups contain instances, so size them first
+        sg_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "securityGroup"]
+        for sg_node in sg_nodes:
+            sg_id = sg_node["id"]
+            # Get all direct children of this SG
+            children = [n for n in self.nodes if n["data"].get("parentId") == sg_id]
+            
+            if children:
+                # Dynamic padding based on number of children
+                padding = self._get_dynamic_padding(len(children), "sg")
+                
+                sg_x = sg_node["position"]["x"]
+                sg_y = sg_node["position"]["y"]
+                max_right = max([n["position"]["x"] + n["width"] for n in children])
+                max_bottom = max([n["position"]["y"] + n["height"] for n in children])
+                
+                new_width = max_right - sg_x + padding
+                new_height = max_bottom - sg_y + padding
+                
+                sg_node["width"] = new_width
+                sg_node["height"] = new_height
+                sg_node["data"]["size"] = {"width": new_width, "height": new_height}
+        
+        # Pass 2: Update Subnet sizes (subnets contain instances, NAT, RDS, security groups)
+        subnet_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "subnet"]
         for subnet_node in subnet_nodes:
             subnet_id = subnet_node["id"]
+            # Get all direct children: instances, NAT gateways, RDS, security groups
             children = [n for n in self.nodes if n["data"].get("parentId") == subnet_id]
             
             if children:
-                # Subnet has children - expand to fit them
+                # Dynamic padding based on number of children in subnet
+                padding = self._get_dynamic_padding(len(children), "subnet")
+                
+                # Subnet has children - expand to fit them all
                 subnet_x = subnet_node["position"]["x"]
                 subnet_y = subnet_node["position"]["y"]
                 # Calculate the rightmost and bottommost edges of all children
                 max_right = max([n["position"]["x"] + n["width"] for n in children])
                 max_bottom = max([n["position"]["y"] + n["height"] for n in children])
                 
-                # Size subnet to contain all children with padding
+                # Size subnet to contain all children with dynamic padding
                 new_width = max_right - subnet_x + padding
                 new_height = max_bottom - subnet_y + padding
                 
@@ -815,20 +1196,24 @@ class AWSToCloudBuilderConverter:
                 subnet_node["height"] = default_subnet_height
                 subnet_node["data"]["size"] = {"width": default_subnet_width, "height": default_subnet_height}
         
-        # Second pass: Update VPC sizes based on all children (subnets, IGWs, RTs, SGs)
-        vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
+        # Pass 3: Update VPC sizes (VPCs contain subnets, route tables, security groups)
+        vpc_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "vpc"]
         for vpc_node in vpc_nodes:
             vpc_id = vpc_node["id"]
+            # Get all direct children of VPC: subnets, route tables, security groups
             children = [n for n in self.nodes if n["data"].get("parentId") == vpc_id]
             
             if children:
+                # Dynamic padding based on number of children in VPC
+                padding = self._get_dynamic_padding(len(children), "vpc")
+                
                 vpc_x = vpc_node["position"]["x"]
                 vpc_y = vpc_node["position"]["y"]
                 # Calculate the rightmost and bottommost edges of all children
                 max_right = max([n["position"]["x"] + n["width"] for n in children])
                 max_bottom = max([n["position"]["y"] + n["height"] for n in children])
                 
-                # Size VPC to contain all children with padding
+                # Size VPC to contain all children with dynamic padding
                 new_width = max_right - vpc_x + padding
                 new_height = max_bottom - vpc_y + padding
                 
@@ -836,13 +1221,17 @@ class AWSToCloudBuilderConverter:
                 vpc_node["height"] = new_height
                 vpc_node["data"]["size"] = {"width": new_width, "height": new_height}
         
-        # Third pass: Update region size based on all VPCs (ultimate boundary container)
-        region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        # Pass 4: Update region size (region contains VPCs)
+        region_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "region"]
         for region_node in region_nodes:
             region_id = region_node["id"]
+            # Get all VPCs directly under this region
             vpc_children = [n for n in self.nodes if n["data"].get("parentId") == region_id]
             
             if vpc_children:
+                # Dynamic padding based on number of VPCs in region
+                padding = self._get_dynamic_padding(len(vpc_children), "region")
+                
                 region_x = 0  # Region always starts at 0
                 region_y = 0  # Region always starts at 0
                 
@@ -866,22 +1255,24 @@ class AWSToCloudBuilderConverter:
                 region_node["data"]["width"] = new_width
                 region_node["data"]["height"] = new_height
                 
-                print(f"Region '{region_id}' sized to: {new_width}x{new_height} (VPCs max: {max_right}x{max_bottom})")
+                print(f"Region '{region_id}' sized to: {new_width}x{new_height} (VPCs max: {max_right}x{max_bottom}, padding: {padding}px)")
     
     def _reposition_subnets_to_prevent_collision(self):
-        """Reposition subnets within each VPC to prevent vertical collisions after sizing"""
-        min_spacing = 50  # Minimum gap between subnet bottom and next subnet top
+        """Reposition subnets within each VPC in a 2-column grid layout"""
+        min_spacing = 50  # Minimum gap between elements
+        col_spacing = 30  # Horizontal spacing between columns
         
         # Find all VPC nodes
-        vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
+        vpc_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "vpc"]
         
         for vpc_node in vpc_nodes:
             vpc_id = vpc_node["id"]
             vpc_x = vpc_node["position"]["x"]
             vpc_y = vpc_node["position"]["y"]
+            vpc_width = vpc_node["width"]
             
             # Find all subnets in this VPC
-            subnets = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and n["data"].get("resourceType", {}).get("id") == "subnet"]
+            subnets = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and self._get_resource_type_id(n) == "subnet"]
             
             if not subnets:
                 continue
@@ -889,17 +1280,35 @@ class AWSToCloudBuilderConverter:
             # Sort subnets by their current y position
             subnets.sort(key=lambda n: n["position"]["y"])
             
-            # Reposition subnets vertically with guaranteed spacing
-            current_y = vpc_y + 120  # Start position for subnets (below IGWs)
+            # Calculate column widths (2 columns)
+            available_width = vpc_width - 80  # Padding on both sides (40px each)
+            col_width = (available_width - col_spacing) / 2  # Divide by 2 for 2 columns
+            
+            # 2-column grid layout
+            col1_x = vpc_x + 40  # Left column
+            col2_x = vpc_x + 40 + col_width + col_spacing  # Right column
+            start_y = vpc_y + 120  # Start position for subnets (below IGWs)
+            
+            # Track positions for each column
+            col1_y = start_y
+            col2_y = start_y
             
             for subnet_idx, subnet in enumerate(subnets):
                 subnet_id = subnet["id"]
                 old_y = subnet["position"]["y"]
                 old_x = subnet["position"]["x"]
                 
-                # Align all subnets to left with padding
-                new_x = vpc_x + 40
-                new_y = current_y
+                # Alternate between columns, always using the lowest available Y
+                if subnet_idx % 2 == 0:  # Even index = Column 1
+                    new_x = col1_x
+                    # Place at the maximum of current column or the other column
+                    new_y = max(col1_y, col2_y)
+                    col1_y = new_y + subnet["height"] + min_spacing
+                else:  # Odd index = Column 2
+                    new_x = col2_x
+                    # Place at the maximum of current column or the other column
+                    new_y = max(col1_y, col2_y)
+                    col2_y = new_y + subnet["height"] + min_spacing
                 
                 # Update subnet position
                 subnet["position"]["x"] = new_x
@@ -909,10 +1318,6 @@ class AWSToCloudBuilderConverter:
                 x_offset = new_x - old_x
                 y_offset = new_y - old_y
                 self._adjust_children_position_both(subnet_id, x_offset, y_offset)
-                
-                # Calculate next position: current position + height + spacing
-                subnet_bottom = new_y + subnet["height"]
-                current_y = subnet_bottom + min_spacing
     
     def _adjust_children_y_position(self, parent_id: str, y_offset: float):
         """Adjust only y position of direct children when parent moves vertically"""
@@ -930,12 +1335,203 @@ class AWSToCloudBuilderConverter:
                 # Recursively adjust children of this node
                 self._adjust_children_position_both(node["id"], x_offset, y_offset)
     
+    def _reposition_vpcs_horizontally(self):
+        """Reposition VPCs horizontally within each region to prevent overlap"""
+        min_spacing = 50  # Minimum gap between VPC edges
+        
+        # Find all region nodes
+        region_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "region"]
+        
+        for region_node in region_nodes:
+            region_id = region_node["id"]
+            region_x = region_node["position"]["x"]
+            
+            # Find all VPCs in this region
+            vpcs = [n for n in self.nodes if n["data"].get("parentId") == region_id and self._get_resource_type_id(n) == "vpc"]
+            
+            if not vpcs:
+                continue
+            
+            # Sort VPCs by their current x position
+            vpcs.sort(key=lambda n: n["position"]["x"])
+            
+            # Reposition VPCs horizontally with guaranteed spacing
+            current_x = region_x + 40  # Start position for VPCs (left padding)
+            
+            for vpc in vpcs:
+                vpc_id = vpc["id"]
+                old_x = vpc["position"]["x"]
+                
+                new_x = current_x
+                
+                # Update VPC position
+                vpc["position"]["x"] = new_x
+                
+                # Adjust all children of this VPC
+                x_offset = new_x - old_x
+                self._adjust_children_x_position(vpc_id, x_offset)
+                
+                # Calculate next position: current position + width + spacing
+                vpc_right = new_x + vpc["width"]
+                current_x = vpc_right + min_spacing
+    
+    def _adjust_children_x_position(self, parent_id: str, x_offset: float):
+        """Adjust only x position of all descendants when parent moves horizontally"""
+        for node in self.nodes:
+            if node["data"].get("parentId") == parent_id:
+                node["position"]["x"] += x_offset
+    
+    def _expand_containers_to_fit_children(self):
+        """Expand all container nodes to fit their direct children with padding
+        
+        Runs before repositioning to ensure there's enough space for all children.
+        """
+        padding = 20
+        
+        # Process from smallest containers to largest (leaf containers first)
+        # Group by container type
+        container_nodes = [n for n in self.nodes if n["data"].get("isContainer")]
+        
+        for container in container_nodes:
+            container_id = container["id"]
+            
+            # Find all direct children
+            children = [n for n in self.nodes if n["data"].get("parentId") == container_id]
+            
+            if not children:
+                continue
+            
+            container_x = container["position"]["x"]
+            container_y = container["position"]["y"]
+            
+            # Calculate bounding box of all children
+            child_positions = [
+                {
+                    "x_min": c["position"]["x"],
+                    "x_max": c["position"]["x"] + c["width"],
+                    "y_min": c["position"]["y"],
+                    "y_max": c["position"]["y"] + c["height"],
+                }
+                for c in children
+            ]
+            
+            min_x = min(cp["x_min"] for cp in child_positions)
+            max_x = max(cp["x_max"] for cp in child_positions)
+            min_y = min(cp["y_min"] for cp in child_positions)
+            max_y = max(cp["y_max"] for cp in child_positions)
+            
+            # Calculate required size
+            required_width = max_x - container_x + padding
+            required_height = max_y - container_y + padding
+            
+            # Expand container if needed
+            if required_width > container["width"]:
+                container["width"] = required_width
+                container["data"]["size"]["width"] = required_width
+            
+            if required_height > container["height"]:
+                container["height"] = required_height
+                container["data"]["size"]["height"] = required_height
+    
+    def _reposition_children_inside_parents(self):
+        """Reposition all children to be properly centered and contained within their parent bounds
+        
+        This pass runs AFTER container sizing, ensuring children fit perfectly inside parents
+        with proper alignment and spacing.
+        """
+        padding = 15  # Padding from parent edges
+        
+        # Process each parent node
+        parent_nodes = [n for n in self.nodes if n["data"].get("isContainer")]
+        
+        for parent in parent_nodes:
+            parent_id = parent["id"]
+            parent_x = parent["position"]["x"]
+            parent_y = parent["position"]["y"]
+            parent_w = parent["width"]
+            parent_h = parent["height"]
+            
+            # Find all direct children of this parent
+            children = [n for n in self.nodes if n["data"].get("parentId") == parent_id]
+            
+            if not children:
+                continue
+            
+            # Separate children by type for better layout
+            containers = [c for c in children if c["data"].get("isContainer")]
+            leaf_nodes = [c for c in children if not c["data"].get("isContainer")]
+            
+            # Position leaf nodes (instances, nat gateways, rds, etc.)
+            # Distribute them vertically with proper spacing
+            available_h = parent_h - (2 * padding)
+            
+            if leaf_nodes:
+                # Calculate total height needed and spacing
+                total_child_h = sum(c["height"] for c in leaf_nodes)
+                num_gaps = len(leaf_nodes) + 1
+                space_per_gap = available_h - total_child_h
+                gap_size = space_per_gap / num_gaps if num_gaps > 0 else padding
+                gap_size = max(gap_size, 5)  # Minimum 5px gap
+                
+                current_y = parent_y + gap_size
+                
+                for leaf in leaf_nodes:
+                    leaf_w = leaf["width"]
+                    leaf_h = leaf["height"]
+                    
+                    # Center horizontally within parent
+                    leaf_x = parent_x + (parent_w - leaf_w) / 2
+                    leaf_x = max(parent_x + padding, min(leaf_x, parent_x + parent_w - leaf_w - padding))
+                    
+                    # Position vertically with proper bounds checking
+                    leaf_y = current_y
+                    
+                    # Ensure it doesn't exceed parent bounds
+                    max_y = parent_y + parent_h - leaf_h
+                    if leaf_y + leaf_h > parent_y + parent_h:
+                        leaf_y = max(parent_y + padding, max_y)
+                    
+                    # Update position
+                    leaf["position"]["x"] = leaf_x
+                    leaf["position"]["y"] = leaf_y
+                    
+                    current_y = leaf_y + leaf_h + gap_size
+            
+            # Position container children (subnets within VPC, etc.)
+            # Ensure they're within bounds with proper spacing
+            if containers:
+                cont_padding = 20
+                
+                for idx, container in enumerate(containers):
+                    cont_x = container["position"]["x"]
+                    cont_y = container["position"]["y"]
+                    cont_w = container["width"]
+                    cont_h = container["height"]
+                    
+                    # Ensure container stays within parent bounds
+                    min_x = parent_x + cont_padding
+                    max_x = parent_x + parent_w - cont_w - cont_padding
+                    min_y = parent_y + cont_padding
+                    max_y = parent_y + parent_h - cont_h - cont_padding
+                    
+                    new_x = max(min_x, min(cont_x, max_x)) if max_x >= min_x else parent_x + cont_padding
+                    new_y = max(min_y, min(cont_y, max_y)) if max_y >= min_y else parent_y + cont_padding
+                    
+                    x_offset = new_x - cont_x
+                    y_offset = new_y - cont_y
+                    
+                    if x_offset != 0 or y_offset != 0:
+                        container["position"]["x"] = new_x
+                        container["position"]["y"] = new_y
+                        # Adjust all descendants of this container
+                        self._adjust_children_position_both(container["id"], x_offset, y_offset)
+    
     def _recalculate_vpc_sizes(self):
         """Recalculate VPC sizes after subnet repositioning to ensure they fit all children"""
         padding = 40
         
         # Update VPC sizes based on all children after repositioning
-        vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
+        vpc_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "vpc"]
         for vpc_node in vpc_nodes:
             vpc_id = vpc_node["id"]
             children = [n for n in self.nodes if n["data"].get("parentId") == vpc_id]
@@ -963,7 +1559,7 @@ class AWSToCloudBuilderConverter:
         sg_vertical_spacing = 150  # Increased for container height
         
         # Find all VPC nodes
-        vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
+        vpc_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "vpc"]
         
         for vpc_node in vpc_nodes:
             vpc_id = vpc_node["id"]
@@ -972,7 +1568,7 @@ class AWSToCloudBuilderConverter:
             vpc_width = vpc_node["width"]
             
             # Find all subnets in this VPC to determine where they end
-            subnets = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and n["data"].get("resourceType", {}).get("id") == "subnet"]
+            subnets = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and self._get_resource_type_id(n) == "subnet"]
             
             # Determine RT start position (after last subnet)
             if subnets:
@@ -983,7 +1579,7 @@ class AWSToCloudBuilderConverter:
                 rt_y_start = vpc_y + 260  # Fallback to original position if no subnets
             
             # Reposition RTs
-            route_tables = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and n["data"].get("resourceType", {}).get("id") == "routetable"]
+            route_tables = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and self._get_resource_type_id(n) == "routetable"]
             
             rt_x = vpc_x + padding
             current_rt_y = rt_y_start
@@ -1001,7 +1597,7 @@ class AWSToCloudBuilderConverter:
                 sg_y_start = rt_y_start  # If no RTs, start where RTs would have started
             
             # Reposition SGs
-            security_groups = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and n["data"].get("resourceType", {}).get("id") == "securityGroup"]
+            security_groups = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and self._get_resource_type_id(n) == "securityGroup"]
             
             sg_x = vpc_x + vpc_width - padding - 250  # Updated for larger container width
             current_sg_y = sg_y_start
@@ -1023,7 +1619,7 @@ class AWSToCloudBuilderConverter:
         inst_spacing = 15
         
         # Find all subnets
-        subnet_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "subnet"]
+        subnet_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "subnet"]
         
         for subnet_node in subnet_nodes:
             subnet_id = subnet_node["id"]
@@ -1032,7 +1628,7 @@ class AWSToCloudBuilderConverter:
             subnet_width = subnet_node["width"]
             
             # Find all instances in this subnet
-            subnet_instances = [n for n in self.nodes if n["data"].get("parentId") == subnet_id and n["data"].get("resourceType", {}).get("id") == "ec2"]
+            subnet_instances = [n for n in self.nodes if n["data"].get("parentId") == subnet_id and self._get_resource_type_id(n) == "ec2"]
             
             if not subnet_instances:
                 continue
@@ -1136,17 +1732,17 @@ class AWSToCloudBuilderConverter:
         
         # Find all SGs that have been moved to subnets (those with instances)
         positioned_sgs = set()
-        for subnet_node in [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "subnet"]:
-            sgs_in_subnet = [n for n in self.nodes if n["data"].get("parentId") == subnet_node["id"] and 
-                           n["data"].get("resourceType", {}).get("id") == "securityGroup"]
+        for subnet_node in [n for n in self.nodes if self._get_resource_type_id(n) == "subnet"]:
+            sgs_in_subnet = [n for n in self.nodes if n["data"].get("parentId") == subnet_node["id"] and
+                           self._get_resource_type_id(n) == "securityGroup"]
             for sg in sgs_in_subnet:
                 positioned_sgs.add(sg["id"])
         
         # Find all SGs (orphaned ones will not be in positioned_sgs)
-        all_sgs = {n["id"]: n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "securityGroup"}
+        all_sgs = {n["id"]: n for n in self.nodes if self._get_resource_type_id(n) == "securityGroup"}
         
         # Position orphaned SGs by VPC
-        vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
+        vpc_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "vpc"]
         
         for vpc_node in vpc_nodes:
             vpc_id = vpc_node["id"]
@@ -1168,9 +1764,9 @@ class AWSToCloudBuilderConverter:
             
             # Find the lowest subnets/RTs to position orphaned SGs below them
             subnets = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and 
-                      n["data"].get("resourceType", {}).get("id") == "subnet"]
+                      self._get_resource_type_id(n) == "subnet"]
             rts = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and 
-                   n["data"].get("resourceType", {}).get("id") == "routetable"]
+                   self._get_resource_type_id(n) == "routetable"]
             
             all_children = subnets + rts
             if all_children:
@@ -1203,7 +1799,7 @@ class AWSToCloudBuilderConverter:
         """Recalculate subnet sizes to fit all children (SGs and instances inside SGs)"""
         padding = 20
         
-        subnet_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "subnet"]
+        subnet_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "subnet"]
         
         for subnet_node in subnet_nodes:
             subnet_id = subnet_node["id"]
@@ -1216,7 +1812,7 @@ class AWSToCloudBuilderConverter:
             # Also find instances inside SGs to include in sizing
             all_descendants = children.copy()
             for child in children:
-                if child["data"].get("resourceType", {}).get("id") == "securityGroup":
+                if self._get_resource_type_id(child) == "securityGroup":
                     sg_children = [n for n in self.nodes if n["data"].get("parentId") == child["id"]]
                     all_descendants.extend(sg_children)
             
@@ -1236,7 +1832,7 @@ class AWSToCloudBuilderConverter:
         padding = 40
         rt_vertical_spacing = 100
         
-        vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
+        vpc_nodes = [n for n in self.nodes if self._get_resource_type_id(n) == "vpc"]
         
         for vpc_node in vpc_nodes:
             vpc_id = vpc_node["id"]
@@ -1245,7 +1841,7 @@ class AWSToCloudBuilderConverter:
             vpc_width = vpc_node["width"]
             
             # Find all subnets in this VPC to determine where they end
-            subnets = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and n["data"].get("resourceType", {}).get("id") == "subnet"]
+            subnets = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and self._get_resource_type_id(n) == "subnet"]
             
             # Determine RT start position (after last subnet)
             if subnets:
@@ -1256,7 +1852,7 @@ class AWSToCloudBuilderConverter:
                 rt_y_start = vpc_y + 260
             
             # Reposition RTs
-            route_tables = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and n["data"].get("resourceType", {}).get("id") == "routetable"]
+            route_tables = [n for n in self.nodes if n["data"].get("parentId") == vpc_id and self._get_resource_type_id(n) == "routetable"]
             
             rt_x = vpc_x + padding
             current_rt_y = rt_y_start
@@ -1435,7 +2031,7 @@ class AWSToCloudBuilderConverter:
         # Filter out overlaps with region nodes (edges naturally cross region boundaries)
         significant_overlaps = [
             (e, n) for e, n in edge_overlaps 
-            if not self.node_map.get(n, {})['data'].get('resourceType', {}).get('id') == 'region'
+            if not self.node_map.get(n, {})['data'].get('resourceType') == 'region'
         ]
         
         if significant_overlaps:

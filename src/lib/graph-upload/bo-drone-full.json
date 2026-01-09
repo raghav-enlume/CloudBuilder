@@ -31,11 +31,11 @@
         },
         "region": "ap-northeast-1",
         "isContainer": true,
-        "width": 870,
-        "height": 1070,
+        "width": 997.5,
+        "height": 1045,
         "size": {
-          "width": 870,
-          "height": 1070
+          "width": 997.5,
+          "height": 1045
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -43,14 +43,14 @@
         },
         "nestingDepth": 0
       },
-      "width": 870,
-      "height": 1070
+      "width": 997.5,
+      "height": 1045
     },
     {
       "id": "vpc-vpc-00132212f1c5c663a",
       "type": "resourceNode",
       "position": {
-        "x": 100,
+        "x": 40,
         "y": 140
       },
       "data": {
@@ -88,8 +88,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 890
+          "width": 421.25,
+          "height": 865
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -101,14 +101,14 @@
         "nestingDepth": 1,
         "parentId": "region-ap-northeast-1"
       },
-      "width": 280,
-      "height": 890
+      "width": 421.25,
+      "height": 865
     },
     {
       "id": "vpc-vpc-0014e926fd3f6611f",
       "type": "resourceNode",
       "position": {
-        "x": 550,
+        "x": 511.25,
         "y": 140
       },
       "data": {
@@ -146,8 +146,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 758
+          "width": 446.25,
+          "height": 753
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -159,14 +159,14 @@
         "nestingDepth": 1,
         "parentId": "region-ap-northeast-1"
       },
-      "width": 280,
-      "height": 758
+      "width": 446.25,
+      "height": 753
     },
     {
       "id": "subnet-subnet-aea6361d3503c2d7f",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 80,
         "y": 260
       },
       "data": {
@@ -218,7 +218,7 @@
       "id": "subnet-subnet-69e5111f2df91e675",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 241.25,
         "y": 390
       },
       "data": {
@@ -270,7 +270,7 @@
       "id": "subnet-subnet-70718ada29a0e4a85",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 80,
         "y": 520
       },
       "data": {
@@ -322,7 +322,7 @@
       "id": "subnet-subnet-95bea5d79dc80a1e1",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 241.25,
         "y": 650
       },
       "data": {
@@ -374,7 +374,7 @@
       "id": "subnet-subnet-c326854c1fe2fe627",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 80,
         "y": 780
       },
       "data": {
@@ -426,8 +426,8 @@
       "id": "subnet-subnet-9f7619facb7827850",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 910
+        "x": 241.25,
+        "y": 905
       },
       "data": {
         "label": "subnet-9f7619facb7827850",
@@ -478,7 +478,7 @@
       "id": "subnet-subnet-a407d11737d5b95a3",
       "type": "resourceNode",
       "position": {
-        "x": 590,
+        "x": 551.25,
         "y": 260
       },
       "data": {
@@ -530,7 +530,7 @@
       "id": "subnet-subnet-9a794d026db790e41",
       "type": "resourceNode",
       "position": {
-        "x": 590,
+        "x": 722.5,
         "y": 390
       },
       "data": {
@@ -582,7 +582,7 @@
       "id": "subnet-subnet-60e8f01a25856cce9",
       "type": "resourceNode",
       "position": {
-        "x": 590,
+        "x": 551.25,
         "y": 520
       },
       "data": {
@@ -634,7 +634,7 @@
       "id": "subnet-subnet-be734a066c357492e",
       "type": "resourceNode",
       "position": {
-        "x": 590,
+        "x": 722.5,
         "y": 650
       },
       "data": {
@@ -687,7 +687,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 1110
+        "y": 1085
       },
       "data": {
         "label": "Region: ap-southeast-1",
@@ -713,11 +713,11 @@
         },
         "region": "ap-southeast-1",
         "isContainer": true,
-        "width": 870,
-        "height": 810,
+        "width": 997.5,
+        "height": 785,
         "size": {
-          "width": 870,
-          "height": 810
+          "width": 997.5,
+          "height": 785
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -725,15 +725,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 870,
-      "height": 810
+      "width": 997.5,
+      "height": 785
     },
     {
       "id": "vpc-vpc-00076762ac00eb6c0",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 1250
+        "x": 40,
+        "y": 1225
       },
       "data": {
         "label": "vpc-00076762ac00eb6c0",
@@ -770,8 +770,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 630
+          "width": 421.25,
+          "height": 605
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -783,15 +783,15 @@
         "nestingDepth": 1,
         "parentId": "region-ap-southeast-1"
       },
-      "width": 280,
-      "height": 630
+      "width": 421.25,
+      "height": 605
     },
     {
       "id": "vpc-vpc-0008368aa506fde61",
       "type": "resourceNode",
       "position": {
-        "x": 550,
-        "y": 1250
+        "x": 511.25,
+        "y": 1225
       },
       "data": {
         "label": "vpc-0008368aa506fde61",
@@ -828,8 +828,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 370
+          "width": 446.25,
+          "height": 365
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -841,15 +841,15 @@
         "nestingDepth": 1,
         "parentId": "region-ap-southeast-1"
       },
-      "width": 280,
-      "height": 370
+      "width": 446.25,
+      "height": 365
     },
     {
       "id": "subnet-subnet-aea16120234661a8b",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 1370
+        "x": 80,
+        "y": 1345
       },
       "data": {
         "label": "subnet-aea16120234661a8b",
@@ -900,8 +900,8 @@
       "id": "subnet-subnet-d6af901def3eeeb83",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 1500
+        "x": 241.25,
+        "y": 1475
       },
       "data": {
         "label": "subnet-d6af901def3eeeb83",
@@ -952,8 +952,8 @@
       "id": "subnet-subnet-cfc65907097ec5a4c",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 1630
+        "x": 80,
+        "y": 1605
       },
       "data": {
         "label": "subnet-cfc65907097ec5a4c",
@@ -1004,8 +1004,8 @@
       "id": "subnet-subnet-33f252e629b9dedf1",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 1760
+        "x": 241.25,
+        "y": 1730
       },
       "data": {
         "label": "subnet-33f252e629b9dedf1",
@@ -1056,8 +1056,8 @@
       "id": "subnet-subnet-afb9aeeea219a6fd6",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 1370
+        "x": 551.25,
+        "y": 1345
       },
       "data": {
         "label": "subnet-afb9aeeea219a6fd6",
@@ -1108,8 +1108,8 @@
       "id": "subnet-subnet-0f6a7b8c9d0e12345",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 1500
+        "x": 722.5,
+        "y": 1475
       },
       "data": {
         "label": "subnet-0f6a7b8c9d0e12345",
@@ -1157,11 +1157,271 @@
       "height": 80
     },
     {
+      "id": "rds-bo-drone-db-11",
+      "type": "resourceNode",
+      "position": {
+        "x": 190.625,
+        "y": 1358.0
+      },
+      "data": {
+        "label": "bo-drone-db-11",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-11",
+        "vpcId": "vpc-00076762ac00eb6c0",
+        "engine": "oracle-ee",
+        "dbInstanceClass": "db.m5.large",
+        "allocatedStorage": 50,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00076762ac00eb6c0",
+          "engine": "oracle-ee"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00076762ac00eb6c0"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-14",
+      "type": "resourceNode",
+      "position": {
+        "x": 190.625,
+        "y": 1579.0
+      },
+      "data": {
+        "label": "bo-drone-db-14",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-14",
+        "vpcId": "vpc-00076762ac00eb6c0",
+        "engine": "postgres",
+        "dbInstanceClass": "db.t3.small",
+        "allocatedStorage": 200,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00076762ac00eb6c0",
+          "engine": "postgres"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00076762ac00eb6c0"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-09",
+      "type": "resourceNode",
+      "position": {
+        "x": 674.375,
+        "y": 1242.75
+      },
+      "data": {
+        "label": "bo-drone-db-09",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-09",
+        "vpcId": "vpc-0008368aa506fde61",
+        "engine": "sqlserver-ex",
+        "dbInstanceClass": "db.m5.large",
+        "allocatedStorage": 20,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-0008368aa506fde61",
+          "engine": "sqlserver-ex"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0008368aa506fde61"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-22",
+      "type": "resourceNode",
+      "position": {
+        "x": 674.375,
+        "y": 1348.5
+      },
+      "data": {
+        "label": "bo-drone-db-22",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-22",
+        "vpcId": "vpc-0008368aa506fde61",
+        "engine": "mysql",
+        "dbInstanceClass": "db.m5.large",
+        "allocatedStorage": 50,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-0008368aa506fde61",
+          "engine": "mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0008368aa506fde61"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-25",
+      "type": "resourceNode",
+      "position": {
+        "x": 674.375,
+        "y": 1454.25
+      },
+      "data": {
+        "label": "bo-drone-db-25",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-25",
+        "vpcId": "vpc-0008368aa506fde61",
+        "engine": "oracle-ee",
+        "dbInstanceClass": "db.m5.large",
+        "allocatedStorage": 100,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-0008368aa506fde61",
+          "engine": "oracle-ee"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0008368aa506fde61"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
       "id": "region-eu-central-1",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 1960
+        "y": 1910
       },
       "data": {
         "label": "Region: eu-central-1",
@@ -1187,11 +1447,11 @@
         },
         "region": "eu-central-1",
         "isContainer": true,
-        "width": 870,
-        "height": 940,
+        "width": 997.5,
+        "height": 915,
         "size": {
-          "width": 870,
-          "height": 940
+          "width": 997.5,
+          "height": 915
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -1199,15 +1459,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 870,
-      "height": 940
+      "width": 997.5,
+      "height": 915
     },
     {
       "id": "vpc-vpc-0011c5ff196d4c440",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 2100
+        "x": 40,
+        "y": 2050
       },
       "data": {
         "label": "vpc-0011c5ff196d4c440",
@@ -1244,8 +1504,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 760
+          "width": 421.25,
+          "height": 735
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -1257,15 +1517,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-central-1"
       },
-      "width": 280,
-      "height": 760
+      "width": 421.25,
+      "height": 735
     },
     {
       "id": "vpc-vpc-00121e2a5983e3b3e",
       "type": "resourceNode",
       "position": {
-        "x": 550,
-        "y": 2100
+        "x": 511.25,
+        "y": 2050
       },
       "data": {
         "label": "vpc-00121e2a5983e3b3e",
@@ -1302,8 +1562,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 370
+          "width": 446.25,
+          "height": 365
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -1315,15 +1575,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-central-1"
       },
-      "width": 280,
-      "height": 370
+      "width": 446.25,
+      "height": 365
     },
     {
       "id": "subnet-subnet-4048da018eb02b845",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 2220
+        "x": 551.25,
+        "y": 2170
       },
       "data": {
         "label": "subnet-4048da018eb02b845",
@@ -1374,8 +1634,8 @@
       "id": "subnet-subnet-0b2c3d4e5f6a78901",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 2350
+        "x": 722.5,
+        "y": 2300
       },
       "data": {
         "label": "subnet-0b2c3d4e5f6a78901",
@@ -1426,8 +1686,8 @@
       "id": "subnet-subnet-b012e8a101db87189",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 2220
+        "x": 80,
+        "y": 2170
       },
       "data": {
         "label": "subnet-b012e8a101db87189",
@@ -1478,8 +1738,8 @@
       "id": "subnet-subnet-fb328971b2af83295",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 2350
+        "x": 241.25,
+        "y": 2300
       },
       "data": {
         "label": "subnet-fb328971b2af83295",
@@ -1530,8 +1790,8 @@
       "id": "subnet-subnet-4988141516c9bade6",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 2480
+        "x": 80,
+        "y": 2430
       },
       "data": {
         "label": "subnet-4988141516c9bade6",
@@ -1582,8 +1842,8 @@
       "id": "subnet-subnet-14ac6c682f292300e",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 2610
+        "x": 241.25,
+        "y": 2560
       },
       "data": {
         "label": "subnet-14ac6c682f292300e",
@@ -1634,8 +1894,8 @@
       "id": "subnet-subnet-cbdc84421f408635d",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 2740
+        "x": 80,
+        "y": 2685
       },
       "data": {
         "label": "subnet-cbdc84421f408635d",
@@ -1683,11 +1943,323 @@
       "height": 80
     },
     {
+      "id": "rds-bo-drone-db-13",
+      "type": "resourceNode",
+      "position": {
+        "x": 190.625,
+        "y": 2160.25
+      },
+      "data": {
+        "label": "bo-drone-db-13",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-13",
+        "vpcId": "vpc-0011c5ff196d4c440",
+        "engine": "aurora-mysql",
+        "dbInstanceClass": "db.m5.large",
+        "allocatedStorage": 100,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-0011c5ff196d4c440",
+          "engine": "aurora-mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0011c5ff196d4c440"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-03",
+      "type": "resourceNode",
+      "position": {
+        "x": 190.625,
+        "y": 2358.5
+      },
+      "data": {
+        "label": "bo-drone-db-03",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-03",
+        "vpcId": "vpc-0011c5ff196d4c440",
+        "engine": "oracle-ee",
+        "dbInstanceClass": "db.r5.large",
+        "allocatedStorage": 200,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-0011c5ff196d4c440",
+          "engine": "oracle-ee"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0011c5ff196d4c440"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-05",
+      "type": "resourceNode",
+      "position": {
+        "x": 190.625,
+        "y": 2556.75
+      },
+      "data": {
+        "label": "bo-drone-db-05",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-05",
+        "vpcId": "vpc-0011c5ff196d4c440",
+        "engine": "sqlserver-ex",
+        "dbInstanceClass": "db.t3.small",
+        "allocatedStorage": 50,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-0011c5ff196d4c440",
+          "engine": "sqlserver-ex"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0011c5ff196d4c440"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-06",
+      "type": "resourceNode",
+      "position": {
+        "x": 674.375,
+        "y": 2067.75
+      },
+      "data": {
+        "label": "bo-drone-db-06",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-06",
+        "vpcId": "vpc-00121e2a5983e3b3e",
+        "engine": "postgres",
+        "dbInstanceClass": "db.t3.micro",
+        "allocatedStorage": 50,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00121e2a5983e3b3e",
+          "engine": "postgres"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00121e2a5983e3b3e"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-18",
+      "type": "resourceNode",
+      "position": {
+        "x": 674.375,
+        "y": 2173.5
+      },
+      "data": {
+        "label": "bo-drone-db-18",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-18",
+        "vpcId": "vpc-00121e2a5983e3b3e",
+        "engine": "aurora-mysql",
+        "dbInstanceClass": "db.t3.small",
+        "allocatedStorage": 100,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00121e2a5983e3b3e",
+          "engine": "aurora-mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00121e2a5983e3b3e"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-30",
+      "type": "resourceNode",
+      "position": {
+        "x": 674.375,
+        "y": 2279.25
+      },
+      "data": {
+        "label": "bo-drone-db-30",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-30",
+        "vpcId": "vpc-00121e2a5983e3b3e",
+        "engine": "mysql",
+        "dbInstanceClass": "db.t3.micro",
+        "allocatedStorage": 200,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00121e2a5983e3b3e",
+          "engine": "mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00121e2a5983e3b3e"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
       "id": "region-eu-west-1",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 2940
+        "y": 2865
       },
       "data": {
         "label": "Region: eu-west-1",
@@ -1713,11 +2285,11 @@
         },
         "region": "eu-west-1",
         "isContainer": true,
-        "width": 870,
-        "height": 680,
+        "width": 997.5,
+        "height": 655,
         "size": {
-          "width": 870,
-          "height": 680
+          "width": 997.5,
+          "height": 655
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -1725,15 +2297,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 870,
-      "height": 680
+      "width": 997.5,
+      "height": 655
     },
     {
       "id": "vpc-vpc-000588bd2b6b06e4a",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 3080
+        "x": 40,
+        "y": 3005
       },
       "data": {
         "label": "vpc-000588bd2b6b06e4a",
@@ -1770,8 +2342,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 370
+          "width": 446.25,
+          "height": 365
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -1783,15 +2355,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-west-1"
       },
-      "width": 280,
-      "height": 370
+      "width": 446.25,
+      "height": 365
     },
     {
       "id": "vpc-vpc-00066f5af89a2a3a3",
       "type": "resourceNode",
       "position": {
-        "x": 550,
-        "y": 3080
+        "x": 536.25,
+        "y": 3005
       },
       "data": {
         "label": "vpc-00066f5af89a2a3a3",
@@ -1828,8 +2400,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 500
+          "width": 421.25,
+          "height": 475
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -1841,15 +2413,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-west-1"
       },
-      "width": 280,
-      "height": 500
+      "width": 421.25,
+      "height": 475
     },
     {
       "id": "subnet-subnet-40740bb24905b501e",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 3200
+        "x": 576.25,
+        "y": 3125
       },
       "data": {
         "label": "subnet-40740bb24905b501e",
@@ -1900,8 +2472,8 @@
       "id": "subnet-subnet-bfb1eebb5eaa7d659",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 3330
+        "x": 737.5,
+        "y": 3255
       },
       "data": {
         "label": "subnet-bfb1eebb5eaa7d659",
@@ -1952,8 +2524,8 @@
       "id": "subnet-subnet-02c9b48fc59f6197a",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 3460
+        "x": 576.25,
+        "y": 3380
       },
       "data": {
         "label": "subnet-02c9b48fc59f6197a",
@@ -2004,8 +2576,8 @@
       "id": "subnet-subnet-0c97e3866710528ca",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 3200
+        "x": 80,
+        "y": 3125
       },
       "data": {
         "label": "subnet-0c97e3866710528ca",
@@ -2056,8 +2628,8 @@
       "id": "subnet-subnet-e4829d52f38e39eff",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 3330
+        "x": 251.25,
+        "y": 3255
       },
       "data": {
         "label": "subnet-e4829d52f38e39eff",
@@ -2105,11 +2677,375 @@
       "height": 80
     },
     {
+      "id": "rds-bo-drone-db-08",
+      "type": "resourceNode",
+      "position": {
+        "x": 686.875,
+        "y": 3023.6
+      },
+      "data": {
+        "label": "bo-drone-db-08",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-08",
+        "vpcId": "vpc-00066f5af89a2a3a3",
+        "engine": "mysql",
+        "dbInstanceClass": "db.r5.large",
+        "allocatedStorage": 20,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00066f5af89a2a3a3",
+          "engine": "mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00066f5af89a2a3a3"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-17",
+      "type": "resourceNode",
+      "position": {
+        "x": 203.125,
+        "y": 3022.75
+      },
+      "data": {
+        "label": "bo-drone-db-17",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-17",
+        "vpcId": "vpc-000588bd2b6b06e4a",
+        "engine": "postgres",
+        "dbInstanceClass": "db.m5.large",
+        "allocatedStorage": 20,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-000588bd2b6b06e4a",
+          "engine": "postgres"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-000588bd2b6b06e4a"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-19",
+      "type": "resourceNode",
+      "position": {
+        "x": 203.125,
+        "y": 3128.5
+      },
+      "data": {
+        "label": "bo-drone-db-19",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-19",
+        "vpcId": "vpc-000588bd2b6b06e4a",
+        "engine": "postgres",
+        "dbInstanceClass": "db.r5.large",
+        "allocatedStorage": 20,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-000588bd2b6b06e4a",
+          "engine": "postgres"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-000588bd2b6b06e4a"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-20",
+      "type": "resourceNode",
+      "position": {
+        "x": 203.125,
+        "y": 3234.25
+      },
+      "data": {
+        "label": "bo-drone-db-20",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-20",
+        "vpcId": "vpc-000588bd2b6b06e4a",
+        "engine": "sqlserver-ex",
+        "dbInstanceClass": "db.m5.large",
+        "allocatedStorage": 50,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-000588bd2b6b06e4a",
+          "engine": "sqlserver-ex"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-000588bd2b6b06e4a"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-21",
+      "type": "resourceNode",
+      "position": {
+        "x": 686.875,
+        "y": 3130.2
+      },
+      "data": {
+        "label": "bo-drone-db-21",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-21",
+        "vpcId": "vpc-00066f5af89a2a3a3",
+        "engine": "aurora-mysql",
+        "dbInstanceClass": "db.r5.large",
+        "allocatedStorage": 50,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00066f5af89a2a3a3",
+          "engine": "aurora-mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00066f5af89a2a3a3"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-23",
+      "type": "resourceNode",
+      "position": {
+        "x": 686.875,
+        "y": 3236.8
+      },
+      "data": {
+        "label": "bo-drone-db-23",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-23",
+        "vpcId": "vpc-00066f5af89a2a3a3",
+        "engine": "aurora-postgresql",
+        "dbInstanceClass": "db.m5.large",
+        "allocatedStorage": 50,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00066f5af89a2a3a3",
+          "engine": "aurora-postgresql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00066f5af89a2a3a3"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-24",
+      "type": "resourceNode",
+      "position": {
+        "x": 686.875,
+        "y": 3343.4
+      },
+      "data": {
+        "label": "bo-drone-db-24",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-24",
+        "vpcId": "vpc-00066f5af89a2a3a3",
+        "engine": "aurora-postgresql",
+        "dbInstanceClass": "db.m5.large",
+        "allocatedStorage": 200,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00066f5af89a2a3a3",
+          "engine": "aurora-postgresql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00066f5af89a2a3a3"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
       "id": "region-us-central-1",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 3660
+        "y": 3560
       },
       "data": {
         "label": "Region: us-central-1",
@@ -2135,11 +3071,11 @@
         },
         "region": "us-central-1",
         "isContainer": true,
-        "width": 870,
-        "height": 940,
+        "width": 997.5,
+        "height": 915,
         "size": {
-          "width": 870,
-          "height": 940
+          "width": 997.5,
+          "height": 915
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -2147,15 +3083,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 870,
-      "height": 940
+      "width": 997.5,
+      "height": 915
     },
     {
       "id": "vpc-vpc-0009e5f7aa321aa49",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 3800
+        "x": 40,
+        "y": 3700
       },
       "data": {
         "label": "vpc-0009e5f7aa321aa49",
@@ -2192,8 +3128,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 760
+          "width": 421.25,
+          "height": 735
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -2205,15 +3141,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-central-1"
       },
-      "width": 280,
-      "height": 760
+      "width": 421.25,
+      "height": 735
     },
     {
       "id": "vpc-vpc-0010294f1555eed37",
       "type": "resourceNode",
       "position": {
-        "x": 550,
-        "y": 3800
+        "x": 511.25,
+        "y": 3700
       },
       "data": {
         "label": "vpc-0010294f1555eed37",
@@ -2250,8 +3186,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 500
+          "width": 446.25,
+          "height": 495
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -2263,15 +3199,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-central-1"
       },
-      "width": 280,
-      "height": 500
+      "width": 446.25,
+      "height": 495
     },
     {
       "id": "subnet-subnet-3fe2111b886a47ba6",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 3920
+        "x": 80,
+        "y": 3820
       },
       "data": {
         "label": "subnet-3fe2111b886a47ba6",
@@ -2322,8 +3258,8 @@
       "id": "subnet-subnet-1f51d9a399eda6af4",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 4050
+        "x": 241.25,
+        "y": 3950
       },
       "data": {
         "label": "subnet-1f51d9a399eda6af4",
@@ -2374,8 +3310,8 @@
       "id": "subnet-subnet-09442feb37f057132",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 4180
+        "x": 80,
+        "y": 4080
       },
       "data": {
         "label": "subnet-09442feb37f057132",
@@ -2426,8 +3362,8 @@
       "id": "subnet-subnet-7433015295393b6f9",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 4310
+        "x": 241.25,
+        "y": 4210
       },
       "data": {
         "label": "subnet-7433015295393b6f9",
@@ -2478,8 +3414,8 @@
       "id": "subnet-subnet-c13ddaa8936a8fcc0",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 4440
+        "x": 80,
+        "y": 4335
       },
       "data": {
         "label": "subnet-c13ddaa8936a8fcc0",
@@ -2530,8 +3466,8 @@
       "id": "subnet-subnet-0932e3a6345f87b11",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 3920
+        "x": 551.25,
+        "y": 3820
       },
       "data": {
         "label": "subnet-0932e3a6345f87b11",
@@ -2582,8 +3518,8 @@
       "id": "subnet-subnet-ff4e9895b0837a092",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 4050
+        "x": 722.5,
+        "y": 3950
       },
       "data": {
         "label": "subnet-ff4e9895b0837a092",
@@ -2634,8 +3570,8 @@
       "id": "subnet-subnet-6f2227b803e51c30e",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 4180
+        "x": 551.25,
+        "y": 4080
       },
       "data": {
         "label": "subnet-6f2227b803e51c30e",
@@ -2683,11 +3619,167 @@
       "height": 80
     },
     {
+      "id": "rds-bo-drone-db-02",
+      "type": "resourceNode",
+      "position": {
+        "x": 190.625,
+        "y": 4008.5
+      },
+      "data": {
+        "label": "bo-drone-db-02",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-02",
+        "vpcId": "vpc-0009e5f7aa321aa49",
+        "engine": "aurora-mysql",
+        "dbInstanceClass": "db.r5.large",
+        "allocatedStorage": 100,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-0009e5f7aa321aa49",
+          "engine": "aurora-mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0009e5f7aa321aa49"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-04",
+      "type": "resourceNode",
+      "position": {
+        "x": 674.375,
+        "y": 3796.3333333333335
+      },
+      "data": {
+        "label": "bo-drone-db-04",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-04",
+        "vpcId": "vpc-0010294f1555eed37",
+        "engine": "mysql",
+        "dbInstanceClass": "db.t3.small",
+        "allocatedStorage": 200,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-0010294f1555eed37",
+          "engine": "mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0010294f1555eed37"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-26",
+      "type": "resourceNode",
+      "position": {
+        "x": 674.375,
+        "y": 3980.6666666666665
+      },
+      "data": {
+        "label": "bo-drone-db-26",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-26",
+        "vpcId": "vpc-0010294f1555eed37",
+        "engine": "postgres",
+        "dbInstanceClass": "db.t3.micro",
+        "allocatedStorage": 200,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-0010294f1555eed37",
+          "engine": "postgres"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-0010294f1555eed37"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
       "id": "region-us-east-1",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 4640
+        "y": 4515
       },
       "data": {
         "label": "Region: us-east-1",
@@ -2713,11 +3805,11 @@
         },
         "region": "us-east-1",
         "isContainer": true,
-        "width": 870,
-        "height": 810,
+        "width": 997.5,
+        "height": 805,
         "size": {
-          "width": 870,
-          "height": 810
+          "width": 997.5,
+          "height": 805
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -2725,15 +3817,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 870,
-      "height": 810
+      "width": 997.5,
+      "height": 805
     },
     {
       "id": "vpc-vpc-00017e718dcd12e07",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 4780
+        "x": 40,
+        "y": 4655
       },
       "data": {
         "label": "vpc-00017e718dcd12e07",
@@ -2770,8 +3862,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 630
+          "width": 446.25,
+          "height": 625
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -2783,15 +3875,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-1"
       },
-      "width": 280,
-      "height": 630
+      "width": 446.25,
+      "height": 625
     },
     {
       "id": "vpc-vpc-000256c6b84bd583c",
       "type": "resourceNode",
       "position": {
-        "x": 550,
-        "y": 4780
+        "x": 536.25,
+        "y": 4655
       },
       "data": {
         "label": "vpc-000256c6b84bd583c",
@@ -2828,8 +3920,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 630
+          "width": 421.25,
+          "height": 605
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -2841,15 +3933,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-1"
       },
-      "width": 280,
-      "height": 630
+      "width": 421.25,
+      "height": 605
     },
     {
       "id": "subnet-subnet-095498e1865aa6211",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 4900
+        "x": 576.25,
+        "y": 4775
       },
       "data": {
         "label": "subnet-095498e1865aa6211",
@@ -2900,8 +3992,8 @@
       "id": "subnet-subnet-60e1b7dc21355771b",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 5030
+        "x": 737.5,
+        "y": 4905
       },
       "data": {
         "label": "subnet-60e1b7dc21355771b",
@@ -2952,8 +4044,8 @@
       "id": "subnet-subnet-614a2fbf347e446af",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 5160
+        "x": 576.25,
+        "y": 5035
       },
       "data": {
         "label": "subnet-614a2fbf347e446af",
@@ -3004,8 +4096,8 @@
       "id": "subnet-subnet-ab586baa6bda9bb38",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 5290
+        "x": 737.5,
+        "y": 5160
       },
       "data": {
         "label": "subnet-ab586baa6bda9bb38",
@@ -3056,8 +4148,8 @@
       "id": "subnet-subnet-001f39f1dba23d51c",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 4900
+        "x": 80,
+        "y": 4775
       },
       "data": {
         "label": "subnet-001f39f1dba23d51c",
@@ -3108,8 +4200,8 @@
       "id": "subnet-subnet-e6efbf63c8085a13c",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 5030
+        "x": 251.25,
+        "y": 4905
       },
       "data": {
         "label": "subnet-e6efbf63c8085a13c",
@@ -3160,8 +4252,8 @@
       "id": "subnet-subnet-ce7d70bb576aa9726",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 5160
+        "x": 80,
+        "y": 5035
       },
       "data": {
         "label": "subnet-ce7d70bb576aa9726",
@@ -3212,8 +4304,8 @@
       "id": "subnet-subnet-dac3969f3e85d470b",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 5290
+        "x": 251.25,
+        "y": 5165
       },
       "data": {
         "label": "subnet-dac3969f3e85d470b",
@@ -3264,8 +4356,8 @@
       "id": "rt-rtb-0a1b2c3d4e5f67890",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 770
+        "x": 674.375,
+        "y": 457.5
       },
       "data": {
         "label": "rtb-0a1b2c3d4e5f67890",
@@ -3304,11 +4396,167 @@
       "height": 88
     },
     {
+      "id": "rds-bo-drone-db-16",
+      "type": "resourceNode",
+      "position": {
+        "x": 686.875,
+        "y": 4732.75
+      },
+      "data": {
+        "label": "bo-drone-db-16",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-16",
+        "vpcId": "vpc-000256c6b84bd583c",
+        "engine": "aurora-postgresql",
+        "dbInstanceClass": "db.t3.small",
+        "allocatedStorage": 20,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-000256c6b84bd583c",
+          "engine": "aurora-postgresql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-000256c6b84bd583c"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-10",
+      "type": "resourceNode",
+      "position": {
+        "x": 686.875,
+        "y": 4898.5
+      },
+      "data": {
+        "label": "bo-drone-db-10",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-10",
+        "vpcId": "vpc-000256c6b84bd583c",
+        "engine": "aurora-mysql",
+        "dbInstanceClass": "db.t3.micro",
+        "allocatedStorage": 200,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-000256c6b84bd583c",
+          "engine": "aurora-mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-000256c6b84bd583c"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-29",
+      "type": "resourceNode",
+      "position": {
+        "x": 686.875,
+        "y": 5064.25
+      },
+      "data": {
+        "label": "bo-drone-db-29",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-29",
+        "vpcId": "vpc-000256c6b84bd583c",
+        "engine": "postgres",
+        "dbInstanceClass": "db.t3.micro",
+        "allocatedStorage": 200,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-000256c6b84bd583c",
+          "engine": "postgres"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-000256c6b84bd583c"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
       "id": "region-us-west-2",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 5490
+        "y": 5360
       },
       "data": {
         "label": "Region: us-west-2",
@@ -3334,11 +4582,11 @@
         },
         "region": "us-west-2",
         "isContainer": true,
-        "width": 870,
-        "height": 1070,
+        "width": 997.5,
+        "height": 1045,
         "size": {
-          "width": 870,
-          "height": 1070
+          "width": 997.5,
+          "height": 1045
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -3346,15 +4594,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 870,
-      "height": 1070
+      "width": 997.5,
+      "height": 1045
     },
     {
       "id": "vpc-vpc-00035c254391aa4ba",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 5630
+        "x": 40,
+        "y": 5500
       },
       "data": {
         "label": "vpc-00035c254391aa4ba",
@@ -3391,8 +4639,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 890
+          "width": 421.25,
+          "height": 865
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -3404,15 +4652,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 280,
-      "height": 890
+      "width": 421.25,
+      "height": 865
     },
     {
       "id": "vpc-vpc-00044fca21ebe63d7",
       "type": "resourceNode",
       "position": {
-        "x": 550,
-        "y": 5630
+        "x": 511.25,
+        "y": 5500
       },
       "data": {
         "label": "vpc-00044fca21ebe63d7",
@@ -3449,8 +4697,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 280,
-          "height": 500
+          "width": 446.25,
+          "height": 495
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -3462,15 +4710,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 280,
-      "height": 500
+      "width": 446.25,
+      "height": 495
     },
     {
       "id": "subnet-subnet-0a1b2c3d4e5f67890",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 5750
+        "x": 80,
+        "y": 5620
       },
       "data": {
         "label": "subnet-0a1b2c3d4e5f67890",
@@ -3521,8 +4769,8 @@
       "id": "subnet-subnet-46799203b300bc94d",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 5880
+        "x": 241.25,
+        "y": 5750
       },
       "data": {
         "label": "subnet-46799203b300bc94d",
@@ -3573,8 +4821,8 @@
       "id": "subnet-subnet-f04e858657460c0f7",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 6010
+        "x": 80,
+        "y": 5880
       },
       "data": {
         "label": "subnet-f04e858657460c0f7",
@@ -3625,8 +4873,8 @@
       "id": "subnet-subnet-de645ce5e6692ca23",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 6140
+        "x": 241.25,
+        "y": 6010
       },
       "data": {
         "label": "subnet-de645ce5e6692ca23",
@@ -3677,8 +4925,8 @@
       "id": "subnet-subnet-50811ee2aa95db6a1",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 6270
+        "x": 80,
+        "y": 6140
       },
       "data": {
         "label": "subnet-50811ee2aa95db6a1",
@@ -3729,8 +4977,8 @@
       "id": "subnet-subnet-e404cb4ecd78d32aa",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 6400
+        "x": 241.25,
+        "y": 6265
       },
       "data": {
         "label": "subnet-e404cb4ecd78d32aa",
@@ -3781,8 +5029,8 @@
       "id": "subnet-subnet-f665827803bb06e3c",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 5750
+        "x": 551.25,
+        "y": 5620
       },
       "data": {
         "label": "subnet-f665827803bb06e3c",
@@ -3833,8 +5081,8 @@
       "id": "subnet-subnet-82e4cc8896baccefb",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 5880
+        "x": 722.5,
+        "y": 5750
       },
       "data": {
         "label": "subnet-82e4cc8896baccefb",
@@ -3885,8 +5133,8 @@
       "id": "subnet-subnet-0dd1b59a25f1c2ecc",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 6010
+        "x": 551.25,
+        "y": 5880
       },
       "data": {
         "label": "subnet-0dd1b59a25f1c2ecc",
@@ -3932,6 +5180,318 @@
       },
       "width": 200,
       "height": 80
+    },
+    {
+      "id": "rds-bo-drone-db-12",
+      "type": "resourceNode",
+      "position": {
+        "x": 674.375,
+        "y": 5596.333333333333
+      },
+      "data": {
+        "label": "bo-drone-db-12",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-12",
+        "vpcId": "vpc-00044fca21ebe63d7",
+        "engine": "postgres",
+        "dbInstanceClass": "db.t3.small",
+        "allocatedStorage": 20,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00044fca21ebe63d7",
+          "engine": "postgres"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00044fca21ebe63d7"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-15",
+      "type": "resourceNode",
+      "position": {
+        "x": 190.625,
+        "y": 5596.6
+      },
+      "data": {
+        "label": "bo-drone-db-15",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-15",
+        "vpcId": "vpc-00035c254391aa4ba",
+        "engine": "oracle-ee",
+        "dbInstanceClass": "db.r5.large",
+        "allocatedStorage": 100,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00035c254391aa4ba",
+          "engine": "oracle-ee"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00035c254391aa4ba"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-01",
+      "type": "resourceNode",
+      "position": {
+        "x": 190.625,
+        "y": 5781.2
+      },
+      "data": {
+        "label": "bo-drone-db-01",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-01",
+        "vpcId": "vpc-00035c254391aa4ba",
+        "engine": "aurora-postgresql",
+        "dbInstanceClass": "db.r5.large",
+        "allocatedStorage": 20,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00035c254391aa4ba",
+          "engine": "aurora-postgresql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00035c254391aa4ba"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-07",
+      "type": "resourceNode",
+      "position": {
+        "x": 674.375,
+        "y": 5780.666666666667
+      },
+      "data": {
+        "label": "bo-drone-db-07",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-07",
+        "vpcId": "vpc-00044fca21ebe63d7",
+        "engine": "mysql",
+        "dbInstanceClass": "db.t3.small",
+        "allocatedStorage": 100,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00044fca21ebe63d7",
+          "engine": "mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00044fca21ebe63d7"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-27",
+      "type": "resourceNode",
+      "position": {
+        "x": 190.625,
+        "y": 5965.8
+      },
+      "data": {
+        "label": "bo-drone-db-27",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-27",
+        "vpcId": "vpc-00035c254391aa4ba",
+        "engine": "mysql",
+        "dbInstanceClass": "db.m5.large",
+        "allocatedStorage": 200,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00035c254391aa4ba",
+          "engine": "mysql"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00035c254391aa4ba"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rds-bo-drone-db-28",
+      "type": "resourceNode",
+      "position": {
+        "x": 190.625,
+        "y": 6150.4
+      },
+      "data": {
+        "label": "bo-drone-db-28",
+        "resourceType": {
+          "id": "rdsInstance",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database Service Instance",
+          "color": "#FF6D00",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Database Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceIdentifier": "bo-drone-db-28",
+        "vpcId": "vpc-00035c254391aa4ba",
+        "engine": "oracle-ee",
+        "dbInstanceClass": "db.t3.micro",
+        "allocatedStorage": 200,
+        "dbInstanceStatus": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance",
+          "region": "bo",
+          "vpcId": "vpc-00035c254391aa4ba",
+          "engine": "oracle-ee"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-00035c254391aa4ba"
+      },
+      "width": 120,
+      "height": 88
     }
   ],
   "edges": [
@@ -4112,6 +5672,66 @@
       }
     },
     {
+      "id": "subnet-to-rds-vpc-vpc-00076762ac00eb6c0-rds-bo-drone-db-11",
+      "source": "vpc-vpc-00076762ac00eb6c0",
+      "target": "rds-bo-drone-db-11",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00076762ac00eb6c0-rds-bo-drone-db-14",
+      "source": "vpc-vpc-00076762ac00eb6c0",
+      "target": "rds-bo-drone-db-14",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-0008368aa506fde61-rds-bo-drone-db-09",
+      "source": "vpc-vpc-0008368aa506fde61",
+      "target": "rds-bo-drone-db-09",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-0008368aa506fde61-rds-bo-drone-db-22",
+      "source": "vpc-vpc-0008368aa506fde61",
+      "target": "rds-bo-drone-db-22",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-0008368aa506fde61-rds-bo-drone-db-25",
+      "source": "vpc-vpc-0008368aa506fde61",
+      "target": "rds-bo-drone-db-25",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
       "id": "vpc-to-subnet-vpc-vpc-00121e2a5983e3b3e-subnet-subnet-4048da018eb02b845",
       "source": "vpc-vpc-00121e2a5983e3b3e",
       "target": "subnet-subnet-4048da018eb02b845",
@@ -4189,6 +5809,78 @@
       }
     },
     {
+      "id": "subnet-to-rds-vpc-vpc-0011c5ff196d4c440-rds-bo-drone-db-13",
+      "source": "vpc-vpc-0011c5ff196d4c440",
+      "target": "rds-bo-drone-db-13",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-0011c5ff196d4c440-rds-bo-drone-db-03",
+      "source": "vpc-vpc-0011c5ff196d4c440",
+      "target": "rds-bo-drone-db-03",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-0011c5ff196d4c440-rds-bo-drone-db-05",
+      "source": "vpc-vpc-0011c5ff196d4c440",
+      "target": "rds-bo-drone-db-05",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00121e2a5983e3b3e-rds-bo-drone-db-06",
+      "source": "vpc-vpc-00121e2a5983e3b3e",
+      "target": "rds-bo-drone-db-06",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00121e2a5983e3b3e-rds-bo-drone-db-18",
+      "source": "vpc-vpc-00121e2a5983e3b3e",
+      "target": "rds-bo-drone-db-18",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00121e2a5983e3b3e-rds-bo-drone-db-30",
+      "source": "vpc-vpc-00121e2a5983e3b3e",
+      "target": "rds-bo-drone-db-30",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
       "id": "vpc-to-subnet-vpc-vpc-00066f5af89a2a3a3-subnet-subnet-40740bb24905b501e",
       "source": "vpc-vpc-00066f5af89a2a3a3",
       "target": "subnet-subnet-40740bb24905b501e",
@@ -4241,6 +5933,90 @@
       "style": {
         "stroke": "#8C4FFF",
         "strokeWidth": 2
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00066f5af89a2a3a3-rds-bo-drone-db-08",
+      "source": "vpc-vpc-00066f5af89a2a3a3",
+      "target": "rds-bo-drone-db-08",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-000588bd2b6b06e4a-rds-bo-drone-db-17",
+      "source": "vpc-vpc-000588bd2b6b06e4a",
+      "target": "rds-bo-drone-db-17",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-000588bd2b6b06e4a-rds-bo-drone-db-19",
+      "source": "vpc-vpc-000588bd2b6b06e4a",
+      "target": "rds-bo-drone-db-19",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-000588bd2b6b06e4a-rds-bo-drone-db-20",
+      "source": "vpc-vpc-000588bd2b6b06e4a",
+      "target": "rds-bo-drone-db-20",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00066f5af89a2a3a3-rds-bo-drone-db-21",
+      "source": "vpc-vpc-00066f5af89a2a3a3",
+      "target": "rds-bo-drone-db-21",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00066f5af89a2a3a3-rds-bo-drone-db-23",
+      "source": "vpc-vpc-00066f5af89a2a3a3",
+      "target": "rds-bo-drone-db-23",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00066f5af89a2a3a3-rds-bo-drone-db-24",
+      "source": "vpc-vpc-00066f5af89a2a3a3",
+      "target": "rds-bo-drone-db-24",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
       }
     },
     {
@@ -4332,6 +6108,42 @@
       }
     },
     {
+      "id": "subnet-to-rds-vpc-vpc-0009e5f7aa321aa49-rds-bo-drone-db-02",
+      "source": "vpc-vpc-0009e5f7aa321aa49",
+      "target": "rds-bo-drone-db-02",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-0010294f1555eed37-rds-bo-drone-db-04",
+      "source": "vpc-vpc-0010294f1555eed37",
+      "target": "rds-bo-drone-db-04",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-0010294f1555eed37-rds-bo-drone-db-26",
+      "source": "vpc-vpc-0010294f1555eed37",
+      "target": "rds-bo-drone-db-26",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
       "id": "vpc-to-subnet-vpc-vpc-000256c6b84bd583c-subnet-subnet-095498e1865aa6211",
       "source": "vpc-vpc-000256c6b84bd583c",
       "target": "subnet-subnet-095498e1865aa6211",
@@ -4417,6 +6229,42 @@
       "style": {
         "stroke": "#8C4FFF",
         "strokeWidth": 2
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-000256c6b84bd583c-rds-bo-drone-db-16",
+      "source": "vpc-vpc-000256c6b84bd583c",
+      "target": "rds-bo-drone-db-16",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-000256c6b84bd583c-rds-bo-drone-db-10",
+      "source": "vpc-vpc-000256c6b84bd583c",
+      "target": "rds-bo-drone-db-10",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-000256c6b84bd583c-rds-bo-drone-db-29",
+      "source": "vpc-vpc-000256c6b84bd583c",
+      "target": "rds-bo-drone-db-29",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
       }
     },
     {
@@ -4516,6 +6364,78 @@
       "style": {
         "stroke": "#8C4FFF",
         "strokeWidth": 2
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00044fca21ebe63d7-rds-bo-drone-db-12",
+      "source": "vpc-vpc-00044fca21ebe63d7",
+      "target": "rds-bo-drone-db-12",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00035c254391aa4ba-rds-bo-drone-db-15",
+      "source": "vpc-vpc-00035c254391aa4ba",
+      "target": "rds-bo-drone-db-15",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00035c254391aa4ba-rds-bo-drone-db-01",
+      "source": "vpc-vpc-00035c254391aa4ba",
+      "target": "rds-bo-drone-db-01",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00044fca21ebe63d7-rds-bo-drone-db-07",
+      "source": "vpc-vpc-00044fca21ebe63d7",
+      "target": "rds-bo-drone-db-07",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00035c254391aa4ba-rds-bo-drone-db-27",
+      "source": "vpc-vpc-00035c254391aa4ba",
+      "target": "rds-bo-drone-db-27",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      }
+    },
+    {
+      "id": "subnet-to-rds-vpc-vpc-00035c254391aa4ba-rds-bo-drone-db-28",
+      "source": "vpc-vpc-00035c254391aa4ba",
+      "target": "rds-bo-drone-db-28",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF6D00",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
       }
     }
   ]

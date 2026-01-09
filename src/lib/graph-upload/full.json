@@ -31,11 +31,11 @@
         },
         "region": "ap-northeast-1",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -43,14 +43,14 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-018e4f9690c80ffb2",
       "type": "resourceNode",
       "position": {
-        "x": 100,
+        "x": 40,
         "y": 140
       },
       "data": {
@@ -88,8 +88,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -101,14 +101,14 @@
         "nestingDepth": 1,
         "parentId": "region-ap-northeast-1"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-03fb6147eac85c646",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 80,
         "y": 260
       },
       "data": {
@@ -160,7 +160,7 @@
       "id": "subnet-subnet-0476c5a16e5fe1725",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 256.25,
         "y": 390
       },
       "data": {
@@ -212,7 +212,7 @@
       "id": "subnet-subnet-059683e59d607e44c",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 80,
         "y": 520
       },
       "data": {
@@ -264,8 +264,8 @@
       "id": "igw-igw-0d0a7c2b578f3b2bd",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 160
+        "x": 205.625,
+        "y": 279.0
       },
       "data": {
         "label": "igw-0d0a7c2b578f3b2bd",
@@ -305,8 +305,8 @@
       "id": "rt-rtb-0979d0ee06d5a5dbe",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 640
+        "x": 205.625,
+        "y": 506.0
       },
       "data": {
         "label": "rtb-0979d0ee06d5a5dbe",
@@ -349,7 +349,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 848
+        "y": 853
       },
       "data": {
         "label": "Region: ap-northeast-2",
@@ -375,11 +375,11 @@
         },
         "region": "ap-northeast-2",
         "isContainer": true,
-        "width": 440.0,
-        "height": 938,
+        "width": 516.25,
+        "height": 923,
         "size": {
-          "width": 440.0,
-          "height": 938
+          "width": 516.25,
+          "height": 923
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -387,15 +387,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 938
+      "width": 516.25,
+      "height": 923
     },
     {
       "id": "vpc-vpc-09268c8c9f22622d7",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 988
+        "x": 40,
+        "y": 993
       },
       "data": {
         "label": "vpc-09268c8c9f22622d7",
@@ -432,8 +432,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 758
+          "width": 426.25,
+          "height": 733
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -445,15 +445,15 @@
         "nestingDepth": 1,
         "parentId": "region-ap-northeast-2"
       },
-      "width": 300.0,
-      "height": 758
+      "width": 426.25,
+      "height": 733
     },
     {
       "id": "subnet-subnet-00cf3fa181f7a0851",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 1108
+        "x": 80,
+        "y": 1113
       },
       "data": {
         "label": "subnet-00cf3fa181f7a0851",
@@ -504,8 +504,8 @@
       "id": "subnet-subnet-0f9032b72b03970bd",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 1238
+        "x": 246.25,
+        "y": 1243
       },
       "data": {
         "label": "subnet-0f9032b72b03970bd",
@@ -556,8 +556,8 @@
       "id": "subnet-subnet-0eb48fe6630be93f2",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 1368
+        "x": 80,
+        "y": 1373
       },
       "data": {
         "label": "subnet-0eb48fe6630be93f2",
@@ -608,8 +608,8 @@
       "id": "subnet-subnet-0d9789563f2af45d4",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 1498
+        "x": 246.25,
+        "y": 1503
       },
       "data": {
         "label": "subnet-0d9789563f2af45d4",
@@ -660,8 +660,8 @@
       "id": "igw-igw-0abed7a1b3bea7d41",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 1008
+        "x": 193.125,
+        "y": 1168.6666666666665
       },
       "data": {
         "label": "igw-0abed7a1b3bea7d41",
@@ -701,8 +701,8 @@
       "id": "rt-rtb-0e7e9b27375078eaf",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 1618
+        "x": 193.125,
+        "y": 1432.3333333333333
       },
       "data": {
         "label": "rtb-0e7e9b27375078eaf",
@@ -745,7 +745,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 1826
+        "y": 1816
       },
       "data": {
         "label": "Region: ap-northeast-3",
@@ -771,11 +771,11 @@
         },
         "region": "ap-northeast-3",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -783,15 +783,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-0849dafb7eb9851f7",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 1966
+        "x": 40,
+        "y": 1956
       },
       "data": {
         "label": "vpc-0849dafb7eb9851f7",
@@ -828,8 +828,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -841,15 +841,15 @@
         "nestingDepth": 1,
         "parentId": "region-ap-northeast-3"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-0474ec3b84172387a",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 2086
+        "x": 80,
+        "y": 2076
       },
       "data": {
         "label": "subnet-0474ec3b84172387a",
@@ -900,8 +900,8 @@
       "id": "subnet-subnet-0aa65790dfc097c09",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 2216
+        "x": 256.25,
+        "y": 2206
       },
       "data": {
         "label": "subnet-0aa65790dfc097c09",
@@ -952,8 +952,8 @@
       "id": "subnet-subnet-07299d42fe7865a0e",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 2346
+        "x": 80,
+        "y": 2336
       },
       "data": {
         "label": "subnet-07299d42fe7865a0e",
@@ -1004,8 +1004,8 @@
       "id": "igw-igw-08dd47305b8ff5e56",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 1986
+        "x": 205.625,
+        "y": 2095.0
       },
       "data": {
         "label": "igw-08dd47305b8ff5e56",
@@ -1045,8 +1045,8 @@
       "id": "rt-rtb-09c8c9af065798996",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 2466
+        "x": 205.625,
+        "y": 2322.0
       },
       "data": {
         "label": "rtb-09c8c9af065798996",
@@ -1089,7 +1089,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 2674
+        "y": 2669
       },
       "data": {
         "label": "Region: ap-south-1",
@@ -1115,11 +1115,11 @@
         },
         "region": "ap-south-1",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -1127,15 +1127,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-0f44149e6732fa4fa",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 2814
+        "x": 40,
+        "y": 2809
       },
       "data": {
         "label": "vpc-0f44149e6732fa4fa",
@@ -1172,8 +1172,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -1185,15 +1185,15 @@
         "nestingDepth": 1,
         "parentId": "region-ap-south-1"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-0df6ee2c2bf12b21c",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 2934
+        "x": 80,
+        "y": 2929
       },
       "data": {
         "label": "subnet-0df6ee2c2bf12b21c",
@@ -1244,8 +1244,8 @@
       "id": "subnet-subnet-071f30afd3d3073fb",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 3064
+        "x": 256.25,
+        "y": 3059
       },
       "data": {
         "label": "subnet-071f30afd3d3073fb",
@@ -1296,8 +1296,8 @@
       "id": "subnet-subnet-0c56842162a25cc86",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 3194
+        "x": 80,
+        "y": 3189
       },
       "data": {
         "label": "subnet-0c56842162a25cc86",
@@ -1348,8 +1348,8 @@
       "id": "igw-igw-01aaf1c005cfee40f",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 2834
+        "x": 205.625,
+        "y": 2948.0
       },
       "data": {
         "label": "igw-01aaf1c005cfee40f",
@@ -1389,8 +1389,8 @@
       "id": "rt-rtb-03c5e5c4e4716c8d0",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 3314
+        "x": 205.625,
+        "y": 3175.0
       },
       "data": {
         "label": "rtb-03c5e5c4e4716c8d0",
@@ -1459,11 +1459,11 @@
         },
         "region": "ap-southeast-1",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -1471,14 +1471,14 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-0a44bee3324a95e12",
       "type": "resourceNode",
       "position": {
-        "x": 100,
+        "x": 40,
         "y": 3662
       },
       "data": {
@@ -1516,8 +1516,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -1529,14 +1529,14 @@
         "nestingDepth": 1,
         "parentId": "region-ap-southeast-1"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-029ccb5b4c9ce3d09",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 80,
         "y": 3782
       },
       "data": {
@@ -1588,7 +1588,7 @@
       "id": "subnet-subnet-06d395cbb6293d37c",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 256.25,
         "y": 3912
       },
       "data": {
@@ -1640,7 +1640,7 @@
       "id": "subnet-subnet-05030b7a8eb9fa828",
       "type": "resourceNode",
       "position": {
-        "x": 140,
+        "x": 80,
         "y": 4042
       },
       "data": {
@@ -1692,8 +1692,8 @@
       "id": "igw-igw-0ace9d176416f3129",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 3682
+        "x": 205.625,
+        "y": 3801.0
       },
       "data": {
         "label": "igw-0ace9d176416f3129",
@@ -1733,8 +1733,8 @@
       "id": "rt-rtb-01e5d71d65057b6e4",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 4162
+        "x": 205.625,
+        "y": 4028.0
       },
       "data": {
         "label": "rtb-01e5d71d65057b6e4",
@@ -1777,7 +1777,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 4370
+        "y": 4375
       },
       "data": {
         "label": "Region: ap-southeast-2",
@@ -1803,11 +1803,11 @@
         },
         "region": "ap-southeast-2",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -1815,15 +1815,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-09e6b3d81d2cd7b99",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 4510
+        "x": 40,
+        "y": 4515
       },
       "data": {
         "label": "vpc-09e6b3d81d2cd7b99",
@@ -1860,8 +1860,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -1873,15 +1873,15 @@
         "nestingDepth": 1,
         "parentId": "region-ap-southeast-2"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-0dd4b8e84faa5b2b5",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 4630
+        "x": 80,
+        "y": 4635
       },
       "data": {
         "label": "subnet-0dd4b8e84faa5b2b5",
@@ -1932,8 +1932,8 @@
       "id": "subnet-subnet-0d38acfb87adf80af",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 4760
+        "x": 256.25,
+        "y": 4765
       },
       "data": {
         "label": "subnet-0d38acfb87adf80af",
@@ -1984,8 +1984,8 @@
       "id": "subnet-subnet-094cef2429ce35d32",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 4890
+        "x": 80,
+        "y": 4895
       },
       "data": {
         "label": "subnet-094cef2429ce35d32",
@@ -2036,8 +2036,8 @@
       "id": "igw-igw-06ba49da8bc1dc982",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 4530
+        "x": 205.625,
+        "y": 4654.0
       },
       "data": {
         "label": "igw-06ba49da8bc1dc982",
@@ -2077,8 +2077,8 @@
       "id": "rt-rtb-06ebea9f06a6c5864",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 5010
+        "x": 205.625,
+        "y": 4881.0
       },
       "data": {
         "label": "rtb-06ebea9f06a6c5864",
@@ -2121,7 +2121,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 5218
+        "y": 5228
       },
       "data": {
         "label": "Region: ca-central-1",
@@ -2147,11 +2147,11 @@
         },
         "region": "ca-central-1",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -2159,15 +2159,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-0c92e31af367ba7ee",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 5358
+        "x": 40,
+        "y": 5368
       },
       "data": {
         "label": "vpc-0c92e31af367ba7ee",
@@ -2204,8 +2204,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -2217,15 +2217,15 @@
         "nestingDepth": 1,
         "parentId": "region-ca-central-1"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-0abfd94cc511c0853",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 5478
+        "x": 80,
+        "y": 5488
       },
       "data": {
         "label": "subnet-0abfd94cc511c0853",
@@ -2276,8 +2276,8 @@
       "id": "subnet-subnet-030771ac2c1d83514",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 5608
+        "x": 256.25,
+        "y": 5618
       },
       "data": {
         "label": "subnet-030771ac2c1d83514",
@@ -2328,8 +2328,8 @@
       "id": "subnet-subnet-00b4e621d92716d36",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 5738
+        "x": 80,
+        "y": 5748
       },
       "data": {
         "label": "subnet-00b4e621d92716d36",
@@ -2380,8 +2380,8 @@
       "id": "igw-igw-004bf73d745079220",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 5378
+        "x": 205.625,
+        "y": 5507.0
       },
       "data": {
         "label": "igw-004bf73d745079220",
@@ -2421,8 +2421,8 @@
       "id": "rt-rtb-013f02eec25261188",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 5858
+        "x": 205.625,
+        "y": 5734.0
       },
       "data": {
         "label": "rtb-013f02eec25261188",
@@ -2465,7 +2465,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 6066
+        "y": 6081
       },
       "data": {
         "label": "Region: eu-central-1",
@@ -2491,11 +2491,11 @@
         },
         "region": "eu-central-1",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -2503,15 +2503,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-04cc5c354dc719357",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 6206
+        "x": 40,
+        "y": 6221
       },
       "data": {
         "label": "vpc-04cc5c354dc719357",
@@ -2548,8 +2548,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -2561,15 +2561,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-central-1"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-0bc8dde4095d636f6",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 6326
+        "x": 80,
+        "y": 6341
       },
       "data": {
         "label": "subnet-0bc8dde4095d636f6",
@@ -2620,8 +2620,8 @@
       "id": "subnet-subnet-09ee2efb2744f6db6",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 6456
+        "x": 256.25,
+        "y": 6471
       },
       "data": {
         "label": "subnet-09ee2efb2744f6db6",
@@ -2672,8 +2672,8 @@
       "id": "subnet-subnet-06711806690352125",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 6586
+        "x": 80,
+        "y": 6601
       },
       "data": {
         "label": "subnet-06711806690352125",
@@ -2724,8 +2724,8 @@
       "id": "igw-igw-02eeb2da8fe132ad8",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 6226
+        "x": 205.625,
+        "y": 6360.0
       },
       "data": {
         "label": "igw-02eeb2da8fe132ad8",
@@ -2765,8 +2765,8 @@
       "id": "rt-rtb-07237487261583ff1",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 6706
+        "x": 205.625,
+        "y": 6587.0
       },
       "data": {
         "label": "rtb-07237487261583ff1",
@@ -2809,7 +2809,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 6914
+        "y": 6934
       },
       "data": {
         "label": "Region: eu-north-1",
@@ -2835,11 +2835,11 @@
         },
         "region": "eu-north-1",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -2847,15 +2847,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-0a5c0f521aa6ed9a0",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 7054
+        "x": 40,
+        "y": 7074
       },
       "data": {
         "label": "vpc-0a5c0f521aa6ed9a0",
@@ -2892,8 +2892,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -2905,15 +2905,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-north-1"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-023bca1a88abba8ae",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 7174
+        "x": 80,
+        "y": 7194
       },
       "data": {
         "label": "subnet-023bca1a88abba8ae",
@@ -2964,8 +2964,8 @@
       "id": "subnet-subnet-026e486f6673a9105",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 7304
+        "x": 256.25,
+        "y": 7324
       },
       "data": {
         "label": "subnet-026e486f6673a9105",
@@ -3016,8 +3016,8 @@
       "id": "subnet-subnet-0381e81ec5ee1868f",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 7434
+        "x": 80,
+        "y": 7454
       },
       "data": {
         "label": "subnet-0381e81ec5ee1868f",
@@ -3068,8 +3068,8 @@
       "id": "igw-igw-0cfff7ae7ab4c9edf",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 7074
+        "x": 205.625,
+        "y": 7213.0
       },
       "data": {
         "label": "igw-0cfff7ae7ab4c9edf",
@@ -3109,8 +3109,8 @@
       "id": "rt-rtb-00d1359f0d9572c87",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 7554
+        "x": 205.625,
+        "y": 7440.0
       },
       "data": {
         "label": "rtb-00d1359f0d9572c87",
@@ -3153,7 +3153,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 7762
+        "y": 7787
       },
       "data": {
         "label": "Region: eu-west-1",
@@ -3179,11 +3179,11 @@
         },
         "region": "eu-west-1",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -3191,15 +3191,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-032d4e941ffdf830f",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 7902
+        "x": 40,
+        "y": 7927
       },
       "data": {
         "label": "vpc-032d4e941ffdf830f",
@@ -3236,8 +3236,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -3249,15 +3249,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-west-1"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-076dc5d4f617e6b0b",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 8022
+        "x": 80,
+        "y": 8047
       },
       "data": {
         "label": "subnet-076dc5d4f617e6b0b",
@@ -3308,8 +3308,8 @@
       "id": "subnet-subnet-05214f54bb2cddfa5",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 8152
+        "x": 256.25,
+        "y": 8177
       },
       "data": {
         "label": "subnet-05214f54bb2cddfa5",
@@ -3360,8 +3360,8 @@
       "id": "subnet-subnet-06b30f413f5f61ed2",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 8282
+        "x": 80,
+        "y": 8307
       },
       "data": {
         "label": "subnet-06b30f413f5f61ed2",
@@ -3412,8 +3412,8 @@
       "id": "igw-igw-084187d538c99a563",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 7922
+        "x": 205.625,
+        "y": 8066.0
       },
       "data": {
         "label": "igw-084187d538c99a563",
@@ -3453,8 +3453,8 @@
       "id": "rt-rtb-0afabc7f5fff344f3",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 8402
+        "x": 205.625,
+        "y": 8293.0
       },
       "data": {
         "label": "rtb-0afabc7f5fff344f3",
@@ -3497,7 +3497,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 8610
+        "y": 8640
       },
       "data": {
         "label": "Region: eu-west-2",
@@ -3523,11 +3523,11 @@
         },
         "region": "eu-west-2",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -3535,15 +3535,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-0e74c14ea0ad00495",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 8750
+        "x": 40,
+        "y": 8780
       },
       "data": {
         "label": "vpc-0e74c14ea0ad00495",
@@ -3580,8 +3580,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -3593,15 +3593,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-west-2"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-02b2cdedc0386d8fb",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 8870
+        "x": 80,
+        "y": 8900
       },
       "data": {
         "label": "subnet-02b2cdedc0386d8fb",
@@ -3652,8 +3652,8 @@
       "id": "subnet-subnet-0f678b4725b70a42b",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 9000
+        "x": 256.25,
+        "y": 9030
       },
       "data": {
         "label": "subnet-0f678b4725b70a42b",
@@ -3704,8 +3704,8 @@
       "id": "subnet-subnet-08d7b8f4d6f5f97a2",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 9130
+        "x": 80,
+        "y": 9160
       },
       "data": {
         "label": "subnet-08d7b8f4d6f5f97a2",
@@ -3756,8 +3756,8 @@
       "id": "igw-igw-09c45e150dd7e5f1b",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 8770
+        "x": 205.625,
+        "y": 8919.0
       },
       "data": {
         "label": "igw-09c45e150dd7e5f1b",
@@ -3797,8 +3797,8 @@
       "id": "rt-rtb-06efea66dbb89427b",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 9250
+        "x": 205.625,
+        "y": 9146.0
       },
       "data": {
         "label": "rtb-06efea66dbb89427b",
@@ -3841,7 +3841,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 9458
+        "y": 9493
       },
       "data": {
         "label": "Region: eu-west-3",
@@ -3867,11 +3867,11 @@
         },
         "region": "eu-west-3",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -3879,15 +3879,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-080e9d169770df8c3",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 9598
+        "x": 40,
+        "y": 9633
       },
       "data": {
         "label": "vpc-080e9d169770df8c3",
@@ -3924,8 +3924,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -3937,15 +3937,15 @@
         "nestingDepth": 1,
         "parentId": "region-eu-west-3"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-0ab10de2b5beb5736",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 9718
+        "x": 80,
+        "y": 9753
       },
       "data": {
         "label": "subnet-0ab10de2b5beb5736",
@@ -3996,8 +3996,8 @@
       "id": "subnet-subnet-07920931787af4691",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 9848
+        "x": 256.25,
+        "y": 9883
       },
       "data": {
         "label": "subnet-07920931787af4691",
@@ -4048,8 +4048,8 @@
       "id": "subnet-subnet-0b7e693e2b7a2e31d",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 9978
+        "x": 80,
+        "y": 10013
       },
       "data": {
         "label": "subnet-0b7e693e2b7a2e31d",
@@ -4100,8 +4100,8 @@
       "id": "igw-igw-07c97de833a9b5190",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 9618
+        "x": 205.625,
+        "y": 9772.0
       },
       "data": {
         "label": "igw-07c97de833a9b5190",
@@ -4141,8 +4141,8 @@
       "id": "rt-rtb-05ffa8cef62830672",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 10098
+        "x": 205.625,
+        "y": 9999.0
       },
       "data": {
         "label": "rtb-05ffa8cef62830672",
@@ -4185,7 +4185,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 10306
+        "y": 10346
       },
       "data": {
         "label": "Region: sa-east-1",
@@ -4211,11 +4211,11 @@
         },
         "region": "sa-east-1",
         "isContainer": true,
-        "width": 440.0,
-        "height": 808,
+        "width": 541.25,
+        "height": 813,
         "size": {
-          "width": 440.0,
-          "height": 808
+          "width": 541.25,
+          "height": 813
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -4223,15 +4223,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 808
+      "width": 541.25,
+      "height": 813
     },
     {
       "id": "vpc-vpc-0a15f7085fe586870",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 10446
+        "x": 40,
+        "y": 10486
       },
       "data": {
         "label": "vpc-0a15f7085fe586870",
@@ -4268,8 +4268,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -4281,15 +4281,15 @@
         "nestingDepth": 1,
         "parentId": "region-sa-east-1"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-098382ca4af548532",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 10566
+        "x": 80,
+        "y": 10606
       },
       "data": {
         "label": "subnet-098382ca4af548532",
@@ -4340,8 +4340,8 @@
       "id": "subnet-subnet-0777b1debd3f6f7ac",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 10696
+        "x": 256.25,
+        "y": 10736
       },
       "data": {
         "label": "subnet-0777b1debd3f6f7ac",
@@ -4392,8 +4392,8 @@
       "id": "subnet-subnet-0fe499b994ab99cbf",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 10826
+        "x": 80,
+        "y": 10866
       },
       "data": {
         "label": "subnet-0fe499b994ab99cbf",
@@ -4444,8 +4444,8 @@
       "id": "igw-igw-03b5b309e5cee56f3",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 10466
+        "x": 205.625,
+        "y": 10625.0
       },
       "data": {
         "label": "igw-03b5b309e5cee56f3",
@@ -4485,8 +4485,8 @@
       "id": "rt-rtb-06f4c2daef7312d26",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 10946
+        "x": 205.625,
+        "y": 10852.0
       },
       "data": {
         "label": "rtb-06f4c2daef7312d26",
@@ -4529,7 +4529,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 11154
+        "y": 11199
       },
       "data": {
         "label": "Region: us-east-1",
@@ -4555,11 +4555,11 @@
         },
         "region": "us-east-1",
         "isContainer": true,
-        "width": 440.0,
-        "height": 1198,
+        "width": 516.25,
+        "height": 1183,
         "size": {
-          "width": 440.0,
-          "height": 1198
+          "width": 516.25,
+          "height": 1183
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -4567,15 +4567,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 1198
+      "width": 516.25,
+      "height": 1183
     },
     {
       "id": "vpc-vpc-0d03163cb094a90db",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 11294
+        "x": 40,
+        "y": 11339
       },
       "data": {
         "label": "vpc-0d03163cb094a90db",
@@ -4612,8 +4612,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 1018
+          "width": 426.25,
+          "height": 993
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -4625,15 +4625,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-1"
       },
-      "width": 300.0,
-      "height": 1018
+      "width": 426.25,
+      "height": 993
     },
     {
       "id": "subnet-subnet-04c68bc4fb7ce8fd4",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 11414
+        "x": 80,
+        "y": 11459
       },
       "data": {
         "label": "subnet-04c68bc4fb7ce8fd4",
@@ -4684,8 +4684,8 @@
       "id": "subnet-subnet-0a83cabd204087d58",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 11544
+        "x": 246.25,
+        "y": 11589
       },
       "data": {
         "label": "subnet-0a83cabd204087d58",
@@ -4736,8 +4736,8 @@
       "id": "subnet-subnet-0560d216e40c78b48",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 11674
+        "x": 80,
+        "y": 11719
       },
       "data": {
         "label": "subnet-0560d216e40c78b48",
@@ -4788,8 +4788,8 @@
       "id": "subnet-subnet-0c39667a79b39b47e",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 11804
+        "x": 246.25,
+        "y": 11849
       },
       "data": {
         "label": "subnet-0c39667a79b39b47e",
@@ -4840,8 +4840,8 @@
       "id": "subnet-subnet-06a65f9b614a5b068",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 11934
+        "x": 80,
+        "y": 11979
       },
       "data": {
         "label": "subnet-06a65f9b614a5b068",
@@ -4892,8 +4892,8 @@
       "id": "subnet-subnet-0da7a91e8adf7cd43",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 12064
+        "x": 246.25,
+        "y": 12109
       },
       "data": {
         "label": "subnet-0da7a91e8adf7cd43",
@@ -4944,8 +4944,8 @@
       "id": "igw-igw-0973ca4c87602c390",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 11314
+        "x": 193.125,
+        "y": 11601.333333333334
       },
       "data": {
         "label": "igw-0973ca4c87602c390",
@@ -4985,8 +4985,8 @@
       "id": "rt-rtb-02c01a4ba8180e546",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 12184
+        "x": 193.125,
+        "y": 11951.666666666666
       },
       "data": {
         "label": "rtb-02c01a4ba8180e546",
@@ -5029,7 +5029,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 12392
+        "y": 12422
       },
       "data": {
         "label": "Region: us-east-2",
@@ -5055,11 +5055,11 @@
         },
         "region": "us-east-2",
         "isContainer": true,
-        "width": 890.0,
-        "height": 858,
+        "width": 1082.5,
+        "height": 853,
         "size": {
-          "width": 890.0,
-          "height": 858
+          "width": 1082.5,
+          "height": 853
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -5067,15 +5067,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 890.0,
-      "height": 858
+      "width": 1082.5,
+      "height": 853
     },
     {
       "id": "vpc-vpc-055ecbe469911131f",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 12532
+        "x": 40,
+        "y": 12562
       },
       "data": {
         "label": "vpc-055ecbe469911131f",
@@ -5112,8 +5112,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 678
+          "width": 561.25,
+          "height": 673
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -5125,15 +5125,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 300.0,
-      "height": 678
+      "width": 561.25,
+      "height": 673
     },
     {
       "id": "vpc-vpc-0b145f6e02009d14f",
       "type": "resourceNode",
       "position": {
-        "x": 550,
-        "y": 12532
+        "x": 591.25,
+        "y": 12562
       },
       "data": {
         "label": "vpc-0b145f6e02009d14f",
@@ -5170,8 +5170,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 451.25,
+          "height": 623
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -5183,15 +5183,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 451.25,
+      "height": 623
     },
     {
       "id": "subnet-subnet-0c0b6c2c4c85ea563",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 12652
+        "x": 631.25,
+        "y": 12682
       },
       "data": {
         "label": "subnet-0c0b6c2c4c85ea563",
@@ -5242,8 +5242,8 @@
       "id": "subnet-subnet-08e9bb78b352b2024",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 12782
+        "x": 807.5,
+        "y": 12812
       },
       "data": {
         "label": "subnet-08e9bb78b352b2024",
@@ -5294,8 +5294,8 @@
       "id": "subnet-subnet-043f81fa582a702aa",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 12912
+        "x": 631.25,
+        "y": 12942
       },
       "data": {
         "label": "subnet-043f81fa582a702aa",
@@ -5346,8 +5346,8 @@
       "id": "subnet-subnet-090944b7b5623d2f5",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 12652
+        "x": 80,
+        "y": 12682
       },
       "data": {
         "label": "subnet-090944b7b5623d2f5",
@@ -5398,8 +5398,8 @@
       "id": "subnet-subnet-00f4f77356e6d203c",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 12782
+        "x": 251.25,
+        "y": 12812
       },
       "data": {
         "label": "subnet-00f4f77356e6d203c",
@@ -5430,8 +5430,8 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": 210,
-          "height": 180
+          "width": 315.0,
+          "height": 223
         },
         "config": {
           "originalType": "AWS::EC2::Subnet",
@@ -5443,15 +5443,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-055ecbe469911131f"
       },
-      "width": 210,
-      "height": 180
+      "width": 315.0,
+      "height": 223
     },
     {
       "id": "instance-i-0dbb9e1a5e6d51ac5",
       "type": "resourceNode",
       "position": {
-        "x": 175,
-        "y": 12817
+        "x": 363.75,
+        "y": 12849.5
       },
       "data": {
         "label": "blazeops-agent-staging-backend-api",
@@ -5514,8 +5514,8 @@
       "id": "igw-igw-0134fb30fe533d085",
       "type": "resourceNode",
       "position": {
-        "x": 690.0,
-        "y": 12552
+        "x": 756.875,
+        "y": 12701.0
       },
       "data": {
         "label": "igw-0134fb30fe533d085",
@@ -5555,8 +5555,8 @@
       "id": "igw-igw-03ffabfd930534342",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 12552
+        "x": 260.625,
+        "y": 12656.75
       },
       "data": {
         "label": "igw-03ffabfd930534342",
@@ -5596,8 +5596,8 @@
       "id": "rt-rtb-026d528b4c8f6eead",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 13032
+        "x": 756.875,
+        "y": 12928.0
       },
       "data": {
         "label": "rtb-026d528b4c8f6eead",
@@ -5639,8 +5639,8 @@
       "id": "rt-rtb-0ec5664cd77e21cd4",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 12982
+        "x": 260.625,
+        "y": 12839.5
       },
       "data": {
         "label": "rtb-0ec5664cd77e21cd4",
@@ -5682,8 +5682,8 @@
       "id": "rt-rtb-0cd278a0ea19f5b6f",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 13082
+        "x": 260.625,
+        "y": 13022.25
       },
       "data": {
         "label": "rtb-0cd278a0ea19f5b6f",
@@ -5725,8 +5725,8 @@
       "id": "sg-sg-06549ef92eb0ccaf7",
       "type": "resourceNode",
       "position": {
-        "x": 160,
-        "y": 12802
+        "x": 331.25,
+        "y": 12832
       },
       "data": {
         "label": "blazeops-agent-staging-agent",
@@ -5753,8 +5753,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 150,
-          "height": 120
+          "width": 185.0,
+          "height": 153
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -5766,15 +5766,15 @@
         "nestingDepth": 3,
         "parentId": "subnet-subnet-00f4f77356e6d203c"
       },
-      "width": 150,
-      "height": 120
+      "width": 185.0,
+      "height": 153
     },
     {
       "id": "region-us-west-1",
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 13290
+        "y": 13315
       },
       "data": {
         "label": "Region: us-west-1",
@@ -5800,11 +5800,11 @@
         },
         "region": "us-west-1",
         "isContainer": true,
-        "width": 440.0,
-        "height": 678,
+        "width": 541.25,
+        "height": 683,
         "size": {
-          "width": 440.0,
-          "height": 678
+          "width": 541.25,
+          "height": 683
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -5812,15 +5812,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 440.0,
-      "height": 678
+      "width": 541.25,
+      "height": 683
     },
     {
       "id": "vpc-vpc-070c9fa7c7780161f",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 13430
+        "x": 40,
+        "y": 13455
       },
       "data": {
         "label": "vpc-070c9fa7c7780161f",
@@ -5857,8 +5857,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 498
+          "width": 451.25,
+          "height": 493
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -5870,15 +5870,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-1"
       },
-      "width": 300.0,
-      "height": 498
+      "width": 451.25,
+      "height": 493
     },
     {
       "id": "subnet-subnet-069cf6b2d0abd2ee2",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 13550
+        "x": 80,
+        "y": 13575
       },
       "data": {
         "label": "subnet-069cf6b2d0abd2ee2",
@@ -5929,8 +5929,8 @@
       "id": "subnet-subnet-0580075a19b75e69f",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 13680
+        "x": 256.25,
+        "y": 13705
       },
       "data": {
         "label": "subnet-0580075a19b75e69f",
@@ -5981,8 +5981,8 @@
       "id": "igw-igw-0c932866c2434a3c8",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 13450
+        "x": 205.625,
+        "y": 13550.666666666666
       },
       "data": {
         "label": "igw-0c932866c2434a3c8",
@@ -6022,8 +6022,8 @@
       "id": "rt-rtb-05101c75cc5a8feb2",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 13800
+        "x": 205.625,
+        "y": 13734.333333333334
       },
       "data": {
         "label": "rtb-05101c75cc5a8feb2",
@@ -6066,7 +6066,7 @@
       "type": "resourceNode",
       "position": {
         "x": 0,
-        "y": 14008
+        "y": 14038
       },
       "data": {
         "label": "Region: us-west-2",
@@ -6092,11 +6092,11 @@
         },
         "region": "us-west-2",
         "isContainer": true,
-        "width": 890.0,
-        "height": 1218,
+        "width": 982.5,
+        "height": 1241,
         "size": {
-          "width": 890.0,
-          "height": 1218
+          "width": 982.5,
+          "height": 1241
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -6104,15 +6104,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 890.0,
-      "height": 1218
+      "width": 982.5,
+      "height": 1241
     },
     {
       "id": "vpc-vpc-0d872966b39f4ea8d",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 14148
+        "x": 40,
+        "y": 14178
       },
       "data": {
         "label": "vpc-0d872966b39f4ea8d",
@@ -6149,8 +6149,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 1038
+          "width": 426.25,
+          "height": 1061
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -6162,15 +6162,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 300.0,
-      "height": 1038
+      "width": 426.25,
+      "height": 1061
     },
     {
       "id": "vpc-vpc-027835473e4b7d72a",
       "type": "resourceNode",
       "position": {
-        "x": 550,
-        "y": 14148
+        "x": 516.25,
+        "y": 14178
       },
       "data": {
         "label": "vpc-027835473e4b7d72a",
@@ -6207,8 +6207,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 758
+          "width": 426.25,
+          "height": 733
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -6220,15 +6220,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 300.0,
-      "height": 758
+      "width": 426.25,
+      "height": 733
     },
     {
       "id": "subnet-subnet-0e91ce399e06b7fdc",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 14268
+        "x": 556.25,
+        "y": 14298
       },
       "data": {
         "label": "subnet-0e91ce399e06b7fdc",
@@ -6279,8 +6279,8 @@
       "id": "subnet-subnet-0aea9cdb9ab33688d",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 14398
+        "x": 722.5,
+        "y": 14428
       },
       "data": {
         "label": "subnet-0aea9cdb9ab33688d",
@@ -6331,8 +6331,8 @@
       "id": "subnet-subnet-05ce308e0177dbb5a",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 14528
+        "x": 556.25,
+        "y": 14558
       },
       "data": {
         "label": "subnet-05ce308e0177dbb5a",
@@ -6383,8 +6383,8 @@
       "id": "subnet-subnet-089ed0816c2f48da1",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 14658
+        "x": 722.5,
+        "y": 14688
       },
       "data": {
         "label": "subnet-089ed0816c2f48da1",
@@ -6435,8 +6435,8 @@
       "id": "subnet-subnet-015e78643cad449b1",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 14268
+        "x": 80,
+        "y": 14298
       },
       "data": {
         "label": "subnet-015e78643cad449b1",
@@ -6487,8 +6487,8 @@
       "id": "subnet-subnet-09f866b987b0b0ee4",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 14398
+        "x": 246.25,
+        "y": 14428
       },
       "data": {
         "label": "subnet-09f866b987b0b0ee4",
@@ -6539,8 +6539,8 @@
       "id": "subnet-subnet-073ef49609e45baae",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 14528
+        "x": 80,
+        "y": 14558
       },
       "data": {
         "label": "subnet-073ef49609e45baae",
@@ -6571,8 +6571,8 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": 210,
-          "height": 180
+          "width": 295,
+          "height": 218
         },
         "config": {
           "originalType": "AWS::EC2::Subnet",
@@ -6584,15 +6584,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0d872966b39f4ea8d"
       },
-      "width": 210,
-      "height": 180
+      "width": 295,
+      "height": 218
     },
     {
       "id": "subnet-subnet-09f403328962fd4af",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 14738
+        "x": 246.25,
+        "y": 14816
       },
       "data": {
         "label": "subnet-09f403328962fd4af",
@@ -6643,8 +6643,8 @@
       "id": "instance-i-0b3d3732ad4db633a",
       "type": "resourceNode",
       "position": {
-        "x": 175,
-        "y": 14563
+        "x": 192.5,
+        "y": 14595.5
       },
       "data": {
         "label": "blazeops-backend-api",
@@ -6707,8 +6707,8 @@
       "id": "igw-igw-01d6f9713399da5ca",
       "type": "resourceNode",
       "position": {
-        "x": 240.0,
-        "y": 14168
+        "x": 193.125,
+        "y": 14313.8
       },
       "data": {
         "label": "igw-01d6f9713399da5ca",
@@ -6748,8 +6748,8 @@
       "id": "igw-igw-0002857dc920c3e99",
       "type": "resourceNode",
       "position": {
-        "x": 690.0,
-        "y": 14168
+        "x": 669.375,
+        "y": 14353.666666666666
       },
       "data": {
         "label": "igw-0002857dc920c3e99",
@@ -6789,8 +6789,8 @@
       "id": "rt-rtb-01409b82181bbb38f",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 14858
+        "x": 193.125,
+        "y": 14537.6
       },
       "data": {
         "label": "rtb-01409b82181bbb38f",
@@ -6832,8 +6832,8 @@
       "id": "rt-rtb-0bff65edc339ff6de",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 14958
+        "x": 193.125,
+        "y": 14761.4
       },
       "data": {
         "label": "rtb-0bff65edc339ff6de",
@@ -6875,8 +6875,8 @@
       "id": "rt-rtb-052b1538a348a1e10",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 15058
+        "x": 193.125,
+        "y": 14985.2
       },
       "data": {
         "label": "rtb-052b1538a348a1e10",
@@ -6918,8 +6918,8 @@
       "id": "rt-rtb-0177b620ebd553e83",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 14778
+        "x": 669.375,
+        "y": 14617.333333333334
       },
       "data": {
         "label": "rtb-0177b620ebd553e83",
@@ -6962,7 +6962,7 @@
       "type": "resourceNode",
       "position": {
         "x": 160,
-        "y": 14548
+        "y": 14578
       },
       "data": {
         "label": "blazeops-staging-backend-api",
@@ -6989,8 +6989,8 @@
         "outboundRules": 1,
         "isContainer": true,
         "size": {
-          "width": 150,
-          "height": 120
+          "width": 185,
+          "height": 153
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -7002,8 +7002,53 @@
         "nestingDepth": 3,
         "parentId": "subnet-subnet-073ef49609e45baae"
       },
-      "width": 150,
-      "height": 120
+      "width": 185,
+      "height": 153
+    },
+    {
+      "id": "nat-nat-08f50d3bafb9d5043",
+      "type": "resourceNode",
+      "position": {
+        "x": 167.5,
+        "y": 14608.0
+      },
+      "data": {
+        "label": "nat-08f50d3bafb9d5043",
+        "resourceType": {
+          "id": "natGateway",
+          "name": "NAT Gateway",
+          "category": "networking",
+          "icon": "natgateway",
+          "description": "NAT Gateway",
+          "color": "#17A2B8",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "NAT Gateway ID",
+              "type": "text"
+            }
+          ]
+        },
+        "natGatewayId": "nat-08f50d3bafb9d5043",
+        "vpcId": "vpc-0d872966b39f4ea8d",
+        "subnetId": "subnet-073ef49609e45baae",
+        "state": "available",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::EC2::NatGateway",
+          "region": "073ef49609e45baae",
+          "vpcId": "vpc-0d872966b39f4ea8d",
+          "subnetId": "subnet-073ef49609e45baae"
+        },
+        "nestingDepth": 3,
+        "parentId": "subnet-subnet-073ef49609e45baae"
+      },
+      "width": 120,
+      "height": 88
     }
   ],
   "edges": [
@@ -7794,6 +7839,18 @@
         "stroke": "#DD344C",
         "strokeWidth": 1,
         "strokeDasharray": "5,5"
+      }
+    },
+    {
+      "id": "subnet-to-nat-subnet-subnet-073ef49609e45baae-nat-nat-08f50d3bafb9d5043",
+      "source": "subnet-subnet-073ef49609e45baae",
+      "target": "nat-nat-08f50d3bafb9d5043",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#17A2B8",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
       }
     }
   ]
