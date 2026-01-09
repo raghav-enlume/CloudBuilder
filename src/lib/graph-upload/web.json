@@ -31,11 +31,11 @@
         },
         "region": "us-east-1",
         "isContainer": true,
-        "width": 745,
-        "height": 1087,
+        "width": 596.25,
+        "height": 1157,
         "size": {
-          "width": 745,
-          "height": 1087
+          "width": 596.25,
+          "height": 1157
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -43,8 +43,8 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
-      "height": 1087
+      "width": 596.25,
+      "height": 1157
     },
     {
       "id": "vpc-vpc-10-0-0-0",
@@ -88,8 +88,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 655,
-          "height": 897
+          "width": 506.25,
+          "height": 967
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -101,8 +101,8 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-1"
       },
-      "width": 655,
-      "height": 897
+      "width": 506.25,
+      "height": 967
     },
     {
       "id": "subnet-subnet-public-1",
@@ -140,8 +140,8 @@
         "state": null,
         "isContainer": true,
         "size": {
-          "width": 480,
-          "height": 168
+          "width": 260,
+          "height": 238
         },
         "config": {
           "originalType": "AWS::EC2::Subnet",
@@ -153,15 +153,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-10-0-0-0"
       },
-      "width": 480,
-      "height": 168
+      "width": 260,
+      "height": 238
     },
     {
       "id": "subnet-subnet-private-a",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
-        "y": 448
+        "x": 251.25,
+        "y": 518
       },
       "data": {
         "label": "subnet-private-a",
@@ -213,7 +213,7 @@
       "type": "resourceNode",
       "position": {
         "x": 80,
-        "y": 636
+        "y": 706
       },
       "data": {
         "label": "subnet-private-b",
@@ -264,8 +264,8 @@
       "id": "instance-i-ec2-001",
       "type": "resourceNode",
       "position": {
-        "x": 455.0,
-        "y": 473.0
+        "x": 321.25,
+        "y": 543.0
       },
       "data": {
         "label": "EC2 Application Server",
@@ -328,8 +328,8 @@
       "id": "rt-rtb-public-1",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
-        "y": 370.33333333333337
+        "x": 233.125,
+        "y": 393.66666666666663
       },
       "data": {
         "label": "rtb-public-1",
@@ -371,8 +371,8 @@
       "id": "rt-rtb-private-1",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
-        "y": 688.6666666666667
+        "x": 233.125,
+        "y": 735.3333333333333
       },
       "data": {
         "label": "rtb-private-1",
@@ -414,8 +414,8 @@
       "id": "nat-nat-001",
       "type": "resourceNode",
       "position": {
-        "x": 260.0,
-        "y": 285.0
+        "x": 150.0,
+        "y": 320.0
       },
       "data": {
         "label": "nat-001",
@@ -460,7 +460,7 @@
       "type": "resourceNode",
       "position": {
         "x": 150.0,
-        "y": 661.0
+        "y": 731.0
       },
       "data": {
         "label": "rds-001",

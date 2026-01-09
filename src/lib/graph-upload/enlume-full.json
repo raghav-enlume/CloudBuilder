@@ -31,10 +31,10 @@
         },
         "region": "ap-northeast-1",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -43,7 +43,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -88,7 +88,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -101,7 +101,7 @@
         "nestingDepth": 1,
         "parentId": "region-ap-northeast-1"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -160,7 +160,7 @@
       "id": "subnet-subnet-02d8d4f99ecfe1870",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 390
       },
       "data": {
@@ -264,7 +264,7 @@
       "id": "igw-igw-028f2912c566c25c2",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 279.0
       },
       "data": {
@@ -305,7 +305,7 @@
       "id": "rt-rtb-03dd84893a8fb2ef0",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 506.0
       },
       "data": {
@@ -375,10 +375,10 @@
         },
         "region": "ap-northeast-2",
         "isContainer": true,
-        "width": 725,
+        "width": 516.25,
         "height": 923,
         "size": {
-          "width": 725,
+          "width": 516.25,
           "height": 923
         },
         "config": {
@@ -387,7 +387,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 725,
+      "width": 516.25,
       "height": 923
     },
     {
@@ -432,7 +432,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 635,
+          "width": 426.25,
           "height": 733
         },
         "config": {
@@ -445,7 +445,7 @@
         "nestingDepth": 1,
         "parentId": "region-ap-northeast-2"
       },
-      "width": 635,
+      "width": 426.25,
       "height": 733
     },
     {
@@ -504,7 +504,7 @@
       "id": "subnet-subnet-0a21b3825b76a3cbc",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 246.25,
         "y": 1243
       },
       "data": {
@@ -608,7 +608,7 @@
       "id": "subnet-subnet-0e1307503a6602426",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 246.25,
         "y": 1503
       },
       "data": {
@@ -660,7 +660,7 @@
       "id": "igw-igw-096fd590ad712f914",
       "type": "resourceNode",
       "position": {
-        "x": 297.5,
+        "x": 193.125,
         "y": 1168.6666666666665
       },
       "data": {
@@ -701,7 +701,7 @@
       "id": "rt-rtb-04cf8cd902339ce2c",
       "type": "resourceNode",
       "position": {
-        "x": 297.5,
+        "x": 193.125,
         "y": 1432.3333333333333
       },
       "data": {
@@ -771,10 +771,10 @@
         },
         "region": "ap-northeast-3",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -783,7 +783,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -828,7 +828,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -841,7 +841,7 @@
         "nestingDepth": 1,
         "parentId": "region-ap-northeast-3"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -900,7 +900,7 @@
       "id": "subnet-subnet-0696e0f7fd6353625",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 2206
       },
       "data": {
@@ -1004,7 +1004,7 @@
       "id": "igw-igw-06b27e6a601535b15",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 2095.0
       },
       "data": {
@@ -1045,7 +1045,7 @@
       "id": "rt-rtb-0141f06e25054375c",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 2322.0
       },
       "data": {
@@ -1115,10 +1115,10 @@
         },
         "region": "ap-south-1",
         "isContainer": true,
-        "width": 1440,
+        "width": 876.25,
         "height": 803,
         "size": {
-          "width": 1440,
+          "width": 876.25,
           "height": 803
         },
         "config": {
@@ -1127,7 +1127,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 1440,
+      "width": 876.25,
       "height": 803
     },
     {
@@ -1172,7 +1172,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -1185,14 +1185,14 @@
         "nestingDepth": 1,
         "parentId": "region-ap-south-1"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
       "id": "vpc-vpc-05bb208ec1e1c9046",
       "type": "resourceNode",
       "position": {
-        "x": 745,
+        "x": 541.25,
         "y": 2809
       },
       "data": {
@@ -1230,7 +1230,7 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 295.0,
           "height": 483
         },
         "config": {
@@ -1243,7 +1243,7 @@
         "nestingDepth": 1,
         "parentId": "region-ap-south-1"
       },
-      "width": 655,
+      "width": 295.0,
       "height": 483
     },
     {
@@ -1302,7 +1302,7 @@
       "id": "subnet-subnet-0a18a2d2cabeb92f4",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 3059
       },
       "data": {
@@ -1406,7 +1406,7 @@
       "id": "igw-igw-0ea6cbab7999d72cf",
       "type": "resourceNode",
       "position": {
-        "x": 1012.5,
+        "x": 628.75,
         "y": 2856.25
       },
       "data": {
@@ -1447,7 +1447,7 @@
       "id": "igw-igw-0f1ff17589f0df376",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 2948.0
       },
       "data": {
@@ -1488,7 +1488,7 @@
       "id": "rt-rtb-0a694f54c42d6bd3b",
       "type": "resourceNode",
       "position": {
-        "x": 1012.5,
+        "x": 628.75,
         "y": 2991.5
       },
       "data": {
@@ -1531,7 +1531,7 @@
       "id": "rt-rtb-0e9c61612ee85c6b5",
       "type": "resourceNode",
       "position": {
-        "x": 1012.5,
+        "x": 628.75,
         "y": 3126.75
       },
       "data": {
@@ -1574,7 +1574,7 @@
       "id": "rt-rtb-0c1cfabc7032d410d",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 3175.0
       },
       "data": {
@@ -1644,10 +1644,10 @@
         },
         "region": "ap-southeast-1",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -1656,7 +1656,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -1701,7 +1701,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -1714,7 +1714,7 @@
         "nestingDepth": 1,
         "parentId": "region-ap-southeast-1"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -1773,7 +1773,7 @@
       "id": "subnet-subnet-0d717d2f591d0425c",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 3902
       },
       "data": {
@@ -1877,7 +1877,7 @@
       "id": "igw-igw-06e90884eb59f7b9c",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 3791.0
       },
       "data": {
@@ -1918,7 +1918,7 @@
       "id": "rt-rtb-038363b1c1952edf9",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 4018.0
       },
       "data": {
@@ -1988,10 +1988,10 @@
         },
         "region": "ap-southeast-2",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -2000,7 +2000,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -2045,7 +2045,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -2058,7 +2058,7 @@
         "nestingDepth": 1,
         "parentId": "region-ap-southeast-2"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -2117,7 +2117,7 @@
       "id": "subnet-subnet-022ef323c26a65006",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 4755
       },
       "data": {
@@ -2221,7 +2221,7 @@
       "id": "igw-igw-01ae3570c813af69f",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 4644.0
       },
       "data": {
@@ -2262,7 +2262,7 @@
       "id": "rt-rtb-03b3ed4a45d7b83e9",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 4871.0
       },
       "data": {
@@ -2332,10 +2332,10 @@
         },
         "region": "ca-central-1",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -2344,7 +2344,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -2389,7 +2389,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -2402,7 +2402,7 @@
         "nestingDepth": 1,
         "parentId": "region-ca-central-1"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -2461,7 +2461,7 @@
       "id": "subnet-subnet-0b678df84d6d52733",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 5608
       },
       "data": {
@@ -2565,7 +2565,7 @@
       "id": "igw-igw-069082c94acc7e1a2",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 5497.0
       },
       "data": {
@@ -2606,7 +2606,7 @@
       "id": "rt-rtb-08c7982b8eef4c4e9",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 5724.0
       },
       "data": {
@@ -2676,10 +2676,10 @@
         },
         "region": "eu-central-1",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -2688,7 +2688,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -2733,7 +2733,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -2746,7 +2746,7 @@
         "nestingDepth": 1,
         "parentId": "region-eu-central-1"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -2805,7 +2805,7 @@
       "id": "subnet-subnet-0735b31c9b21f431e",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 6461
       },
       "data": {
@@ -2909,7 +2909,7 @@
       "id": "igw-igw-0f1f51cf9758016d6",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 6350.0
       },
       "data": {
@@ -2950,7 +2950,7 @@
       "id": "rt-rtb-0bb32f2ff685af33b",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 6577.0
       },
       "data": {
@@ -3020,10 +3020,10 @@
         },
         "region": "eu-north-1",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -3032,7 +3032,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -3077,7 +3077,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -3090,7 +3090,7 @@
         "nestingDepth": 1,
         "parentId": "region-eu-north-1"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -3149,7 +3149,7 @@
       "id": "subnet-subnet-0b98309688848b497",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 7314
       },
       "data": {
@@ -3253,7 +3253,7 @@
       "id": "igw-igw-01fc16fc60f59e24d",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 7203.0
       },
       "data": {
@@ -3294,7 +3294,7 @@
       "id": "rt-rtb-06c7e889afecc232c",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 7430.0
       },
       "data": {
@@ -3364,10 +3364,10 @@
         },
         "region": "eu-west-1",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -3376,7 +3376,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -3421,7 +3421,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -3434,7 +3434,7 @@
         "nestingDepth": 1,
         "parentId": "region-eu-west-1"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -3493,7 +3493,7 @@
       "id": "subnet-subnet-065433cf0895865d1",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 8167
       },
       "data": {
@@ -3597,7 +3597,7 @@
       "id": "igw-igw-0a991724eab3b3767",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 8056.0
       },
       "data": {
@@ -3638,7 +3638,7 @@
       "id": "rt-rtb-02b046212c852e516",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 8283.0
       },
       "data": {
@@ -3708,10 +3708,10 @@
         },
         "region": "eu-west-2",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -3720,7 +3720,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -3765,7 +3765,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -3778,7 +3778,7 @@
         "nestingDepth": 1,
         "parentId": "region-eu-west-2"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -3837,7 +3837,7 @@
       "id": "subnet-subnet-04d706b627e8e317e",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 9020
       },
       "data": {
@@ -3941,7 +3941,7 @@
       "id": "igw-igw-0efa864fb6398f084",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 8909.0
       },
       "data": {
@@ -3982,7 +3982,7 @@
       "id": "rt-rtb-047ad625867d472b7",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 9136.0
       },
       "data": {
@@ -4052,10 +4052,10 @@
         },
         "region": "eu-west-3",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -4064,7 +4064,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -4109,7 +4109,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -4122,7 +4122,7 @@
         "nestingDepth": 1,
         "parentId": "region-eu-west-3"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -4181,7 +4181,7 @@
       "id": "subnet-subnet-04c02d922b215a643",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 9873
       },
       "data": {
@@ -4285,7 +4285,7 @@
       "id": "igw-igw-0387bae71d73062f5",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 9762.0
       },
       "data": {
@@ -4326,7 +4326,7 @@
       "id": "rt-rtb-0967cfd058894f942",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 9989.0
       },
       "data": {
@@ -4396,10 +4396,10 @@
         },
         "region": "sa-east-1",
         "isContainer": true,
-        "width": 745,
+        "width": 541.25,
         "height": 813,
         "size": {
-          "width": 745,
+          "width": 541.25,
           "height": 813
         },
         "config": {
@@ -4408,7 +4408,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 745,
+      "width": 541.25,
       "height": 813
     },
     {
@@ -4453,7 +4453,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -4466,7 +4466,7 @@
         "nestingDepth": 1,
         "parentId": "region-sa-east-1"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
@@ -4525,7 +4525,7 @@
       "id": "subnet-subnet-078beffc6dc67caa2",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 10726
       },
       "data": {
@@ -4629,7 +4629,7 @@
       "id": "igw-igw-06c4e6bd6ba5b22e9",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 10615.0
       },
       "data": {
@@ -4670,7 +4670,7 @@
       "id": "rt-rtb-05b93793b5cee32ed",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 205.625,
         "y": 10842.0
       },
       "data": {
@@ -4740,10 +4740,10 @@
         },
         "region": "us-east-1",
         "isContainer": true,
-        "width": 725,
+        "width": 516.25,
         "height": 1183,
         "size": {
-          "width": 725,
+          "width": 516.25,
           "height": 1183
         },
         "config": {
@@ -4752,7 +4752,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 725,
+      "width": 516.25,
       "height": 1183
     },
     {
@@ -4797,7 +4797,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 635,
+          "width": 426.25,
           "height": 993
         },
         "config": {
@@ -4810,7 +4810,7 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-1"
       },
-      "width": 635,
+      "width": 426.25,
       "height": 993
     },
     {
@@ -4869,7 +4869,7 @@
       "id": "subnet-subnet-039447774e07b1ac8",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 246.25,
         "y": 11579
       },
       "data": {
@@ -4973,7 +4973,7 @@
       "id": "subnet-subnet-0b194e9c4efdf117d",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 246.25,
         "y": 11839
       },
       "data": {
@@ -5077,7 +5077,7 @@
       "id": "subnet-subnet-028d24fff5a666009",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 246.25,
         "y": 12099
       },
       "data": {
@@ -5129,7 +5129,7 @@
       "id": "igw-igw-0b8d4f12ed9149dde",
       "type": "resourceNode",
       "position": {
-        "x": 297.5,
+        "x": 193.125,
         "y": 11591.333333333334
       },
       "data": {
@@ -5170,7 +5170,7 @@
       "id": "rt-rtb-006b0197109522e54",
       "type": "resourceNode",
       "position": {
-        "x": 297.5,
+        "x": 193.125,
         "y": 11941.666666666666
       },
       "data": {
@@ -5240,10 +5240,10 @@
         },
         "region": "us-east-2",
         "isContainer": true,
-        "width": 2825,
+        "width": 2005.0,
         "height": 828,
         "size": {
-          "width": 2825,
+          "width": 2005.0,
           "height": 828
         },
         "config": {
@@ -5252,7 +5252,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 2825,
+      "width": 2005.0,
       "height": 828
     },
     {
@@ -5297,7 +5297,7 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 446.25,
           "height": 673
         },
         "config": {
@@ -5310,14 +5310,14 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 655,
+      "width": 446.25,
       "height": 673
     },
     {
       "id": "vpc-vpc-0010db00d5f9b6d24",
       "type": "resourceNode",
       "position": {
-        "x": 745,
+        "x": 536.25,
         "y": 12552
       },
       "data": {
@@ -5355,7 +5355,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 623
         },
         "config": {
@@ -5368,14 +5368,14 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 623
     },
     {
       "id": "vpc-vpc-0b71e8dcdd9a40ef8",
       "type": "resourceNode",
       "position": {
-        "x": 1450,
+        "x": 1037.5,
         "y": 12552
       },
       "data": {
@@ -5413,7 +5413,7 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 593
         },
         "config": {
@@ -5426,14 +5426,14 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 593
     },
     {
       "id": "vpc-vpc-0eb8eab8fc060589d",
       "type": "resourceNode",
       "position": {
-        "x": 2150,
+        "x": 1533.75,
         "y": 12552
       },
       "data": {
@@ -5471,7 +5471,7 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 593
         },
         "config": {
@@ -5484,14 +5484,14 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 593
     },
     {
       "id": "subnet-subnet-0d7e95372896d77e8",
       "type": "resourceNode",
       "position": {
-        "x": 785,
+        "x": 576.25,
         "y": 12672
       },
       "data": {
@@ -5543,7 +5543,7 @@
       "id": "subnet-subnet-0f74cb72353a2b237",
       "type": "resourceNode",
       "position": {
-        "x": 1090.0,
+        "x": 752.5,
         "y": 12802
       },
       "data": {
@@ -5595,7 +5595,7 @@
       "id": "subnet-subnet-0caaa7cee2f392f8d",
       "type": "resourceNode",
       "position": {
-        "x": 785,
+        "x": 576.25,
         "y": 12932
       },
       "data": {
@@ -5647,7 +5647,7 @@
       "id": "subnet-subnet-0cc22aef01a024a4a",
       "type": "resourceNode",
       "position": {
-        "x": 2190,
+        "x": 1573.75,
         "y": 12672
       },
       "data": {
@@ -5699,7 +5699,7 @@
       "id": "subnet-subnet-01c723a4e0cd68d4f",
       "type": "resourceNode",
       "position": {
-        "x": 2495.0,
+        "x": 1750.0,
         "y": 12802
       },
       "data": {
@@ -5803,7 +5803,7 @@
       "id": "subnet-subnet-09a9db2e951c22a88",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 251.25,
         "y": 12877
       },
       "data": {
@@ -5855,7 +5855,7 @@
       "id": "subnet-subnet-0381aa2076a4bb590",
       "type": "resourceNode",
       "position": {
-        "x": 1490,
+        "x": 1077.5,
         "y": 12672
       },
       "data": {
@@ -5907,7 +5907,7 @@
       "id": "subnet-subnet-03f6049180d037062",
       "type": "resourceNode",
       "position": {
-        "x": 1795.0,
+        "x": 1253.75,
         "y": 12802
       },
       "data": {
@@ -6023,7 +6023,7 @@
       "id": "igw-igw-01d5c14d9e2b4b9c8",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 203.125,
         "y": 12641.75
       },
       "data": {
@@ -6064,7 +6064,7 @@
       "id": "igw-igw-0a13a84d2fd72a28d",
       "type": "resourceNode",
       "position": {
-        "x": 1717.5,
+        "x": 1203.125,
         "y": 12626.75
       },
       "data": {
@@ -6105,7 +6105,7 @@
       "id": "igw-igw-0b3cd3490eb35a07c",
       "type": "resourceNode",
       "position": {
-        "x": 1012.5,
+        "x": 701.875,
         "y": 12691.0
       },
       "data": {
@@ -6146,7 +6146,7 @@
       "id": "igw-igw-0eefc716b166cc3f6",
       "type": "resourceNode",
       "position": {
-        "x": 2417.5,
+        "x": 1699.375,
         "y": 12626.75
       },
       "data": {
@@ -6187,7 +6187,7 @@
       "id": "rt-rtb-01acacde45952b958",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 203.125,
         "y": 12824.5
       },
       "data": {
@@ -6230,7 +6230,7 @@
       "id": "rt-rtb-0f5539d37304dfe0a",
       "type": "resourceNode",
       "position": {
-        "x": 307.5,
+        "x": 203.125,
         "y": 13007.25
       },
       "data": {
@@ -6273,7 +6273,7 @@
       "id": "rt-rtb-09467ba9741ae03be",
       "type": "resourceNode",
       "position": {
-        "x": 1012.5,
+        "x": 701.875,
         "y": 12918.0
       },
       "data": {
@@ -6316,7 +6316,7 @@
       "id": "rt-rtb-051150827cea9acd3",
       "type": "resourceNode",
       "position": {
-        "x": 1717.5,
+        "x": 1203.125,
         "y": 12789.5
       },
       "data": {
@@ -6359,7 +6359,7 @@
       "id": "rt-rtb-04c6172af2a46c76f",
       "type": "resourceNode",
       "position": {
-        "x": 1717.5,
+        "x": 1203.125,
         "y": 12952.25
       },
       "data": {
@@ -6402,7 +6402,7 @@
       "id": "rt-rtb-02e5b59e28181011c",
       "type": "resourceNode",
       "position": {
-        "x": 2417.5,
+        "x": 1699.375,
         "y": 12789.5
       },
       "data": {
@@ -6445,7 +6445,7 @@
       "id": "rt-rtb-066fcdc4ec8cdb638",
       "type": "resourceNode",
       "position": {
-        "x": 2417.5,
+        "x": 1699.375,
         "y": 12952.25
       },
       "data": {
@@ -6563,10 +6563,10 @@
         },
         "region": "us-west-1",
         "isContainer": true,
-        "width": 785.0,
+        "width": 656.25,
         "height": 763,
         "size": {
-          "width": 785.0,
+          "width": 656.25,
           "height": 763
         },
         "config": {
@@ -6575,7 +6575,7 @@
         },
         "nestingDepth": 0
       },
-      "width": 785.0,
+      "width": 656.25,
       "height": 763
     },
     {
@@ -6620,7 +6620,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 695.0,
+          "width": 566.25,
           "height": 573
         },
         "config": {
@@ -6633,7 +6633,7 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-1"
       },
-      "width": 695.0,
+      "width": 566.25,
       "height": 573
     },
     {
@@ -6692,7 +6692,7 @@
       "id": "subnet-subnet-07bea2196296fadfb",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
+        "x": 256.25,
         "y": 13670
       },
       "data": {
@@ -6744,7 +6744,7 @@
       "id": "instance-i-038eaa07332e6dfdc",
       "type": "resourceNode",
       "position": {
-        "x": 497.5,
+        "x": 368.75,
         "y": 13707.5
       },
       "data": {
@@ -6808,7 +6808,7 @@
       "id": "igw-igw-027755f7812b41e9b",
       "type": "resourceNode",
       "position": {
-        "x": 327.5,
+        "x": 263.125,
         "y": 13542.333333333334
       },
       "data": {
@@ -6849,7 +6849,7 @@
       "id": "rt-rtb-0553145506ae0e240",
       "type": "resourceNode",
       "position": {
-        "x": 327.5,
+        "x": 263.125,
         "y": 13752.666666666666
       },
       "data": {
@@ -6892,7 +6892,7 @@
       "id": "sg-sg-0a34be5608f7f8176",
       "type": "resourceNode",
       "position": {
-        "x": 465.0,
+        "x": 336.25,
         "y": 13690
       },
       "data": {
@@ -6967,11 +6967,11 @@
         },
         "region": "us-west-2",
         "isContainer": true,
-        "width": 4840,
-        "height": 1729,
+        "width": 3347.5,
+        "height": 1756,
         "size": {
-          "width": 4840,
-          "height": 1729
+          "width": 3347.5,
+          "height": 1756
         },
         "config": {
           "originalType": "AWS::EC2::Region",
@@ -6979,15 +6979,15 @@
         },
         "nestingDepth": 0
       },
-      "width": 4840,
-      "height": 1729
+      "width": 3347.5,
+      "height": 1756
     },
     {
       "id": "vpc-vpc-0b203175fc017bf03",
       "type": "resourceNode",
       "position": {
         "x": 40,
-        "y": 14223
+        "y": 14218
       },
       "data": {
         "label": "vpc-0b203175fc017bf03",
@@ -7024,8 +7024,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 675.0,
-          "height": 1531
+          "width": 541.25,
+          "height": 1601
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -7037,14 +7037,14 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 675.0,
-      "height": 1531
+      "width": 541.25,
+      "height": 1601
     },
     {
       "id": "vpc-vpc-0396b67c9d7d3abe3",
       "type": "resourceNode",
       "position": {
-        "x": 725,
+        "x": 571.25,
         "y": 14223
       },
       "data": {
@@ -7082,7 +7082,7 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 635,
+          "width": 426.25,
           "height": 1355
         },
         "config": {
@@ -7095,14 +7095,14 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 635,
+      "width": 426.25,
       "height": 1355
     },
     {
       "id": "vpc-vpc-02a17d33150568759",
       "type": "resourceNode",
       "position": {
-        "x": 1410,
+        "x": 1047.5,
         "y": 14223
       },
       "data": {
@@ -7140,8 +7140,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 635,
-          "height": 1451
+          "width": 426.25,
+          "height": 1521
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -7153,14 +7153,14 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 635,
-      "height": 1451
+      "width": 426.25,
+      "height": 1521
     },
     {
       "id": "vpc-vpc-0c40204d45db5ab27",
       "type": "resourceNode",
       "position": {
-        "x": 2095,
+        "x": 1523.75,
         "y": 14223
       },
       "data": {
@@ -7198,7 +7198,7 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 451.25,
           "height": 573
         },
         "config": {
@@ -7211,14 +7211,14 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 655,
+      "width": 451.25,
       "height": 573
     },
     {
       "id": "vpc-vpc-05f5252d25e5b83a3",
       "type": "resourceNode",
       "position": {
-        "x": 2800,
+        "x": 2025.0,
         "y": 14223
       },
       "data": {
@@ -7256,7 +7256,7 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 655,
+          "width": 295.0,
           "height": 443
         },
         "config": {
@@ -7269,15 +7269,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 655,
+      "width": 295.0,
       "height": 443
     },
     {
       "id": "vpc-vpc-0a4c8e6538393c98d",
       "type": "resourceNode",
       "position": {
-        "x": 3505,
-        "y": 14218
+        "x": 2405.0,
+        "y": 14223
       },
       "data": {
         "label": "vpc-0a4c8e6538393c98d",
@@ -7314,7 +7314,7 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 635,
+          "width": 396.25,
           "height": 1574
         },
         "config": {
@@ -7327,14 +7327,14 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 635,
+      "width": 396.25,
       "height": 1574
     },
     {
       "id": "vpc-vpc-07636c778ebc026ab",
       "type": "resourceNode",
       "position": {
-        "x": 4185,
+        "x": 2901.25,
         "y": 14223
       },
       "data": {
@@ -7372,7 +7372,7 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 635,
+          "width": 426.25,
           "height": 1254
         },
         "config": {
@@ -7385,14 +7385,14 @@
         "nestingDepth": 1,
         "parentId": "region-us-west-2"
       },
-      "width": 635,
+      "width": 426.25,
       "height": 1254
     },
     {
       "id": "subnet-subnet-0083864b23c842daa",
       "type": "resourceNode",
       "position": {
-        "x": 765,
+        "x": 611.25,
         "y": 14343
       },
       "data": {
@@ -7444,7 +7444,7 @@
       "id": "subnet-subnet-067ec4c1840793997",
       "type": "resourceNode",
       "position": {
-        "x": 1070.0,
+        "x": 777.5,
         "y": 14473
       },
       "data": {
@@ -7496,7 +7496,7 @@
       "id": "subnet-subnet-00e7ae4144372865b",
       "type": "resourceNode",
       "position": {
-        "x": 765,
+        "x": 611.25,
         "y": 14603
       },
       "data": {
@@ -7528,7 +7528,7 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": 225,
+          "width": 188.75,
           "height": 522
         },
         "config": {
@@ -7541,14 +7541,14 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0396b67c9d7d3abe3"
       },
-      "width": 225,
+      "width": 188.75,
       "height": 522
     },
     {
       "id": "subnet-subnet-09d9910760fc6cd92",
       "type": "resourceNode",
       "position": {
-        "x": 1070.0,
+        "x": 777.5,
         "y": 15155
       },
       "data": {
@@ -7601,7 +7601,7 @@
       "type": "resourceNode",
       "position": {
         "x": 80,
-        "y": 14343
+        "y": 14338
       },
       "data": {
         "label": "subnet-0acf56c6e86160836",
@@ -7632,8 +7632,8 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": 480,
-          "height": 168
+          "width": 260,
+          "height": 238
         },
         "config": {
           "originalType": "AWS::EC2::Subnet",
@@ -7645,15 +7645,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0b203175fc017bf03"
       },
-      "width": 480,
-      "height": 168
+      "width": 260,
+      "height": 238
     },
     {
       "id": "subnet-subnet-083f58538e91bf96a",
       "type": "resourceNode",
       "position": {
-        "x": 380.0,
-        "y": 14531
+        "x": 246.25,
+        "y": 14596
       },
       "data": {
         "label": "subnet-083f58538e91bf96a",
@@ -7705,7 +7705,7 @@
       "type": "resourceNode",
       "position": {
         "x": 80,
-        "y": 14741
+        "y": 14806
       },
       "data": {
         "label": "subnet-0b04c6920ec5670bd",
@@ -7756,8 +7756,8 @@
       "id": "subnet-subnet-03544f2ff91e6498c",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
-        "y": 14871
+        "x": 251.25,
+        "y": 14936
       },
       "data": {
         "label": "subnet-03544f2ff91e6498c",
@@ -7809,7 +7809,7 @@
       "type": "resourceNode",
       "position": {
         "x": 80,
-        "y": 15001
+        "y": 15066
       },
       "data": {
         "label": "subnet-02e8cb59f20b482f5",
@@ -7860,8 +7860,8 @@
       "id": "subnet-subnet-0f4580f8731a0d613",
       "type": "resourceNode",
       "position": {
-        "x": 385.0,
-        "y": 15131
+        "x": 251.25,
+        "y": 15196
       },
       "data": {
         "label": "subnet-0f4580f8731a0d613",
@@ -7912,7 +7912,7 @@
       "id": "subnet-subnet-06376dcc5f8f79f3d",
       "type": "resourceNode",
       "position": {
-        "x": 4225,
+        "x": 2941.25,
         "y": 14343
       },
       "data": {
@@ -7964,7 +7964,7 @@
       "id": "subnet-subnet-035f4e215708e170a",
       "type": "resourceNode",
       "position": {
-        "x": 4530.0,
+        "x": 3107.5,
         "y": 14473
       },
       "data": {
@@ -8016,7 +8016,7 @@
       "id": "subnet-subnet-0a75f8fbc67475887",
       "type": "resourceNode",
       "position": {
-        "x": 4225,
+        "x": 2941.25,
         "y": 14603
       },
       "data": {
@@ -8048,7 +8048,7 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": -1155,
+          "width": 128.75,
           "height": 444
         },
         "config": {
@@ -8061,14 +8061,14 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-07636c778ebc026ab"
       },
-      "width": -1155,
+      "width": 128.75,
       "height": 444
     },
     {
       "id": "subnet-subnet-05e363a73b3306d3a",
       "type": "resourceNode",
       "position": {
-        "x": 4530.0,
+        "x": 3107.5,
         "y": 15054
       },
       "data": {
@@ -8120,7 +8120,7 @@
       "id": "subnet-subnet-05108c24c5b4d18a1",
       "type": "resourceNode",
       "position": {
-        "x": 1450,
+        "x": 1087.5,
         "y": 14343
       },
       "data": {
@@ -8172,7 +8172,7 @@
       "id": "subnet-subnet-05d37d18d84d12adc",
       "type": "resourceNode",
       "position": {
-        "x": 1755.0,
+        "x": 1253.75,
         "y": 14473
       },
       "data": {
@@ -8224,7 +8224,7 @@
       "id": "subnet-subnet-09f18daeda9ec6500",
       "type": "resourceNode",
       "position": {
-        "x": 1450,
+        "x": 1087.5,
         "y": 14603
       },
       "data": {
@@ -8256,8 +8256,8 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": 10,
-          "height": 168
+          "width": 152.5,
+          "height": 238
         },
         "config": {
           "originalType": "AWS::EC2::Subnet",
@@ -8269,15 +8269,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-02a17d33150568759"
       },
-      "width": 10,
-      "height": 168
+      "width": 152.5,
+      "height": 238
     },
     {
       "id": "subnet-subnet-00eca9095c60e8af6",
       "type": "resourceNode",
       "position": {
-        "x": 1755.0,
-        "y": 14791
+        "x": 1253.75,
+        "y": 14861
       },
       "data": {
         "label": "subnet-00eca9095c60e8af6",
@@ -8328,8 +8328,8 @@
       "id": "subnet-subnet-0c56f4f6cb21e6c13",
       "type": "resourceNode",
       "position": {
-        "x": 1450,
-        "y": 14921
+        "x": 1087.5,
+        "y": 14991
       },
       "data": {
         "label": "subnet-0c56f4f6cb21e6c13",
@@ -8380,8 +8380,8 @@
       "id": "subnet-subnet-02230cd9b5bb07647",
       "type": "resourceNode",
       "position": {
-        "x": 1755.0,
-        "y": 15051
+        "x": 1253.75,
+        "y": 15121
       },
       "data": {
         "label": "subnet-02230cd9b5bb07647",
@@ -8432,8 +8432,8 @@
       "id": "subnet-subnet-0b0205a4864ec89a8",
       "type": "resourceNode",
       "position": {
-        "x": 3545,
-        "y": 14338
+        "x": 2445.0,
+        "y": 14343
       },
       "data": {
         "label": "subnet-0b0205a4864ec89a8",
@@ -8464,7 +8464,7 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": -900,
+          "width": 200.0,
           "height": 223
         },
         "config": {
@@ -8477,15 +8477,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": -900,
+      "width": 200.0,
       "height": 223
     },
     {
       "id": "subnet-subnet-0b74c69db4723fde1",
       "type": "resourceNode",
       "position": {
-        "x": 3850.0,
-        "y": 14548
+        "x": 2601.25,
+        "y": 14553
       },
       "data": {
         "label": "subnet-0b74c69db4723fde1",
@@ -8516,7 +8516,7 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": -920.0,
+          "width": 180.0,
           "height": 343
         },
         "config": {
@@ -8529,15 +8529,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": -920.0,
+      "width": 180.0,
       "height": 343
     },
     {
       "id": "subnet-subnet-0d362ee0cc9afcf50",
       "type": "resourceNode",
       "position": {
-        "x": 3545,
-        "y": 14898
+        "x": 2445.0,
+        "y": 14903
       },
       "data": {
         "label": "subnet-0d362ee0cc9afcf50",
@@ -8568,7 +8568,7 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": -920,
+          "width": 180.0,
           "height": 483
         },
         "config": {
@@ -8581,15 +8581,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": -920,
+      "width": 180.0,
       "height": 483
     },
     {
       "id": "subnet-subnet-07e8c88d32e1a951a",
       "type": "resourceNode",
       "position": {
-        "x": 3850.0,
-        "y": 15388
+        "x": 2606.25,
+        "y": 15393
       },
       "data": {
         "label": "subnet-07e8c88d32e1a951a",
@@ -8620,7 +8620,7 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": -925.0,
+          "width": 175.0,
           "height": 301
         },
         "config": {
@@ -8633,14 +8633,14 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0a4c8e6538393c98d"
       },
-      "width": -925.0,
+      "width": 175.0,
       "height": 301
     },
     {
       "id": "subnet-subnet-0265700385bb267bb",
       "type": "resourceNode",
       "position": {
-        "x": 2135,
+        "x": 1563.75,
         "y": 14343
       },
       "data": {
@@ -8672,7 +8672,7 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": -390,
+          "width": 181.25,
           "height": 223
         },
         "config": {
@@ -8685,14 +8685,14 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-0c40204d45db5ab27"
       },
-      "width": -390,
+      "width": 181.25,
       "height": 223
     },
     {
       "id": "subnet-subnet-013a1a6db56cb129a",
       "type": "resourceNode",
       "position": {
-        "x": 2440.0,
+        "x": 1740.0,
         "y": 14553
       },
       "data": {
@@ -8744,7 +8744,7 @@
       "id": "subnet-subnet-0bc3c76cec5af834e",
       "type": "resourceNode",
       "position": {
-        "x": 2840,
+        "x": 2065.0,
         "y": 14343
       },
       "data": {
@@ -8776,7 +8776,7 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": -645,
+          "width": 130.0,
           "height": 223
         },
         "config": {
@@ -8789,14 +8789,14 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-05f5252d25e5b83a3"
       },
-      "width": -645,
+      "width": 130.0,
       "height": 223
     },
     {
       "id": "instance-i-0b99704a35eacb9da",
       "type": "resourceNode",
       "position": {
-        "x": 805.0,
+        "x": 651.25,
         "y": 14631.333333333334
       },
       "data": {
@@ -8860,7 +8860,7 @@
       "id": "instance-i-041b43802bd697249",
       "type": "resourceNode",
       "position": {
-        "x": 4265.0,
+        "x": 2981.25,
         "y": 14631.333333333334
       },
       "data": {
@@ -8924,7 +8924,7 @@
       "id": "instance-i-0240e33f5fb28017f",
       "type": "resourceNode",
       "position": {
-        "x": 2187.5,
+        "x": 1616.25,
         "y": 14380.5
       },
       "data": {
@@ -8988,8 +8988,8 @@
       "id": "instance-i-0fb8674109c4c217c",
       "type": "resourceNode",
       "position": {
-        "x": 3890.0,
-        "y": 15413
+        "x": 2646.25,
+        "y": 15418
       },
       "data": {
         "label": "Turn Server HQ",
@@ -9052,8 +9052,8 @@
       "id": "instance-i-0a6d1ee8ff4b61f09",
       "type": "resourceNode",
       "position": {
-        "x": 3597.5,
-        "y": 14375.5
+        "x": 2497.5,
+        "y": 14380.5
       },
       "data": {
         "label": "Live camera stream proxy server",
@@ -9116,7 +9116,7 @@
       "id": "instance-i-081a27b59573c1065",
       "type": "resourceNode",
       "position": {
-        "x": 2892.5,
+        "x": 2117.5,
         "y": 14380.5
       },
       "data": {
@@ -9180,7 +9180,7 @@
       "id": "instance-i-03f012b9cb690019d",
       "type": "resourceNode",
       "position": {
-        "x": 4277.5,
+        "x": 2993.75,
         "y": 14881.5
       },
       "data": {
@@ -9244,8 +9244,8 @@
       "id": "instance-i-0c0b47963bfd443a8",
       "type": "resourceNode",
       "position": {
-        "x": 3597.5,
-        "y": 14935.5
+        "x": 2497.5,
+        "y": 14940.5
       },
       "data": {
         "label": "test",
@@ -9308,8 +9308,8 @@
       "id": "instance-i-05bdf6ab891877602",
       "type": "resourceNode",
       "position": {
-        "x": 3902.5,
-        "y": 14585.5
+        "x": 2653.75,
+        "y": 14590.5
       },
       "data": {
         "label": "Basestation-Testing",
@@ -9372,7 +9372,7 @@
       "id": "instance-i-025856bb4684afce5",
       "type": "resourceNode",
       "position": {
-        "x": 805.0,
+        "x": 651.25,
         "y": 14872.333333333334
       },
       "data": {
@@ -9436,8 +9436,8 @@
       "id": "instance-i-0ab8e3c47989109b0",
       "type": "resourceNode",
       "position": {
-        "x": 3890.0,
-        "y": 15506
+        "x": 2646.25,
+        "y": 15511
       },
       "data": {
         "label": "Turn Server For Demo",
@@ -9500,8 +9500,8 @@
       "id": "instance-i-0f84e378aa0ea6a83",
       "type": "resourceNode",
       "position": {
-        "x": 3890.0,
-        "y": 15551
+        "x": 2646.25,
+        "y": 15556
       },
       "data": {
         "label": "Turn Server template",
@@ -9564,8 +9564,8 @@
       "id": "instance-i-01349d7a7ebab446c",
       "type": "resourceNode",
       "position": {
-        "x": 492.5,
-        "y": 14568.5
+        "x": 358.75,
+        "y": 14633.5
       },
       "data": {
         "label": "html-pdf-conversion-1-linux-nodes-Node",
@@ -9628,8 +9628,8 @@
       "id": "instance-i-0305800c59298a9db",
       "type": "resourceNode",
       "position": {
-        "x": 3597.5,
-        "y": 15075.5
+        "x": 2497.5,
+        "y": 15080.5
       },
       "data": {
         "label": "devops-rnd-n1",
@@ -9692,7 +9692,7 @@
       "id": "instance-i-082672cedf7b4bc58",
       "type": "resourceNode",
       "position": {
-        "x": 805.0,
+        "x": 651.25,
         "y": 14968.666666666666
       },
       "data": {
@@ -9756,8 +9756,8 @@
       "id": "instance-i-04f83f83dd1407752",
       "type": "resourceNode",
       "position": {
-        "x": 3902.5,
-        "y": 14725.5
+        "x": 2653.75,
+        "y": 14730.5
       },
       "data": {
         "label": "devops-rnd-x1",
@@ -9820,7 +9820,7 @@
       "id": "instance-i-0f2368f258fab5b22",
       "type": "resourceNode",
       "position": {
-        "x": 805.0,
+        "x": 651.25,
         "y": 14727.666666666666
       },
       "data": {
@@ -9884,8 +9884,8 @@
       "id": "instance-i-09d8928f2e46588d2",
       "type": "resourceNode",
       "position": {
-        "x": 3597.5,
-        "y": 15215.5
+        "x": 2497.5,
+        "y": 15220.5
       },
       "data": {
         "label": "blf_conversion_emr",
@@ -9948,7 +9948,7 @@
       "id": "instance-i-07117e2efaf720cf0",
       "type": "resourceNode",
       "position": {
-        "x": 4265.0,
+        "x": 2981.25,
         "y": 14727.666666666666
       },
       "data": {
@@ -10012,8 +10012,8 @@
       "id": "igw-igw-028e1f24ac98f323f",
       "type": "resourceNode",
       "position": {
-        "x": 3762.5,
-        "y": 14674.0
+        "x": 2543.125,
+        "y": 14679.0
       },
       "data": {
         "label": "igw-028e1f24ac98f323f",
@@ -10053,7 +10053,7 @@
       "id": "igw-igw-069c417a24ff58e15",
       "type": "resourceNode",
       "position": {
-        "x": 3067.5,
+        "x": 2112.5,
         "y": 14302.0
       },
       "data": {
@@ -10094,7 +10094,7 @@
       "id": "igw-igw-072e12d5dbdc1e401",
       "type": "resourceNode",
       "position": {
-        "x": 2362.5,
+        "x": 1689.375,
         "y": 14345.333333333334
       },
       "data": {
@@ -10135,7 +10135,7 @@
       "id": "igw-igw-08d5d753909185ce9",
       "type": "resourceNode",
       "position": {
-        "x": 4442.5,
+        "x": 3054.375,
         "y": 14397.4
       },
       "data": {
@@ -10176,7 +10176,7 @@
       "id": "igw-igw-08fa23b99521f9103",
       "type": "resourceNode",
       "position": {
-        "x": 982.5,
+        "x": 724.375,
         "y": 14417.6
       },
       "data": {
@@ -10217,8 +10217,8 @@
       "id": "igw-igw-09581f2a8d9b8630a",
       "type": "resourceNode",
       "position": {
-        "x": 1667.5,
-        "y": 14350.57142857143
+        "x": 1200.625,
+        "y": 14360.57142857143
       },
       "data": {
         "label": "igw-09581f2a8d9b8630a",
@@ -10258,8 +10258,8 @@
       "id": "igw-igw-0b892ac0d6e800a55",
       "type": "resourceNode",
       "position": {
-        "x": 317.5,
-        "y": 14362.0
+        "x": 250.625,
+        "y": 14367.0
       },
       "data": {
         "label": "igw-0b892ac0d6e800a55",
@@ -10299,8 +10299,8 @@
       "id": "rt-rtb-02798c61e7000b356",
       "type": "resourceNode",
       "position": {
-        "x": 1667.5,
-        "y": 14566.142857142857
+        "x": 1200.625,
+        "y": 14586.142857142857
       },
       "data": {
         "label": "rtb-02798c61e7000b356",
@@ -10342,8 +10342,8 @@
       "id": "rt-rtb-00726dba9cb1c960e",
       "type": "resourceNode",
       "position": {
-        "x": 1667.5,
-        "y": 14781.714285714286
+        "x": 1200.625,
+        "y": 14811.714285714286
       },
       "data": {
         "label": "rtb-00726dba9cb1c960e",
@@ -10385,8 +10385,8 @@
       "id": "rt-rtb-0a1d9e30ef223ad40",
       "type": "resourceNode",
       "position": {
-        "x": 1667.5,
-        "y": 14997.285714285714
+        "x": 1200.625,
+        "y": 15037.285714285714
       },
       "data": {
         "label": "rtb-0a1d9e30ef223ad40",
@@ -10428,8 +10428,8 @@
       "id": "rt-rtb-0ea13752abfd1cfd6",
       "type": "resourceNode",
       "position": {
-        "x": 1667.5,
-        "y": 15212.857142857143
+        "x": 1200.625,
+        "y": 15262.857142857143
       },
       "data": {
         "label": "rtb-0ea13752abfd1cfd6",
@@ -10471,8 +10471,8 @@
       "id": "rt-rtb-02e69ec2c839f9991",
       "type": "resourceNode",
       "position": {
-        "x": 1667.5,
-        "y": 15428.428571428572
+        "x": 1200.625,
+        "y": 15488.428571428572
       },
       "data": {
         "label": "rtb-02e69ec2c839f9991",
@@ -10514,8 +10514,8 @@
       "id": "rt-rtb-0c225af6af303e01d",
       "type": "resourceNode",
       "position": {
-        "x": 317.5,
-        "y": 14589.0
+        "x": 250.625,
+        "y": 14604.0
       },
       "data": {
         "label": "rtb-0c225af6af303e01d",
@@ -10557,8 +10557,8 @@
       "id": "rt-rtb-0080c5a262f07d35d",
       "type": "resourceNode",
       "position": {
-        "x": 317.5,
-        "y": 14816.0
+        "x": 250.625,
+        "y": 14841.0
       },
       "data": {
         "label": "rtb-0080c5a262f07d35d",
@@ -10600,8 +10600,8 @@
       "id": "rt-rtb-07b23e4c2b86dc82a",
       "type": "resourceNode",
       "position": {
-        "x": 317.5,
-        "y": 15043.0
+        "x": 250.625,
+        "y": 15078.0
       },
       "data": {
         "label": "rtb-07b23e4c2b86dc82a",
@@ -10643,8 +10643,8 @@
       "id": "rt-rtb-0ec2182ba2265c24b",
       "type": "resourceNode",
       "position": {
-        "x": 317.5,
-        "y": 15270.0
+        "x": 250.625,
+        "y": 15315.0
       },
       "data": {
         "label": "rtb-0ec2182ba2265c24b",
@@ -10686,8 +10686,8 @@
       "id": "rt-rtb-04862bd48de1d358d",
       "type": "resourceNode",
       "position": {
-        "x": 317.5,
-        "y": 15497.0
+        "x": 250.625,
+        "y": 15552.0
       },
       "data": {
         "label": "rtb-04862bd48de1d358d",
@@ -10729,7 +10729,7 @@
       "id": "rt-rtb-0ae5119b9e1a9fe08",
       "type": "resourceNode",
       "position": {
-        "x": 2362.5,
+        "x": 1689.375,
         "y": 14555.666666666666
       },
       "data": {
@@ -10772,7 +10772,7 @@
       "id": "rt-rtb-0e075ffac6dd93130",
       "type": "resourceNode",
       "position": {
-        "x": 982.5,
+        "x": 724.375,
         "y": 14700.2
       },
       "data": {
@@ -10815,7 +10815,7 @@
       "id": "rt-rtb-092e5c0bf5895014f",
       "type": "resourceNode",
       "position": {
-        "x": 982.5,
+        "x": 724.375,
         "y": 14982.8
       },
       "data": {
@@ -10858,7 +10858,7 @@
       "id": "rt-rtb-02338a985345af632",
       "type": "resourceNode",
       "position": {
-        "x": 982.5,
+        "x": 724.375,
         "y": 15265.4
       },
       "data": {
@@ -10901,8 +10901,8 @@
       "id": "rt-rtb-06168f1d1a677f366",
       "type": "resourceNode",
       "position": {
-        "x": 3762.5,
-        "y": 15218.0
+        "x": 2543.125,
+        "y": 15223.0
       },
       "data": {
         "label": "rtb-06168f1d1a677f366",
@@ -10944,7 +10944,7 @@
       "id": "rt-rtb-077887a686e6fa26d",
       "type": "resourceNode",
       "position": {
-        "x": 4442.5,
+        "x": 3054.375,
         "y": 14659.8
       },
       "data": {
@@ -10987,7 +10987,7 @@
       "id": "rt-rtb-0d368079ca2804c0f",
       "type": "resourceNode",
       "position": {
-        "x": 4442.5,
+        "x": 3054.375,
         "y": 14922.2
       },
       "data": {
@@ -11030,7 +11030,7 @@
       "id": "rt-rtb-022d0631b7874c7a1",
       "type": "resourceNode",
       "position": {
-        "x": 4442.5,
+        "x": 3054.375,
         "y": 15184.6
       },
       "data": {
@@ -11073,7 +11073,7 @@
       "id": "rt-rtb-0f76e2c46ddfa5dfb",
       "type": "resourceNode",
       "position": {
-        "x": 3067.5,
+        "x": 2112.5,
         "y": 14469.0
       },
       "data": {
@@ -11116,8 +11116,8 @@
       "id": "sg-sg-08307d0eaa805ee69",
       "type": "resourceNode",
       "position": {
-        "x": 3870.0,
-        "y": 15408
+        "x": 2626.25,
+        "y": 15413
       },
       "data": {
         "label": "launch-wizard-7",
@@ -11164,8 +11164,8 @@
       "id": "sg-sg-0c45395f438037271",
       "type": "resourceNode",
       "position": {
-        "x": 3870.0,
-        "y": 14568
+        "x": 2621.25,
+        "y": 14573
       },
       "data": {
         "label": "launch-wizard-14",
@@ -11212,8 +11212,8 @@
       "id": "sg-sg-080d1a687f5653642",
       "type": "resourceNode",
       "position": {
-        "x": 3565,
-        "y": 15058
+        "x": 2465.0,
+        "y": 15063
       },
       "data": {
         "label": "launch-wizard-21",
@@ -11260,8 +11260,8 @@
       "id": "sg-sg-0719086ee15c2bd59",
       "type": "resourceNode",
       "position": {
-        "x": 3565,
-        "y": 15198
+        "x": 2465.0,
+        "y": 15203
       },
       "data": {
         "label": "ElasticMapReduce-master",
@@ -11308,8 +11308,8 @@
       "id": "sg-sg-092908c964a5764b5",
       "type": "resourceNode",
       "position": {
-        "x": 3565,
-        "y": 14918
+        "x": 2465.0,
+        "y": 14923
       },
       "data": {
         "label": "launch-wizard-18",
@@ -11356,8 +11356,8 @@
       "id": "sg-sg-0519f8817ee57c23d",
       "type": "resourceNode",
       "position": {
-        "x": 3565,
-        "y": 14358
+        "x": 2465.0,
+        "y": 14363
       },
       "data": {
         "label": "launch-wizard-6",
@@ -11404,8 +11404,8 @@
       "id": "sg-sg-0c60d1e914d4e929e",
       "type": "resourceNode",
       "position": {
-        "x": 3870.0,
-        "y": 14708
+        "x": 2621.25,
+        "y": 14713
       },
       "data": {
         "label": "launch-wizard-22",
@@ -11452,8 +11452,8 @@
       "id": "sg-sg-089f864aa998a2179",
       "type": "resourceNode",
       "position": {
-        "x": 460.0,
-        "y": 14551
+        "x": 326.25,
+        "y": 14616
       },
       "data": {
         "label": "eks-cluster-sg-html-pdf-conversion-1-1578806249",
@@ -11500,7 +11500,7 @@
       "id": "sg-sg-0270487ca32686559",
       "type": "resourceNode",
       "position": {
-        "x": 785,
+        "x": 631.25,
         "y": 14864
       },
       "data": {
@@ -11548,7 +11548,7 @@
       "id": "sg-sg-0456ec341e6da6704",
       "type": "resourceNode",
       "position": {
-        "x": 785,
+        "x": 631.25,
         "y": 14623
       },
       "data": {
@@ -11596,7 +11596,7 @@
       "id": "sg-sg-0440a3771877c8210",
       "type": "resourceNode",
       "position": {
-        "x": 4245,
+        "x": 2961.25,
         "y": 14623
       },
       "data": {
@@ -11644,7 +11644,7 @@
       "id": "sg-sg-04b42dab094c09c0d",
       "type": "resourceNode",
       "position": {
-        "x": 4245,
+        "x": 2961.25,
         "y": 14864
       },
       "data": {
@@ -11692,7 +11692,7 @@
       "id": "sg-sg-035911b728fecc17f",
       "type": "resourceNode",
       "position": {
-        "x": 2860,
+        "x": 2085.0,
         "y": 14363
       },
       "data": {
@@ -11740,7 +11740,7 @@
       "id": "sg-sg-0be8aab5d2d75a82c",
       "type": "resourceNode",
       "position": {
-        "x": 2155,
+        "x": 1583.75,
         "y": 14363
       },
       "data": {
@@ -11788,8 +11788,8 @@
       "id": "nat-nat-02c8addb90dab5b16",
       "type": "resourceNode",
       "position": {
-        "x": 260.0,
-        "y": 14368.0
+        "x": 150.0,
+        "y": 14398.0
       },
       "data": {
         "label": "nat-02c8addb90dab5b16",
@@ -11833,7 +11833,7 @@
       "id": "nat-nat-08e1e44f8384cfda4",
       "type": "resourceNode",
       "position": {
-        "x": 817.5,
+        "x": 645.625,
         "y": 14805.0
       },
       "data": {
@@ -11878,8 +11878,8 @@
       "id": "nat-nat-0129b85dd4735decf",
       "type": "resourceNode",
       "position": {
-        "x": 1465,
-        "y": 14628.0
+        "x": 1103.75,
+        "y": 14663.0
       },
       "data": {
         "label": "nat-0129b85dd4735decf",
