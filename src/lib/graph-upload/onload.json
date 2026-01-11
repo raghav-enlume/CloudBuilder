@@ -4,8 +4,8 @@
       "id": "region-us-east-2",
       "type": "resourceNode",
       "position": {
-        "x": 0,
-        "y": 0
+        "x": -40,
+        "y": -40
       },
       "data": {
         "label": "Region: us-east-2",
@@ -31,27 +31,28 @@
         },
         "region": "us-east-2",
         "isContainer": true,
-        "width": 1790.0,
-        "height": 858,
+        "width": 100,
+        "height": 100,
         "size": {
-          "width": 1790.0,
-          "height": 858
+          "width": 2000,
+          "height": 730
         },
         "config": {
           "originalType": "AWS::EC2::Region",
           "region": "us-east-2"
         },
-        "nestingDepth": 0
+        "nestingDepth": 0,
+        "parentId": null
       },
-      "width": 1790.0,
-      "height": 858
+      "width": 2000,
+      "height": 730
     },
     {
       "id": "vpc-vpc-06cc31a57a405feb8",
       "type": "resourceNode",
       "position": {
-        "x": 100,
-        "y": 140
+        "x": -20,
+        "y": -20
       },
       "data": {
         "label": "vpc-06cc31a57a405feb8",
@@ -60,7 +61,7 @@
           "name": "VPC",
           "category": "networking",
           "icon": "vpc",
-          "description": "Virtual private cloud",
+          "description": "Virtual Private Cloud",
           "color": "#8C4FFF",
           "editableAttributes": [
             {
@@ -74,11 +75,6 @@
               "label": "CIDR Block",
               "type": "text",
               "placeholder": "10.0.0.0/16"
-            },
-            {
-              "key": "dnsHostnamesEnabled",
-              "label": "DNS Hostnames",
-              "type": "boolean"
             }
           ]
         },
@@ -88,8 +84,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 678
+          "width": 610,
+          "height": 656
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -101,15 +97,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 300.0,
-      "height": 678
+      "width": 610,
+      "height": 656
     },
     {
       "id": "vpc-vpc-0010db00d5f9b6d24",
       "type": "resourceNode",
       "position": {
-        "x": 550,
-        "y": 140
+        "x": 30,
+        "y": 170
       },
       "data": {
         "label": "vpc-0010db00d5f9b6d24",
@@ -118,7 +114,7 @@
           "name": "VPC",
           "category": "networking",
           "icon": "vpc",
-          "description": "Virtual private cloud",
+          "description": "Virtual Private Cloud",
           "color": "#8C4FFF",
           "editableAttributes": [
             {
@@ -132,11 +128,6 @@
               "label": "CIDR Block",
               "type": "text",
               "placeholder": "10.0.0.0/16"
-            },
-            {
-              "key": "dnsHostnamesEnabled",
-              "label": "DNS Hostnames",
-              "type": "boolean"
             }
           ]
         },
@@ -146,8 +137,8 @@
         "isDefault": true,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 628
+          "width": 1010,
+          "height": 500
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -159,15 +150,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 300.0,
-      "height": 628
+      "width": 1010,
+      "height": 500
     },
     {
       "id": "vpc-vpc-0b71e8dcdd9a40ef8",
       "type": "resourceNode",
       "position": {
-        "x": 1000,
-        "y": 140
+        "x": 30,
+        "y": 170
       },
       "data": {
         "label": "vpc-0b71e8dcdd9a40ef8",
@@ -176,7 +167,7 @@
           "name": "VPC",
           "category": "networking",
           "icon": "vpc",
-          "description": "Virtual private cloud",
+          "description": "Virtual Private Cloud",
           "color": "#8C4FFF",
           "editableAttributes": [
             {
@@ -190,11 +181,6 @@
               "label": "CIDR Block",
               "type": "text",
               "placeholder": "10.0.0.0/16"
-            },
-            {
-              "key": "dnsHostnamesEnabled",
-              "label": "DNS Hostnames",
-              "type": "boolean"
             }
           ]
         },
@@ -204,8 +190,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 598
+          "width": 1460,
+          "height": 466
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -217,15 +203,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 300.0,
-      "height": 598
+      "width": 1460,
+      "height": 466
     },
     {
       "id": "vpc-vpc-0eb8eab8fc060589d",
       "type": "resourceNode",
       "position": {
-        "x": 1450,
-        "y": 140
+        "x": 30,
+        "y": 170
       },
       "data": {
         "label": "vpc-0eb8eab8fc060589d",
@@ -234,7 +220,7 @@
           "name": "VPC",
           "category": "networking",
           "icon": "vpc",
-          "description": "Virtual private cloud",
+          "description": "Virtual Private Cloud",
           "color": "#8C4FFF",
           "editableAttributes": [
             {
@@ -248,11 +234,6 @@
               "label": "CIDR Block",
               "type": "text",
               "placeholder": "10.0.0.0/16"
-            },
-            {
-              "key": "dnsHostnamesEnabled",
-              "label": "DNS Hostnames",
-              "type": "boolean"
             }
           ]
         },
@@ -262,8 +243,8 @@
         "isDefault": false,
         "isContainer": true,
         "size": {
-          "width": 300.0,
-          "height": 598
+          "width": 1910,
+          "height": 466
         },
         "config": {
           "originalType": "AWS::EC2::VPC",
@@ -275,15 +256,15 @@
         "nestingDepth": 1,
         "parentId": "region-us-east-2"
       },
-      "width": 300.0,
-      "height": 598
+      "width": 1910,
+      "height": 466
     },
     {
       "id": "subnet-subnet-0d7e95372896d77e8",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 260
+        "x": 580,
+        "y": 190
       },
       "data": {
         "label": "subnet-0d7e95372896d77e8",
@@ -334,8 +315,8 @@
       "id": "subnet-subnet-0f74cb72353a2b237",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 390
+        "x": 580,
+        "y": 380
       },
       "data": {
         "label": "subnet-0f74cb72353a2b237",
@@ -386,8 +367,8 @@
       "id": "subnet-subnet-0caaa7cee2f392f8d",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 520
+        "x": 580,
+        "y": 570
       },
       "data": {
         "label": "subnet-0caaa7cee2f392f8d",
@@ -438,8 +419,8 @@
       "id": "subnet-subnet-0cc22aef01a024a4a",
       "type": "resourceNode",
       "position": {
-        "x": 1490,
-        "y": 260
+        "x": 1480,
+        "y": 190
       },
       "data": {
         "label": "subnet-0cc22aef01a024a4a",
@@ -490,8 +471,8 @@
       "id": "subnet-subnet-01c723a4e0cd68d4f",
       "type": "resourceNode",
       "position": {
-        "x": 1490,
-        "y": 390
+        "x": 1480,
+        "y": 380
       },
       "data": {
         "label": "subnet-01c723a4e0cd68d4f",
@@ -542,8 +523,8 @@
       "id": "subnet-subnet-0da1a05dfc8b55dc3",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 260
+        "x": 130,
+        "y": 190
       },
       "data": {
         "label": "subnet-0da1a05dfc8b55dc3",
@@ -574,8 +555,8 @@
         "state": "available",
         "isContainer": true,
         "size": {
-          "width": 210,
-          "height": 180
+          "width": 165,
+          "height": 193
         },
         "config": {
           "originalType": "AWS::EC2::Subnet",
@@ -587,15 +568,15 @@
         "nestingDepth": 2,
         "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
-      "width": 210,
-      "height": 180
+      "width": 165,
+      "height": 193
     },
     {
       "id": "subnet-subnet-09a9db2e951c22a88",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 470
+        "x": 130,
+        "y": 423
       },
       "data": {
         "label": "subnet-09a9db2e951c22a88",
@@ -646,8 +627,8 @@
       "id": "subnet-subnet-0381aa2076a4bb590",
       "type": "resourceNode",
       "position": {
-        "x": 1040,
-        "y": 260
+        "x": 1030,
+        "y": 190
       },
       "data": {
         "label": "subnet-0381aa2076a4bb590",
@@ -698,8 +679,8 @@
       "id": "subnet-subnet-03f6049180d037062",
       "type": "resourceNode",
       "position": {
-        "x": 1040,
-        "y": 390
+        "x": 1030,
+        "y": 380
       },
       "data": {
         "label": "subnet-03f6049180d037062",
@@ -750,8 +731,8 @@
       "id": "instance-i-0525e04aaef702279",
       "type": "resourceNode",
       "position": {
-        "x": 175,
-        "y": 295
+        "x": 155,
+        "y": 275
       },
       "data": {
         "label": "blazeops-agent-staging-backend-api",
@@ -760,7 +741,7 @@
           "name": "EC2 Instance",
           "category": "compute",
           "icon": "ec2",
-          "description": "Virtual server in the cloud",
+          "description": "Elastic Compute Cloud",
           "color": "#FF9900",
           "editableAttributes": [
             {
@@ -804,172 +785,8 @@
           "rootDeviceType": "ebs",
           "keyName": "blazeops-agent-staging-ec2-key"
         },
-        "nestingDepth": 4,
-        "parentId": "sg-sg-0c7910417aebd89b9"
-      },
-      "width": 120,
-      "height": 88
-    },
-    {
-      "id": "igw-igw-01d5c14d9e2b4b9c8",
-      "type": "resourceNode",
-      "position": {
-        "x": 240.0,
-        "y": 160
-      },
-      "data": {
-        "label": "igw-01d5c14d9e2b4b9c8",
-        "resourceType": {
-          "id": "internetgateway",
-          "name": "Internet Gateway",
-          "category": "networking",
-          "icon": "elb",
-          "description": "Internet Gateway",
-          "color": "#FF9900",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Gateway ID",
-              "type": "text"
-            }
-          ]
-        },
-        "gatewayId": "igw-01d5c14d9e2b4b9c8",
-        "isContainer": false,
-        "size": {
-          "width": 120,
-          "height": 88
-        },
-        "config": {
-          "originalType": "AWS::EC2::InternetGateway",
-          "region": "06cc31a57a405feb8",
-          "ownerId": "720150001470"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-06cc31a57a405feb8"
-      },
-      "width": 120,
-      "height": 88
-    },
-    {
-      "id": "igw-igw-0a13a84d2fd72a28d",
-      "type": "resourceNode",
-      "position": {
-        "x": 1140.0,
-        "y": 160
-      },
-      "data": {
-        "label": "igw-0a13a84d2fd72a28d",
-        "resourceType": {
-          "id": "internetgateway",
-          "name": "Internet Gateway",
-          "category": "networking",
-          "icon": "elb",
-          "description": "Internet Gateway",
-          "color": "#FF9900",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Gateway ID",
-              "type": "text"
-            }
-          ]
-        },
-        "gatewayId": "igw-0a13a84d2fd72a28d",
-        "isContainer": false,
-        "size": {
-          "width": 120,
-          "height": 88
-        },
-        "config": {
-          "originalType": "AWS::EC2::InternetGateway",
-          "region": "0b71e8dcdd9a40ef8",
-          "ownerId": "720150001470"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0b71e8dcdd9a40ef8"
-      },
-      "width": 120,
-      "height": 88
-    },
-    {
-      "id": "igw-igw-0b3cd3490eb35a07c",
-      "type": "resourceNode",
-      "position": {
-        "x": 690.0,
-        "y": 160
-      },
-      "data": {
-        "label": "igw-0b3cd3490eb35a07c",
-        "resourceType": {
-          "id": "internetgateway",
-          "name": "Internet Gateway",
-          "category": "networking",
-          "icon": "elb",
-          "description": "Internet Gateway",
-          "color": "#FF9900",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Gateway ID",
-              "type": "text"
-            }
-          ]
-        },
-        "gatewayId": "igw-0b3cd3490eb35a07c",
-        "isContainer": false,
-        "size": {
-          "width": 120,
-          "height": 88
-        },
-        "config": {
-          "originalType": "AWS::EC2::InternetGateway",
-          "region": "0010db00d5f9b6d24",
-          "ownerId": "720150001470"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0010db00d5f9b6d24"
-      },
-      "width": 120,
-      "height": 88
-    },
-    {
-      "id": "igw-igw-0eefc716b166cc3f6",
-      "type": "resourceNode",
-      "position": {
-        "x": 1590.0,
-        "y": 160
-      },
-      "data": {
-        "label": "igw-0eefc716b166cc3f6",
-        "resourceType": {
-          "id": "internetgateway",
-          "name": "Internet Gateway",
-          "category": "networking",
-          "icon": "elb",
-          "description": "Internet Gateway",
-          "color": "#FF9900",
-          "editableAttributes": [
-            {
-              "key": "label",
-              "label": "Gateway ID",
-              "type": "text"
-            }
-          ]
-        },
-        "gatewayId": "igw-0eefc716b166cc3f6",
-        "isContainer": false,
-        "size": {
-          "width": 120,
-          "height": 88
-        },
-        "config": {
-          "originalType": "AWS::EC2::InternetGateway",
-          "region": "0eb8eab8fc060589d",
-          "ownerId": "720150001470"
-        },
-        "nestingDepth": 2,
-        "parentId": "vpc-vpc-0eb8eab8fc060589d"
+        "nestingDepth": 3,
+        "parentId": "subnet-subnet-0da1a05dfc8b55dc3"
       },
       "width": 120,
       "height": 88
@@ -978,8 +795,8 @@
       "id": "rt-rtb-01acacde45952b958",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 590
+        "x": 450,
+        "y": 390
       },
       "data": {
         "label": "rtb-01acacde45952b958",
@@ -1021,8 +838,8 @@
       "id": "rt-rtb-0f5539d37304dfe0a",
       "type": "resourceNode",
       "position": {
-        "x": 140,
-        "y": 690
+        "x": 450,
+        "y": 528
       },
       "data": {
         "label": "rtb-0f5539d37304dfe0a",
@@ -1064,8 +881,8 @@
       "id": "rt-rtb-09467ba9741ae03be",
       "type": "resourceNode",
       "position": {
-        "x": 590,
-        "y": 640
+        "x": 900,
+        "y": 390
       },
       "data": {
         "label": "rtb-09467ba9741ae03be",
@@ -1107,8 +924,8 @@
       "id": "rt-rtb-051150827cea9acd3",
       "type": "resourceNode",
       "position": {
-        "x": 1040,
-        "y": 510
+        "x": 1350,
+        "y": 390
       },
       "data": {
         "label": "rtb-051150827cea9acd3",
@@ -1150,8 +967,8 @@
       "id": "rt-rtb-04c6172af2a46c76f",
       "type": "resourceNode",
       "position": {
-        "x": 1040,
-        "y": 610
+        "x": 1350,
+        "y": 528
       },
       "data": {
         "label": "rtb-04c6172af2a46c76f",
@@ -1193,8 +1010,8 @@
       "id": "rt-rtb-02e5b59e28181011c",
       "type": "resourceNode",
       "position": {
-        "x": 1490,
-        "y": 510
+        "x": 1800,
+        "y": 390
       },
       "data": {
         "label": "rtb-02e5b59e28181011c",
@@ -1236,8 +1053,8 @@
       "id": "rt-rtb-066fcdc4ec8cdb638",
       "type": "resourceNode",
       "position": {
-        "x": 1490,
-        "y": 610
+        "x": 1800,
+        "y": 528
       },
       "data": {
         "label": "rtb-066fcdc4ec8cdb638",
@@ -1279,8 +1096,8 @@
       "id": "sg-sg-0c7910417aebd89b9",
       "type": "resourceNode",
       "position": {
-        "x": 160,
-        "y": 280
+        "x": 0,
+        "y": 0
       },
       "data": {
         "label": "blazeops-agent-staging-agent",
@@ -1294,7 +1111,7 @@
           "editableAttributes": [
             {
               "key": "label",
-              "label": "Security Group Name",
+              "label": "SG Name",
               "type": "text"
             }
           ]
@@ -1308,7 +1125,7 @@
         "isContainer": true,
         "size": {
           "width": 150,
-          "height": 120
+          "height": 80
         },
         "config": {
           "originalType": "AWS::EC2::SecurityGroup",
@@ -1317,11 +1134,11 @@
           "vpc": "vpc-06cc31a57a405feb8",
           "groupName": "blazeops-agent-staging-agent"
         },
-        "nestingDepth": 3,
-        "parentId": "subnet-subnet-0da1a05dfc8b55dc3"
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-06cc31a57a405feb8"
       },
       "width": 150,
-      "height": 120
+      "height": 80
     }
   ],
   "edges": [
@@ -1345,6 +1162,18 @@
       "style": {
         "stroke": "#8C4FFF",
         "strokeWidth": 2
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 770.0,
+            "y": 290.0
+          },
+          {
+            "x": 770.0,
+            "y": 400.0
+          }
+        ]
       }
     },
     {
@@ -1356,6 +1185,18 @@
       "style": {
         "stroke": "#8C4FFF",
         "strokeWidth": 2
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 770.0,
+            "y": 290.0
+          },
+          {
+            "x": 770.0,
+            "y": 500.0
+          }
+        ]
       }
     },
     {
@@ -1378,6 +1219,18 @@
       "style": {
         "stroke": "#8C4FFF",
         "strokeWidth": 2
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 1670.0,
+            "y": 290.0
+          },
+          {
+            "x": 1670.0,
+            "y": 400.0
+          }
+        ]
       }
     },
     {
@@ -1400,6 +1253,18 @@
       "style": {
         "stroke": "#8C4FFF",
         "strokeWidth": 2
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 320.0,
+            "y": 290.0
+          },
+          {
+            "x": 320.0,
+            "y": 400.0
+          }
+        ]
       }
     },
     {
@@ -1422,6 +1287,18 @@
       "style": {
         "stroke": "#8C4FFF",
         "strokeWidth": 2
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 1220.0,
+            "y": 290.0
+          },
+          {
+            "x": 1220.0,
+            "y": 400.0
+          }
+        ]
       }
     },
     {
@@ -1433,6 +1310,18 @@
       "style": {
         "stroke": "#FF9900",
         "strokeWidth": 2
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 300.0
+          },
+          {
+            "x": 220.0,
+            "y": 334.0
+          }
+        ]
       }
     },
     {
@@ -1445,6 +1334,18 @@
         "stroke": "#FFA000",
         "strokeWidth": 2,
         "strokeDasharray": "4,4"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 1100.0,
+            "y": 370.0
+          },
+          {
+            "x": 1140.0,
+            "y": 370.0
+          }
+        ]
       }
     },
     {
@@ -1457,6 +1358,18 @@
         "stroke": "#FFA000",
         "strokeWidth": 2,
         "strokeDasharray": "4,4"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 1100.0,
+            "y": 370.0
+          },
+          {
+            "x": 1140.0,
+            "y": 370.0
+          }
+        ]
       }
     },
     {
@@ -1469,6 +1382,18 @@
         "stroke": "#FFA000",
         "strokeWidth": 2,
         "strokeDasharray": "4,4"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 200.0,
+            "y": 370.0
+          },
+          {
+            "x": 240.0,
+            "y": 370.0
+          }
+        ]
       }
     },
     {
@@ -1481,6 +1406,18 @@
         "stroke": "#FFA000",
         "strokeWidth": 2,
         "strokeDasharray": "4,4"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 200.0,
+            "y": 370.0
+          },
+          {
+            "x": 240.0,
+            "y": 370.0
+          }
+        ]
       }
     },
     {
@@ -1493,6 +1430,18 @@
         "stroke": "#FFA000",
         "strokeWidth": 2,
         "strokeDasharray": "4,4"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 1550.0,
+            "y": 370.0
+          },
+          {
+            "x": 1590.0,
+            "y": 370.0
+          }
+        ]
       }
     },
     {
@@ -1505,6 +1454,18 @@
         "stroke": "#FFA000",
         "strokeWidth": 2,
         "strokeDasharray": "4,4"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 1550.0,
+            "y": 370.0
+          },
+          {
+            "x": 1590.0,
+            "y": 370.0
+          }
+        ]
       }
     },
     {
@@ -1517,6 +1478,41 @@
         "stroke": "#DD344C",
         "strokeWidth": 1,
         "strokeDasharray": "5,5"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 130.0,
+            "y": 40.0
+          },
+          {
+            "x": 130.0,
+            "y": 334.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "instance-in-subnet-instance-i-0525e04aaef702279-subnet-subnet-0da1a05dfc8b55dc3",
+      "source": "instance-i-0525e04aaef702279",
+      "target": "subnet-subnet-0da1a05dfc8b55dc3",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 334.0
+          },
+          {
+            "x": 220.0,
+            "y": 300.0
+          }
+        ]
       }
     }
   ]

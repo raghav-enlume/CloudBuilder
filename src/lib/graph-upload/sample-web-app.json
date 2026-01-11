@@ -1,0 +1,1161 @@
+{
+  "nodes": [
+    {
+      "id": "region-us-east-1",
+      "type": "resourceNode",
+      "position": {
+        "x": -40,
+        "y": -40
+      },
+      "data": {
+        "label": "Region: us-east-1",
+        "resourceType": {
+          "id": "region",
+          "name": "Region",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "AWS Region",
+          "color": "#3949AB",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Region Name",
+              "type": "text"
+            },
+            {
+              "key": "region",
+              "label": "Region Code",
+              "type": "text"
+            }
+          ]
+        },
+        "region": "us-east-1",
+        "isContainer": true,
+        "width": 100,
+        "height": 100,
+        "size": {
+          "width": 820,
+          "height": 780
+        },
+        "config": {
+          "originalType": "AWS::EC2::Region",
+          "region": "us-east-1"
+        },
+        "nestingDepth": 0,
+        "parentId": null
+      },
+      "width": 820,
+      "height": 780
+    },
+    {
+      "id": "vpc-vpc-webapp-001",
+      "type": "resourceNode",
+      "position": {
+        "x": -20,
+        "y": -20
+      },
+      "data": {
+        "label": "vpc-webapp-001",
+        "resourceType": {
+          "id": "vpc",
+          "name": "VPC",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Private Cloud",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "vpcName",
+              "label": "VPC Name",
+              "type": "text",
+              "placeholder": "my-vpc"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text",
+              "placeholder": "10.0.0.0/16"
+            }
+          ]
+        },
+        "vpcId": "vpc-webapp-001",
+        "cidrBlock": "10.0.0.0/16",
+        "state": "available",
+        "isDefault": false,
+        "isContainer": true,
+        "size": {
+          "width": 780,
+          "height": 740
+        },
+        "config": {
+          "originalType": "AWS::EC2::VPC",
+          "region": "us-east-1",
+          "ownerId": null,
+          "instanceTenancy": null,
+          "dhcpOptionsId": null
+        },
+        "nestingDepth": 1,
+        "parentId": "region-us-east-1"
+      },
+      "width": 780,
+      "height": 740
+    },
+    {
+      "id": "subnet-subnet-public-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 130,
+        "y": 190
+      },
+      "data": {
+        "label": "subnet-public-001",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
+        },
+        "subnetId": "subnet-public-001",
+        "vpcId": "vpc-webapp-001",
+        "cidrBlock": "10.0.1.0/24",
+        "availabilityZone": "us-east-1a",
+        "state": null,
+        "isContainer": true,
+        "size": {
+          "width": 165,
+          "height": 193
+        },
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": null,
+          "availabilityZoneId": null,
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 165,
+      "height": 193
+    },
+    {
+      "id": "subnet-subnet-private-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 130,
+        "y": 423
+      },
+      "data": {
+        "label": "subnet-private-001",
+        "resourceType": {
+          "id": "subnet",
+          "name": "Subnet",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Virtual Subnet",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Subnet ID",
+              "type": "text"
+            },
+            {
+              "key": "cidrBlock",
+              "label": "CIDR Block",
+              "type": "text"
+            }
+          ]
+        },
+        "subnetId": "subnet-private-001",
+        "vpcId": "vpc-webapp-001",
+        "cidrBlock": "10.0.2.0/24",
+        "availabilityZone": "us-east-1b",
+        "state": null,
+        "isContainer": true,
+        "size": {
+          "width": 200,
+          "height": 80
+        },
+        "config": {
+          "originalType": "AWS::EC2::Subnet",
+          "region": "us-east",
+          "ownerId": null,
+          "availabilityZoneId": null,
+          "defaultForAz": false
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 200,
+      "height": 80
+    },
+    {
+      "id": "instance-i-webapp-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 155,
+        "y": 275
+      },
+      "data": {
+        "label": "web-server-01",
+        "resourceType": {
+          "id": "ec2",
+          "name": "EC2 Instance",
+          "category": "compute",
+          "icon": "ec2",
+          "description": "Elastic Compute Cloud",
+          "color": "#FF9900",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Instance ID",
+              "type": "text"
+            },
+            {
+              "key": "instanceType",
+              "label": "Instance Type",
+              "type": "text"
+            }
+          ]
+        },
+        "instanceId": "i-webapp-001",
+        "instanceType": "t3.medium",
+        "state": "running",
+        "privateIpAddress": "10.0.1.100",
+        "publicIpAddress": "54.123.45.67",
+        "imageId": "ami-0c55b159cbfafe1f0",
+        "launchTime": null,
+        "subnetId": "subnet-public-001",
+        "vpcId": null,
+        "securityGroup": "sg-web-001",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::EC2::Instance",
+          "region": "public",
+          "vpc": null,
+          "subnet": "subnet-public-001",
+          "securityGroup": "sg-web-001",
+          "instanceType": "t3.medium",
+          "architecture": null,
+          "hypervisor": null,
+          "virtualizationType": null,
+          "rootDeviceName": null,
+          "rootDeviceType": null,
+          "keyName": null
+        },
+        "nestingDepth": 3,
+        "parentId": "subnet-subnet-public-001"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "igw-igw-webapp-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 450,
+        "y": 170
+      },
+      "data": {
+        "label": "igw-webapp-001",
+        "resourceType": {
+          "id": "internetgateway",
+          "name": "Internet Gateway",
+          "category": "networking",
+          "icon": "elb",
+          "description": "Internet Gateway",
+          "color": "#FF9900",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Gateway ID",
+              "type": "text"
+            }
+          ]
+        },
+        "gatewayId": "igw-webapp-001",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::EC2::InternetGateway",
+          "region": "webapp",
+          "ownerId": null
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-public-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 450,
+        "y": 390
+      },
+      "data": {
+        "label": "rtb-public-001",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
+        },
+        "routeTableId": "rtb-public-001",
+        "vpcId": "vpc-webapp-001",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "webapp",
+          "vpcId": "vpc-webapp-001",
+          "ownerId": null
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "rt-rtb-private-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 450,
+        "y": 528
+      },
+      "data": {
+        "label": "rtb-private-001",
+        "resourceType": {
+          "id": "routetable",
+          "name": "Route Table",
+          "category": "networking",
+          "icon": "vpc",
+          "description": "Route Table",
+          "color": "#8C4FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Route Table ID",
+              "type": "text"
+            }
+          ]
+        },
+        "routeTableId": "rtb-private-001",
+        "vpcId": "vpc-webapp-001",
+        "isContainer": false,
+        "size": {
+          "width": 120,
+          "height": 88
+        },
+        "config": {
+          "originalType": "AWS::EC2::RouteTable",
+          "region": "webapp",
+          "vpcId": "vpc-webapp-001",
+          "ownerId": null
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 120,
+      "height": 88
+    },
+    {
+      "id": "sg-sg-web-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "data": {
+        "label": "web-app-sg",
+        "resourceType": {
+          "id": "securityGroup",
+          "name": "Security Group",
+          "category": "security",
+          "icon": "waf",
+          "description": "Security Group",
+          "color": "#DD344C",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "SG Name",
+              "type": "text"
+            }
+          ]
+        },
+        "groupId": "sg-web-001",
+        "groupName": "web-app-sg",
+        "vpcId": "vpc-webapp-001",
+        "description": "Security group for web application",
+        "inboundRules": 2,
+        "outboundRules": 0,
+        "isContainer": true,
+        "size": {
+          "width": 150,
+          "height": 80
+        },
+        "config": {
+          "originalType": "AWS::EC2::SecurityGroup",
+          "region": "webapp",
+          "ownerId": null,
+          "vpc": "vpc-webapp-001",
+          "groupName": "web-app-sg"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 150,
+      "height": 80
+    },
+    {
+      "id": "nat-nat-webapp-001",
+      "type": "resourceNode",
+      "position": {
+        "x": 450,
+        "y": 308
+      },
+      "data": {
+        "label": "nat-webapp-001",
+        "resourceType": {
+          "id": "natgateway",
+          "name": "NAT Gateway",
+          "category": "networking",
+          "icon": "elb",
+          "description": "NAT Gateway",
+          "color": "#FF9900",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "NAT Gateway ID",
+              "type": "text"
+            }
+          ]
+        },
+        "natGatewayId": "nat-webapp-001",
+        "subnetId": "subnet-public-001",
+        "state": "available",
+        "isContainer": false,
+        "size": {
+          "width": 100,
+          "height": 60
+        },
+        "config": {
+          "originalType": "AWS::EC2::NatGateway"
+        },
+        "nestingDepth": 1,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 100,
+      "height": 60
+    },
+    {
+      "id": "rds-webapp-postgres-db",
+      "type": "resourceNode",
+      "position": {
+        "x": 130,
+        "y": 620
+      },
+      "data": {
+        "label": "webapp-postgres-db",
+        "resourceType": {
+          "id": "rds",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database",
+          "color": "#527FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceName": "webapp-postgres-db",
+        "engine": "postgresql",
+        "port": 5432,
+        "subnetType": "private",
+        "isContainer": false,
+        "size": {
+          "width": 130,
+          "height": 70
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 130,
+      "height": 70
+    },
+    {
+      "id": "rds-webapp-mysql-db",
+      "type": "resourceNode",
+      "position": {
+        "x": 310,
+        "y": 620
+      },
+      "data": {
+        "label": "webapp-mysql-db",
+        "resourceType": {
+          "id": "rds",
+          "name": "RDS Instance",
+          "category": "database",
+          "icon": "rds",
+          "description": "Relational Database",
+          "color": "#527FFF",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "DB Instance",
+              "type": "text"
+            },
+            {
+              "key": "engine",
+              "label": "Engine",
+              "type": "text"
+            }
+          ]
+        },
+        "dbInstanceName": "webapp-mysql-db",
+        "engine": "mysql",
+        "port": 3306,
+        "subnetType": "private",
+        "isContainer": false,
+        "size": {
+          "width": 130,
+          "height": 70
+        },
+        "config": {
+          "originalType": "AWS::RDS::DBInstance"
+        },
+        "nestingDepth": 2,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 130,
+      "height": 70
+    },
+    {
+      "id": "s3-webapp-assets-bucket",
+      "type": "resourceNode",
+      "position": {
+        "x": 490,
+        "y": 620
+      },
+      "data": {
+        "label": "webapp-assets-bucket",
+        "resourceType": {
+          "id": "s3",
+          "name": "S3 Bucket",
+          "category": "storage",
+          "icon": "s3",
+          "description": "Simple Storage Service",
+          "color": "#569A31",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Bucket Name",
+              "type": "text"
+            }
+          ]
+        },
+        "bucketName": "webapp-assets-bucket",
+        "isContainer": false,
+        "size": {
+          "width": 100,
+          "height": 80
+        },
+        "config": {
+          "originalType": "AWS::S3::Bucket"
+        },
+        "nestingDepth": 0,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 100,
+      "height": 80
+    },
+    {
+      "id": "s3-webapp-backups-bucket",
+      "type": "resourceNode",
+      "position": {
+        "x": 640,
+        "y": 620
+      },
+      "data": {
+        "label": "webapp-backups-bucket",
+        "resourceType": {
+          "id": "s3",
+          "name": "S3 Bucket",
+          "category": "storage",
+          "icon": "s3",
+          "description": "Simple Storage Service",
+          "color": "#569A31",
+          "editableAttributes": [
+            {
+              "key": "label",
+              "label": "Bucket Name",
+              "type": "text"
+            }
+          ]
+        },
+        "bucketName": "webapp-backups-bucket",
+        "isContainer": false,
+        "size": {
+          "width": 100,
+          "height": 80
+        },
+        "config": {
+          "originalType": "AWS::S3::Bucket"
+        },
+        "nestingDepth": 0,
+        "parentId": "vpc-vpc-webapp-001"
+      },
+      "width": 100,
+      "height": 80
+    }
+  ],
+  "edges": [
+    {
+      "id": "vpc-to-subnet-vpc-vpc-webapp-001-subnet-subnet-public-001",
+      "source": "vpc-vpc-webapp-001",
+      "target": "subnet-subnet-public-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      }
+    },
+    {
+      "id": "vpc-to-subnet-vpc-vpc-webapp-001-subnet-subnet-private-001",
+      "source": "vpc-vpc-webapp-001",
+      "target": "subnet-subnet-private-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#8C4FFF",
+        "strokeWidth": 2
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 320.0,
+            "y": 290.0
+          },
+          {
+            "x": 320.0,
+            "y": 400.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "subnet-to-instance-subnet-subnet-public-001-instance-i-webapp-001",
+      "source": "subnet-subnet-public-001",
+      "target": "instance-i-webapp-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF9900",
+        "strokeWidth": 2
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 300.0
+          },
+          {
+            "x": 220.0,
+            "y": 334.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "igw-to-vpc-igw-igw-webapp-001-vpc-vpc-webapp-001",
+      "source": "igw-igw-webapp-001",
+      "target": "vpc-vpc-webapp-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 300.0,
+            "y": 220.0
+          },
+          {
+            "x": 300.0,
+            "y": 220.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-public-001-subnet-subnet-public-001",
+      "source": "rt-rtb-public-001",
+      "target": "subnet-subnet-public-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 200.0,
+            "y": 370.0
+          },
+          {
+            "x": 240.0,
+            "y": 370.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rt-to-subnet-rt-rtb-private-001-subnet-subnet-private-001",
+      "source": "rt-rtb-private-001",
+      "target": "subnet-subnet-private-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FFA000",
+        "strokeWidth": 2,
+        "strokeDasharray": "4,4"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 200.0,
+            "y": 370.0
+          },
+          {
+            "x": 240.0,
+            "y": 370.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rt-to-igw-rt-rtb-public-001-igw-igw-webapp-001",
+      "source": "rt-rtb-public-001",
+      "target": "igw-igw-webapp-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 200.0,
+            "y": 370.0
+          },
+          {
+            "x": 300.0,
+            "y": 370.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rt-to-nat-rt-rtb-private-001-nat-nat-webapp-001",
+      "source": "rt-rtb-private-001",
+      "target": "nat-nat-webapp-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 200.0,
+            "y": 370.0
+          },
+          {
+            "x": 190.0,
+            "y": 370.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "sg-to-instance-sg-sg-web-001-instance-i-webapp-001",
+      "source": "sg-sg-web-001",
+      "target": "instance-i-webapp-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#DD344C",
+        "strokeWidth": 1,
+        "strokeDasharray": "5,5"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 130.0,
+            "y": 40.0
+          },
+          {
+            "x": 130.0,
+            "y": 334.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "subnet-to-nat-subnet-subnet-public-001-nat-nat-webapp-001",
+      "source": "subnet-subnet-public-001",
+      "target": "nat-nat-webapp-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#FF9900",
+        "strokeWidth": 2
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 300.0
+          },
+          {
+            "x": 220.0,
+            "y": 385.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "sg-to-rds-sg-sg-web-001-rds-webapp-postgres-db",
+      "source": "sg-sg-web-001",
+      "target": "rds-webapp-postgres-db",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#DD344C",
+        "strokeWidth": 1,
+        "strokeDasharray": "5,5"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 130.0,
+            "y": 40.0
+          },
+          {
+            "x": 130.0,
+            "y": 300.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "sg-to-rds-sg-sg-web-001-rds-webapp-mysql-db",
+      "source": "sg-sg-web-001",
+      "target": "rds-webapp-mysql-db",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#DD344C",
+        "strokeWidth": 1,
+        "strokeDasharray": "5,5"
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 130.0,
+            "y": 40.0
+          },
+          {
+            "x": 130.0,
+            "y": 300.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "instance-to-s3-instance-i-webapp-001-s3-webapp-assets-bucket",
+      "source": "instance-i-webapp-001",
+      "target": "s3-webapp-assets-bucket",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#569A31",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 334.0
+          },
+          {
+            "x": 220.0,
+            "y": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "instance-to-s3-instance-i-webapp-001-s3-webapp-backups-bucket",
+      "source": "instance-i-webapp-001",
+      "target": "s3-webapp-backups-bucket",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#569A31",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 334.0
+          },
+          {
+            "x": 220.0,
+            "y": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rds-to-s3-rds-webapp-postgres-db-s3-webapp-assets-bucket",
+      "source": "rds-webapp-postgres-db",
+      "target": "s3-webapp-assets-bucket",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 300.0
+          },
+          {
+            "x": 220.0,
+            "y": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rds-to-s3-rds-webapp-postgres-db-s3-webapp-backups-bucket",
+      "source": "rds-webapp-postgres-db",
+      "target": "s3-webapp-backups-bucket",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 300.0
+          },
+          {
+            "x": 220.0,
+            "y": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rds-to-s3-rds-webapp-mysql-db-s3-webapp-assets-bucket",
+      "source": "rds-webapp-mysql-db",
+      "target": "s3-webapp-assets-bucket",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 300.0
+          },
+          {
+            "x": 220.0,
+            "y": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rds-to-s3-rds-webapp-mysql-db-s3-webapp-backups-bucket",
+      "source": "rds-webapp-mysql-db",
+      "target": "s3-webapp-backups-bucket",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 300.0
+          },
+          {
+            "x": 220.0,
+            "y": 90.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "nat-to-vpc-nat-nat-webapp-001-vpc-vpc-webapp-001",
+      "source": "nat-nat-webapp-001",
+      "target": "vpc-vpc-webapp-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 190.0,
+            "y": 380.0
+          },
+          {
+            "x": 300.0,
+            "y": 380.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "instance-in-subnet-instance-i-webapp-001-subnet-subnet-public-001",
+      "source": "instance-i-webapp-001",
+      "target": "subnet-subnet-public-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 334.0
+          },
+          {
+            "x": 220.0,
+            "y": 300.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rds-in-subnet-rds-webapp-postgres-db-subnet-subnet-private-001",
+      "source": "rds-webapp-postgres-db",
+      "target": "subnet-subnet-private-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 300.0
+          },
+          {
+            "x": 220.0,
+            "y": 400.0
+          }
+        ]
+      }
+    },
+    {
+      "id": "rds-in-subnet-rds-webapp-mysql-db-subnet-subnet-public-001",
+      "source": "rds-webapp-mysql-db",
+      "target": "subnet-subnet-public-001",
+      "animated": true,
+      "type": "smoothstep",
+      "style": {
+        "stroke": "#999999",
+        "strokeWidth": 1
+      },
+      "data": {
+        "waypoints": [
+          {
+            "x": 220.0,
+            "y": 300.0
+          },
+          {
+            "x": 220.0,
+            "y": 300.0
+          }
+        ]
+      }
+    }
+  ]
+}
