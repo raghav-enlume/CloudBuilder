@@ -1,118 +1,324 @@
 #!/usr/bin/env python3
 """
 Convert AWS data format to CloudBuilder diagram format (architecture-diagram.json)
+Supports 50+ AWS resources with relationship mapping
 """
 
 import json
 import uuid
 from typing import Dict, List, Any, Tuple
 
-# Resource type definitions matching CloudBuilder format
+# Resource type definitions matching CloudBuilder format - 50+ AWS resources
 RESOURCE_TYPES = {
+    # Networking
     "region": {
-        "id": "region",
-        "name": "Region",
-        "category": "networking",
-        "icon": "vpc",
-        "description": "AWS Region",
-        "color": "#3949AB",
-        "editableAttributes": [
-            {"key": "label", "label": "Region Name", "type": "text"},
-            {"key": "region", "label": "Region Code", "type": "text"}
-        ]
+        "id": "region", "name": "Region", "category": "networking", "icon": "vpc",
+        "description": "AWS Region", "color": "#3949AB",
+        "editableAttributes": [{"key": "label", "label": "Region Name", "type": "text"},
+                               {"key": "region", "label": "Region Code", "type": "text"}]
     },
     "vpc": {
-        "id": "vpc",
-        "name": "VPC",
-        "category": "networking",
-        "icon": "vpc",
-        "description": "Virtual private cloud",
-        "color": "#8C4FFF",
-        "editableAttributes": [
-            {"key": "vpcName", "label": "VPC Name", "type": "text", "placeholder": "my-vpc"},
-            {"key": "cidrBlock", "label": "CIDR Block", "type": "text", "placeholder": "10.0.0.0/16"},
-            {"key": "dnsHostnamesEnabled", "label": "DNS Hostnames", "type": "boolean"}
-        ]
+        "id": "vpc", "name": "VPC", "category": "networking", "icon": "vpc",
+        "description": "Virtual Private Cloud", "color": "#8C4FFF",
+        "editableAttributes": [{"key": "vpcName", "label": "VPC Name", "type": "text", "placeholder": "my-vpc"},
+                               {"key": "cidrBlock", "label": "CIDR Block", "type": "text", "placeholder": "10.0.0.0/16"}]
     },
     "subnet": {
-        "id": "subnet",
-        "name": "Subnet",
-        "category": "networking",
-        "icon": "vpc",
-        "description": "Virtual Subnet",
-        "color": "#8C4FFF",
-        "editableAttributes": [
-            {"key": "label", "label": "Subnet ID", "type": "text"},
-            {"key": "cidrBlock", "label": "CIDR Block", "type": "text"}
-        ]
-    },
-    "instance": {
-        "id": "ec2",
-        "name": "EC2 Instance",
-        "category": "compute",
-        "icon": "ec2",
-        "description": "Virtual server in the cloud",
-        "color": "#FF9900",
-        "editableAttributes": [
-            {"key": "label", "label": "Instance ID", "type": "text"},
-            {"key": "instanceType", "label": "Instance Type", "type": "text"}
-        ]
+        "id": "subnet", "name": "Subnet", "category": "networking", "icon": "vpc",
+        "description": "Virtual Subnet", "color": "#8C4FFF",
+        "editableAttributes": [{"key": "label", "label": "Subnet ID", "type": "text"},
+                               {"key": "cidrBlock", "label": "CIDR Block", "type": "text"}]
     },
     "route_table": {
-        "id": "routetable",
-        "name": "Route Table",
-        "category": "networking",
-        "icon": "vpc",
-        "description": "Route Table",
-        "color": "#8C4FFF",
-        "editableAttributes": [
-            {"key": "label", "label": "Route Table ID", "type": "text"}
-        ]
+        "id": "routetable", "name": "Route Table", "category": "networking", "icon": "vpc",
+        "description": "Route Table", "color": "#8C4FFF",
+        "editableAttributes": [{"key": "label", "label": "Route Table ID", "type": "text"}]
     },
     "internet_gateway": {
-        "id": "internetgateway",
-        "name": "Internet Gateway",
-        "category": "networking",
-        "icon": "elb",
-        "description": "Internet Gateway",
-        "color": "#FF9900",
-        "editableAttributes": [
-            {"key": "label", "label": "Gateway ID", "type": "text"}
-        ]
+        "id": "internetgateway", "name": "Internet Gateway", "category": "networking", "icon": "elb",
+        "description": "Internet Gateway", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "Gateway ID", "type": "text"}]
     },
+    "nat_gateway": {
+        "id": "natgateway", "name": "NAT Gateway", "category": "networking", "icon": "elb",
+        "description": "NAT Gateway", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "NAT Gateway ID", "type": "text"}]
+    },
+    "network_interface": {
+        "id": "eni", "name": "Network Interface", "category": "networking", "icon": "elb",
+        "description": "Elastic Network Interface", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "ENI ID", "type": "text"}]
+    },
+    "transit_gateway": {
+        "id": "tgw", "name": "Transit Gateway", "category": "networking", "icon": "vpc",
+        "description": "Transit Gateway", "color": "#8C4FFF",
+        "editableAttributes": [{"key": "label", "label": "TGW ID", "type": "text"}]
+    },
+    "vpc_peering": {
+        "id": "vpcpeering", "name": "VPC Peering", "category": "networking", "icon": "vpc",
+        "description": "VPC Peering Connection", "color": "#8C4FFF",
+        "editableAttributes": [{"key": "label", "label": "Peering ID", "type": "text"}]
+    },
+    # Compute
+    "instance": {
+        "id": "ec2", "name": "EC2 Instance", "category": "compute", "icon": "ec2",
+        "description": "Elastic Compute Cloud", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "Instance ID", "type": "text"},
+                               {"key": "instanceType", "label": "Instance Type", "type": "text"}]
+    },
+    "auto_scaling_group": {
+        "id": "asg", "name": "Auto Scaling Group", "category": "compute", "icon": "ec2",
+        "description": "Auto Scaling Group", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "ASG Name", "type": "text"}]
+    },
+    "lambda": {
+        "id": "lambda", "name": "Lambda Function", "category": "compute", "icon": "lambda",
+        "description": "Serverless Function", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "Function Name", "type": "text"},
+                               {"key": "runtime", "label": "Runtime", "type": "text"}]
+    },
+    "ecs_cluster": {
+        "id": "ecscluster", "name": "ECS Cluster", "category": "compute", "icon": "ecs",
+        "description": "Elastic Container Service Cluster", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "Cluster Name", "type": "text"}]
+    },
+    "ecs_service": {
+        "id": "ecsservice", "name": "ECS Service", "category": "compute", "icon": "ecs",
+        "description": "ECS Service", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "Service Name", "type": "text"}]
+    },
+    "ecs_task": {
+        "id": "ecstask", "name": "ECS Task", "category": "compute", "icon": "ecs",
+        "description": "ECS Task", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "Task ID", "type": "text"}]
+    },
+    # Load Balancing
+    "alb": {
+        "id": "alb", "name": "Application Load Balancer", "category": "networking", "icon": "elb",
+        "description": "Application Load Balancer", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "ALB Name", "type": "text"}]
+    },
+    "nlb": {
+        "id": "nlb", "name": "Network Load Balancer", "category": "networking", "icon": "elb",
+        "description": "Network Load Balancer", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "NLB Name", "type": "text"}]
+    },
+    "target_group": {
+        "id": "targetgroup", "name": "Target Group", "category": "networking", "icon": "elb",
+        "description": "Target Group", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "Target Group Name", "type": "text"}]
+    },
+    # Database
+    "rds_instance": {
+        "id": "rds", "name": "RDS Instance", "category": "database", "icon": "rds",
+        "description": "Relational Database", "color": "#527FFF",
+        "editableAttributes": [{"key": "label", "label": "DB Instance", "type": "text"},
+                               {"key": "engine", "label": "Engine", "type": "text"}]
+    },
+    "rds_read_replica": {
+        "id": "rdsreplica", "name": "RDS Read Replica", "category": "database", "icon": "rds",
+        "description": "RDS Read Replica", "color": "#527FFF",
+        "editableAttributes": [{"key": "label", "label": "Replica Name", "type": "text"}]
+    },
+    "dynamodb": {
+        "id": "dynamodb", "name": "DynamoDB Table", "category": "database", "icon": "dynamodb",
+        "description": "NoSQL Database", "color": "#527FFF",
+        "editableAttributes": [{"key": "label", "label": "Table Name", "type": "text"}]
+    },
+    "elasticache": {
+        "id": "elasticache", "name": "ElastiCache", "category": "database", "icon": "elasticache",
+        "description": "In-Memory Cache", "color": "#527FFF",
+        "editableAttributes": [{"key": "label", "label": "Cache ID", "type": "text"}]
+    },
+    "redshift": {
+        "id": "redshift", "name": "Redshift", "category": "database", "icon": "redshift",
+        "description": "Data Warehouse", "color": "#527FFF",
+        "editableAttributes": [{"key": "label", "label": "Cluster ID", "type": "text"}]
+    },
+    # Security
     "security_group": {
-        "id": "securityGroup",
-        "name": "Security Group",
-        "category": "security",
-        "icon": "waf",
-        "description": "Security Group",
-        "color": "#DD344C",
-        "editableAttributes": [
-            {"key": "label", "label": "Security Group Name", "type": "text"}
-        ]
+        "id": "securityGroup", "name": "Security Group", "category": "security", "icon": "waf",
+        "description": "Security Group", "color": "#DD344C",
+        "editableAttributes": [{"key": "label", "label": "SG Name", "type": "text"}]
+    },
+    "acl": {
+        "id": "nacl", "name": "Network ACL", "category": "security", "icon": "waf",
+        "description": "Network Access Control List", "color": "#DD344C",
+        "editableAttributes": [{"key": "label", "label": "NACL ID", "type": "text"}]
+    },
+    "waf": {
+        "id": "waf", "name": "AWS WAF", "category": "security", "icon": "waf",
+        "description": "Web Application Firewall", "color": "#DD344C",
+        "editableAttributes": [{"key": "label", "label": "WAF Name", "type": "text"}]
+    },
+    "iam_role": {
+        "id": "iamrole", "name": "IAM Role", "category": "security", "icon": "iam",
+        "description": "IAM Role", "color": "#DD344C",
+        "editableAttributes": [{"key": "label", "label": "Role Name", "type": "text"}]
+    },
+    "iam_user": {
+        "id": "iamuser", "name": "IAM User", "category": "security", "icon": "iam",
+        "description": "IAM User", "color": "#DD344C",
+        "editableAttributes": [{"key": "label", "label": "User Name", "type": "text"}]
+    },
+    "iam_policy": {
+        "id": "iampolicy", "name": "IAM Policy", "category": "security", "icon": "iam",
+        "description": "IAM Policy", "color": "#DD344C",
+        "editableAttributes": [{"key": "label", "label": "Policy Name", "type": "text"}]
+    },
+    "kms": {
+        "id": "kms", "name": "KMS Key", "category": "security", "icon": "kms",
+        "description": "Key Management Service", "color": "#DD344C",
+        "editableAttributes": [{"key": "label", "label": "Key ID", "type": "text"}]
+    },
+    "secrets_manager": {
+        "id": "secretsmanager", "name": "Secrets Manager", "category": "security", "icon": "secretsmanager",
+        "description": "Secrets Manager", "color": "#DD344C",
+        "editableAttributes": [{"key": "label", "label": "Secret Name", "type": "text"}]
+    },
+    # Storage
+    "s3": {
+        "id": "s3", "name": "S3 Bucket", "category": "storage", "icon": "s3",
+        "description": "Simple Storage Service", "color": "#569A31",
+        "editableAttributes": [{"key": "label", "label": "Bucket Name", "type": "text"}]
+    },
+    "ebs": {
+        "id": "ebs", "name": "EBS Volume", "category": "storage", "icon": "ebs",
+        "description": "Elastic Block Store", "color": "#569A31",
+        "editableAttributes": [{"key": "label", "label": "Volume ID", "type": "text"}]
+    },
+    "efs": {
+        "id": "efs", "name": "EFS", "category": "storage", "icon": "efs",
+        "description": "Elastic File System", "color": "#569A31",
+        "editableAttributes": [{"key": "label", "label": "File System ID", "type": "text"}]
+    },
+    "fsx": {
+        "id": "fsx", "name": "FSx", "category": "storage", "icon": "fsx",
+        "description": "File Storage Service", "color": "#569A31",
+        "editableAttributes": [{"key": "label", "label": "FSx ID", "type": "text"}]
+    },
+    "glacier": {
+        "id": "glacier", "name": "Glacier", "category": "storage", "icon": "glacier",
+        "description": "Archive Storage", "color": "#569A31",
+        "editableAttributes": [{"key": "label", "label": "Vault Name", "type": "text"}]
+    },
+    # Analytics
+    "cloudwatch": {
+        "id": "cloudwatch", "name": "CloudWatch", "category": "management", "icon": "cloudwatch",
+        "description": "Monitoring Service", "color": "#FFA000",
+        "editableAttributes": [{"key": "label", "label": "Log Group", "type": "text"}]
+    },
+    "kinesis": {
+        "id": "kinesis", "name": "Kinesis", "category": "analytics", "icon": "kinesis",
+        "description": "Real-time Data", "color": "#FFA000",
+        "editableAttributes": [{"key": "label", "label": "Stream Name", "type": "text"}]
+    },
+    "emr": {
+        "id": "emr", "name": "EMR Cluster", "category": "analytics", "icon": "emr",
+        "description": "Elastic MapReduce", "color": "#FFA000",
+        "editableAttributes": [{"key": "label", "label": "Cluster ID", "type": "text"}]
+    },
+    # Application Services
+    "api_gateway": {
+        "id": "apigateway", "name": "API Gateway", "category": "networking", "icon": "apigateway",
+        "description": "API Gateway", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "API Name", "type": "text"}]
+    },
+    "sqs": {
+        "id": "sqs", "name": "SQS Queue", "category": "messaging", "icon": "sqs",
+        "description": "Simple Queue Service", "color": "#FFA000",
+        "editableAttributes": [{"key": "label", "label": "Queue Name", "type": "text"}]
+    },
+    "sns": {
+        "id": "sns", "name": "SNS Topic", "category": "messaging", "icon": "sns",
+        "description": "Simple Notification Service", "color": "#FFA000",
+        "editableAttributes": [{"key": "label", "label": "Topic Name", "type": "text"}]
+    },
+    "step_functions": {
+        "id": "stepfunctions", "name": "Step Functions", "category": "compute", "icon": "stepfunctions",
+        "description": "Workflow Orchestration", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "State Machine", "type": "text"}]
+    },
+    "codepipeline": {
+        "id": "codepipeline", "name": "CodePipeline", "category": "devops", "icon": "codepipeline",
+        "description": "CI/CD Pipeline", "color": "#FF6C40",
+        "editableAttributes": [{"key": "label", "label": "Pipeline Name", "type": "text"}]
+    },
+    "codebuild": {
+        "id": "codebuild", "name": "CodeBuild", "category": "devops", "icon": "codebuild",
+        "description": "Build Service", "color": "#FF6C40",
+        "editableAttributes": [{"key": "label", "label": "Project Name", "type": "text"}]
+    },
+    "codedeploy": {
+        "id": "codedeploy", "name": "CodeDeploy", "category": "devops", "icon": "codedeploy",
+        "description": "Deployment Service", "color": "#FF6C40",
+        "editableAttributes": [{"key": "label", "label": "Application", "type": "text"}]
+    },
+    # Management
+    "cloudformation": {
+        "id": "cloudformation", "name": "CloudFormation", "category": "management", "icon": "cloudformation",
+        "description": "Infrastructure as Code", "color": "#FFA000",
+        "editableAttributes": [{"key": "label", "label": "Stack Name", "type": "text"}]
+    },
+    "cloudtrail": {
+        "id": "cloudtrail", "name": "CloudTrail", "category": "management", "icon": "cloudtrail",
+        "description": "Audit Logging", "color": "#FFA000",
+        "editableAttributes": [{"key": "label", "label": "Trail Name", "type": "text"}]
+    },
+    "config": {
+        "id": "config", "name": "Config", "category": "management", "icon": "config",
+        "description": "Compliance Monitoring", "color": "#FFA000",
+        "editableAttributes": [{"key": "label", "label": "Config Rule", "type": "text"}]
+    },
+    # Content Delivery
+    "cloudfront": {
+        "id": "cloudfront", "name": "CloudFront", "category": "networking", "icon": "cloudfront",
+        "description": "Content Delivery Network", "color": "#FF9900",
+        "editableAttributes": [{"key": "label", "label": "Distribution ID", "type": "text"}]
     }
 }
 
 # Edge styling definitions
 EDGE_STYLES = {
-    "vpc-to-subnet": {
-        "stroke": "#8C4FFF",
-        "strokeWidth": 2
-    },
-    "subnet-to-instance": {
-        "stroke": "#FF9900",
-        "strokeWidth": 2
-    },
-    "rt-to-subnet": {
-        "stroke": "#FFA000",
-        "strokeWidth": 2,
-        "strokeDasharray": "4,4"
-    },
-    "sg-to-instance": {
-        "stroke": "#DD344C",
-        "strokeWidth": 1,
-        "strokeDasharray": "5,5"
-    }
+    # Networking relationships
+    "vpc-to-subnet": {"stroke": "#8C4FFF", "strokeWidth": 2},
+    "subnet-to-instance": {"stroke": "#FF9900", "strokeWidth": 2},
+    "rt-to-subnet": {"stroke": "#FFA000", "strokeWidth": 2, "strokeDasharray": "4,4"},
+    "subnet-to-nat": {"stroke": "#FF9900", "strokeWidth": 2},
+    "subnet-to-alb": {"stroke": "#FF9900", "strokeWidth": 2},
+    "subnet-to-rds": {"stroke": "#527FFF", "strokeWidth": 2},
+    "alb-to-target": {"stroke": "#FF9900", "strokeWidth": 2},
+    "api-to-lambda": {"stroke": "#FF9900", "strokeWidth": 2},
+    # Security relationships
+    "sg-to-instance": {"stroke": "#DD344C", "strokeWidth": 1, "strokeDasharray": "5,5"},
+    "sg-to-rds": {"stroke": "#DD344C", "strokeWidth": 1, "strokeDasharray": "5,5"},
+    "sg-to-alb": {"stroke": "#DD344C", "strokeWidth": 1, "strokeDasharray": "5,5"},
+    "iam-to-resource": {"stroke": "#DD344C", "strokeWidth": 1, "strokeDasharray": "3,3"},
+    "kms-to-resource": {"stroke": "#DD344C", "strokeWidth": 1, "strokeDasharray": "3,3"},
+    # Compute relationships
+    "asg-to-instance": {"stroke": "#FF9900", "strokeWidth": 2},
+    "ecs-cluster-to-service": {"stroke": "#FF9900", "strokeWidth": 2},
+    "ecs-service-to-task": {"stroke": "#FF9900", "strokeWidth": 2},
+    # Messaging & Queue relationships
+    "lambda-to-sqs": {"stroke": "#FFA000", "strokeWidth": 1, "strokeDasharray": "4,4"},
+    "lambda-to-sns": {"stroke": "#FFA000", "strokeWidth": 1, "strokeDasharray": "4,4"},
+    "sqs-to-lambda": {"stroke": "#FFA000", "strokeWidth": 2},
+    "sns-to-lambda": {"stroke": "#FFA000", "strokeWidth": 2},
+    # Database relationships
+    "rds-to-sg": {"stroke": "#527FFF", "strokeWidth": 1},
+    "dynamodb-to-lambda": {"stroke": "#527FFF", "strokeWidth": 1},
+    "elasticache-to-instance": {"stroke": "#527FFF", "strokeWidth": 1},
+    # Storage relationships
+    "instance-to-ebs": {"stroke": "#569A31", "strokeWidth": 1},
+    "instance-to-s3": {"stroke": "#569A31", "strokeWidth": 1},
+    "lambda-to-s3": {"stroke": "#569A31", "strokeWidth": 1},
+    # Monitoring relationships
+    "resource-to-cloudwatch": {"stroke": "#FFA000", "strokeWidth": 1, "strokeDasharray": "2,2"},
+    # Content Delivery
+    "cloudfront-to-s3": {"stroke": "#FF9900", "strokeWidth": 2},
+    "cloudfront-to-alb": {"stroke": "#FF9900", "strokeWidth": 2},
+    # Default
+    "default": {"stroke": "#999999", "strokeWidth": 1}
 }
 
 
@@ -127,6 +333,11 @@ class AWSToCloudBuilderConverter:
         self.sg_node_map: Dict[str, str] = {}  # sg_id -> node_id
         self.sg_vpc_map: Dict[str, str] = {}  # sg_id -> vpc_id (for tracking which VPC an SG belongs to)
         self.rt_node_map: Dict[str, str] = {}  # rt_id -> node_id
+        self.instance_node_map: Dict[str, str] = {}  # instance_id -> node_id
+        self.s3_node_map: Dict[str, str] = {}  # bucket_name -> node_id
+        self.rds_node_map: Dict[str, str] = {}  # db_name -> node_id
+        self.igw_node_map: Dict[str, str] = {}  # igw_id -> node_id
+        self.nat_gw_node_map: Dict[str, str] = {}  # nat_id -> node_id
         self.position_counter = {"vpc": 0, "subnet": 0, "instance": 0, "rt": 0, "sg": 0}
         self.vpc_count = 0
         self.max_x_position = 0
@@ -147,41 +358,12 @@ class AWSToCloudBuilderConverter:
             self._process_region(region_name, region_data, region_y_position)
             region_y_position = 0  # Will be updated after sizing
         
-        # Third pass: update region size based on child nodes
-        self._update_region_size()
+        # Third pass: Apply new hierarchical layout algorithm
+        # This ensures all children are positioned inside parents with no overlaps
+        self._apply_hierarchical_layout()
         
-        # Fourth pass: Reposition subnets vertically to prevent collisions
-        self._reposition_subnets_to_prevent_collision()
-        
-        # Fourth-B pass: Recalculate VPC sizes after subnet repositioning
-        self._recalculate_vpc_sizes()
-        
-        # Fourth-C pass: Position security groups inside subnets and move instances into them
-        self._position_security_groups_inside_subnets()
-        
-        # Fourth-C-2 pass: Position orphaned SGs (those without instances) at VPC level
-        self._position_orphaned_security_groups()
-        
-        # Fourth-D pass: Recalculate subnet sizes to accommodate SGs and instances
-        self._recalculate_subnet_sizes()
-        
-        # Fourth-D-2 pass: REPOSITION SUBNETS AGAIN after their sizes changed
-        self._reposition_subnets_to_prevent_collision()
-        
-        # Fourth-E pass: Reposition RTs after SGs are positioned inside subnets
-        self._reposition_route_tables()
-        
-        # Fourth-F pass: Recalculate VPC sizes again
-        self._recalculate_vpc_sizes()
-        self._update_region_size()
-        
-        # Fifth pass: Stack regions vertically to prevent overlap
-        self._stack_regions_vertically()
-        
-        # Sixth pass: verify all children fit within parent bounds
+        # Fourth pass: Verify layout and validate positions
         self._verify_container_bounds()
-        
-        # Seventh pass: Validate all positions (overlaps, bounds, edges)
         self._validate_all_positions()
         
         return {
@@ -257,7 +439,7 @@ class AWSToCloudBuilderConverter:
         self._process_instances(instances)
         
         # Process Internet Gateways
-        igws = region_data.get("igws", [])
+        igws = region_data.get("internet_gateways", [])
         self._process_igws(igws)
         
         # Process Route Tables
@@ -268,11 +450,41 @@ class AWSToCloudBuilderConverter:
         sgs = region_data.get("security_groups", [])
         self._process_security_groups(sgs)
         
+        # Process NAT Gateways
+        nat_gateways = region_data.get("nat_gateways", [])
+        self._process_nat_gateways(nat_gateways)
+        
+        # Process RDS Instances
+        rds_instances = region_data.get("rds_instances", [])
+        self._process_rds_instances(rds_instances)
+        
+        # Process additional generic resources (Lambda, ALB, S3, API Gateway, etc.)
+        self._process_generic_resources(region_name, region_data)
+        
+        # Create edges for Internet Gateways to VPC
+        self._create_igw_vpc_edges(igws)
+        
         # Create edges for route tables to subnets
         self._create_rt_subnet_edges(route_tables)
         
+        # Create edges for route tables to gateways (IGW/NAT)
+        self._create_rt_gateway_edges(route_tables)
+        
         # Create edges for security groups to instances
         self._create_sg_instance_edges(instances)
+        
+        # Create edges for NAT Gateways to subnets
+        self._create_nat_subnet_edges(nat_gateways)
+        
+        # Create edges for RDS to subnets and security groups
+        self._create_rds_edges(rds_instances)
+        
+        # Create edges for maximum connectivity between existing resources
+        self._create_instance_s3_edges(instances)
+        self._create_rds_s3_edges(rds_instances)
+        self._create_nat_vpc_edges(nat_gateways)
+        self._create_instance_subnet_edges(instances)
+        self._create_rds_subnet_edges(rds_instances)
     
     def _process_vpcs(self, region_id: str, vpcs: List[Dict]):
         """Process VPCs"""
@@ -439,7 +651,7 @@ class AWSToCloudBuilderConverter:
                 nesting_depth=3,
                 instanceId=instance_id,
                 instanceType=instance.get("InstanceType"),
-                state=instance.get("State", {}).get("Name"),
+                state=instance.get("State", {}).get("Name") if isinstance(instance.get("State"), dict) else instance.get("State", "running"),
                 privateIpAddress=instance.get("PrivateIpAddress"),
                 publicIpAddress=instance.get("PublicIpAddress"),
                 imageId=instance.get("ImageId"),
@@ -448,6 +660,9 @@ class AWSToCloudBuilderConverter:
                 vpcId=instance.get("VpcId"),
                 securityGroup=sg_id  # Store for later parent assignment
             )
+            
+            # Store in map for edge creation
+            self.instance_node_map[instance_id] = node_id
             
             # Create Subnet → Instance edge (will add SG → Instance edge later)
             self._create_edge(
@@ -458,6 +673,10 @@ class AWSToCloudBuilderConverter:
     
     def _process_igws(self, igws: List[Dict]):
         """Process Internet Gateways"""
+        # Initialize igw_node_map if not exists
+        if not hasattr(self, 'igw_node_map'):
+            self.igw_node_map = {}
+        
         # Group IGWs by VPC
         igw_by_vpc: Dict[str, List[Dict]] = {}
         for igw in igws:
@@ -489,6 +708,9 @@ class AWSToCloudBuilderConverter:
                 igw_id = igw.get("InternetGatewayId")
                 igw_name = self._get_tag_value(igw.get("Tags", []), "Name", igw_id)
                 node_id = f"igw-{igw_id}"
+                
+                # Store in map for edge creation
+                self.igw_node_map[igw_id] = node_id
                 
                 x_pos = vpc_x + padding + ((igw_idx + 1) * igw_spacing) - 60
                 y_pos = vpc_y + 20  # 20px from the top of the VPC
@@ -637,6 +859,696 @@ class AWSToCloudBuilderConverter:
                     outboundRules=len(sg.get("IpPermissionsEgress", []))
                 )
     
+    def _process_nat_gateways(self, nat_gateways: List[Dict]):
+        """Process NAT Gateways - positioned below their subnet to avoid overflow"""
+        for nat in nat_gateways:
+            nat_id = nat.get("NatGatewayId")
+            subnet_id = nat.get("SubnetId")
+            
+            subnet_node_info = self.subnet_node_map.get(subnet_id)
+            if not subnet_node_info:
+                continue
+            
+            subnet_node_id, vpc_node_id = subnet_node_info
+            subnet_node = self.node_map.get(subnet_node_id)
+            
+            node_id = f"nat-{nat_id}"
+            self.nat_gw_node_map = getattr(self, 'nat_gw_node_map', {})
+            self.nat_gw_node_map[nat_id] = node_id
+            
+            # Position NAT Gateway below subnet, aligned to the left
+            subnet_x = subnet_node["position"]["x"]
+            subnet_y = subnet_node["position"]["y"]
+            subnet_height = subnet_node["height"]
+            
+            nat_width = 100
+            nat_height = 60
+            x_pos = subnet_x  # Aligned with subnet
+            y_pos = subnet_y + subnet_height + 15  # Below subnet
+            
+            self._create_node(
+                node_id=node_id,
+                label=nat_id,
+                resource_type="nat_gateway",
+                position={"x": x_pos, "y": y_pos},
+                size={"width": nat_width, "height": nat_height},
+                is_container=False,
+                parent_id=None,
+                config={"originalType": "AWS::EC2::NatGateway"},
+                nesting_depth=1,
+                natGatewayId=nat_id,
+                subnetId=subnet_id,
+                state=nat.get("State")
+            )
+    
+    def _process_rds_instances(self, rds_instances: List[Dict]):
+        """Process RDS Instances - positioned inside subnets"""
+        for rds in rds_instances:
+            db_name = rds.get("db_instance_name")
+            subnet_type = rds.get("subnet_type", "private")
+            
+            # Find a private subnet to place RDS in (typically in private subnets)
+            matching_subnet = None
+            for subnet_id, (node_id, vpc_node_id) in list(self.subnet_node_map.items()):
+                subnet_node = self.node_map.get(node_id)
+                if subnet_node:
+                    # Prefer private subnets for RDS
+                    if subnet_node["data"].get("Type") == "private" or subnet_type == "private":
+                        matching_subnet = (node_id, subnet_node, vpc_node_id)
+                        break
+                    elif not matching_subnet:
+                        # Fallback to any subnet
+                        matching_subnet = (node_id, subnet_node, vpc_node_id)
+            
+            if not matching_subnet:
+                # If no subnet found, use the first VPC as parent
+                vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
+                if not vpc_nodes:
+                    continue
+                vpc_node = vpc_nodes[0]
+                node_id = f"rds-{db_name}"
+                self.rds_node_map = getattr(self, 'rds_node_map', {})
+                self.rds_node_map[db_name] = node_id
+                
+                # Position in VPC
+                rds_width = 140
+                rds_height = 80
+                x_pos = vpc_node["position"]["x"] + 20
+                y_pos = vpc_node["position"]["y"] + vpc_node["height"] + 40
+                
+                self._create_node(
+                    node_id=node_id,
+                    label=db_name,
+                    resource_type="rds_instance",
+                    position={"x": x_pos, "y": y_pos},
+                    size={"width": rds_width, "height": rds_height},
+                    is_container=False,
+                    parent_id=None,
+                    config={"originalType": "AWS::RDS::DBInstance"},
+                    nesting_depth=1,
+                    dbInstanceName=db_name,
+                    engine=rds.get("engine"),
+                    port=rds.get("port"),
+                    subnetType=subnet_type
+                )
+                continue
+            
+            subnet_node_id, subnet_node, vpc_node_id = matching_subnet
+            node_id = f"rds-{db_name}"
+            self.rds_node_map = getattr(self, 'rds_node_map', {})
+            self.rds_node_map[db_name] = node_id
+            
+            # Position RDS inside subnet, right side
+            subnet_x = subnet_node["position"]["x"]
+            subnet_y = subnet_node["position"]["y"]
+            subnet_width = subnet_node["width"]
+            
+            rds_width = 130
+            rds_height = 70
+            x_pos = subnet_x + subnet_width - rds_width - 10  # Right side with padding
+            y_pos = subnet_y + 5  # Top with small padding
+            
+            self._create_node(
+                node_id=node_id,
+                label=db_name,
+                resource_type="rds_instance",
+                position={"x": x_pos, "y": y_pos},
+                size={"width": rds_width, "height": rds_height},
+                is_container=False,
+                parent_id=None,
+                config={"originalType": "AWS::RDS::DBInstance"},
+                nesting_depth=2,
+                dbInstanceName=db_name,
+                engine=rds.get("engine"),
+                port=rds.get("port"),
+                subnetType=subnet_type
+            )
+    
+    def _process_generic_resources(self, region_name: str, region_data: Dict):
+        """Process additional AWS resources from the data if present"""
+        # Lambda Functions
+        if "lambdas" in region_data or "lambda_functions" in region_data:
+            lambdas = region_data.get("lambdas", region_data.get("lambda_functions", []))
+            self._process_lambdas(lambdas)
+        
+        # ALB/NLB
+        if "load_balancers" in region_data:
+            lbs = region_data.get("load_balancers", [])
+            self._process_load_balancers(lbs)
+        
+        # S3 Buckets
+        if "s3_buckets" in region_data:
+            buckets = region_data.get("s3_buckets", [])
+            self._process_s3_buckets(buckets)
+        
+        # CloudFront
+        if "cloudfront_distributions" in region_data:
+            dists = region_data.get("cloudfront_distributions", [])
+            self._process_cloudfront(dists)
+        
+        # API Gateway
+        if "api_gateways" in region_data:
+            apis = region_data.get("api_gateways", [])
+            self._process_api_gateways(apis)
+        
+        # SQS/SNS
+        if "sqs_queues" in region_data:
+            queues = region_data.get("sqs_queues", [])
+            self._process_sqs(queues)
+        
+        if "sns_topics" in region_data:
+            topics = region_data.get("sns_topics", [])
+            self._process_sns(topics)
+        
+        # ECS
+        if "ecs_clusters" in region_data:
+            clusters = region_data.get("ecs_clusters", [])
+            self._process_ecs(clusters)
+        
+        # DynamoDB
+        if "dynamodb_tables" in region_data:
+            tables = region_data.get("dynamodb_tables", [])
+            self._process_dynamodb(tables)
+        
+        # ElastiCache
+        if "elasticache_clusters" in region_data:
+            caches = region_data.get("elasticache_clusters", [])
+            self._process_elasticache(caches)
+        
+        # IAM Roles
+        if "iam_roles" in region_data:
+            roles = region_data.get("iam_roles", [])
+            self._process_iam_roles(roles)
+        
+        # KMS Keys
+        if "kms_keys" in region_data:
+            keys = region_data.get("kms_keys", [])
+            self._process_kms(keys)
+    
+    def _process_lambdas(self, lambdas: List[Dict]):
+        """Process Lambda Functions"""
+        lambda_map = getattr(self, 'lambda_node_map', {})
+        
+        for idx, func in enumerate(lambdas):
+            func_name = func.get("FunctionName") or func.get("name", f"lambda-{idx}")
+            node_id = f"lambda-{func_name}"
+            lambda_map[func_name] = node_id
+            
+            lambda_width = 110
+            lambda_height = 70
+            x_pos = 500 + (idx * 150)
+            y_pos = 300
+            
+            self._create_node(
+                node_id=node_id, label=func_name, resource_type="lambda",
+                position={"x": x_pos, "y": y_pos}, size={"width": lambda_width, "height": lambda_height},
+                is_container=False, parent_id=None,
+                config={"originalType": "AWS::Lambda::Function"},
+                nesting_depth=0, functionName=func_name, runtime=func.get("Runtime", "python3.9")
+            )
+        
+        setattr(self, 'lambda_node_map', lambda_map)
+    
+    def _process_load_balancers(self, lbs: List[Dict]):
+        """Process Load Balancers (ALB/NLB)"""
+        alb_map = getattr(self, 'alb_node_map', {})
+        
+        for lb in lbs:
+            lb_name = lb.get("LoadBalancerName") or lb.get("name", "alb")
+            lb_type = lb.get("Type", "application").lower()
+            res_type = "alb" if "application" in lb_type else "nlb"
+            node_id = f"{res_type}-{lb_name}"
+            alb_map[lb_name] = node_id
+            
+            lb_width = 120
+            lb_height = 80
+            x_pos = 300
+            y_pos = 150
+            
+            self._create_node(
+                node_id=node_id, label=lb_name, resource_type=res_type,
+                position={"x": x_pos, "y": y_pos}, size={"width": lb_width, "height": lb_height},
+                is_container=False, parent_id=None,
+                config={"originalType": f"AWS::ElasticLoadBalancingV2::{res_type}"},
+                nesting_depth=0, lbName=lb_name, lbType=lb_type
+            )
+        
+        setattr(self, 'alb_node_map', alb_map)
+    
+    def _process_s3_buckets(self, buckets: List[Dict]):
+        """Process S3 Buckets"""
+        s3_map = getattr(self, 's3_node_map', {})
+        
+        for bucket in buckets:
+            bucket_name = bucket.get("Name") or bucket.get("Bucket", "s3-bucket")
+            node_id = f"s3-{bucket_name}"
+            s3_map[bucket_name] = node_id
+            
+            s3_width = 100
+            s3_height = 80
+            x_pos = 50 + (len(s3_map) * 120)
+            y_pos = 50
+            
+            self._create_node(
+                node_id=node_id, label=bucket_name, resource_type="s3",
+                position={"x": x_pos, "y": y_pos}, size={"width": s3_width, "height": s3_height},
+                is_container=False, parent_id=None,
+                config={"originalType": "AWS::S3::Bucket"},
+                nesting_depth=0, bucketName=bucket_name
+            )
+        
+        setattr(self, 's3_node_map', s3_map)
+    
+    def _process_cloudfront(self, dists: List[Dict]):
+        """Process CloudFront Distributions"""
+        cf_map = getattr(self, 'cloudfront_node_map', {})
+        
+        for dist in dists:
+            dist_id = dist.get("Id") or dist.get("DomainName", "cloudfront")
+            node_id = f"cloudfront-{dist_id}"
+            cf_map[dist_id] = node_id
+            
+            cf_width = 120
+            cf_height = 70
+            x_pos = 100
+            y_pos = 100
+            
+            self._create_node(
+                node_id=node_id, label=dist_id, resource_type="cloudfront",
+                position={"x": x_pos, "y": y_pos}, size={"width": cf_width, "height": cf_height},
+                is_container=False, parent_id=None,
+                config={"originalType": "AWS::CloudFront::Distribution"},
+                nesting_depth=0, distId=dist_id
+            )
+        
+        setattr(self, 'cloudfront_node_map', cf_map)
+    
+    def _process_api_gateways(self, apis: List[Dict]):
+        """Process API Gateways"""
+        api_map = getattr(self, 'api_node_map', {})
+        
+        for api in apis:
+            api_name = api.get("name") or api.get("Name", "api")
+            api_id = api.get("id") or api.get("RestApiId", api_name)
+            node_id = f"api-{api_id}"
+            api_map[api_id] = node_id
+            
+            api_width = 110
+            api_height = 70
+            x_pos = 700
+            y_pos = 300
+            
+            self._create_node(
+                node_id=node_id, label=api_name, resource_type="api_gateway",
+                position={"x": x_pos, "y": y_pos}, size={"width": api_width, "height": api_height},
+                is_container=False, parent_id=None,
+                config={"originalType": "AWS::ApiGateway::RestApi"},
+                nesting_depth=0, apiName=api_name, apiId=api_id
+            )
+        
+        setattr(self, 'api_node_map', api_map)
+    
+    def _process_sqs(self, queues: List[Dict]):
+        """Process SQS Queues"""
+        sqs_map = getattr(self, 'sqs_node_map', {})
+        
+        for queue in queues:
+            queue_name = queue.get("QueueName") or queue.get("name", "queue")
+            node_id = f"sqs-{queue_name}"
+            sqs_map[queue_name] = node_id
+            
+            queue_width = 100
+            queue_height = 70
+            x_pos = 600 + (len(sqs_map) * 120)
+            y_pos = 450
+            
+            self._create_node(
+                node_id=node_id, label=queue_name, resource_type="sqs",
+                position={"x": x_pos, "y": y_pos}, size={"width": queue_width, "height": queue_height},
+                is_container=False, parent_id=None,
+                config={"originalType": "AWS::SQS::Queue"},
+                nesting_depth=0, queueName=queue_name
+            )
+        
+        setattr(self, 'sqs_node_map', sqs_map)
+    
+    def _process_sns(self, topics: List[Dict]):
+        """Process SNS Topics"""
+        sns_map = getattr(self, 'sns_node_map', {})
+        
+        for topic in topics:
+            topic_name = topic.get("TopicName") or topic.get("name", "topic")
+            topic_arn = topic.get("TopicArn") or topic.get("arn", topic_name)
+            node_id = f"sns-{topic_name}"
+            sns_map[topic_name] = node_id
+            
+            topic_width = 100
+            topic_height = 70
+            x_pos = 600 + (len(sns_map) * 120)
+            y_pos = 550
+            
+            self._create_node(
+                node_id=node_id, label=topic_name, resource_type="sns",
+                position={"x": x_pos, "y": y_pos}, size={"width": topic_width, "height": topic_height},
+                is_container=False, parent_id=None,
+                config={"originalType": "AWS::SNS::Topic"},
+                nesting_depth=0, topicName=topic_name, topicArn=topic_arn
+            )
+        
+        setattr(self, 'sns_node_map', sns_map)
+    
+    def _process_ecs(self, clusters: List[Dict]):
+        """Process ECS Clusters"""
+        ecs_map = getattr(self, 'ecs_node_map', {})
+        
+        for cluster in clusters:
+            cluster_name = cluster.get("clusterName") or cluster.get("name", "cluster")
+            node_id = f"ecs-{cluster_name}"
+            ecs_map[cluster_name] = node_id
+            
+            ecs_width = 110
+            ecs_height = 80
+            x_pos = 800
+            y_pos = 450
+            
+            self._create_node(
+                node_id=node_id, label=cluster_name, resource_type="ecs_cluster",
+                position={"x": x_pos, "y": y_pos}, size={"width": ecs_width, "height": ecs_height},
+                is_container=True, parent_id=None,
+                config={"originalType": "AWS::ECS::Cluster"},
+                nesting_depth=0, clusterName=cluster_name
+            )
+        
+        setattr(self, 'ecs_node_map', ecs_map)
+    
+    def _process_dynamodb(self, tables: List[Dict]):
+        """Process DynamoDB Tables"""
+        ddb_map = getattr(self, 'dynamodb_node_map', {})
+        
+        for table in tables:
+            table_name = table.get("TableName") or table.get("name", "table")
+            node_id = f"dynamodb-{table_name}"
+            ddb_map[table_name] = node_id
+            
+            ddb_width = 110
+            ddb_height = 70
+            x_pos = 900 + (len(ddb_map) * 120)
+            y_pos = 550
+            
+            self._create_node(
+                node_id=node_id, label=table_name, resource_type="dynamodb",
+                position={"x": x_pos, "y": y_pos}, size={"width": ddb_width, "height": ddb_height},
+                is_container=False, parent_id=None,
+                config={"originalType": "AWS::DynamoDB::Table"},
+                nesting_depth=0, tableName=table_name
+            )
+        
+        setattr(self, 'dynamodb_node_map', ddb_map)
+    
+    def _process_elasticache(self, caches: List[Dict]):
+        """Process ElastiCache Clusters"""
+        cache_map = getattr(self, 'elasticache_node_map', {})
+        
+        for cache in caches:
+            cache_id = cache.get("CacheClusterId") or cache.get("id", "cache")
+            node_id = f"elasticache-{cache_id}"
+            cache_map[cache_id] = node_id
+            
+            cache_width = 110
+            cache_height = 70
+            x_pos = 1000 + (len(cache_map) * 120)
+            y_pos = 300
+            
+            self._create_node(
+                node_id=node_id, label=cache_id, resource_type="elasticache",
+                position={"x": x_pos, "y": y_pos}, size={"width": cache_width, "height": cache_height},
+                is_container=False, parent_id=None,
+                config={"originalType": "AWS::ElastiCache::CacheCluster"},
+                nesting_depth=0, cacheId=cache_id
+            )
+        
+        setattr(self, 'elasticache_node_map', cache_map)
+    
+    def _process_iam_roles(self, roles: List[Dict]):
+        """Process IAM Roles"""
+        iam_map = getattr(self, 'iam_node_map', {})
+        
+        for role in roles:
+            role_name = role.get("RoleName") or role.get("name", "role")
+            node_id = f"iam-{role_name}"
+            iam_map[role_name] = node_id
+            
+            iam_width = 100
+            iam_height = 60
+            x_pos = 1100 + (len(iam_map) * 120)
+            y_pos = 150
+            
+            self._create_node(
+                node_id=node_id, label=role_name, resource_type="iam_role",
+                position={"x": x_pos, "y": y_pos}, size={"width": iam_width, "height": iam_height},
+                is_container=False, parent_id=None,
+                config={"originalType": "AWS::IAM::Role"},
+                nesting_depth=0, roleName=role_name
+            )
+        
+        setattr(self, 'iam_node_map', iam_map)
+    
+    def _process_kms(self, keys: List[Dict]):
+        """Process KMS Keys"""
+        kms_map = getattr(self, 'kms_node_map', {})
+        
+        for key in keys:
+            key_id = key.get("KeyId") or key.get("id", "key")
+            key_desc = key.get("Description", key_id)
+            node_id = f"kms-{key_id}"
+            kms_map[key_id] = node_id
+            
+            kms_width = 100
+            kms_height = 60
+            x_pos = 1200 + (len(kms_map) * 120)
+            y_pos = 200
+            
+            self._create_node(
+                node_id=node_id, label=key_desc, resource_type="kms",
+                position={"x": x_pos, "y": y_pos}, size={"width": kms_width, "height": kms_height},
+                is_container=False, parent_id=None,
+                config={"originalType": "AWS::KMS::Key"},
+                nesting_depth=0, keyId=key_id
+            )
+        
+        setattr(self, 'kms_node_map', kms_map)
+    
+    def _create_igw_vpc_edges(self, internet_gateways: List[Dict]):
+        """Create edges from Internet Gateways to VPC (attachment relationship)"""
+        if not hasattr(self, 'igw_node_map'):
+            return
+        
+        for igw in internet_gateways:
+            igw_id = igw.get("InternetGatewayId")
+            igw_node_id = self.igw_node_map.get(igw_id)
+            
+            if not igw_node_id:
+                continue
+            
+            # Get attached VPCs
+            for attachment in igw.get("Attachments", []):
+                vpc_id = attachment.get("VpcId")
+                vpc_node_id = self.vpc_node_map.get(vpc_id)
+                
+                if vpc_node_id:
+                    self._create_edge(
+                        source=igw_node_id,
+                        target=vpc_node_id,
+                        edge_type="igw-to-vpc"
+                    )
+    
+    def _create_rt_gateway_edges(self, route_tables: List[Dict]):
+        """Create edges from Route Tables to IGW/NAT Gateways for routing"""
+        if not hasattr(self, 'igw_node_map'):
+            self.igw_node_map = {}
+        if not hasattr(self, 'nat_gw_node_map'):
+            self.nat_gw_node_map = {}
+        
+        for rt in route_tables:
+            rt_id = rt.get("RouteTableId")
+            rt_node_id = self.rt_node_map.get(rt_id)
+            
+            if not rt_node_id:
+                continue
+            
+            # Check routes for IGW or NAT Gateway targets
+            for route in rt.get("Routes", []):
+                # IGW route
+                igw_id = route.get("GatewayId")
+                if igw_id and igw_id != "local":
+                    igw_node_id = self.igw_node_map.get(igw_id)
+                    if igw_node_id:
+                        self._create_edge(
+                            source=rt_node_id,
+                            target=igw_node_id,
+                            edge_type="rt-to-igw"
+                        )
+                
+                # NAT Gateway route
+                nat_id = route.get("NatGatewayId")
+                if nat_id:
+                    nat_node_id = self.nat_gw_node_map.get(nat_id)
+                    if nat_node_id:
+                        self._create_edge(
+                            source=rt_node_id,
+                            target=nat_node_id,
+                            edge_type="rt-to-nat"
+                        )
+    
+    def _create_nat_subnet_edges(self, nat_gateways: List[Dict]):
+        """Create edges from Subnets to NAT Gateways"""
+        nat_gw_node_map = getattr(self, 'nat_gw_node_map', {})
+        
+        for nat in nat_gateways:
+            nat_id = nat.get("NatGatewayId")
+            subnet_id = nat.get("SubnetId")
+            
+            nat_node_id = nat_gw_node_map.get(nat_id)
+            if not nat_node_id or subnet_id not in self.subnet_node_map:
+                continue
+            
+            subnet_node_id = self.subnet_node_map[subnet_id][0]
+            self._create_edge(
+                source=subnet_node_id,
+                target=nat_node_id,
+                edge_type="subnet-to-nat"
+            )
+    
+    def _create_rds_edges(self, rds_instances: List[Dict]):
+        """Create edges from Subnets and Security Groups to RDS Instances"""
+        rds_node_map = getattr(self, 'rds_node_map', {})
+        
+        for rds in rds_instances:
+            db_name = rds.get("db_instance_name")
+            rds_node_id = rds_node_map.get(db_name)
+            
+            if not rds_node_id:
+                continue
+            
+            # Create edge from RDS to its security group if present
+            sg_info = rds.get("security_group", {})
+            if sg_info and sg_info.get("id"):
+                sg_id = sg_info.get("id")
+                sg_node_id = self.sg_node_map.get(sg_id)
+                if sg_node_id:
+                    self._create_edge(
+                        source=sg_node_id,
+                        target=rds_node_id,
+                        edge_type="sg-to-rds"
+                    )
+    
+    def _create_instance_s3_edges(self, instances: List[Dict]):
+        """Create edges from EC2 instances to S3 buckets (app uses S3)"""
+        s3_node_map = getattr(self, 's3_node_map', {})
+        if not s3_node_map:
+            return
+        
+        for instance in instances:
+            instance_id = instance.get("InstanceId")
+            instance_node_id = self.instance_node_map.get(instance_id)
+            
+            if not instance_node_id:
+                continue
+            
+            # Create edges to all S3 buckets (app uses them)
+            for bucket_name, s3_node_id in s3_node_map.items():
+                self._create_edge(
+                    source=instance_node_id,
+                    target=s3_node_id,
+                    edge_type="instance-to-s3"
+                )
+    
+    def _create_rds_s3_edges(self, rds_instances: List[Dict]):
+        """Create edges from RDS instances to S3 buckets (backups)"""
+        rds_node_map = getattr(self, 'rds_node_map', {})
+        s3_node_map = getattr(self, 's3_node_map', {})
+        if not rds_node_map or not s3_node_map:
+            return
+        
+        for rds in rds_instances:
+            db_name = rds.get("db_instance_name")
+            rds_node_id = rds_node_map.get(db_name)
+            
+            if not rds_node_id:
+                continue
+            
+            # Create edges to all S3 buckets (database backups)
+            for bucket_name, s3_node_id in s3_node_map.items():
+                self._create_edge(
+                    source=rds_node_id,
+                    target=s3_node_id,
+                    edge_type="rds-to-s3"
+                )
+    
+    def _create_nat_vpc_edges(self, nat_gateways: List[Dict]):
+        """Create edges from NAT Gateways to VPC"""
+        nat_gw_node_map = getattr(self, 'nat_gw_node_map', {})
+        
+        for nat in nat_gateways:
+            nat_id = nat.get("NatGatewayId")
+            nat_node_id = nat_gw_node_map.get(nat_id)
+            
+            if not nat_node_id:
+                continue
+            
+            # Find the VPC by getting the subnet's VPC
+            subnet_id = nat.get("SubnetId")
+            if subnet_id and subnet_id in self.subnet_node_map:
+                subnet_node_id, vpc_node_id = self.subnet_node_map[subnet_id]
+                if vpc_node_id:
+                    self._create_edge(
+                        source=nat_node_id,
+                        target=vpc_node_id,
+                        edge_type="nat-to-vpc"
+                    )
+    
+    def _create_instance_subnet_edges(self, instances: List[Dict]):
+        """Create explicit edges from instances to their subnets"""
+        for instance in instances:
+            instance_id = instance.get("InstanceId")
+            instance_node_id = self.instance_node_map.get(instance_id)
+            
+            if not instance_node_id:
+                continue
+            
+            # Create edge to subnet
+            subnet_id = instance.get("SubnetId")
+            if subnet_id and subnet_id in self.subnet_node_map:
+                subnet_node_id, vpc_node_id = self.subnet_node_map[subnet_id]
+                if subnet_node_id:
+                    self._create_edge(
+                        source=instance_node_id,
+                        target=subnet_node_id,
+                        edge_type="instance-in-subnet"
+                    )
+    
+    def _create_rds_subnet_edges(self, rds_instances: List[Dict]):
+        """Create explicit edges from RDS instances to their subnets"""
+        rds_node_map = getattr(self, 'rds_node_map', {})
+        
+        for rds in rds_instances:
+            db_name = rds.get("db_instance_name")
+            rds_node_id = rds_node_map.get(db_name)
+            
+            if not rds_node_id:
+                continue
+            
+            # Create edge to subnet
+            subnet_id = rds.get("subnet_id")
+            if subnet_id and subnet_id in self.subnet_node_map:
+                subnet_node_id, vpc_node_id = self.subnet_node_map[subnet_id]
+                if subnet_node_id:
+                    self._create_edge(
+                        source=rds_node_id,
+                        target=subnet_node_id,
+                        edge_type="rds-in-subnet"
+                    )
+    
     def _create_rt_subnet_edges(self, route_tables: List[Dict]):
         """Create edges from Route Tables to associated Subnets"""
         for rt in route_tables:
@@ -723,9 +1635,8 @@ class AWSToCloudBuilderConverter:
         data["config"] = config
         data["nestingDepth"] = nesting_depth
         
-        # Add parentId if present
-        if parent_id:
-            data["parentId"] = parent_id
+        # ALWAYS add parentId (even if None) so it can be updated later
+        data["parentId"] = parent_id
         
         node = {
             "id": node_id,
@@ -736,14 +1647,11 @@ class AWSToCloudBuilderConverter:
             "height": size["height"]
         }
         
-        if parent_id:
-            node["data"]["parentId"] = parent_id
-        
         self.nodes.append(node)
         self.node_map[node_id] = node
     
     def _create_edge(self, source: str, target: str, edge_type: str = "default"):
-        """Create an edge in CloudBuilder format"""
+        """Create an edge in CloudBuilder format with smart routing to avoid node overlaps"""
         style = EDGE_STYLES.get(edge_type, {"stroke": "#999999", "strokeWidth": 1})
         
         edge = {
@@ -755,7 +1663,144 @@ class AWSToCloudBuilderConverter:
             "style": style
         }
         
+        # Calculate waypoints to avoid overlapping with other nodes
+        waypoints = self._calculate_edge_waypoints(source, target)
+        if waypoints and len(waypoints) > 0:
+            edge["data"] = {"waypoints": waypoints}
+        
         self.edges.append(edge)
+    
+    def _calculate_edge_waypoints(self, source_id: str, target_id: str) -> List[Dict]:
+        """
+        Calculate waypoints for edge path to avoid overlapping with other nodes.
+        Uses simple node avoidance algorithm.
+        """
+        source_node = self.node_map.get(source_id)
+        target_node = self.node_map.get(target_id)
+        
+        if not source_node or not target_node:
+            return []
+        
+        source_pos = source_node["position"]
+        target_pos = target_node["position"]
+        
+        # Get center points
+        source_center = {
+            "x": source_pos["x"] + source_node["width"] / 2,
+            "y": source_pos["y"] + source_node["height"] / 2
+        }
+        target_center = {
+            "x": target_pos["x"] + target_node["width"] / 2,
+            "y": target_pos["y"] + target_node["height"] / 2
+        }
+        
+        # Check if direct line intersects any nodes
+        intersecting_nodes = self._find_intersecting_nodes(
+            source_center, target_center, [source_id, target_id]
+        )
+        
+        if not intersecting_nodes:
+            return []  # No intersections, use default smoothstep
+        
+        # Route around intersecting nodes
+        waypoints = self._route_around_nodes(
+            source_center, target_center, intersecting_nodes
+        )
+        
+        return waypoints
+    
+    def _find_intersecting_nodes(self, start: Dict, end: Dict, exclude_ids: List[str]) -> List[Dict]:
+        """Find nodes that intersect with the line from start to end"""
+        intersecting = []
+        
+        for node in self.nodes:
+            node_id = node["id"]
+            if node_id in exclude_ids:
+                continue
+            
+            pos = node["position"]
+            width = node["width"]
+            height = node["height"]
+            
+            # Check if line segment intersects node bounding box
+            if self._line_intersects_rect(start, end, pos, width, height):
+                intersecting.append(node)
+        
+        return intersecting
+    
+    def _line_intersects_rect(self, p1: Dict, p2: Dict, rect_pos: Dict, width: float, height: float) -> bool:
+        """Check if line segment (p1, p2) intersects with rectangle"""
+        x1, y1 = p1["x"], p1["y"]
+        x2, y2 = p2["x"], p2["y"]
+        
+        rect_x = rect_pos["x"]
+        rect_y = rect_pos["y"]
+        rect_right = rect_x + width
+        rect_bottom = rect_y + height
+        
+        # Check if either endpoint is inside rectangle
+        if (rect_x <= x1 <= rect_right and rect_y <= y1 <= rect_bottom) or \
+           (rect_x <= x2 <= rect_right and rect_y <= y2 <= rect_bottom):
+            return True
+        
+        # Check if line crosses rectangle edges
+        # Check horizontal edges (top and bottom)
+        if self._point_on_line_segment({"x": rect_x, "y": rect_y}, {"x": rect_right, "y": rect_y}, p1, p2) or \
+           self._point_on_line_segment({"x": rect_x, "y": rect_bottom}, {"x": rect_right, "y": rect_bottom}, p1, p2):
+            return True
+        
+        # Check vertical edges (left and right)
+        if self._point_on_line_segment({"x": rect_x, "y": rect_y}, {"x": rect_x, "y": rect_bottom}, p1, p2) or \
+           self._point_on_line_segment({"x": rect_right, "y": rect_y}, {"x": rect_right, "y": rect_bottom}, p1, p2):
+            return True
+        
+        return False
+    
+    def _point_on_line_segment(self, line_start: Dict, line_end: Dict, seg_start: Dict, seg_end: Dict) -> bool:
+        """Check if line segment intersects with another line segment"""
+        # Simple approach: check if segments share any overlap
+        def ccw(A: Dict, B: Dict, C: Dict) -> bool:
+            return (C["y"] - A["y"]) * (B["x"] - A["x"]) > (B["y"] - A["y"]) * (C["x"] - A["x"])
+        
+        return ccw(line_start, seg_start, seg_end) != ccw(line_end, seg_start, seg_end) and \
+               ccw(line_start, line_end, seg_start) != ccw(line_start, line_end, seg_end)
+    
+    def _route_around_nodes(self, start: Dict, end: Dict, obstacles: List[Dict]) -> List[Dict]:
+        """
+        Create waypoints to route around obstacles.
+        Uses simple side-stepping: go around the first obstacle.
+        """
+        waypoints = []
+        
+        # Get obstacle bounds
+        obstacle = obstacles[0]  # Use first obstacle for simplicity
+        obs_pos = obstacle["position"]
+        obs_width = obstacle["width"]
+        obs_height = obstacle["height"]
+        
+        # Determine which side to route around based on positions
+        mid_x = (start["x"] + end["x"]) / 2
+        mid_y = (start["y"] + end["y"]) / 2
+        
+        obs_center_x = obs_pos["x"] + obs_width / 2
+        obs_center_y = obs_pos["y"] + obs_height / 2
+        
+        # Calculate offset direction
+        offset = 80  # Distance to detour around obstacle
+        
+        # Route to the side that's further from obstacle
+        if abs(start["x"] - obs_center_x) > abs(start["y"] - obs_center_y):
+            # Route horizontally
+            detour_x = obs_center_x + (offset if start["x"] > obs_center_x else -offset)
+            waypoints.append({"x": detour_x, "y": start["y"]})
+            waypoints.append({"x": detour_x, "y": end["y"]})
+        else:
+            # Route vertically
+            detour_y = obs_center_y + (offset if start["y"] > obs_center_y else -offset)
+            waypoints.append({"x": start["x"], "y": detour_y})
+            waypoints.append({"x": end["x"], "y": detour_y})
+        
+        return waypoints
     
     def _get_node_position(self, node_id: str) -> Dict:
         """Get position of a node"""
@@ -1264,6 +2309,308 @@ class AWSToCloudBuilderConverter:
             for rt in route_tables:
                 rt["position"]["y"] = current_rt_y
                 current_rt_y += rt_vertical_spacing
+    
+    def _apply_hierarchical_layout(self):
+        """
+        Apply hierarchical layout algorithm to ensure:
+        1. All children are positioned inside their parent containers
+        2. No overlaps between siblings at same level
+        3. Proper spacing and alignment
+        """
+        # First, fix parent relationships for orphaned nodes
+        self._fix_orphaned_nodes()
+        
+        # Build parent-child relationships AFTER fixing orphaned nodes
+        children_by_parent: Dict[str, List[Dict]] = {}
+        for node in self.nodes:
+            parent_id = node["data"].get("parentId")
+            if parent_id not in children_by_parent:
+                children_by_parent[parent_id] = []
+            children_by_parent[parent_id].append(node)
+        
+        # Layout container by container, depth-first
+        def layout_recursive(parent_id=None, parent_node=None, depth=0):
+            """Recursively layout children starting from deepest level"""
+            children = children_by_parent.get(parent_id, [])
+            if not children:
+                return
+            
+            # First, recursively layout each child's children
+            for child in children:
+                if child["data"].get("isContainer", False):
+                    layout_recursive(child["id"], child, depth + 1)
+            
+            # Then layout this level's children
+            if parent_node is None:
+                # Top-level regions
+                self._layout_regions()
+            else:
+                parent_type = parent_node["data"].get("resourceType", {}).get("id")
+                if parent_type == "region":
+                    self._layout_vpcs_in_region(children, parent_node)
+                elif parent_type == "vpc":
+                    self._layout_vpc_contents_v2(children, parent_node)
+                elif parent_type == "subnet":
+                    self._layout_subnet_contents_v2(children, parent_node)
+                elif parent_type == "securityGroup":
+                    self._layout_sg_contents_v2(children, parent_node)
+                else:
+                    self._layout_generic_container(children, parent_node)
+            
+            # Recalculate parent size to fit children
+            if parent_node:
+                self._size_container_to_children(parent_node)
+        
+        # Start from root
+        layout_recursive()
+        
+        # Final pass: ensure all containers sized properly
+        self._recalculate_all_container_sizes()
+    
+    def _fix_orphaned_nodes(self):
+        """Fix parent relationships for nodes that should be inside containers"""
+        # Find the VPC node
+        vpc_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "vpc"]
+        if not vpc_nodes:
+            return
+        
+        vpc_id = vpc_nodes[0]["id"]
+        
+        # RDS instances should be in VPC (note: resource type id is "rds", not "rds_instance")
+        rds_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "rds"]
+        for rds in rds_nodes:
+            rds["data"]["parentId"] = vpc_id  # Force parent to VPC
+        
+        # NAT gateways should be in VPC
+        nat_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "natgateway"]
+        for nat in nat_nodes:
+            nat["data"]["parentId"] = vpc_id  # Force parent to VPC
+        
+        # S3 buckets should be in VPC
+        s3_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "s3"]
+        for s3 in s3_nodes:
+            s3["data"]["parentId"] = vpc_id  # Force parent to VPC
+
+    
+    def _recalculate_all_container_sizes(self):
+        """Recalculate all container sizes to fit their children"""
+        # Process containers bottom-up (children before parents)
+        containers = [n for n in self.nodes if n["data"].get("isContainer", False)]
+        
+        # Sort by nesting depth (deepest first)
+        containers.sort(key=lambda n: n["data"].get("nestingDepth", 0), reverse=True)
+        
+        padding = 20
+        for container in containers:
+            children = [n for n in self.nodes if n["data"].get("parentId") == container["id"]]
+            
+            if not children:
+                continue
+            
+            # Calculate bounds of all children
+            child_xs = [n["position"]["x"] for n in children]
+            child_ys = [n["position"]["y"] for n in children]
+            child_rights = [n["position"]["x"] + n["width"] for n in children]
+            child_bottoms = [n["position"]["y"] + n["height"] for n in children]
+            
+            min_x = min(child_xs)
+            min_y = min(child_ys)
+            max_right = max(child_rights)
+            max_bottom = max(child_bottoms)
+            
+            # Adjust container position if needed
+            if min_x < container["position"]["x"]:
+                container["position"]["x"] = min_x - padding
+            if min_y < container["position"]["y"]:
+                container["position"]["y"] = min_y - padding
+            
+            # Resize container to fit all children
+            new_width = max_right - container["position"]["x"] + padding
+            new_height = max_bottom - container["position"]["y"] + padding
+            
+            container["width"] = new_width
+            container["height"] = new_height
+            container["data"]["size"] = {"width": new_width, "height": new_height}
+    
+    def _layout_regions(self):
+        """Layout all region nodes vertically"""
+        regions = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        current_y = 20
+        
+        for region in regions:
+            region["position"]["x"] = 20
+            region["position"]["y"] = current_y
+            current_y += 600  # Large space for content
+    
+    def _layout_vpcs_in_region(self, vpcs: List[Dict], region_node: Dict):
+        """Layout VPCs inside region"""
+        region_x = region_node["position"]["x"]
+        region_y = region_node["position"]["y"]
+        spacing = 40
+        
+        # Position VPCs vertically
+        current_y = region_y + 40
+        
+        for vpc in vpcs:
+            vpc["position"]["x"] = region_x + 30
+            vpc["position"]["y"] = current_y
+            current_y += 400  # Space for VPC content
+    
+    def _layout_vpc_contents_v2(self, children: List[Dict], vpc_node: Dict):
+        """Layout all resources inside VPC optimally"""
+        vpc_x = vpc_node["position"]["x"]
+        vpc_y = vpc_node["position"]["y"]
+        vpc_id = vpc_node["id"]
+        padding = 30
+        spacing = 50  # Increased from 35 to 50 for better subnet spacing
+        
+        # Categorize children
+        subnets = [n for n in children if n["data"].get("resourceType", {}).get("id") == "subnet"]
+        igws = [n for n in children if n["data"].get("resourceType", {}).get("id") == "internetgateway"]
+        nats = [n for n in children if n["data"].get("resourceType", {}).get("id") == "natgateway"]
+        rts = [n for n in children if n["data"].get("resourceType", {}).get("id") == "routetable"]
+        sgs = [n for n in children if n["data"].get("resourceType", {}).get("id") == "securityGroup"]
+        
+        # Find RDS and S3 that need to be repositioned (they might have parent_id=None)
+        rds_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "rds" and n["data"].get("parentId") == vpc_id]
+        s3_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "s3" and n["data"].get("parentId") == vpc_id]
+        
+        # Column 1: Subnets (left) - with better vertical spacing
+        if subnets:
+            col1_x = vpc_x + padding
+            col1_y = vpc_y + padding + 20
+            for subnet in subnets:
+                subnet["position"]["x"] = col1_x
+                subnet["position"]["y"] = col1_y
+                # Add height to the spacing calculation to prevent overlaps
+                col1_y += subnet["height"] + spacing + 60  # Increased from 50 to 60 for more margin
+        
+        # Column 2: IGW and NAT (right top)
+        col2_x = vpc_x + 350  # Right side
+        col2_y = vpc_y + padding
+        
+        for igw in igws:
+            igw["position"]["x"] = col2_x
+            igw["position"]["y"] = col2_y
+            col2_y += igw["height"] + spacing
+        
+        for nat in nats:
+            nat["position"]["x"] = col2_x
+            nat["position"]["y"] = col2_y
+            col2_y += nat["height"] + spacing
+        
+        # Column 3: Route Tables (right bottom)
+        col3_y = vpc_y + padding + 220
+        for rt in rts:
+            rt["position"]["x"] = col2_x
+            rt["position"]["y"] = col3_y
+            col3_y += rt["height"] + spacing
+        
+        # Bottom row: RDS and S3 (below subnets)
+        bottom_y = vpc_y + 480  # Increased from 450 to give more space
+        bottom_x = vpc_x + padding
+        for rds in rds_nodes:
+            rds["position"]["x"] = bottom_x
+            rds["position"]["y"] = bottom_y
+            bottom_x += rds["width"] + spacing
+        
+        for s3 in s3_nodes:
+            s3["position"]["x"] = bottom_x
+            s3["position"]["y"] = bottom_y
+            bottom_x += s3["width"] + spacing
+
+    
+    def _layout_subnet_contents_v2(self, children: List[Dict], subnet_node: Dict):
+        """Layout EC2 and RDS inside subnet"""
+        subnet_x = subnet_node["position"]["x"]
+        subnet_y = subnet_node["position"]["y"]
+        subnet_w = subnet_node["width"]
+        subnet_h = subnet_node["height"]
+        padding = 15
+        spacing = 12
+        
+        # Split children
+        sgs = [n for n in children if n["data"].get("resourceType", {}).get("id") == "securityGroup"]
+        instances = [n for n in children if n["data"].get("resourceType", {}).get("id") == "ec2"]
+        rds = [n for n in children if n["data"].get("resourceType", {}).get("id") == "rds"]
+        
+        # Left side: instances/SGs
+        col_x = subnet_x + padding
+        col_y = subnet_y + padding
+        
+        for sg in sgs:
+            sg["position"]["x"] = col_x
+            sg["position"]["y"] = col_y
+            col_y += sg["height"] + spacing
+        
+        for inst in instances:
+            inst["position"]["x"] = col_x
+            inst["position"]["y"] = col_y
+            col_y += inst["height"] + spacing
+        
+        # Right side: RDS
+        if rds:
+            rds_x = subnet_x + subnet_w - rds[0]["width"] - padding
+            rds_y = subnet_y + padding
+            for r in rds:
+                r["position"]["x"] = rds_x
+                r["position"]["y"] = rds_y
+                rds_y += r["height"] + spacing
+    
+    def _layout_sg_contents_v2(self, children: List[Dict], sg_node: Dict):
+        """Layout instances inside security group"""
+        sg_x = sg_node["position"]["x"]
+        sg_y = sg_node["position"]["y"]
+        padding = 8
+        spacing = 8
+        
+        current_y = sg_y + padding
+        for child in children:
+            child["position"]["x"] = sg_x + padding
+            child["position"]["y"] = current_y
+            current_y += child["height"] + spacing
+    
+    def _layout_generic_container(self, children: List[Dict], container: Dict):
+        """Default layout for unknown containers"""
+        x = container["position"]["x"]
+        y = container["position"]["y"]
+        padding = 15
+        spacing = 15
+        
+        current_y = y + padding
+        for child in children:
+            child["position"]["x"] = x + padding
+            child["position"]["y"] = current_y
+            current_y += child["height"] + spacing
+    
+    def _size_container_to_children(self, container: Dict):
+        """Resize a container to fit all its children"""
+        children = [n for n in self.nodes if n["data"].get("parentId") == container["id"]]
+        if not children:
+            return
+        
+        padding = 20
+        container_x = container["position"]["x"]
+        container_y = container["position"]["y"]
+        
+        # Find child bounds
+        child_xs = [n["position"]["x"] for n in children]
+        child_ys = [n["position"]["y"] for n in children]
+        child_rights = [n["position"]["x"] + n["width"] for n in children]
+        child_bottoms = [n["position"]["y"] + n["height"] for n in children]
+        
+        min_x = min(child_xs)
+        min_y = min(child_ys)
+        max_right = max(child_rights)
+        max_bottom = max(child_bottoms)
+        
+        # Expand container to fit children
+        new_width = max_right - container_x + padding
+        new_height = max_bottom - container_y + padding
+        
+        container["width"] = max(container["width"], new_width)
+        container["height"] = max(container["height"], new_height)
+        container["data"]["size"] = {"width": container["width"], "height": container["height"]}
     
     def _verify_container_bounds(self):
         """Verify that all children are within their parent container bounds (optional verification)"""
