@@ -1,0 +1,344 @@
+{
+    "nodes": [
+        {
+            "id": "vpc-webapp-001",
+            "x": 73,
+            "y": 370.59999999999997,
+            "width": 114.012,
+            "height": 57.6,
+            "originalNode": {
+                "id": "vpc-webapp-001",
+                "type": "ec2",
+                "label": "VPC: 10.0.0.0/16",
+                "vpc": "vpc-webapp-001",
+                "metadata": {
+                    "state": "available"
+                }
+            }
+        },
+        {
+            "id": "igw-webapp-001",
+            "x": 74,
+            "y": 214.99999999999997,
+            "width": 112.7808,
+            "height": 57.6,
+            "originalNode": {
+                "id": "igw-webapp-001",
+                "type": "internet-gateway",
+                "label": "Internet Gateway",
+                "vpc": "vpc-webapp-001"
+            }
+        },
+        {
+            "id": "nat-webapp-001",
+            "x": 396,
+            "y": 214.99999999999997,
+            "width": 108,
+            "height": 57.6,
+            "originalNode": {
+                "id": "nat-webapp-001",
+                "type": "nat-gateway",
+                "label": "NAT Gateway",
+                "vpc": "vpc-webapp-001",
+                "az": "az-us-east-1-us-east-1a"
+            }
+        },
+        {
+            "id": "i-webapp-001",
+            "x": 562,
+            "y": 214.99999999999997,
+            "width": 108,
+            "height": 57.6,
+            "originalNode": {
+                "id": "i-webapp-001",
+                "type": "ec2",
+                "label": "web-server-01",
+                "vpc": "vpc--public-001",
+                "az": "az-us-east-1-us-east-1a",
+                "metadata": {
+                    "instanceType": "t3.medium",
+                    "state": "running",
+                    "privateIp": "10.0.1.100",
+                    "publicIp": "54.123.45.67",
+                    "securityGroup": "sg-web-001"
+                }
+            }
+        },
+        {
+            "id": "rds-webapp-postgres-db",
+            "x": 253,
+            "y": 370.59999999999997,
+            "width": 129.528,
+            "height": 57.6,
+            "originalNode": {
+                "id": "rds-webapp-postgres-db",
+                "type": "rds",
+                "label": "webapp-postgres-db",
+                "vpc": "vpc-webapp-001",
+                "az": "az-us-east-1-us-east-1b",
+                "metadata": {
+                    "engine": "postgresql",
+                    "engineVersion": "13.7",
+                    "port": 5432,
+                    "instanceClass": "db.t3.micro",
+                    "allocatedStorage": 20,
+                    "multiAz": false
+                }
+            }
+        },
+        {
+            "id": "rds-webapp-mysql-db",
+            "x": 498,
+            "y": 370.59999999999997,
+            "width": 117.08640000000001,
+            "height": 57.6,
+            "originalNode": {
+                "id": "rds-webapp-mysql-db",
+                "type": "rds",
+                "label": "webapp-mysql-db",
+                "vpc": "vpc-webapp-001",
+                "az": "az-us-east-1-us-east-1a",
+                "metadata": {
+                    "engine": "mysql",
+                    "engineVersion": "8.0.28",
+                    "port": 3306,
+                    "instanceClass": "db.t3.micro",
+                    "allocatedStorage": 30,
+                    "multiAz": false
+                }
+            }
+        },
+        {
+            "id": "s3-webapp-assets-bucket",
+            "x": 577,
+            "y": 28.799999999999955,
+            "width": 138.8448,
+            "height": 57.6,
+            "originalNode": {
+                "id": "s3-webapp-assets-bucket",
+                "type": "s3",
+                "label": "webapp-assets-bucket",
+                "metadata": {
+                    "region": "us-east-1",
+                    "versioning": "Enabled",
+                    "encryption": "AES256"
+                }
+            }
+        },
+        {
+            "id": "s3-webapp-backups-bucket",
+            "x": 780,
+            "y": 28.799999999999955,
+            "width": 152.05679999999998,
+            "height": 57.6,
+            "originalNode": {
+                "id": "s3-webapp-backups-bucket",
+                "type": "s3",
+                "label": "webapp-backups-bucket",
+                "metadata": {
+                    "region": "us-east-1",
+                    "versioning": "Enabled",
+                    "encryption": "AES256"
+                }
+            }
+        }
+    ],
+    "edges": [
+        {
+            "source": "igw-webapp-001",
+            "target": "vpc-webapp-001",
+            "points": [
+                {
+                    "x": 73.817,
+                    "y": 244.17
+                },
+                {
+                    "x": 73.66,
+                    "y": 268.24
+                },
+                {
+                    "x": 73.433,
+                    "y": 303.13
+                },
+                {
+                    "x": 73.258,
+                    "y": 330.003
+                }
+            ],
+            "originalEdge": {
+                "source": "igw-webapp-001",
+                "target": "vpc-webapp-001",
+                "label": "Attached to"
+            }
+        },
+        {
+            "source": "i-webapp-001",
+            "target": "rds-webapp-postgres-db",
+            "points": [
+                {
+                    "x": 507.6,
+                    "y": 237.04999999999998
+                },
+                {
+                    "x": 453.66,
+                    "y": 257.91999999999996
+                },
+                {
+                    "x": 379.02,
+                    "y": 286.79999999999995
+                },
+                {
+                    "x": 379.02,
+                    "y": 286.79999999999995
+                },
+                {
+                    "x": 379.02,
+                    "y": 286.79999999999995
+                },
+                {
+                    "x": 322,
+                    "y": 309
+                },
+                {
+                    "x": 322,
+                    "y": 309
+                },
+                {
+                    "x": 322,
+                    "y": 309
+                },
+                {
+                    "x": 308.54,
+                    "y": 320.82
+                },
+                {
+                    "x": 293.51,
+                    "y": 334.02
+                }
+            ],
+            "originalEdge": {
+                "source": "i-webapp-001",
+                "target": "rds-webapp-postgres-db",
+                "protocol": "TCP",
+                "port": 5432,
+                "label": "Connect to postgresql (port 5432)"
+            }
+        },
+        {
+            "source": "i-webapp-001",
+            "target": "rds-webapp-mysql-db",
+            "points": [
+                {
+                    "x": 550.26,
+                    "y": 244.17
+                },
+                {
+                    "x": 540.14,
+                    "y": 268.45
+                },
+                {
+                    "x": 525.44,
+                    "y": 303.75
+                },
+                {
+                    "x": 514.2,
+                    "y": 330.724
+                }
+            ],
+            "originalEdge": {
+                "source": "i-webapp-001",
+                "target": "rds-webapp-mysql-db",
+                "protocol": "TCP",
+                "port": 3306,
+                "label": "Connect to mysql (port 3306)"
+            }
+        },
+        {
+            "source": "rtb-public-001",
+            "target": "igw-webapp-001",
+            "points": [
+                {
+                    "x": 74,
+                    "y": 57.77999999999997
+                },
+                {
+                    "x": 74,
+                    "y": 88.88
+                },
+                {
+                    "x": 74,
+                    "y": 139.35999999999996
+                },
+                {
+                    "x": 74,
+                    "y": 174.48999999999998
+                }
+            ],
+            "originalEdge": {
+                "source": "rtb-public-001",
+                "target": "igw-webapp-001",
+                "label": "Route to 0.0.0.0/0"
+            }
+        },
+        {
+            "source": "rtb-private-001",
+            "target": "nat-webapp-001",
+            "points": [
+                {
+                    "x": 396,
+                    "y": 57.77999999999997
+                },
+                {
+                    "x": 396,
+                    "y": 88.88
+                },
+                {
+                    "x": 396,
+                    "y": 139.35999999999996
+                },
+                {
+                    "x": 396,
+                    "y": 174.48999999999998
+                }
+            ],
+            "originalEdge": {
+                "source": "rtb-private-001",
+                "target": "nat-webapp-001",
+                "label": "Route to 0.0.0.0/0"
+            }
+        }
+    ],
+    "subgraphs": [
+        {
+            "id": "vpc-webapp-001",
+            "name": "VPC (vpc-webapp-001) (10.0.0.0/16)",
+            "x": 8,
+            "y": 120.59999999999997,
+            "width": 624,
+            "height": 294.8,
+            "type": "vpc"
+        },
+        {
+            "id": "az-us-east-1-us-east-1a",
+            "name": "us-east-1a",
+            "x": 334,
+            "y": 153.39999999999998,
+            "width": 290,
+            "height": 254,
+            "type": "az"
+        },
+        {
+            "id": "az-us-east-1-us-east-1b",
+            "name": "us-east-1b",
+            "x": 180,
+            "y": 309,
+            "width": 146,
+            "height": 98.4,
+            "type": "az"
+        }
+    ],
+    "boundingBox": {
+        "width": 956.03,
+        "height": 523.4
+    }
+}

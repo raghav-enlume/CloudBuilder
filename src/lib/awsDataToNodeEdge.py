@@ -7,6 +7,7 @@ Supports 50+ AWS resources with relationship mapping
 import json
 import uuid
 from typing import Dict, List, Any, Tuple
+from collections import defaultdict
 
 # Resource type definitions matching CloudBuilder format - 50+ AWS resources
 RESOURCE_TYPES = {
@@ -322,9 +323,265 @@ EDGE_STYLES = {
 }
 
 
+class SugiyamaLayout:
+    """
+    Sugiyama layered graph drawing algorithm implementation for AWS resources
+    
+    Phases:
+    1. Layer Assignment: Assign nodes to layers based on AWS hierarchy depth
+    2. Node Ordering: Order nodes within layers to minimize edge crossings
+    3. Position Calculation: Calculate x, y coordinates respecting parent-child relationships
+    4. Container Sizing: Size all containers to fit their children
+    """
+    
+    # AWS resource type to layer mapping
+    RESOURCE_LAYERS = {
+        'region': 0,
+        'vpc': 1,
+        'subnet': 2,
+        'ec2': 3,
+        'lambda': 3,
+        'rds': 2,
+        's3': 1,
+        'internetgateway': 1,
+        'natgateway': 2,
+        'routetable': 1,
+        'securityGroup': 2,
+        'elasticache': 2,
+        'dynamodb': 1,
+        'alb': 2,
+        'nlb': 2,
+        'cloudwatch': 1,
+        'cloudfront': 0,
+        'apigateway': 1,
+        'ebs': 3,
+        'snapshot': 2,
+    }
+    
+    # Layout spacing parameters
+    LAYER_SPACING = 300  # Vertical space between layers
+    NODE_SPACING = 200   # Horizontal space between sibling nodes
+    CONTAINER_PADDING = 30  # Padding inside containers
+    
+    @staticmethod
+    def apply_layout(nodes: List[Dict], edges: List[Dict]) -> Tuple[List[Dict], List[Dict]]:
+        """
+        Apply Sugiyama layout algorithm to AWS resource graph
+        """
+        # Build hierarchy maps
+        parent_map = {}
+        children_map = defaultdict(list)
+        
+        for node in nodes:
+            parent_id = node['data'].get('parentId')
+            if parent_id:
+                parent_map[node['id']] = parent_id
+                children_map[parent_id].append(node['id'])
+        
+        # Do NOT assign region parents to external services
+        # They should remain root-level for proper spacing outside region boundaries
+        
+        # Phase 1: Assign layers based on AWS hierarchy
+        layers = SugiyamaLayout._assign_layers(nodes, parent_map)
+        
+        # Phase 2: Order nodes within layers to minimize crossings
+        SugiyamaLayout._order_nodes_by_barycenter(nodes, edges, layers)
+        
+        # Phase 3: Calculate positions (x, y)
+        SugiyamaLayout._calculate_positions(nodes, layers, parent_map, children_map)
+        
+        # Phase 4: Size containers to fit children
+        SugiyamaLayout._size_containers(nodes, children_map)
+        
+        return nodes, edges
+    
+    @staticmethod
+    def _assign_layers(nodes: List[Dict], parent_map: Dict) -> Dict[str, int]:
+        """
+        Assign layer number to each node based on AWS hierarchy depth
+        """
+        layers = {}
+        
+        for node in nodes:
+            resource_type = node['data'].get('resourceType', {}).get('id', 'unknown')
+            
+            # Use predefined layer if available
+            if resource_type in SugiyamaLayout.RESOURCE_LAYERS:
+                layers[node['id']] = SugiyamaLayout.RESOURCE_LAYERS[resource_type]
+            else:
+                # Calculate layer based on parent hierarchy
+                if node['id'] in parent_map:
+                    parent_id = parent_map[node['id']]
+                    parent_layer = layers.get(parent_id, 1)
+                    layers[node['id']] = parent_layer + 1
+                else:
+                    layers[node['id']] = 0
+        
+        return layers
+    
+    @staticmethod
+    def _order_nodes_by_barycenter(nodes: List[Dict], edges: List[Dict], layers: Dict) -> None:
+        """
+        Order nodes within each layer using barycenter heuristic
+        to minimize edge crossings
+        """
+        # Group nodes by layer
+        layer_nodes = defaultdict(list)
+        for node in nodes:
+            layer = layers.get(node['id'], 0)
+            layer_nodes[layer].append(node)
+        
+        # For each layer, sort by barycenter position of neighbors
+        for layer in sorted(layer_nodes.keys()):
+            nodes_in_layer = layer_nodes[layer]
+            barycenters = {}
+            
+            for node in nodes_in_layer:
+                neighbor_positions = []
+                
+                # Find positions of connected nodes
+                for edge in edges:
+                    if edge['source'] == node['id']:
+                        neighbor = next((n for n in nodes if n['id'] == edge['target']), None)
+                        if neighbor and layers.get(neighbor['id'], layer) != layer:
+                            neighbor_positions.append(neighbor['position'].get('x', 0))
+                    elif edge['target'] == node['id']:
+                        neighbor = next((n for n in nodes if n['id'] == edge['source']), None)
+                        if neighbor and layers.get(neighbor['id'], layer) != layer:
+                            neighbor_positions.append(neighbor['position'].get('x', 0))
+                
+                # Calculate barycenter (average position of neighbors)
+                if neighbor_positions:
+                    barycenters[node['id']] = sum(neighbor_positions) / len(neighbor_positions)
+                else:
+                    barycenters[node['id']] = node['position'].get('x', 0)
+            
+            # Sort nodes by barycenter value
+            layer_nodes[layer].sort(key=lambda n: barycenters.get(n['id'], 0))
+    
+    @staticmethod
+    def _calculate_positions(nodes: List[Dict], layers: Dict, parent_map: Dict, children_map: Dict) -> None:
+        """
+        Calculate x, y coordinates for all nodes
+        Respects parent-child relationships and container boundaries
+        """
+        # Group nodes by layer
+        layer_nodes = defaultdict(list)
+        for node in nodes:
+            layer = layers.get(node['id'], 0)
+            layer_nodes[layer].append(node)
+        
+        # Calculate y-position for each layer
+        layer_y = {}
+        current_y = 0
+        
+        for layer in sorted(layer_nodes.keys()):
+            layer_y[layer] = current_y
+            max_height = max((n.get('height', 80) for n in layer_nodes[layer]), default=80)
+            current_y += max_height + SugiyamaLayout.LAYER_SPACING
+        
+        # Position nodes within each layer
+        for layer in sorted(layer_nodes.keys()):
+            nodes_in_layer = layer_nodes[layer]
+            
+            # Group nodes by parent
+            parent_groups = defaultdict(list)
+            for node in nodes_in_layer:
+                parent_id = parent_map.get(node['id'], 'root')
+                parent_groups[parent_id].append(node)
+            
+            # Position each group
+            current_x = 20  # Start at left margin
+            
+            for parent_id, group_nodes in parent_groups.items():
+                parent_node = next((n for n in nodes if n['id'] == parent_id), None) if parent_id != 'root' else None
+                
+                if parent_node:
+                    # Position children inside parent container
+                    parent_x = parent_node['position'].get('x', 0)
+                    start_x = parent_x + SugiyamaLayout.CONTAINER_PADDING
+                    
+                    # Distribute horizontally within container
+                    max_parent_right = parent_x + parent_node.get('width', 600)
+                    
+                    for idx, node in enumerate(group_nodes):
+                        node_width = node.get('width', 120)
+                        x_pos = start_x + (idx * (node_width + SugiyamaLayout.NODE_SPACING))
+                        
+                        # Ensure node stays within parent bounds
+                        if x_pos + node_width > max_parent_right - SugiyamaLayout.CONTAINER_PADDING:
+                            x_pos = max_parent_right - node_width - SugiyamaLayout.CONTAINER_PADDING
+                        
+                        # Add Y-based offset for multiple children at same layer to avoid overlap
+                        y_offset = idx * 100  # Larger vertical offset between siblings (was 25)
+                        node['position']['x'] = x_pos
+                        node['position']['y'] = layer_y[layer] + y_offset
+                else:
+                    # Root-level nodes - position away from containers
+                    # Find rightmost boundary of all containers to position externals beyond
+                    container_nodes = [n for n in nodes if n['data'].get('isContainer', False)]
+                    max_container_right = 0
+                    if container_nodes:
+                        max_container_right = max(
+                            n['position'].get('x', 0) + n.get('width', 600) 
+                            for n in container_nodes
+                        )
+                    
+                    # Position root nodes far to the right with proper spacing
+                    start_x = max(current_x, max_container_right + 200)
+                    
+                    for idx, node in enumerate(group_nodes):
+                        node_width = node.get('width', 120)
+                        # Add Y-based offset for multiple nodes at same layer to avoid overlap
+                        y_offset = idx * 20  # Slight vertical offset
+                        node['position']['x'] = start_x + (idx * (node_width + SugiyamaLayout.NODE_SPACING))
+                        node['position']['y'] = layer_y[layer] + y_offset
+                    
+                    # Update current_x for next root group
+                    if group_nodes:
+                        last_node = group_nodes[-1]
+                        current_x = last_node['position'].get('x', 0) + last_node.get('width', 120) + SugiyamaLayout.NODE_SPACING
+    
+    @staticmethod
+    def _size_containers(nodes: List[Dict], children_map: Dict) -> None:
+        """
+        Size containers (Region, VPC, Subnet) to fit all children
+        Process bottom-up: deepest containers first
+        """
+        containers = [n for n in nodes if n['data'].get('isContainer', False)]
+        containers.sort(key=lambda n: n['data'].get('nestingDepth', 0), reverse=True)
+        
+        for container in containers:
+            children_ids = children_map.get(container['id'], [])
+            if not children_ids:
+                continue
+            
+            children = [n for n in nodes if n['id'] in children_ids]
+            if not children:
+                continue
+            
+            # Calculate bounds
+            min_x = min(c['position'].get('x', 0) for c in children)
+            max_x = max(c['position'].get('x', 0) + c.get('width', 150) for c in children)
+            min_y = min(c['position'].get('y', 0) for c in children)
+            max_y = max(c['position'].get('y', 0) + c.get('height', 80) for c in children)
+            
+            # Size container
+            container['position']['x'] = min_x - SugiyamaLayout.CONTAINER_PADDING
+            container['position']['y'] = min_y - SugiyamaLayout.CONTAINER_PADDING
+            container['width'] = (max_x - min_x) + (2 * SugiyamaLayout.CONTAINER_PADDING)
+            container['height'] = (max_y - min_y) + (2 * SugiyamaLayout.CONTAINER_PADDING)
+            
+            container['data']['size'] = {
+                'width': container['width'],
+                'height': container['height']
+            }
+
+
 class AWSToCloudBuilderConverter:
-    def __init__(self, aws_data: Dict[str, Any]):
+    def __init__(self, aws_data: Dict[str, Any], use_sugiyama: bool = False):
         self.aws_data = aws_data
+        self.use_sugiyama = use_sugiyama
         self.nodes: List[Dict] = []
         self.edges: List[Dict] = []
         self.node_map: Dict[str, Dict] = {}  # node_id -> node data
@@ -358,11 +615,22 @@ class AWSToCloudBuilderConverter:
             self._process_region(region_name, region_data, region_y_position)
             region_y_position = 0  # Will be updated after sizing
         
-        # Third pass: Apply new hierarchical layout algorithm
-        # This ensures all children are positioned inside parents with no overlaps
-        self._apply_hierarchical_layout()
+        # Third pass: Apply layout algorithm
+        # Use Sugiyama layered graph algorithm or AWS-aware grid layout
+        if self.use_sugiyama:
+            print("Applying Sugiyama layered graph algorithm for resource placement...")
+            self.nodes, self.edges = SugiyamaLayout.apply_layout(self.nodes, self.edges)
+        else:
+            print("Applying AWS-aware hierarchical grid layout...")
+            self._apply_hierarchical_layout()
         
-        # Fourth pass: Verify layout and validate positions
+        # Fourth pass: Resolve overlaps between sibling containers
+        self._resolve_container_collisions()
+        
+        # Fifth pass: Resize parent containers to fit repositioned children
+        self._resize_containers_to_fit_children()
+        
+        # Sixth pass: Verify layout and validate positions
         self._verify_container_bounds()
         self._validate_all_positions()
         
@@ -893,9 +1161,9 @@ class AWSToCloudBuilderConverter:
                 position={"x": x_pos, "y": y_pos},
                 size={"width": nat_width, "height": nat_height},
                 is_container=False,
-                parent_id=None,
+                parent_id=subnet_node_id,
                 config={"originalType": "AWS::EC2::NatGateway"},
-                nesting_depth=1,
+                nesting_depth=2,
                 natGatewayId=nat_id,
                 subnetId=subnet_id,
                 state=nat.get("State")
@@ -943,9 +1211,9 @@ class AWSToCloudBuilderConverter:
                     position={"x": x_pos, "y": y_pos},
                     size={"width": rds_width, "height": rds_height},
                     is_container=False,
-                    parent_id=None,
+                    parent_id=vpc_node_id,
                     config={"originalType": "AWS::RDS::DBInstance"},
-                    nesting_depth=1,
+                    nesting_depth=2,
                     dbInstanceName=db_name,
                     engine=rds.get("engine"),
                     port=rds.get("port"),
@@ -975,9 +1243,9 @@ class AWSToCloudBuilderConverter:
                 position={"x": x_pos, "y": y_pos},
                 size={"width": rds_width, "height": rds_height},
                 is_container=False,
-                parent_id=None,
+                parent_id=subnet_node_id,
                 config={"originalType": "AWS::RDS::DBInstance"},
-                nesting_depth=2,
+                nesting_depth=3,
                 dbInstanceName=db_name,
                 engine=rds.get("engine"),
                 port=rds.get("port"),
@@ -1048,67 +1316,61 @@ class AWSToCloudBuilderConverter:
     def _process_lambdas(self, lambdas: List[Dict]):
         """Process Lambda Functions"""
         lambda_map = getattr(self, 'lambda_node_map', {})
-        
+        region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        region_id = region_nodes[0]["id"] if region_nodes else None
         for idx, func in enumerate(lambdas):
             func_name = func.get("FunctionName") or func.get("name", f"lambda-{idx}")
             node_id = f"lambda-{func_name}"
             lambda_map[func_name] = node_id
-            
             lambda_width = 110
             lambda_height = 70
             x_pos = 500 + (idx * 150)
             y_pos = 300
-            
             self._create_node(
                 node_id=node_id, label=func_name, resource_type="lambda",
                 position={"x": x_pos, "y": y_pos}, size={"width": lambda_width, "height": lambda_height},
-                is_container=False, parent_id=None,
+                is_container=False, parent_id=region_id,
                 config={"originalType": "AWS::Lambda::Function"},
-                nesting_depth=0, functionName=func_name, runtime=func.get("Runtime", "python3.9")
+                nesting_depth=1, functionName=func_name, runtime=func.get("Runtime", "python3.9")
             )
-        
         setattr(self, 'lambda_node_map', lambda_map)
     
     def _process_load_balancers(self, lbs: List[Dict]):
         """Process Load Balancers (ALB/NLB)"""
         alb_map = getattr(self, 'alb_node_map', {})
-        
+        region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        region_id = region_nodes[0]["id"] if region_nodes else None
         for lb in lbs:
             lb_name = lb.get("LoadBalancerName") or lb.get("name", "alb")
             lb_type = lb.get("Type", "application").lower()
             res_type = "alb" if "application" in lb_type else "nlb"
             node_id = f"{res_type}-{lb_name}"
             alb_map[lb_name] = node_id
-            
             lb_width = 120
             lb_height = 80
             x_pos = 300
             y_pos = 150
-            
             self._create_node(
                 node_id=node_id, label=lb_name, resource_type=res_type,
                 position={"x": x_pos, "y": y_pos}, size={"width": lb_width, "height": lb_height},
-                is_container=False, parent_id=None,
+                is_container=False, parent_id=region_id,
                 config={"originalType": f"AWS::ElasticLoadBalancingV2::{res_type}"},
-                nesting_depth=0, lbName=lb_name, lbType=lb_type
+                nesting_depth=1, lbName=lb_name, lbType=lb_type
             )
-        
         setattr(self, 'alb_node_map', alb_map)
     
     def _process_s3_buckets(self, buckets: List[Dict]):
-        """Process S3 Buckets"""
+        """Process S3 Buckets - keep at root level (not inside region) for cleaner layout"""
         s3_map = getattr(self, 's3_node_map', {})
         
         for bucket in buckets:
             bucket_name = bucket.get("Name") or bucket.get("Bucket", "s3-bucket")
             node_id = f"s3-{bucket_name}"
             s3_map[bucket_name] = node_id
-            
             s3_width = 100
             s3_height = 80
             x_pos = 50 + (len(s3_map) * 120)
             y_pos = 50
-            
             self._create_node(
                 node_id=node_id, label=bucket_name, resource_type="s3",
                 position={"x": x_pos, "y": y_pos}, size={"width": s3_width, "height": s3_height},
@@ -1116,13 +1378,14 @@ class AWSToCloudBuilderConverter:
                 config={"originalType": "AWS::S3::Bucket"},
                 nesting_depth=0, bucketName=bucket_name
             )
-        
         setattr(self, 's3_node_map', s3_map)
     
     def _process_cloudfront(self, dists: List[Dict]):
         """Process CloudFront Distributions"""
         cf_map = getattr(self, 'cloudfront_node_map', {})
         
+        region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        region_id = region_nodes[0]["id"] if region_nodes else None
         for dist in dists:
             dist_id = dist.get("Id") or dist.get("DomainName", "cloudfront")
             node_id = f"cloudfront-{dist_id}"
@@ -1136,9 +1399,9 @@ class AWSToCloudBuilderConverter:
             self._create_node(
                 node_id=node_id, label=dist_id, resource_type="cloudfront",
                 position={"x": x_pos, "y": y_pos}, size={"width": cf_width, "height": cf_height},
-                is_container=False, parent_id=None,
+                is_container=False, parent_id=region_id,
                 config={"originalType": "AWS::CloudFront::Distribution"},
-                nesting_depth=0, distId=dist_id
+                nesting_depth=1, distId=dist_id
             )
         
         setattr(self, 'cloudfront_node_map', cf_map)
@@ -1146,6 +1409,8 @@ class AWSToCloudBuilderConverter:
     def _process_api_gateways(self, apis: List[Dict]):
         """Process API Gateways"""
         api_map = getattr(self, 'api_node_map', {})
+        region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        region_id = region_nodes[0]["id"] if region_nodes else None
         
         for api in apis:
             api_name = api.get("name") or api.get("Name", "api")
@@ -1161,9 +1426,9 @@ class AWSToCloudBuilderConverter:
             self._create_node(
                 node_id=node_id, label=api_name, resource_type="api_gateway",
                 position={"x": x_pos, "y": y_pos}, size={"width": api_width, "height": api_height},
-                is_container=False, parent_id=None,
+                is_container=False, parent_id=region_id,
                 config={"originalType": "AWS::ApiGateway::RestApi"},
-                nesting_depth=0, apiName=api_name, apiId=api_id
+                nesting_depth=1, apiName=api_name, apiId=api_id
             )
         
         setattr(self, 'api_node_map', api_map)
@@ -1171,6 +1436,8 @@ class AWSToCloudBuilderConverter:
     def _process_sqs(self, queues: List[Dict]):
         """Process SQS Queues"""
         sqs_map = getattr(self, 'sqs_node_map', {})
+        region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        region_id = region_nodes[0]["id"] if region_nodes else None
         
         for queue in queues:
             queue_name = queue.get("QueueName") or queue.get("name", "queue")
@@ -1185,9 +1452,9 @@ class AWSToCloudBuilderConverter:
             self._create_node(
                 node_id=node_id, label=queue_name, resource_type="sqs",
                 position={"x": x_pos, "y": y_pos}, size={"width": queue_width, "height": queue_height},
-                is_container=False, parent_id=None,
+                is_container=False, parent_id=region_id,
                 config={"originalType": "AWS::SQS::Queue"},
-                nesting_depth=0, queueName=queue_name
+                nesting_depth=1, queueName=queue_name
             )
         
         setattr(self, 'sqs_node_map', sqs_map)
@@ -1195,6 +1462,8 @@ class AWSToCloudBuilderConverter:
     def _process_sns(self, topics: List[Dict]):
         """Process SNS Topics"""
         sns_map = getattr(self, 'sns_node_map', {})
+        region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        region_id = region_nodes[0]["id"] if region_nodes else None
         
         for topic in topics:
             topic_name = topic.get("TopicName") or topic.get("name", "topic")
@@ -1210,9 +1479,9 @@ class AWSToCloudBuilderConverter:
             self._create_node(
                 node_id=node_id, label=topic_name, resource_type="sns",
                 position={"x": x_pos, "y": y_pos}, size={"width": topic_width, "height": topic_height},
-                is_container=False, parent_id=None,
+                is_container=False, parent_id=region_id,
                 config={"originalType": "AWS::SNS::Topic"},
-                nesting_depth=0, topicName=topic_name, topicArn=topic_arn
+                nesting_depth=1, topicName=topic_name, topicArn=topic_arn
             )
         
         setattr(self, 'sns_node_map', sns_map)
@@ -1228,7 +1497,6 @@ class AWSToCloudBuilderConverter:
             
             ecs_width = 110
             ecs_height = 80
-            x_pos = 800
             y_pos = 450
             
             self._create_node(
@@ -1244,6 +1512,8 @@ class AWSToCloudBuilderConverter:
     def _process_dynamodb(self, tables: List[Dict]):
         """Process DynamoDB Tables"""
         ddb_map = getattr(self, 'dynamodb_node_map', {})
+        region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        region_id = region_nodes[0]["id"] if region_nodes else None
         
         for table in tables:
             table_name = table.get("TableName") or table.get("name", "table")
@@ -1258,9 +1528,9 @@ class AWSToCloudBuilderConverter:
             self._create_node(
                 node_id=node_id, label=table_name, resource_type="dynamodb",
                 position={"x": x_pos, "y": y_pos}, size={"width": ddb_width, "height": ddb_height},
-                is_container=False, parent_id=None,
+                is_container=False, parent_id=region_id,
                 config={"originalType": "AWS::DynamoDB::Table"},
-                nesting_depth=0, tableName=table_name
+                nesting_depth=1, tableName=table_name
             )
         
         setattr(self, 'dynamodb_node_map', ddb_map)
@@ -1268,6 +1538,8 @@ class AWSToCloudBuilderConverter:
     def _process_elasticache(self, caches: List[Dict]):
         """Process ElastiCache Clusters"""
         cache_map = getattr(self, 'elasticache_node_map', {})
+        region_nodes = [n for n in self.nodes if n["data"].get("resourceType", {}).get("id") == "region"]
+        region_id = region_nodes[0]["id"] if region_nodes else None
         
         for cache in caches:
             cache_id = cache.get("CacheClusterId") or cache.get("id", "cache")
@@ -1282,9 +1554,9 @@ class AWSToCloudBuilderConverter:
             self._create_node(
                 node_id=node_id, label=cache_id, resource_type="elasticache",
                 position={"x": x_pos, "y": y_pos}, size={"width": cache_width, "height": cache_height},
-                is_container=False, parent_id=None,
+                is_container=False, parent_id=region_id,
                 config={"originalType": "AWS::ElastiCache::CacheCluster"},
-                nesting_depth=0, cacheId=cache_id
+                nesting_depth=1, cacheId=cache_id
             )
         
         setattr(self, 'elasticache_node_map', cache_map)
@@ -2219,7 +2491,7 @@ class AWSToCloudBuilderConverter:
             
             all_children = subnets + rts
             if all_children:
-                max_y = max([n["position"]["y"] + n.get("height", 100) for n in all_children])
+                max_y = max([n["position"]["y"] + n["height"] for n in all_children])
                 orphaned_y_start = max_y + padding
             else:
                 # If no subnets/RTs, position after IGWs (which are at top)
@@ -2269,11 +2541,8 @@ class AWSToCloudBuilderConverter:
                 max_right = max([n["position"]["x"] + n["width"] for n in all_descendants])
                 max_bottom = max([n["position"]["y"] + n["height"] for n in all_descendants])
                 
-                new_width = max_right - subnet_x + padding
-                new_height = max_bottom - subnet_y + padding
-                
-                subnet_node["width"] = max(new_width, 200)
-                subnet_node["height"] = max(new_height, 100)
+                subnet_node["width"] = max(max_right - subnet_x + padding, 200)
+                subnet_node["height"] = max(max_bottom - subnet_y + padding, 100)
                 subnet_node["data"]["size"] = {"width": subnet_node["width"], "height": subnet_node["height"]}
     
     def _reposition_route_tables(self):
@@ -2428,9 +2697,9 @@ class AWSToCloudBuilderConverter:
             new_width = max_right - container["position"]["x"] + padding
             new_height = max_bottom - container["position"]["y"] + padding
             
-            container["width"] = new_width
-            container["height"] = new_height
-            container["data"]["size"] = {"width": new_width, "height": new_height}
+            container["width"] = max(container["width"], new_width)
+            container["height"] = max(container["height"], new_height)
+            container["data"]["size"] = {"width": container["width"], "height": container["height"]}
     
     def _layout_regions(self):
         """Layout all region nodes vertically"""
@@ -2612,6 +2881,124 @@ class AWSToCloudBuilderConverter:
         container["height"] = max(container["height"], new_height)
         container["data"]["size"] = {"width": container["width"], "height": container["height"]}
     
+    def _clamp_nodes_to_parents(self):
+        """Clamp all child nodes to stay within their parent container bounds.
+        
+        This ensures no resource is positioned outside of its parent container.
+        Only moves nodes that actually overflow - preserves Sugiyama layout otherwise.
+        """
+        containers = {n['id']: n for n in self.nodes if n["data"].get("isContainer", False)}
+        padding = 30
+        
+        for container_id, container in containers.items():
+            container_x = container['position']['x']
+            container_y = container['position']['y']
+            container_width = container['width']
+            container_height = container['height']
+            container_right = container_x + container_width
+            container_bottom = container_y + container_height
+            
+            # Find all children of this container
+            children = [n for n in self.nodes if n['data'].get('parentId') == container_id]
+            
+            for child in children:
+                child_x = child['position']['x']
+                child_y = child['position']['y']
+                child_width = child['width']
+                child_height = child['height']
+                
+                # Only adjust if node extends beyond container bounds
+                if child_x < container_x + padding:
+                    child['position']['x'] = container_x + padding
+                
+                if child_y < container_y + padding:
+                    child['position']['y'] = container_y + padding
+                
+                if child_x + child_width > container_right - padding:
+                    child['position']['x'] = container_right - child_width - padding
+                
+                if child_y + child_height > container_bottom - padding:
+                    child['position']['y'] = container_bottom - child_height - padding
+    
+    def _resolve_container_collisions(self):
+        """Resolve overlaps between sibling containers by pushing them apart vertically."""
+        # Group containers by parent
+        by_parent = {}
+        for node in self.nodes:
+            if node['data'].get('isContainer', False):
+                parent_id = node['data'].get('parentId')
+                if parent_id not in by_parent:
+                    by_parent[parent_id] = []
+                by_parent[parent_id].append(node)
+        
+        # For each parent with multiple containers, resolve overlaps
+        for parent_id, containers in by_parent.items():
+            if len(containers) < 2:
+                continue
+            
+            # Iteratively resolve all overlaps
+            max_iterations = 10
+            for iteration in range(max_iterations):
+                overlaps_found = False
+                
+                # Sort by Y position
+                containers_sorted = sorted(containers, key=lambda n: n['position']['y'])
+                
+                # Check each pair of sibling containers
+                for i in range(len(containers_sorted) - 1):
+                    c1 = containers_sorted[i]
+                    c2 = containers_sorted[i + 1]
+                    
+                    y1 = c1['position']['y']
+                    h1 = c1['height']
+                    y2 = c2['position']['y']
+                    h2 = c2['height']
+                    
+                    # If they overlap in Y, push c2 down
+                    if y1 + h1 > y2:
+                        gap = 20  # Minimum gap between containers
+                        new_y2 = y1 + h1 + gap
+                        c2['position']['y'] = new_y2
+                        overlaps_found = True
+                
+                if not overlaps_found:
+                    break
+    
+    def _resize_containers_to_fit_children(self):
+        """Resize all containers to fit their children after collision resolution."""
+        padding = 30
+        
+        # Get all containers sorted by nesting depth (deepest first)
+        containers = sorted(
+            [n for n in self.nodes if n['data'].get('isContainer', False)],
+            key=lambda n: n['data'].get('nestingDepth', 0),
+            reverse=True
+        )
+        
+        for container in containers:
+            children = [n for n in self.nodes if n['data'].get('parentId') == container['id']]
+            
+            if not children:
+                continue
+            
+            # Calculate bounds of all children
+            min_x = min(c['position']['x'] for c in children)
+            max_x = max(c['position']['x'] + c['width'] for c in children)
+            min_y = min(c['position']['y'] for c in children)
+            max_y = max(c['position']['y'] + c['height'] for c in children)
+            
+            # Resize and reposition container
+            container['position']['x'] = min_x - padding
+            container['position']['y'] = min_y - padding
+            container['width'] = (max_x - min_x) + (2 * padding)
+            container['height'] = (max_y - min_y) + (2 * padding)
+            
+            # Update size data
+            container['data']['size'] = {
+                'width': container['width'],
+                'height': container['height']
+            }
+    
     def _verify_container_bounds(self):
         """Verify that all children are within their parent container bounds (optional verification)"""
         containers = {n['id']: n for n in self.nodes if n["data"].get("isContainer", False)}
@@ -2785,17 +3172,23 @@ class AWSToCloudBuilderConverter:
             if not self.node_map.get(n, {})['data'].get('resourceType', {}).get('id') == 'region'
         ]
         
-        if significant_overlaps:
-            print(f"\n⚠️  EDGE OVERLAPS WITH NODES: {len(significant_overlaps)}")
-            for edge_id, node_id in significant_overlaps[:5]:  # Show first 5
-                print(f"   - {edge_id} crosses {node_id}")
-            if len(significant_overlaps) > 5:
-                print(f"   ... and {len(significant_overlaps) - 5} more")
-        else:
-            print("\n✅ No problematic edge overlaps detected")
+        # Further filter: ignore edges to/from S3 (external service) since they naturally cross VPC
+        critical_overlaps = [
+            (e, n) for e, n in significant_overlaps 
+            if 's3' not in e and 's3' not in n
+        ]
         
-        if edge_overlaps and not significant_overlaps:
-            print(f"   (Note: {len(edge_overlaps)} edges cross region boundaries - this is expected)")
+        if critical_overlaps:
+            print(f"\n⚠️  EDGE OVERLAPS WITH NODES: {len(critical_overlaps)}")
+            for edge_id, node_id in critical_overlaps[:5]:  # Show first 5
+                print(f"   - {edge_id} crosses {node_id}")
+            if len(critical_overlaps) > 5:
+                print(f"   ... and {len(critical_overlaps) - 5} more")
+        else:
+            print("\n✅ No critical edge overlaps detected")
+        
+        if significant_overlaps and not critical_overlaps:
+            print(f"   (Note: {len(significant_overlaps)} edges involve S3 or cross region boundaries - this is expected)")
         
         # Check container bounds
         print("\n✅ Container bounds validated")
@@ -2806,13 +3199,14 @@ class AWSToCloudBuilderConverter:
         return len(node_overlaps) == 0
 
 
-def convert_aws_to_cloud_builder(aws_json_path: str, output_path: str = None) -> Dict[str, Any]:
+def convert_aws_to_cloud_builder(aws_json_path: str, output_path: str = None, use_sugiyama: bool = False) -> Dict[str, Any]:
     """
     Main function to convert AWS JSON to CloudBuilder diagram format
     
     Args:
         aws_json_path: Path to AWS JSON file
         output_path: Optional path to save the output JSON
+        use_sugiyama: Whether to use Sugiyama layered graph algorithm
     
     Returns:
         Dictionary with nodes and edges in CloudBuilder format
@@ -2822,7 +3216,7 @@ def convert_aws_to_cloud_builder(aws_json_path: str, output_path: str = None) ->
         aws_data = json.load(f)
     
     # Convert
-    converter = AWSToCloudBuilderConverter(aws_data)
+    converter = AWSToCloudBuilderConverter(aws_data, use_sugiyama=use_sugiyama)
     result = converter.convert()
     
     # Save output if path provided
@@ -2838,15 +3232,17 @@ if __name__ == "__main__":
     import sys
     
     if len(sys.argv) < 2:
-        print("Usage: python awsDataToNodeEdge.py <input_json_path> [output_json_path]")
+        print("Usage: python awsDataToNodeEdge.py <input_json_path> [output_json_path] [--sugiyama]")
         print("\nExample:")
         print("  python awsDataToNodeEdge.py onload.json architecture-diagram.json")
+        print("  python awsDataToNodeEdge.py onload.json architecture-diagram.json --sugiyama")
         sys.exit(1)
     
     input_path = sys.argv[1]
-    output_path = sys.argv[2] if len(sys.argv) > 2 else "architecture-diagram.json"
+    output_path = sys.argv[2] if len(sys.argv) > 2 and not sys.argv[2].startswith('--') else "architecture-diagram.json"
+    use_sugiyama = '--sugiyama' in sys.argv
     
-    result = convert_aws_to_cloud_builder(input_path, output_path)
+    result = convert_aws_to_cloud_builder(input_path, output_path, use_sugiyama)
     print(f"\nConversion complete!")
     print(f"Total nodes: {len(result['nodes'])}")
     print(f"Total edges: {len(result['edges'])}")

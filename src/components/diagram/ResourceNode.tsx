@@ -384,7 +384,7 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
         >
           <Handle
             type="target"
-            position={Position.Top}
+            position={Position.Left}
             className="!w-2.5 !h-2.5 !bg-primary !border-2 !border-primary-foreground"
             style={{ zIndex: 1000, pointerEvents: 'auto' }}
           />
@@ -406,7 +406,7 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
 
           <Handle
             type="source"
-            position={Position.Bottom}
+            position={Position.Right}
             className="!w-2.5 !h-2.5 !bg-primary !border-2 !border-primary-foreground"
             style={{ zIndex: 1000, pointerEvents: 'auto' }}
           />
