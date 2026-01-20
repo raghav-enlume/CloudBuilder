@@ -89,12 +89,8 @@ const DiagramCanvasInner = () => {
       .react-flow__edge:hover .react-flow__edge-label {
         opacity: 1;
       }
-      .react-flow__edge-textbg {
-        opacity: 0.3;
-      }
       .react-flow__edge-text{
         font-size: 8px;
-        color: red
       }
       .react-flow__node {
         z-index: -1 !important;

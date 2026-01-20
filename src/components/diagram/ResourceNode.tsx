@@ -335,11 +335,12 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
   };
 
   // size from node data (if provided by store)
-  const width = data?.size?.width ?? 64;
-  const height = data?.size?.height ?? 64;
+  const width = typeof data?.size?.width === 'number' && !isNaN(data.size.width) ? data.size.width : 64;
+  const height = typeof data?.size?.height === 'number' && !isNaN(data.size.height) ? data.size.height : 64;
 
   // compute icon size based on node dimensions
   const computeIconSize = (w: number, h: number) => {
+    if (isNaN(w) || isNaN(h)) return 32; // Default icon size if dimensions are invalid
     const max = Math.min(w * 0.7, h * 0.9);
     return Math.max(16, Math.round(max));
   };
@@ -508,7 +509,7 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
           </button>
         </div>
       ) : (
-        <div className="text-center mt-2" style={{ width: `${width}px`, pointerEvents: 'auto' }}>
+        <div className="text-center" style={{ width: `${width}px`, pointerEvents: 'auto' }}>
           <div className="font-medium text-xs truncate text-card-foreground cursor-pointer hover:underline" onClick={() => setIsEditing(true)}>
             {label}
           </div>

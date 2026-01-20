@@ -74,24 +74,8 @@
           {
             "DestinationCidrBlock": "0.0.0.0/0",
             "NatGatewayId": "nat-webapp-001"
-          },
-          {
-            "DestinationPrefixListId": "pl-s3",
-            "VpcEndpointId": "vpce-s3-001"
           }
         ]
-      }
-    ],
-    "vpc_endpoints": [
-      {
-        "VpcEndpointId": "vpce-s3-001",
-        "VpcId": "vpc-webapp-001",
-        "ServiceName": "com.amazonaws.us-east-1.s3",
-        "VpcEndpointType": "Gateway",
-        "RouteTableIds": [
-          "rtb-private-001"
-        ],
-        "State": "available"
       }
     ],
     "security_groups": [
@@ -105,21 +89,13 @@
             "IpProtocol": "tcp",
             "FromPort": 80,
             "ToPort": 80,
-            "IpRanges": [
-              {
-                "CidrIp": "0.0.0.0/0"
-              }
-            ]
+            "IpRanges": [{"CidrIp": "0.0.0.0/0"}]
           },
           {
             "IpProtocol": "tcp",
             "FromPort": 443,
             "ToPort": 443,
-            "IpRanges": [
-              {
-                "CidrIp": "0.0.0.0/0"
-              }
-            ]
+            "IpRanges": [{"CidrIp": "0.0.0.0/0"}]
           }
         ]
       },
@@ -133,11 +109,7 @@
             "IpProtocol": "tcp",
             "FromPort": 5432,
             "ToPort": 5432,
-            "UserIdGroupPairs": [
-              {
-                "GroupId": "sg-web-001"
-              }
-            ]
+            "UserIdGroupPairs": [{"GroupId": "sg-web-001"}]
           }
         ]
       }
@@ -176,10 +148,30 @@
         "subnet_id": "subnet-private-001",
         "multi_az": false,
         "security_group": {
-          "id": "sg-rds-001",
+          "id": "sg-web-001",
           "inbound_rules": [
             {
               "port": 5432,
+              "source_security_group": "sg-web-001"
+            }
+          ]
+        }
+      },
+      {
+        "db_instance_name": "webapp-mysql-db",
+        "engine": "mysql",
+        "engine_version": "8.0.28",
+        "port": 3306,
+        "db_instance_class": "db.t3.micro",
+        "allocated_storage": 30,
+        "subnet_type": "private",
+        "subnet_id": "subnet-public-001",
+        "multi_az": false,
+        "security_group": {
+          "id": "sg-web-001",
+          "inbound_rules": [
+            {
+              "port": 3306,
               "source_security_group": "sg-web-001"
             }
           ]
@@ -192,16 +184,14 @@
         "CreationDate": "2024-01-15",
         "Region": "us-east-1",
         "Versioning": "Enabled",
-        "Encryption": "AES256",
-        "Access": "Via VPC Endpoint vpce-s3-001"
+        "Encryption": "AES256"
       },
       {
         "Name": "webapp-backups-bucket",
         "CreationDate": "2024-01-15",
         "Region": "us-east-1",
         "Versioning": "Enabled",
-        "Encryption": "AES256",
-        "Access": "Via VPC Endpoint vpce-s3-001"
+        "Encryption": "AES256"
       }
     ]
   }
