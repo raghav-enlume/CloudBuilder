@@ -6,13 +6,14 @@ import { Toolbar } from './Toolbar';
 import { useDiagramStore } from '@/store/diagramStore';
 import { ResourceType } from '@/types/diagram';
 // import architectureDiagram from '@/lib/graph-upload/blaze-op-test.json';
-import architectureDiagram from '@/lib/graph-upload/sample-web-app.json';
+// import architectureDiagram from '@/lib/graph-upload/sample-web-app.json';
+import architectureDiagram from '@/lib/graph-upload/three-tier-web.json';
 // import architectureDiagram from '@/lib/graph-upload/onload.json';
 // import architectureDiagram from '@/lib/graph-upload/full-diagram.json';
 // import architectureDiagram from '@/lib/graph-upload/enlume-full-diagram.json';
 // import architectureDiagram from '@/lib/graph-upload/bo-drone-full-diagram.json';
 // import architectureDiagram from '@/lib/present.json';
-// import { parseAWSDataJSON } from '@/lib/awsDataParser';
+import { parseAWSDataJSON } from '@/lib/awsDataParser';
 // import onloadData from '@/lib/onload.json';
 
 const DiagramBuilderContent = ({ onDragEnd }: { onDragEnd: (event: DragEndEvent) => void }) => {
@@ -20,34 +21,43 @@ const DiagramBuilderContent = ({ onDragEnd }: { onDragEnd: (event: DragEndEvent)
 
   // Load architecture diagram on component mount
   useEffect(() => {
-    try {
-      const { nodes, edges } = architectureDiagram as { nodes: Record<string, unknown>[]; edges: Record<string, unknown>[] };
-      loadDiagram(nodes, edges);
-      console.log('Loaded architecture diagram:', { nodes: nodes.length, edges: edges.length });
-      
-      // Extract and store security groups from the loaded data
-      const securityGroups = nodes
-        .filter((node) => node.data?.resourceType?.id === 'securityGroup')
-        .map((node) => node.data);
-      setLoadedSecurityGroups(securityGroups);
-      
-      // Trigger fitView after a longer delay to ensure DOM is ready and find first region
-      setTimeout(() => {
-        // Find the first region node
-        const firstRegionNode = nodes.find((node) => node.data?.resourceType?.id === 'region');
-        if (firstRegionNode) {
-          window.dispatchEvent(new CustomEvent('fitViewOnLoad', { 
-            detail: { nodeId: firstRegionNode.id } 
-          }));
-          console.log('fitViewOnLoad event dispatched for region:', firstRegionNode.id);
-        } else {
-          window.dispatchEvent(new CustomEvent('fitViewOnLoad'));
-          console.log('fitViewOnLoad event dispatched');
-        }
-      }, 500);
-    } catch (error) {
-      console.error('Failed to load architecture diagram:', error);
-    }
+    const loadDiagramData = async () => {
+      try {
+        // Parse AWS raw data format
+        const { nodes: parsedNodes, edges: parsedEdges } = await parseAWSDataJSON(architectureDiagram as any);
+        loadDiagram(parsedNodes, parsedEdges);
+        console.log('Loaded and parsed architecture diagram:', { nodes: parsedNodes.length, edges: parsedEdges.length });
+        
+        // Log ASG nodes for debugging
+        const asgNodes = parsedNodes.filter((node) => node.data?.resourceType?.id === 'autoscaling');
+        console.log('[ASG DEBUG] Found ASG nodes:', asgNodes.length, asgNodes);
+        
+        // Extract and store security groups from the loaded data
+        const securityGroups = parsedNodes
+          .filter((node) => node.data?.resourceType?.id === 'securityGroup')
+          .map((node) => node.data);
+        setLoadedSecurityGroups(securityGroups);
+        
+        // Trigger fitView after a longer delay to ensure DOM is ready and find first region
+        setTimeout(() => {
+          // Find the first region node
+          const firstRegionNode = parsedNodes.find((node) => node.data?.resourceType?.id === 'region');
+          if (firstRegionNode) {
+            window.dispatchEvent(new CustomEvent('fitViewOnLoad', { 
+              detail: { nodeId: firstRegionNode.id } 
+            }));
+            console.log('fitViewOnLoad event dispatched for region:', firstRegionNode.id);
+          } else {
+            window.dispatchEvent(new CustomEvent('fitViewOnLoad'));
+            console.log('fitViewOnLoad event dispatched');
+          }
+        }, 500);
+      } catch (error) {
+        console.error('Failed to load architecture diagram:', error);
+      }
+    };
+    
+    loadDiagramData();
   }, [loadDiagram, setLoadedSecurityGroups]);
   // useEffect(() => {
   //   try {

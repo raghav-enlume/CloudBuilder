@@ -508,7 +508,7 @@ const ResourceNode = memo(({ id, data, selected }: NodeProps) => {
           </button>
         </div>
       ) : (
-        <div className="text-center mt-2 max-w-[120px]" style={{ pointerEvents: 'auto' }}>
+        <div className="text-center mt-2" style={{ width: `${width}px`, pointerEvents: 'auto' }}>
           <div className="font-medium text-xs truncate text-card-foreground cursor-pointer hover:underline" onClick={() => setIsEditing(true)}>
             {label}
           </div>

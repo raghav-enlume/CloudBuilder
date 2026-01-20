@@ -75,6 +75,26 @@ const DiagramCanvasInner = () => {
       .react-flow__edge-label {
         z-index: 10000 !important;
         pointer-events: auto !important;
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+        background-color: rgba(255, 255, 255, 0.6);
+        padding: 3px 6px;
+        border-radius: 3px;
+        font-size: 8px;
+        font-weight: 500;
+        color: #000;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      }
+      .react-flow__edge:hover .react-flow__edge-label {
+        opacity: 1;
+      }
+      .react-flow__edge-textbg {
+        opacity: 0.3;
+      }
+      .react-flow__edge-text{
+        font-size: 8px;
+        color: red
       }
       .react-flow__node {
         z-index: -1 !important;
@@ -207,8 +227,8 @@ const DiagramCanvasInner = () => {
         snapGrid={[20, 20]}
         defaultEdgeOptions={{
           type: 'smoothstep',
-          animated: false,
-          style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2.5 },
+          // animated: false,
+          // style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2.5 },
           markerEnd: {
             type: MarkerType.ArrowClosed,
             color: 'hsl(210, 100%, 50%)',

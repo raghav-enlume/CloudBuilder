@@ -1,0 +1,66 @@
+{
+  "us-east-1": {
+    "region": "us-east-1",
+    "vpcs": [
+      {
+        "VpcId": "vpc-12345678",
+        "CidrBlock": "10.0.0.0/16",
+        "State": "available",
+        "OwnerId": "123456789012"
+      }
+    ],
+    "subnets": [
+      {
+        "SubnetId": "subnet-app-a",
+        "VpcId": "vpc-12345678",
+        "CidrBlock": "10.0.1.0/24",
+        "AvailabilityZone": "us-east-1a",
+        "AvailabilityZoneId": "use1-az1",
+        "State": "available",
+        "MapPublicIpOnLaunch": false,
+        "DefaultForAz": false,
+        "OwnerId": "123456789012"
+      },
+      {
+        "SubnetId": "subnet-app-b",
+        "VpcId": "vpc-12345678",
+        "CidrBlock": "10.0.2.0/24",
+        "AvailabilityZone": "us-east-1b",
+        "AvailabilityZoneId": "use1-az2",
+        "State": "available",
+        "MapPublicIpOnLaunch": false,
+        "DefaultForAz": false,
+        "OwnerId": "123456789012"
+      }
+    ],
+    "instances": [],
+    "security_groups": [
+      {
+        "GroupId": "sg-app",
+        "GroupName": "app-security-group",
+        "Description": "Security group for application servers",
+        "VpcId": "vpc-12345678",
+        "OwnerId": "123456789012"
+      }
+    ],
+    "nat_gateways": [],
+    "rds_instances": [],
+    "load_balancers": [],
+    "internet_gateways": [],
+    "route_tables": [],
+    "autoscaling_groups": [
+      {
+        "AutoScalingGroupName": "app-asg",
+        "Subnets": ["subnet-app-a", "subnet-app-b"],
+        "MinSize": 2,
+        "MaxSize": 6,
+        "DesiredCapacity": 2,
+        "LaunchConfiguration": {
+          "InstanceType": "t3.medium",
+          "SecurityGroups": ["sg-app"]
+        }
+      }
+    ]
+  }
+}
+

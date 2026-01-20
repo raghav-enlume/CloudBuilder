@@ -235,36 +235,63 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
 
     try {
       const fileContent = await file.text();
-      const data = JSON.parse(fileContent);
+      const data = JSON.parse(fileContent) as Record<string, unknown>;
 
-      // Validate the AWS data format (should have region keys with vpcs, subnets, instances)
-      const isValidAWSData = Object.values(data).some((region: any) => 
-        region.vpcs && region.subnets && region.instances
-      );
+      // Validate the AWS data format - sample-web-app.json format
+      // Format: { [regionKey]: { vpcs, subnets, instances, security_groups, rds_instances, s3_buckets, ... } }
+      const isValidAWSData = Object.values(data).some((region: unknown) => {
+        if (typeof region !== 'object' || region === null) return false;
+        const regionObj = region as Record<string, unknown>;
+        // Check if it has any AWS resource arrays
+        return (
+          Array.isArray(regionObj.vpcs) ||
+          Array.isArray(regionObj.subnets) ||
+          Array.isArray(regionObj.instances) ||
+          Array.isArray(regionObj.security_groups) ||
+          Array.isArray(regionObj.rds_instances) ||
+          Array.isArray(regionObj.s3_buckets) ||
+          Array.isArray(regionObj.internet_gateways) ||
+          Array.isArray(regionObj.nat_gateways)
+        );
+      });
 
       if (!isValidAWSData) {
         toast({
           title: 'Invalid AWS data format',
-          description: 'The file must contain AWS region data with vpcs, subnets, and instances.',
+          description: 'The file must be in sample-web-app.json format with AWS region data containing at least one resource type (VPCs, Subnets, EC2 Instances, Security Groups, RDS, S3, Internet Gateway, or NAT Gateway).',
           variant: 'destructive',
         });
         return;
       }
 
       // Parse AWS data to nodes and edges
-      const { nodes: parsedNodes, edges: parsedEdges } = parseAWSDataJSON(data);
+      const { nodes: parsedNodes, edges: parsedEdges } = await parseAWSDataJSON(data);
 
       // Load the diagram
       loadDiagram(parsedNodes, parsedEdges);
 
       // Count resources
-      const vpcCount = parsedNodes.filter(n => n.id.startsWith('vpc-')).length;
-      const subnetCount = parsedNodes.filter(n => n.id.startsWith('subnet-')).length;
-      const instanceCount = parsedNodes.filter(n => n.id.startsWith('instance-')).length;
+      const vpcCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'vpc').length;
+      const subnetCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'subnet').length;
+      const instanceCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'ec2').length;
+      const rdsCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'rds').length;
+      const s3Count = parsedNodes.filter(n => n.data?.resourceType?.id === 's3').length;
+      const sgCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'securitygroup').length;
+
+      const resourceSummary = [
+        vpcCount > 0 && `${vpcCount} VPCs`,
+        subnetCount > 0 && `${subnetCount} Subnets`,
+        instanceCount > 0 && `${instanceCount} EC2 Instances`,
+        rdsCount > 0 && `${rdsCount} RDS Databases`,
+        s3Count > 0 && `${s3Count} S3 Buckets`,
+        sgCount > 0 && `${sgCount} Security Groups`,
+      ]
+        .filter(Boolean)
+        .join(', ');
 
       toast({
         title: 'AWS data imported',
-        description: `Loaded ${vpcCount} VPCs, ${subnetCount} Subnets, and ${instanceCount} EC2 Instances with ${parsedEdges.length} connections.`,
+        description: `Loaded ${resourceSummary || 'resources'} with ${parsedEdges.length} connections.`,
       });
 
       setIsImportDialogOpen(false);
