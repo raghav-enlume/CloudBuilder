@@ -4,6 +4,30 @@
 
 **URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
 
+
+## How to Run the App Locally
+
+To run the application on your local machine:
+
+1. **Clone the repository**
+	```sh
+	git clone <YOUR_GIT_URL>
+	cd <YOUR_PROJECT_NAME>
+	```
+2. **Install dependencies**
+	```sh
+	npm install
+	```
+3. **Start the development server**
+	```sh
+	npm run dev
+	```
+4. **Open your browser** and go to the URL shown in the terminal (usually http://localhost:5173 or similar).
+
+The app will reload automatically as you make changes.
+
+---
+
 ## How can I edit this code?
 
 There are several ways of editing your application.
