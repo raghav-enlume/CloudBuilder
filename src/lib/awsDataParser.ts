@@ -2,21 +2,6 @@
 import { Node, Edge } from 'reactflow';
 import { cloudResources } from '@/data/resources';
 
-// Dynamically import Graphviz for layout calculation
-let GraphvizModule: any = null;
-
-export const initGraphviz = async () => {
-  if (!GraphvizModule) {
-    try {
-      const module = await import('@hpcc-js/wasm-graphviz');
-      GraphvizModule = module;
-    } catch (error) {
-      console.warn('Graphviz module not available, using default layout', error);
-    }
-  }
-  return GraphvizModule;
-};
-
 interface AWSDataInput {
   [region: string]: {
     region?: string;
@@ -32,6 +17,7 @@ interface AWSDataInput {
     vpc_endpoints?: any[];
     lambda_functions?: any[];
     ecs_clusters?: any[];
+    ecs?: any;
     eks_clusters?: any[];
     ebs_volumes?: any[];
     efs_filesystems?: any[];
@@ -55,6 +41,10 @@ interface AWSDataInput {
     transit_gateways?: any[];
     availability_zones?: any[];
     network_acls?: any[];
+    ecr_repositories?: any[];
+    service_discovery?: any;
+    databases?: any;
+    messaging?: any;
     [key: string]: any;
   };
 }
@@ -697,381 +687,51 @@ const getNetworkACLResourceType = () => {
 };
 
 /**
- * Calculate positions using Graphviz layout algorithm
- * Generates a DOT graph from AWS resources and uses Graphviz to calculate optimal positions
+ * Get ECR repository resource type
  */
-const calculateGraphvizLayout = async (
-  data: AWSDataInput
-): Promise<Map<string, { x: number; y: number; width?: number; height?: number }>> => {
-  const positions = new Map<string, { x: number; y: number; width?: number; height?: number }>();
-  
-  try {
-    const graphviz = await initGraphviz();
-    if (!graphviz) {
-      console.warn('Graphviz not available, using default positioning');
-      return positions;
-    }
-
-    // Build a DOT graph representation of the AWS infrastructure with hierarchical constraints
-    let dotGraph = 'digraph AWS {\n';
-    dotGraph += '  rankdir=TB;\n';
-    dotGraph += '  compound=true;\n';
-    dotGraph += '  nodesep=1.0;\n';
-    dotGraph += '  ranksep=1.5;\n';
-    dotGraph += '  node [shape=box, style="rounded,filled", fillcolor=white, height=0.6, width=1.2];\n';
-    dotGraph += '  edge [dir=forward, penwidth=1.5];\n\n';
-
-    // Create a mapping for node IDs to track positions and dimensions later
-    const nodeMap = new Map<string, { id: string; width: number; height: number; isContainer?: boolean }>();
-    let nodeCounter = 0;
-
-    // Helper to add a node to graph
-    const addNode = (nodeId: string, label: string, shape: string = 'box', group?: string, isContainer: boolean = false) => {
-      const dotNodeId = `n${nodeCounter++}`;
-      nodeMap.set(dotNodeId, { id: nodeId, width: 1.2, height: 0.6, isContainer });
-      const nodeAttrs = [
-        `label="${label}"`,
-        `shape="${shape}"`,
-        group ? `group="${group}"` : '',
-      ].filter(a => a).join(', ');
-      dotGraph += `  ${dotNodeId} [${nodeAttrs}];\n`;
-      return dotNodeId;
-    };
-
-    // Helper to add an edge
-    const addEdge = (fromDotId: string, toDotId: string) => {
-      dotGraph += `  ${fromDotId} -> ${toDotId};\n`;
-    };
-
-    // Process each region
-    Object.entries(data).forEach(([regionKey, regionData]) => {
-      const regionDotId = addNode(`region-${regionKey}`, `Region: ${regionKey}`, 'box', 'region', true);
-
-      // Process VPCs in region
-      if (regionData.vpcs && Array.isArray(regionData.vpcs)) {
-        regionData.vpcs.forEach((vpc: any) => {
-          const vpcDotId = addNode(`vpc-${vpc.VpcId}`, `VPC: ${vpc.VpcId}`, 'box', 'vpc', true);
-          addEdge(regionDotId, vpcDotId);
-
-          // Process Internet Gateways for this VPC
-          if (regionData.internet_gateways && Array.isArray(regionData.internet_gateways)) {
-            regionData.internet_gateways
-              .filter((igw: any) => igw.Attachments?.some((att: any) => att.VpcId === vpc.VpcId))
-              .forEach((igw: any) => {
-                const igwDotId = addNode(`igw-${igw.InternetGatewayId}`, `IGW: ${igw.InternetGatewayId}`, 'box', 'igw');
-                addEdge(vpcDotId, igwDotId);
-              });
-          }
-
-          // Process Subnets
-          if (regionData.subnets && Array.isArray(regionData.subnets)) {
-            regionData.subnets
-              .filter((subnet: any) => subnet.VpcId === vpc.VpcId)
-              .forEach((subnet: any) => {
-                const subnetDotId = addNode(`subnet-${subnet.SubnetId}`, `Subnet: ${subnet.SubnetId}`, 'box', 'subnet', true);
-                addEdge(vpcDotId, subnetDotId);
-
-                // Add EC2 instances in subnet
-                if (regionData.instances && Array.isArray(regionData.instances)) {
-                  regionData.instances
-                    .filter((inst: any) => inst.SubnetId === subnet.SubnetId)
-                    .forEach((instance: any) => {
-                      const instDotId = addNode(`instance-${instance.InstanceId}`, `EC2: ${instance.InstanceId}`, 'ellipse', 'instance');
-                      addEdge(subnetDotId, instDotId);
-                    });
-                }
-
-                // Add Load Balancers in subnet
-                if (regionData.load_balancers && Array.isArray(regionData.load_balancers)) {
-                  regionData.load_balancers
-                    .filter((lb: any) => lb.Subnets?.includes(subnet.SubnetId))
-                    .forEach((lb: any) => {
-                      const lbDotId = addNode(`lb-${lb.LoadBalancerArn}`, `LB: ${lb.LoadBalancerName}`, 'box', 'loadbalancer');
-                      addEdge(subnetDotId, lbDotId);
-                    });
-                }
-
-                // Add NAT Gateways in subnet
-                if (regionData.nat_gateways && Array.isArray(regionData.nat_gateways)) {
-                  regionData.nat_gateways
-                    .filter((nat: any) => nat.SubnetId === subnet.SubnetId)
-                    .forEach((nat: any) => {
-                      const natDotId = addNode(`nat-${nat.NatGatewayId}`, `NAT: ${nat.NatGatewayId}`, 'box', 'nat');
-                      addEdge(subnetDotId, natDotId);
-                    });
-                }
-
-                // Add RDS instances in subnet
-                if (regionData.rds_instances && Array.isArray(regionData.rds_instances)) {
-                  regionData.rds_instances
-                    .filter((rds: any) => rds.DBSubnetGroupDescription?.includes(subnet.SubnetId) || rds.AvailabilityZone?.includes(regionKey))
-                    .forEach((rds: any) => {
-                      const rdsDotId = addNode(`rds-${rds.DBInstanceIdentifier}`, `RDS: ${rds.DBInstanceIdentifier}`, 'cylinder', 'database');
-                      addEdge(subnetDotId, rdsDotId);
-                    });
-                }
-              });
-          }
-
-          // Process Security Groups for this VPC
-          if (regionData.security_groups && Array.isArray(regionData.security_groups)) {
-            regionData.security_groups
-              .filter((sg: any) => sg.VpcId === vpc.VpcId)
-              .forEach((sg: any) => {
-                const sgDotId = addNode(`sg-${sg.GroupId}`, `SG: ${sg.GroupName || sg.GroupId}`, 'diamond', 'sg');
-                addEdge(vpcDotId, sgDotId);
-              });
-          }
-
-          // Process Route Tables
-          if (regionData.route_tables && Array.isArray(regionData.route_tables)) {
-            regionData.route_tables
-              .filter((rt: any) => rt.VpcId === vpc.VpcId)
-              .forEach((rt: any) => {
-                const rtDotId = addNode(`rt-${rt.RouteTableId}`, `RT: ${rt.RouteTableId}`, 'box', 'routetable');
-                addEdge(vpcDotId, rtDotId);
-              });
-          }
-        });
-      }
-
-      // Regional-level resources
-      if (regionData.s3_buckets && Array.isArray(regionData.s3_buckets)) {
-        regionData.s3_buckets.forEach((bucket: any) => {
-          const s3DotId = addNode(`s3-${bucket.Name}`, `S3: ${bucket.Name}`, 'folder', 'storage');
-          addEdge(regionDotId, s3DotId);
-        });
-      }
-
-      if (regionData.lambda_functions && Array.isArray(regionData.lambda_functions)) {
-        regionData.lambda_functions.forEach((lambda: any) => {
-          const lambdaDotId = addNode(`lambda-${lambda.FunctionName}`, `Lambda: ${lambda.FunctionName}`, 'ellipse', 'compute');
-          addEdge(regionDotId, lambdaDotId);
-        });
-      }
-
-      if (regionData.cloudfront_distributions && Array.isArray(regionData.cloudfront_distributions)) {
-        regionData.cloudfront_distributions.forEach((cf: any) => {
-          const cfDotId = addNode(`cf-${cf.Id}`, `CloudFront: ${cf.Id}`, 'box', 'cdn');
-          addEdge(regionDotId, cfDotId);
-        });
-      }
-
-      if (regionData.api_gateways && Array.isArray(regionData.api_gateways)) {
-        regionData.api_gateways.forEach((api: any) => {
-          const apiDotId = addNode(`api-${api.id || api.name}`, `API Gateway: ${api.name || api.id}`, 'box', 'api');
-          addEdge(regionDotId, apiDotId);
-        });
-      }
-
-      if (regionData.ecs_clusters && Array.isArray(regionData.ecs_clusters)) {
-        regionData.ecs_clusters.forEach((ecs: any) => {
-          const ecsDotId = addNode(`ecs-${ecs.clusterName}`, `ECS: ${ecs.clusterName}`, 'box', 'compute', true);
-          addEdge(regionDotId, ecsDotId);
-        });
-      }
-
-      if (regionData.eks_clusters && Array.isArray(regionData.eks_clusters)) {
-        regionData.eks_clusters.forEach((eks: any) => {
-          const eksDotId = addNode(`eks-${eks.name}`, `EKS: ${eks.name}`, 'box', 'compute', true);
-          addEdge(regionDotId, eksDotId);
-        });
-      }
-
-      if (regionData.dynamodb_tables && Array.isArray(regionData.dynamodb_tables)) {
-        regionData.dynamodb_tables.forEach((ddb: any) => {
-          const ddbDotId = addNode(`ddb-${ddb.TableName}`, `DynamoDB: ${ddb.TableName}`, 'box', 'database');
-          addEdge(regionDotId, ddbDotId);
-        });
-      }
-
-      if (regionData.elasticache_clusters && Array.isArray(regionData.elasticache_clusters)) {
-        regionData.elasticache_clusters.forEach((ec: any) => {
-          const ecDotId = addNode(`ec-${ec.CacheClusterId}`, `ElastiCache: ${ec.CacheClusterId}`, 'box', 'database');
-          addEdge(regionDotId, ecDotId);
-        });
-      }
-
-      if (regionData.autoscaling_groups && Array.isArray(regionData.autoscaling_groups)) {
-        regionData.autoscaling_groups.forEach((asg: any) => {
-          const asgDotId = addNode(`asg-${asg.AutoScalingGroupName}`, `ASG: ${asg.AutoScalingGroupName}`, 'box', 'compute', true);
-          addEdge(regionDotId, asgDotId);
-        });
-      }
-
-      if (regionData.fargate_tasks && Array.isArray(regionData.fargate_tasks)) {
-        regionData.fargate_tasks.forEach((fargate: any) => {
-          const fargateDotId = addNode(`fargate-${fargate.taskDefinitionArn}`, `Fargate: ${fargate.family}`, 'ellipse', 'compute');
-          addEdge(regionDotId, fargateDotId);
-        });
-      }
-
-      if (regionData.kinesis_streams && Array.isArray(regionData.kinesis_streams)) {
-        regionData.kinesis_streams.forEach((stream: any) => {
-          const kDotId = addNode(`kinesis-${stream.StreamName}`, `Kinesis: ${stream.StreamName}`, 'box', 'analytics');
-          addEdge(regionDotId, kDotId);
-        });
-      }
-
-      if (regionData.sqs_queues && Array.isArray(regionData.sqs_queues)) {
-        regionData.sqs_queues.forEach((queue: any) => {
-          const sqsDotId = addNode(`sqs-${queue.QueueUrl}`, `SQS: ${queue.QueueUrl.split('/').pop()}`, 'box', 'messaging');
-          addEdge(regionDotId, sqsDotId);
-        });
-      }
-
-      if (regionData.sns_topics && Array.isArray(regionData.sns_topics)) {
-        regionData.sns_topics.forEach((topic: any) => {
-          const snsDotId = addNode(`sns-${topic.TopicArn}`, `SNS: ${topic.TopicArn.split(':').pop()}`, 'box', 'messaging');
-          addEdge(regionDotId, snsDotId);
-        });
-      }
-
-      if (regionData.iam_roles && Array.isArray(regionData.iam_roles)) {
-        regionData.iam_roles.forEach((role: any) => {
-          const iamDotId = addNode(`iam-${role.RoleName}`, `IAM: ${role.RoleName}`, 'box', 'security');
-          addEdge(regionDotId, iamDotId);
-        });
-      }
-
-      if (regionData.cognito_user_pools && Array.isArray(regionData.cognito_user_pools)) {
-        regionData.cognito_user_pools.forEach((pool: any) => {
-          const cognitoDotId = addNode(`cognito-${pool.Id}`, `Cognito: ${pool.Name}`, 'box', 'security');
-          addEdge(regionDotId, cognitoDotId);
-        });
-      }
-
-      if (regionData.vpc_endpoints && Array.isArray(regionData.vpc_endpoints)) {
-        regionData.vpc_endpoints.forEach((endpoint: any) => {
-          const vpceDotId = addNode(`vpce-${endpoint.VpcEndpointId}`, `VPC Endpoint: ${endpoint.VpcEndpointId}`, 'box', 'networking');
-          addEdge(regionDotId, vpceDotId);
-        });
-      }
-    });
-
-    dotGraph += '}\n';
-
-    // Use Graphviz layout engine
-    const Graphviz = (graphviz as any).Graphviz;
-    const viz = new Graphviz();
-    viz.dot(dotGraph);
-    
-    // Render to get layout information
-    const svg = viz.renderSVG();
-    
-    // Parse SVG to extract node positions and dimensions
-    if (typeof svg === 'string' && typeof globalThis !== 'undefined' && globalThis.DOMParser) {
-      const parser = new globalThis.DOMParser();
-      const svgDoc = parser.parseFromString(svg, 'image/svg+xml');
-      
-      // Extract positions and dimensions from SVG elements
-      const titleElements = svgDoc.querySelectorAll('title');
-      titleElements.forEach((titleEl: any) => {
-        const nodeId = titleEl.textContent?.trim();
-        const parentG = titleEl.closest('g[id]') || titleEl.parentElement;
-        
-        if (nodeId && parentG) {
-          const transform = parentG.getAttribute('transform');
-          if (transform) {
-            // Extract translate coordinates from transform
-            const translateMatch = transform.match(/translate\(([\d.-]+),([\d.-]+)\)/);
-            if (translateMatch) {
-              const x = parseFloat(translateMatch[1]);
-              const y = parseFloat(translateMatch[2]);
-              
-              // Look up the actual node ID and metadata from our mapping
-              const mapEntry = Array.from(nodeMap.entries()).find(
-                ([_, data]) => data.id === nodeId
-              );
-              
-              if (mapEntry) {
-                const [_, metadata] = mapEntry;
-                const positionData: any = {
-                  x: !isNaN(x) ? x * 1.5 : 0,  // Scale factor for ReactFlow, default to 0 if NaN
-                  y: !isNaN(y) ? y * 1.5 : 0,
-                };
-                
-                // Extract width and height for container nodes from the polygon/ellipse/path elements
-                if (metadata.isContainer) {
-                  // Find the shape element (polygon, ellipse, or path) within this group
-                  const shapeElement = parentG.querySelector('polygon, ellipse, path');
-                  if (shapeElement) {
-                    // Extract bounding box from shape
-                    if (shapeElement.tagName === 'polygon') {
-                      const points = shapeElement.getAttribute('points');
-                      if (points) {
-                        const coordPairs = points.trim().split(/\s+/).map((p: string) => {
-                          const [x, y] = p.split(',').map(Number);
-                          return { x, y };
-                        });
-                        
-                        if (coordPairs.length > 0) {
-                          const xs = coordPairs.map((p: any) => p.x).filter(x => !isNaN(x));
-                          const ys = coordPairs.map((p: any) => p.y).filter(y => !isNaN(y));
-                          if (xs.length > 0 && ys.length > 0) {
-                            const minX = Math.min(...xs);
-                            const maxX = Math.max(...xs);
-                            const minY = Math.min(...ys);
-                            const maxY = Math.max(...ys);
-                            
-                            positionData.width = (maxX - minX) * 1.5;
-                            positionData.height = (maxY - minY) * 1.5;
-                          }
-                        }
-                      }
-                    } else if (shapeElement.tagName === 'ellipse') {
-                      const rx = parseFloat(shapeElement.getAttribute('rx') || '0');
-                      const ry = parseFloat(shapeElement.getAttribute('ry') || '0');
-                      if (!isNaN(rx) && !isNaN(ry)) {
-                        positionData.width = rx * 2 * 1.5;
-                        positionData.height = ry * 2 * 1.5;
-                      }
-                    }
-                  }
-                }
-                
-                positions.set(nodeId, positionData);
-              }
-            }
-          }
-        }
-      });
-    }
-  } catch (error) {
-    console.warn('Error calculating Graphviz layout:', error);
-  }
-
-  return positions;
+const getECRResourceType = () => {
+  return getResourceType('ecr') || {
+    id: 'ecr',
+    name: 'ECR Repository',
+    category: 'compute',
+    icon: 'ecr',
+    description: 'Elastic Container Registry',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'label', label: 'Repository Name', type: 'text' },
+    ],
+  };
 };
 
 /**
- * Parse AWS sample-web-app.json format to nodes and edges
- * Converts Regions, VPCs, Subnets, Instances, RDS, S3, and other AWS resources into diagram nodes with relationships
- * Uses resource type definitions from cloudResources (resources.ts)
- * Leverages Graphviz layout algorithm for optimal node positioning
+ * Get Service Discovery resource type
+ */
+const getServiceDiscoveryResourceType = () => {
+  return getResourceType('servicediscovery') || {
+    id: 'servicediscovery',
+    name: 'Service Discovery',
+    category: 'networking',
+    icon: 'vpc',
+    description: 'AWS Cloud Map',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'label', label: 'Namespace', type: 'text' },
+    ],
+  };
+};
+
+/**
+ * Parse AWS data to nodes and edges
+ * Converts Regions, VPCs, Subnets, Instances, RDS, S3, and other AWS resources into diagram nodes
+ * Uses deterministic grid-based layout for reliable positioning
  */
 export const parseAWSDataJSON = async (
   data: AWSDataInput
 ): Promise<{ nodes: Node[]; edges: Edge[] }> => {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
-  let graphvizPositions = new Map<string, { x: number; y: number }>();
-  let useGraphvizLayout = false;
 
-  // Calculate graphviz layout for all nodes
-  try {
-    console.log('Calculating Graphviz layout...');
-    const positions = await calculateGraphvizLayout(data);
-    if (positions && positions.size > 0) {
-      graphvizPositions = positions;
-      useGraphvizLayout = true;
-      console.log(`Graphviz layout calculated for ${positions.size} nodes`);
-    }
-  } catch (error) {
-    console.warn('Graphviz layout calculation failed, falling back to manual positioning:', error);
-  }
-
-  // Helper function to get position and dimensions - uses graphviz if available, otherwise manual calculation
+  // Helper function to get position and dimensions
   const getNodePosition = (
     nodeId: string, 
     defaultX: number, 
@@ -1079,20 +739,9 @@ export const parseAWSDataJSON = async (
     defaultWidth?: number,
     defaultHeight?: number
   ): { x: number; y: number; width?: number; height?: number } => {
-    if (useGraphvizLayout && graphvizPositions.has(nodeId)) {
-      const graphvizData = graphvizPositions.get(nodeId)! as any;
-      // Use Graphviz dimensions if available, otherwise use defaults
-      return {
-        x: graphvizData.x,
-        y: graphvizData.y,
-        width: graphvizData.width || defaultWidth,
-        height: graphvizData.height || defaultHeight,
-      };
-    }
     return { x: defaultX, y: defaultY, width: defaultWidth, height: defaultHeight };
   };
 
-  const currentX = 0;
   let currentY = 0;
 
   // Get resource types from resources.ts
@@ -1130,9 +779,54 @@ export const parseAWSDataJSON = async (
   const vpcPeeringResourceType = getVPCPeeringResourceType();
   const tgwResourceType = getTransitGatewayResourceType();
   const naclResourceType = getNetworkACLResourceType();
+  const ecrResourceType = getECRResourceType();
+  const serviceDiscoveryResourceType = getServiceDiscoveryResourceType();
 
   // Process each region
   Object.entries(data).forEach(([regionKey, regionData]) => {
+    // Normalize nested structures for microservices architecture support
+    // Handle databases object (nested: rds_instances, dynamodb_tables)
+    if (regionData.databases && typeof regionData.databases === 'object') {
+      if (!regionData.rds_instances && regionData.databases.rds_instances) {
+        regionData.rds_instances = regionData.databases.rds_instances;
+      }
+      if (!regionData.dynamodb_tables && regionData.databases.dynamodb_tables) {
+        regionData.dynamodb_tables = regionData.databases.dynamodb_tables;
+      }
+    }
+    
+    // Handle messaging object (nested: sqs_queues, sns_topics)
+    if (regionData.messaging && typeof regionData.messaging === 'object') {
+      if (!regionData.sqs_queues && regionData.messaging.sqs_queues) {
+        regionData.sqs_queues = regionData.messaging.sqs_queues;
+      }
+      if (!regionData.sns_topics && regionData.messaging.sns_topics) {
+        regionData.sns_topics = regionData.messaging.sns_topics;
+      }
+    }
+    
+    // Handle ECS object format (nested: ClusterName, Services)
+    if (regionData.ecs && typeof regionData.ecs === 'object' && regionData.ecs.ClusterName) {
+      if (!regionData.ecs_clusters) {
+        regionData.ecs_clusters = [regionData.ecs];
+      }
+    }
+    
+    // Support both ECR formats (array or nested)
+    if (regionData.ecr_repositories && !Array.isArray(regionData.ecr_repositories)) {
+      if (regionData.ecr_repositories.repositories && Array.isArray(regionData.ecr_repositories.repositories)) {
+        regionData.ecr_repositories = regionData.ecr_repositories.repositories;
+      }
+    }
+    
+    // Support service discovery as standalone object
+    if (regionData.service_discovery && typeof regionData.service_discovery === 'object' && !Array.isArray(regionData.service_discovery)) {
+      if (!Array.isArray(regionData.service_discovery)) {
+        // Wrap single service discovery in array for uniform processing
+        regionData.service_discovery = [regionData.service_discovery];
+      }
+    }
+    
     // Support both VPC-based and serverless (VPC-less) architectures
     const hasVPCs = regionData.vpcs && regionData.vpcs.length > 0;
     
@@ -1156,7 +850,7 @@ export const parseAWSDataJSON = async (
     }
 
     const regionNodeId = `region-${regionKey}`;
-    const regionX = currentX;
+    const regionX = 0;
     const regionY = currentY;
 
     // Define layout variables with defaults (will be updated if VPCs exist)
@@ -1248,64 +942,30 @@ export const parseAWSDataJSON = async (
       vpcMarginBetween = 100;
       regionPadding = 140;
 
-      // Calculate height for region-level resources that appear after VPCs
-      const resourceHeight = 150;
-      const resourceTypes = [
-        regionData.lambda_functions?.length || 0,
-        regionData.api_gateways?.length || 0,
-        regionData.cloudfront_distributions?.length || 0,
-        regionData.dynamodb_tables?.length || 0,
-        regionData.elasticache_clusters?.length || 0,
-        regionData.ecs_clusters?.length || 0,
-        regionData.eks_clusters?.length || 0,
-        regionData.autoscaling_groups?.length || 0,
-        regionData.fargate_tasks?.length || 0,
-        regionData.kinesis_streams?.length || 0,
-        regionData.sqs_queues?.length || 0,
-        regionData.sns_topics?.length || 0,
-        regionData.vpc_endpoints?.length || 0,
-        regionData.s3_buckets?.length || 0,
-      ];
-      const hasRegionResources = resourceTypes.some(count => count > 0);
-      const regionResourcesHeight = hasRegionResources ? resourceTypes.length * resourceHeight + (resourceTypes.length - 1) * vpcMarginBetween : 0;
-
       regionContainerWidth = Math.max(vpcCount * maxVpcWidth + (vpcCount + 1) * vpcMarginBetween, 1100);
-      regionContainerHeight = Math.max(regionPadding * 2 + maxVpcHeightLocal + (regionResourcesHeight > 0 ? 50 + regionResourcesHeight : 0), 400);
+      regionContainerHeight = Math.max(regionPadding * 2 + maxVpcHeightLocal, 400);
       regionResourcesStartY = regionY + regionPadding + maxVpcHeightLocal + 50;
     } else {
-      // Serverless architecture - calculate dimensions from region-level resources
-      regionPadding = 60;
-      vpcMarginBetween = 80;
-      const resourcesPerRow = 3;
-      const resourceHeight = 150;
-      const resourceWidth = 280;
-      const resourceMargin = 25;
+      // Serverless/Event-driven architecture - calculate height based on region-level resources
+      const serverlessResourceHeights = [
+        (regionData.cloudfront_distributions?.length || 0) > 0 ? 150 : 0,
+        (regionData.api_gateways?.length || 0) > 0 ? 150 : 0,
+        (regionData.lambda_functions?.length || 0) > 0 ? 150 : 0,
+        (regionData.dynamodb_tables?.length || 0) > 0 ? 150 : 0,
+        (regionData.s3_buckets?.length || 0) > 0 ? 150 : 0,
+        (regionData.sqs_queues?.length || 0) > 0 ? 150 : 0,
+        (regionData.sns_topics?.length || 0) > 0 ? 150 : 0,
+        (regionData.eventbridge?.length || 0) > 0 ? 150 : 0,
+        (regionData.kinesis_streams?.length || 0) > 0 ? 150 : 0,
+        (regionData.ecs_clusters?.length || 0) > 0 ? 150 : 0,
+        (regionData.ecr_repositories?.length || 0) > 0 ? 150 : 0,
+      ];
+      const totalServerlessHeight = serverlessResourceHeights.reduce((a, b) => a + b, 0);
       
-      // Count total resources
-      const totalResources = 
-        (regionData.load_balancers?.length || 0) +
-        (regionData.lambda_functions?.length || 0) +
-        (regionData.api_gateways?.length || 0) +
-        (regionData.cloudfront_distributions?.length || 0) +
-        (regionData.dynamodb_tables?.length || 0) +
-        (regionData.elasticache_clusters?.length || 0) +
-        (regionData.ecs_clusters?.length || 0) +
-        (regionData.eks_clusters?.length || 0) +
-        (regionData.autoscaling_groups?.length || 0) +
-        (regionData.fargate_tasks?.length || 0) +
-        (regionData.kinesis_streams?.length || 0) +
-        (regionData.sqs_queues?.length || 0) +
-        (regionData.sns_topics?.length || 0) +
-        (regionData.vpc_endpoints?.length || 0) +
-        (regionData.s3_buckets?.length || 0);
-      
-      const numRows = Math.ceil(totalResources / resourcesPerRow);
-      const contentWidth = resourcesPerRow * resourceWidth + (resourcesPerRow + 1) * resourceMargin;
-      const contentHeight = numRows * resourceHeight + (numRows + 1) * vpcMarginBetween;
-      
-      regionContainerWidth = contentWidth + regionPadding * 2;
-      regionContainerHeight = contentHeight + regionPadding * 2;
-      regionResourcesStartY = regionY + regionPadding;
+      // Calculate minimum height needed
+      const minServerlessHeight = Math.max(totalServerlessHeight + 200, 400);
+      regionContainerHeight = minServerlessHeight;
+      regionResourcesStartY = regionY + 100;
     }
 
 
@@ -1972,6 +1632,7 @@ export const parseAWSDataJSON = async (
       const lambdaMargin = 25;
       const lambdaWidth = 280;
       const lambdaX = regionX + regionPadding;
+      // Position Lambda inside region container
       const lambdaY = regionResourcesStartY;
 
       regionData.lambda_functions.forEach((lambda: any, lambdaIndex: number) => {
@@ -2020,7 +1681,8 @@ export const parseAWSDataJSON = async (
       const apiWidth = 280;
       const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
       const apiX = regionX + regionPadding;
-      const apiY = regionResourcesStartY + lambdaHeight + vpcMarginBetween;
+      // Position API Gateway inside region container, below Lambda
+      const apiY = regionResourcesStartY + lambdaHeight;
 
       regionData.api_gateways.forEach((api: any, apiIndex: number) => {
         const apiId = api.id || api.ApiId || api.ApiName || `api-${apiIndex}`;
@@ -2067,7 +1729,8 @@ export const parseAWSDataJSON = async (
       const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
       const apiHeight = regionData.api_gateways?.length ? 150 : 0;
       const cfX = regionX + regionPadding;
-      const cfY = regionResourcesStartY + lambdaHeight + apiHeight + vpcMarginBetween * 2;
+      // Position CloudFront inside region container, below API Gateway
+      const cfY = regionResourcesStartY + lambdaHeight + apiHeight;
 
       regionData.cloudfront_distributions.forEach((cf: any, cfIndex: number) => {
         const cfId = cf.DistributionId || cf.Id || cf.DomainName || `cf-${cfIndex}`;
@@ -2115,7 +1778,8 @@ export const parseAWSDataJSON = async (
       const apiHeight = regionData.api_gateways?.length ? 150 : 0;
       const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
       const ddbX = regionX + regionPadding;
-      const ddbY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + vpcMarginBetween * 3;
+      // Position DynamoDB inside region container, below CloudFront
+      const ddbY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight;
 
       regionData.dynamodb_tables.forEach((ddb: any, ddbIndex: number) => {
         const ddbNodeId = `ddb-${ddb.TableName}`;
@@ -2164,7 +1828,8 @@ export const parseAWSDataJSON = async (
       const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
       const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
       const ecX = regionX + regionPadding;
-      const ecY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + vpcMarginBetween * 4;
+      // Position ElastiCache inside region container, below DynamoDB
+      const ecY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight;
 
       regionData.elasticache_clusters.forEach((ec: any, ecIndex: number) => {
         const ecNodeId = `ec-${ec.CacheClusterId}`;
@@ -2214,7 +1879,8 @@ export const parseAWSDataJSON = async (
       const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
       const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
       const ecsX = regionX + regionPadding;
-      const ecsY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + vpcMarginBetween * 5;
+      // Position ECS inside region container
+      const ecsY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight;
 
       regionData.ecs_clusters.forEach((ecs: any, ecsIndex: number) => {
         const ecsNodeId = `ecs-${ecs.clusterName}`;
@@ -2271,7 +1937,8 @@ export const parseAWSDataJSON = async (
       const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
       const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
       const eksX = regionX + regionPadding;
-      const eksY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + vpcMarginBetween * 6;
+      // Position EKS inside region container
+      const eksY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight;
 
       regionData.eks_clusters.forEach((eks: any, eksIndex: number) => {
         const eksNodeId = `eks-${eks.name}`;
@@ -2328,7 +1995,8 @@ export const parseAWSDataJSON = async (
       const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
       const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
       const asgX = regionX + regionPadding;
-      const asgY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + vpcMarginBetween * 7;
+      // Position ASG inside region container
+      const asgY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight;
 
       regionData.autoscaling_groups.forEach((asg: any, asgIndex: number) => {
         const asgNodeId = `asg-${asg.AutoScalingGroupName}`;
@@ -2386,7 +2054,8 @@ export const parseAWSDataJSON = async (
       const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
       const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
       const fargateX = regionX + regionPadding;
-      const fargateY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + vpcMarginBetween * 8;
+      // Position Fargate inside region container
+      const fargateY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight;
 
       regionData.fargate_tasks.forEach((fargate: any, fargateIndex: number) => {
         const fargateNodeId = `fargate-${fargate.taskDefinitionArn}`;
@@ -2427,6 +2096,115 @@ export const parseAWSDataJSON = async (
       });
     }
 
+    // Add EventBridge Event Buses at Region level
+    if (regionData.eventbridge && regionData.eventbridge.length > 0) {
+      const ebMargin = 25;
+      const ebWidth = 300;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebX = regionX + regionPadding;
+      const ebY = regionY + regionContainerHeight + vpcMarginBetween + (regionData.load_balancers?.length ? 150 : 0) + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight;
+
+      regionData.eventbridge.forEach((eventBus: any, ebIndex: number) => {
+        const ebNodeId = `eventbridge-${eventBus.EventBusName}`;
+        const ebNodeX = ebX + ebIndex * (ebWidth + ebMargin);
+        const ebNodeY = ebY;
+        const ebPosition = getNodePosition(ebNodeId, ebNodeX, ebNodeY);
+
+        nodes.push({
+          id: ebNodeId,
+          type: 'resourceNode',
+          position: ebPosition,
+          data: {
+            label: eventBus.EventBusName,
+            resourceType: {
+              id: 'eventbridge',
+              name: 'EventBridge',
+              category: 'analytics',
+              icon: 'eventbridge',
+              description: 'Event bus for event routing',
+              color: '#FF9900',
+            },
+            busName: eventBus.EventBusName,
+            ruleCount: eventBus.Rules?.length || 0,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::Events::EventBus',
+              region: regionKey,
+              busName: eventBus.EventBusName,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-eventbridge-${regionKey}-${eventBus.EventBusName}`,
+          source: regionNodeId,
+          target: ebNodeId,
+          label: 'Event Bus',
+          style: { stroke: '#FF9900', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+
+        // Create edges from EventBridge to its target resources
+        if (eventBus.Rules && Array.isArray(eventBus.Rules)) {
+          eventBus.Rules.forEach((rule: any) => {
+            if (rule.Targets && Array.isArray(rule.Targets)) {
+              rule.Targets.forEach((target: string) => {
+                // Target could be Lambda, SQS, SNS, etc.
+                // Try to find matching resource
+                if (regionData.lambda_functions) {
+                  const lambdaMatch = regionData.lambda_functions.find((fn: any) => fn.FunctionName === target || target.includes(fn.FunctionName));
+                  if (lambdaMatch) {
+                    edges.push({
+                      id: `eventbridge-lambda-${eventBus.EventBusName}-${target}`,
+                      source: ebNodeId,
+                      target: `lambda-${lambdaMatch.FunctionName}`,
+                      label: `Rule: ${rule.RuleName}`,
+                      style: { stroke: '#FF9900', strokeWidth: 1.5, strokeDasharray: '5,5' },
+                      markerEnd: 'arrowclosed',
+                    });
+                  }
+                }
+                if (regionData.sqs_queues) {
+                  const sqsMatch = regionData.sqs_queues.find((q: any) => q.QueueName === target || target.includes(q.QueueName));
+                  if (sqsMatch) {
+                    edges.push({
+                      id: `eventbridge-sqs-${eventBus.EventBusName}-${target}`,
+                      source: ebNodeId,
+                      target: `sqs-${sqsMatch.QueueName}`,
+                      label: `Rule: ${rule.RuleName}`,
+                      style: { stroke: '#FF4F8B', strokeWidth: 1.5, strokeDasharray: '5,5' },
+                      markerEnd: 'arrowclosed',
+                    });
+                  }
+                }
+                if (regionData.sns_topics) {
+                  const snsMatch = regionData.sns_topics.find((t: any) => t.TopicName === target || target.includes(t.TopicName));
+                  if (snsMatch) {
+                    edges.push({
+                      id: `eventbridge-sns-${eventBus.EventBusName}-${target}`,
+                      source: ebNodeId,
+                      target: `sns-${snsMatch.TopicName}`,
+                      label: `Rule: ${rule.RuleName}`,
+                      style: { stroke: '#FF4F8B', strokeWidth: 1.5, strokeDasharray: '5,5' },
+                      markerEnd: 'arrowclosed',
+                    });
+                  }
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+
     // Add Kinesis Streams at Region level
     if (regionData.kinesis_streams && regionData.kinesis_streams.length > 0) {
       const kinesisMargin = 25;
@@ -2440,8 +2218,10 @@ export const parseAWSDataJSON = async (
       const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
       const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
       const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
       const kinesisX = regionX + regionPadding;
-      const kinesisY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + vpcMarginBetween * 9;
+      // Position Kinesis inside region container
+      const kinesisY = regionResourcesStartY + lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight;
 
       regionData.kinesis_streams.forEach((stream: any, kinesisIndex: number) => {
         const kinesisNodeId = `kinesis-${stream.StreamName}`;
@@ -2484,7 +2264,18 @@ export const parseAWSDataJSON = async (
     if (regionData.sqs_queues && regionData.sqs_queues.length > 0) {
       const sqsMargin = 25;
       const sqsWidth = 280;
-      let offsetY = 0;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const offsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight;
       const resourceHeights = [
         regionData.lambda_functions?.length ? 150 : 0,
         regionData.api_gateways?.length ? 150 : 0,
@@ -2496,8 +2287,9 @@ export const parseAWSDataJSON = async (
         regionData.autoscaling_groups?.length ? 150 : 0,
         regionData.fargate_tasks?.length ? 150 : 0,
         regionData.kinesis_streams?.length ? 150 : 0,
+        regionData.eventbridge?.length ? 150 : 0,
       ];
-      offsetY = resourceHeights.reduce((a, b) => a + b, 0) + vpcMarginBetween * (resourceHeights.filter(h => h > 0).length);
+      // Position SQS inside region container
       const sqsX = regionX + regionPadding;
       const sqsY = regionResourcesStartY + offsetY;
 
@@ -2543,7 +2335,19 @@ export const parseAWSDataJSON = async (
     if (regionData.sns_topics && regionData.sns_topics.length > 0) {
       const snsMargin = 25;
       const snsWidth = 280;
-      let offsetY = 0;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const offsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight;
       const resourceHeights = [
         regionData.lambda_functions?.length ? 150 : 0,
         regionData.api_gateways?.length ? 150 : 0,
@@ -2556,8 +2360,9 @@ export const parseAWSDataJSON = async (
         regionData.fargate_tasks?.length ? 150 : 0,
         regionData.kinesis_streams?.length ? 150 : 0,
         regionData.sqs_queues?.length ? 150 : 0,
+        regionData.eventbridge?.length ? 150 : 0,
       ];
-      offsetY = resourceHeights.reduce((a, b) => a + b, 0) + vpcMarginBetween * (resourceHeights.filter(h => h > 0).length);
+      // Position SNS inside region container
       const snsX = regionX + regionPadding;
       const snsY = regionResourcesStartY + offsetY;
 
@@ -2719,15 +2524,28 @@ export const parseAWSDataJSON = async (
       });
     }
 
-    // Add S3 buckets at Region level (AWS Rule: S3 is region-scoped, not VPC-bound)
-    if (regionData.s3_buckets && regionData.s3_buckets.length > 0) {
-      const s3Margin = 25;
-      const s3Width = 280;
-      const s3X = regionX + regionPadding;
+    // Add ECR Repositories at Region level
+    if (regionData.ecr_repositories && regionData.ecr_repositories.length > 0) {
+      const ecrMargin = 25;
+      const ecrWidth = 280;
+      const ecrX = regionX + regionPadding;
       
-      // Calculate S3 Y position accounting for all resources before it
-      let s3OffsetY = 0;
-      const s3ResourceHeights = [
+      // Calculate ECR Y position accounting for all resources before it
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      let ecrOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight;
+      const ecrResourceHeights = [
         regionData.lambda_functions?.length ? 150 : 0,
         regionData.api_gateways?.length ? 150 : 0,
         regionData.cloudfront_distributions?.length ? 150 : 0,
@@ -2740,15 +2558,863 @@ export const parseAWSDataJSON = async (
         regionData.kinesis_streams?.length ? 150 : 0,
         regionData.sqs_queues?.length ? 150 : 0,
         regionData.sns_topics?.length ? 150 : 0,
-        regionData.vpc_endpoints?.length ? 150 : 0, // Add VPC Endpoint height
+        regionData.vpc_endpoints?.length ? 150 : 0,
       ];
-      s3OffsetY = s3ResourceHeights.reduce((a, b) => a + b, 0) + vpcMarginBetween * (s3ResourceHeights.filter(h => h > 0).length);
-      const s3Y = regionResourcesStartY + s3OffsetY;
+      ecrOffsetY += ecrResourceHeights.reduce((a, b) => a + b, 0);
+      // Position ECR inside region container
+      const ecrY = regionResourcesStartY + ecrOffsetY;
+
+      regionData.ecr_repositories.forEach((repo: any, ecrIndex: number) => {
+        const ecrNodeId = `ecr-${repo.RepositoryName}`;
+        const ecrNodeX = ecrX + ecrIndex * (ecrWidth + ecrMargin);
+        const ecrNodeY = ecrY;
+        const ecrPosition = getNodePosition(ecrNodeId, ecrNodeX, ecrNodeY);
+
+        nodes.push({
+          id: ecrNodeId,
+          type: 'resourceNode',
+          position: ecrPosition,
+          data: {
+            label: repo.RepositoryName,
+            resourceType: ecrResourceType,
+            repositoryName: repo.RepositoryName,
+            repositoryUri: repo.RepositoryUri,
+            imageCount: repo.ImageCount,
+            createdAt: repo.CreatedAt,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::ECR::Repository',
+              region: regionKey,
+              repositoryName: repo.RepositoryName,
+              repositoryUri: repo.RepositoryUri,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-ecr-${regionKey}-${repo.RepositoryName}`,
+          source: regionNodeId,
+          target: ecrNodeId,
+          label: 'ECR Repository',
+          style: { stroke: '#FF9900', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add Service Discovery (Cloud Map) at Region level
+    if (regionData.service_discovery && regionData.service_discovery.length > 0) {
+      const sdMargin = 25;
+      const sdWidth = 280;
+      const sdX = regionX + regionPadding;
+      
+      // Calculate Service Discovery Y position accounting for all resources before it
+      let sdOffsetY = (regionData.load_balancers?.length ? 150 : 0);
+      const sdResourceHeights = [
+        regionData.lambda_functions?.length ? 150 : 0,
+        regionData.api_gateways?.length ? 150 : 0,
+        regionData.cloudfront_distributions?.length ? 150 : 0,
+        regionData.dynamodb_tables?.length ? 150 : 0,
+        regionData.elasticache_clusters?.length ? 150 : 0,
+        regionData.ecs_clusters?.length ? 150 : 0,
+        regionData.eks_clusters?.length ? 150 : 0,
+        regionData.autoscaling_groups?.length ? 150 : 0,
+        regionData.fargate_tasks?.length ? 150 : 0,
+        regionData.kinesis_streams?.length ? 150 : 0,
+        regionData.sqs_queues?.length ? 150 : 0,
+        regionData.sns_topics?.length ? 150 : 0,
+        regionData.vpc_endpoints?.length ? 150 : 0,
+        regionData.ecr_repositories?.length ? 150 : 0,
+      ];
+      sdOffsetY += sdResourceHeights.reduce((a, b) => a + b, 0);
+      const sdY = regionY + regionContainerHeight + vpcMarginBetween + sdOffsetY;
+
+      regionData.service_discovery.forEach((sd: any, sdIndex: number) => {
+        const sdNodeId = `sd-${sd.Namespace}`;
+        const sdNodeX = sdX + sdIndex * (sdWidth + sdMargin);
+        const sdNodeY = sdY;
+        const sdPosition = getNodePosition(sdNodeId, sdNodeX, sdNodeY);
+
+        nodes.push({
+          id: sdNodeId,
+          type: 'resourceNode',
+          position: sdPosition,
+          data: {
+            label: sd.Namespace,
+            resourceType: serviceDiscoveryResourceType,
+            namespace: sd.Namespace,
+            type: sd.Type || 'AWS Cloud Map',
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::ServiceDiscovery::PrivateDnsNamespace',
+              region: regionKey,
+              namespace: sd.Namespace,
+              type: sd.Type,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-sd-${regionKey}-${sd.Namespace}`,
+          source: regionNodeId,
+          target: sdNodeId,
+          label: 'Service Discovery',
+          style: { stroke: '#8C4FFF', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add EBS Volumes at Region level
+    if (regionData.ebs_volumes && regionData.ebs_volumes.length > 0) {
+      const ebsMargin = 25;
+      const ebsWidth = 280;
+      const ebsX = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight;
+      const ebsY = regionResourcesStartY + ebsOffsetY;
+
+      regionData.ebs_volumes.forEach((volume: any, ebsIndex: number) => {
+        const ebsNodeId = `ebs-${volume.VolumeId}`;
+        const ebsNodeX = ebsX + ebsIndex * (ebsWidth + ebsMargin);
+        const ebsNodeY = ebsY;
+        const ebsPosition = getNodePosition(ebsNodeId, ebsNodeX, ebsNodeY);
+
+        nodes.push({
+          id: ebsNodeId,
+          type: 'resourceNode',
+          position: ebsPosition,
+          data: {
+            label: volume.VolumeId,
+            resourceType: ebsResourceType,
+            volumeId: volume.VolumeId,
+            size: volume.Size,
+            type: volume.VolumeType,
+            state: volume.State,
+            iops: volume.Iops,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::EC2::Volume',
+              region: regionKey,
+              volumeType: volume.VolumeType,
+              size: volume.Size,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-ebs-${regionKey}-${volume.VolumeId}`,
+          source: regionNodeId,
+          target: ebsNodeId,
+          label: 'EBS Volume',
+          style: { stroke: '#FF9900', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add EFS File Systems at Region level
+    if (regionData.efs_filesystems && regionData.efs_filesystems.length > 0) {
+      const efsMargin = 25;
+      const efsWidth = 280;
+      const efsX = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsHeight = regionData.ebs_volumes?.length ? 150 : 0;
+      const efsOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight + ebsHeight;
+      const efsY = regionResourcesStartY + efsOffsetY;
+
+      regionData.efs_filesystems.forEach((fs: any, efsIndex: number) => {
+        const efsNodeId = `efs-${fs.FileSystemId}`;
+        const efsNodeX = efsX + efsIndex * (efsWidth + efsMargin);
+        const efsNodeY = efsY;
+        const efsPosition = getNodePosition(efsNodeId, efsNodeX, efsNodeY);
+
+        nodes.push({
+          id: efsNodeId,
+          type: 'resourceNode',
+          position: efsPosition,
+          data: {
+            label: fs.Name || fs.FileSystemId,
+            resourceType: efsResourceType,
+            fileSystemId: fs.FileSystemId,
+            performanceMode: fs.PerformanceMode,
+            throughputMode: fs.ThroughputMode,
+            sizeInBytes: fs.SizeInBytes,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::EFS::FileSystem',
+              region: regionKey,
+              performanceMode: fs.PerformanceMode,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-efs-${regionKey}-${fs.FileSystemId}`,
+          source: regionNodeId,
+          target: efsNodeId,
+          label: 'EFS FileSystem',
+          style: { stroke: '#FF9900', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add Route53 Hosted Zones at Region level
+    if (regionData.route53_zones && regionData.route53_zones.length > 0) {
+      const route53Margin = 25;
+      const route53Width = 280;
+      const route53X = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsHeight = regionData.ebs_volumes?.length ? 150 : 0;
+      const efsHeight = regionData.efs_filesystems?.length ? 150 : 0;
+      const route53OffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight + ebsHeight + efsHeight;
+      const route53Y = regionResourcesStartY + route53OffsetY;
+
+      regionData.route53_zones.forEach((zone: any, route53Index: number) => {
+        const route53NodeId = `r53-${zone.Id}`;
+        const route53NodeX = route53X + route53Index * (route53Width + route53Margin);
+        const route53NodeY = route53Y;
+        const route53Position = getNodePosition(route53NodeId, route53NodeX, route53NodeY);
+
+        nodes.push({
+          id: route53NodeId,
+          type: 'resourceNode',
+          position: route53Position,
+          data: {
+            label: zone.Name,
+            resourceType: route53ResourceType,
+            zoneId: zone.Id,
+            name: zone.Name,
+            recordCount: zone.RecordSetCount,
+            isPrivate: zone.Config?.PrivateZone || false,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::Route53::HostedZone',
+              region: regionKey,
+              zoneId: zone.Id,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-r53-${regionKey}-${zone.Id}`,
+          source: regionNodeId,
+          target: route53NodeId,
+          label: 'Route53 Zone',
+          style: { stroke: '#FF9900', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add IAM Roles at Region level
+    if (regionData.iam_roles && regionData.iam_roles.length > 0) {
+      const iamMargin = 25;
+      const iamWidth = 280;
+      const iamX = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsHeight = regionData.ebs_volumes?.length ? 150 : 0;
+      const efsHeight = regionData.efs_filesystems?.length ? 150 : 0;
+      const route53Height = regionData.route53_zones?.length ? 150 : 0;
+      const iamOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight + ebsHeight + efsHeight + route53Height;
+      const iamY = regionResourcesStartY + iamOffsetY;
+
+      regionData.iam_roles.forEach((role: any, iamIndex: number) => {
+        const iamNodeId = `iam-${role.RoleName}`;
+        const iamNodeX = iamX + iamIndex * (iamWidth + iamMargin);
+        const iamNodeY = iamY;
+        const iamPosition = getNodePosition(iamNodeId, iamNodeX, iamNodeY);
+
+        nodes.push({
+          id: iamNodeId,
+          type: 'resourceNode',
+          position: iamPosition,
+          data: {
+            label: role.RoleName,
+            resourceType: iamResourceType,
+            roleName: role.RoleName,
+            roleId: role.RoleId,
+            arn: role.Arn,
+            assumeRolePolicyDocument: role.AssumeRolePolicyDocument,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::IAM::Role',
+              region: regionKey,
+              roleName: role.RoleName,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-iam-${regionKey}-${role.RoleName}`,
+          source: regionNodeId,
+          target: iamNodeId,
+          label: 'IAM Role',
+          style: { stroke: '#DD344C', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add Cognito User Pools at Region level
+    if (regionData.cognito_user_pools && regionData.cognito_user_pools.length > 0) {
+      const cognitoMargin = 25;
+      const cognitoWidth = 280;
+      const cognitoX = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsHeight = regionData.ebs_volumes?.length ? 150 : 0;
+      const efsHeight = regionData.efs_filesystems?.length ? 150 : 0;
+      const route53Height = regionData.route53_zones?.length ? 150 : 0;
+      const iamHeight = regionData.iam_roles?.length ? 150 : 0;
+      const cognitoOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight + ebsHeight + efsHeight + route53Height + iamHeight;
+      const cognitoY = regionResourcesStartY + cognitoOffsetY;
+
+      regionData.cognito_user_pools.forEach((pool: any, cognitoIndex: number) => {
+        const cognitoNodeId = `cognito-${pool.Id}`;
+        const cognitoNodeX = cognitoX + cognitoIndex * (cognitoWidth + cognitoMargin);
+        const cognitoNodeY = cognitoY;
+        const cognitoPosition = getNodePosition(cognitoNodeId, cognitoNodeX, cognitoNodeY);
+
+        nodes.push({
+          id: cognitoNodeId,
+          type: 'resourceNode',
+          position: cognitoPosition,
+          data: {
+            label: pool.Name,
+            resourceType: cognitoResourceType,
+            poolId: pool.Id,
+            poolName: pool.Name,
+            userCount: pool.EstimatedUserCount,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::Cognito::UserPool',
+              region: regionKey,
+              poolId: pool.Id,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-cognito-${regionKey}-${pool.Id}`,
+          source: regionNodeId,
+          target: cognitoNodeId,
+          label: 'Cognito UserPool',
+          style: { stroke: '#FF9900', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add WAF Web ACLs at Region level
+    if (regionData.waf_rules && regionData.waf_rules.length > 0) {
+      const wafMargin = 25;
+      const wafWidth = 280;
+      const wafX = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsHeight = regionData.ebs_volumes?.length ? 150 : 0;
+      const efsHeight = regionData.efs_filesystems?.length ? 150 : 0;
+      const route53Height = regionData.route53_zones?.length ? 150 : 0;
+      const iamHeight = regionData.iam_roles?.length ? 150 : 0;
+      const cognitoHeight = regionData.cognito_user_pools?.length ? 150 : 0;
+      const wafOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight + ebsHeight + efsHeight + route53Height + iamHeight + cognitoHeight;
+      const wafY = regionResourcesStartY + wafOffsetY;
+
+      regionData.waf_rules.forEach((rule: any, wafIndex: number) => {
+        const wafNodeId = `waf-${rule.Id}`;
+        const wafNodeX = wafX + wafIndex * (wafWidth + wafMargin);
+        const wafNodeY = wafY;
+        const wafPosition = getNodePosition(wafNodeId, wafNodeX, wafNodeY);
+
+        nodes.push({
+          id: wafNodeId,
+          type: 'resourceNode',
+          position: wafPosition,
+          data: {
+            label: rule.Name,
+            resourceType: wafResourceType,
+            ruleId: rule.Id,
+            ruleName: rule.Name,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::WAFv2::WebACL',
+              region: regionKey,
+              ruleId: rule.Id,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-waf-${regionKey}-${rule.Id}`,
+          source: regionNodeId,
+          target: wafNodeId,
+          label: 'WAF Rule',
+          style: { stroke: '#DD344C', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add CloudWatch Alarms at Region level
+    if (regionData.cloudwatch_alarms && regionData.cloudwatch_alarms.length > 0) {
+      const cwMargin = 25;
+      const cwWidth = 280;
+      const cwX = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsHeight = regionData.ebs_volumes?.length ? 150 : 0;
+      const efsHeight = regionData.efs_filesystems?.length ? 150 : 0;
+      const route53Height = regionData.route53_zones?.length ? 150 : 0;
+      const iamHeight = regionData.iam_roles?.length ? 150 : 0;
+      const cognitoHeight = regionData.cognito_user_pools?.length ? 150 : 0;
+      const wafHeight = regionData.waf_rules?.length ? 150 : 0;
+      const cwOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight + ebsHeight + efsHeight + route53Height + iamHeight + cognitoHeight + wafHeight;
+      const cwY = regionResourcesStartY + cwOffsetY;
+
+      regionData.cloudwatch_alarms.forEach((alarm: any, cwIndex: number) => {
+        const cwNodeId = `cw-${alarm.AlarmName}`;
+        const cwNodeX = cwX + cwIndex * (cwWidth + cwMargin);
+        const cwNodeY = cwY;
+        const cwPosition = getNodePosition(cwNodeId, cwNodeX, cwNodeY);
+
+        nodes.push({
+          id: cwNodeId,
+          type: 'resourceNode',
+          position: cwPosition,
+          data: {
+            label: alarm.AlarmName,
+            resourceType: cloudwatchResourceType,
+            alarmName: alarm.AlarmName,
+            metric: alarm.MetricName,
+            state: alarm.StateValue,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::CloudWatch::Alarm',
+              region: regionKey,
+              metricName: alarm.MetricName,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-cw-${regionKey}-${alarm.AlarmName}`,
+          source: regionNodeId,
+          target: cwNodeId,
+          label: 'CloudWatch Alarm',
+          style: { stroke: '#FF9900', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add Transit Gateways at Region level
+    if (regionData.transit_gateways && regionData.transit_gateways.length > 0) {
+      const tgwMargin = 25;
+      const tgwWidth = 280;
+      const tgwX = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsHeight = regionData.ebs_volumes?.length ? 150 : 0;
+      const efsHeight = regionData.efs_filesystems?.length ? 150 : 0;
+      const route53Height = regionData.route53_zones?.length ? 150 : 0;
+      const iamHeight = regionData.iam_roles?.length ? 150 : 0;
+      const cognitoHeight = regionData.cognito_user_pools?.length ? 150 : 0;
+      const wafHeight = regionData.waf_rules?.length ? 150 : 0;
+      const cwHeight = regionData.cloudwatch_alarms?.length ? 150 : 0;
+      const tgwOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight + ebsHeight + efsHeight + route53Height + iamHeight + cognitoHeight + wafHeight + cwHeight;
+      const tgwY = regionResourcesStartY + tgwOffsetY;
+
+      regionData.transit_gateways.forEach((tgw: any, tgwIndex: number) => {
+        const tgwNodeId = `tgw-${tgw.TransitGatewayId}`;
+        const tgwNodeX = tgwX + tgwIndex * (tgwWidth + tgwMargin);
+        const tgwNodeY = tgwY;
+        const tgwPosition = getNodePosition(tgwNodeId, tgwNodeX, tgwNodeY);
+
+        nodes.push({
+          id: tgwNodeId,
+          type: 'resourceNode',
+          position: tgwPosition,
+          data: {
+            label: tgw.TransitGatewayId,
+            resourceType: tgwResourceType,
+            tgwId: tgw.TransitGatewayId,
+            state: tgw.State,
+            description: tgw.Description,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::EC2::TransitGateway',
+              region: regionKey,
+              tgwId: tgw.TransitGatewayId,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-tgw-${regionKey}-${tgw.TransitGatewayId}`,
+          source: regionNodeId,
+          target: tgwNodeId,
+          label: 'Transit Gateway',
+          style: { stroke: '#8C4FFF', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add VPC Peering Connections at Region level
+    if (regionData.vpc_peering_connections && regionData.vpc_peering_connections.length > 0) {
+      const pcxMargin = 25;
+      const pcxWidth = 280;
+      const pcxX = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsHeight = regionData.ebs_volumes?.length ? 150 : 0;
+      const efsHeight = regionData.efs_filesystems?.length ? 150 : 0;
+      const route53Height = regionData.route53_zones?.length ? 150 : 0;
+      const iamHeight = regionData.iam_roles?.length ? 150 : 0;
+      const cognitoHeight = regionData.cognito_user_pools?.length ? 150 : 0;
+      const wafHeight = regionData.waf_rules?.length ? 150 : 0;
+      const cwHeight = regionData.cloudwatch_alarms?.length ? 150 : 0;
+      const tgwHeight = regionData.transit_gateways?.length ? 150 : 0;
+      const pcxOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight + ebsHeight + efsHeight + route53Height + iamHeight + cognitoHeight + wafHeight + cwHeight + tgwHeight;
+      const pcxY = regionResourcesStartY + pcxOffsetY;
+
+      regionData.vpc_peering_connections.forEach((pcx: any, pcxIndex: number) => {
+        const pcxNodeId = `pcx-${pcx.VpcPeeringConnectionId}`;
+        const pcxNodeX = pcxX + pcxIndex * (pcxWidth + pcxMargin);
+        const pcxNodeY = pcxY;
+        const pcxPosition = getNodePosition(pcxNodeId, pcxNodeX, pcxNodeY);
+
+        nodes.push({
+          id: pcxNodeId,
+          type: 'resourceNode',
+          position: pcxPosition,
+          data: {
+            label: pcx.VpcPeeringConnectionId,
+            resourceType: vpcPeeringResourceType,
+            pcxId: pcx.VpcPeeringConnectionId,
+            requesterVpcId: pcx.RequesterVpcInfo?.VpcId,
+            accepterVpcId: pcx.AccepterVpcInfo?.VpcId,
+            status: pcx.Status?.Code,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::EC2::VPCPeeringConnection',
+              region: regionKey,
+              pcxId: pcx.VpcPeeringConnectionId,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-pcx-${regionKey}-${pcx.VpcPeeringConnectionId}`,
+          source: regionNodeId,
+          target: pcxNodeId,
+          label: 'VPC Peering',
+          style: { stroke: '#8C4FFF', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add Network ACLs at Region level
+    if (regionData.network_acls && regionData.network_acls.length > 0) {
+      const naclMargin = 25;
+      const naclWidth = 280;
+      const naclX = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsHeight = regionData.ebs_volumes?.length ? 150 : 0;
+      const efsHeight = regionData.efs_filesystems?.length ? 150 : 0;
+      const route53Height = regionData.route53_zones?.length ? 150 : 0;
+      const iamHeight = regionData.iam_roles?.length ? 150 : 0;
+      const cognitoHeight = regionData.cognito_user_pools?.length ? 150 : 0;
+      const wafHeight = regionData.waf_rules?.length ? 150 : 0;
+      const cwHeight = regionData.cloudwatch_alarms?.length ? 150 : 0;
+      const tgwHeight = regionData.transit_gateways?.length ? 150 : 0;
+      const pcxHeight = regionData.vpc_peering_connections?.length ? 150 : 0;
+      const naclOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight + ebsHeight + efsHeight + route53Height + iamHeight + cognitoHeight + wafHeight + cwHeight + tgwHeight + pcxHeight;
+      const naclY = regionResourcesStartY + naclOffsetY;
+
+      regionData.network_acls.forEach((nacl: any, naclIndex: number) => {
+        const naclNodeId = `nacl-${nacl.NetworkAclId}`;
+        const naclNodeX = naclX + naclIndex * (naclWidth + naclMargin);
+        const naclNodeY = naclY;
+        const naclPosition = getNodePosition(naclNodeId, naclNodeX, naclNodeY);
+
+        nodes.push({
+          id: naclNodeId,
+          type: 'resourceNode',
+          position: naclPosition,
+          data: {
+            label: nacl.NetworkAclId,
+            resourceType: naclResourceType,
+            naclId: nacl.NetworkAclId,
+            isDefault: nacl.IsDefault,
+            vpcId: nacl.VpcId,
+            parentId: regionNodeId,
+            config: {
+              originalType: 'AWS::EC2::NetworkAcl',
+              region: regionKey,
+              naclId: nacl.NetworkAclId,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-nacl-${regionKey}-${nacl.NetworkAclId}`,
+          source: regionNodeId,
+          target: naclNodeId,
+          label: 'Network ACL',
+          style: { stroke: '#8C4FFF', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add Elastic Beanstalk Applications at Region level
+    if (regionData.elastic_beanstalk_apps && regionData.elastic_beanstalk_apps.length > 0) {
+      const ebMargin = 25;
+      const ebWidth = 380;
+      const ebX = regionX + regionPadding;
+      const lambdaHeight = regionData.lambda_functions?.length ? 150 : 0;
+      const apiHeight = regionData.api_gateways?.length ? 150 : 0;
+      const cfHeight = regionData.cloudfront_distributions?.length ? 150 : 0;
+      const ddbHeight = regionData.dynamodb_tables?.length ? 150 : 0;
+      const ecHeight = regionData.elasticache_clusters?.length ? 150 : 0;
+      const ecsHeight = regionData.ecs_clusters?.length ? 150 : 0;
+      const eksHeight = regionData.eks_clusters?.length ? 150 : 0;
+      const asgHeight = regionData.autoscaling_groups?.length ? 150 : 0;
+      const fargateHeight = regionData.fargate_tasks?.length ? 150 : 0;
+      const ebHeight = regionData.eventbridge?.length ? 150 : 0;
+      const kinesisHeight = regionData.kinesis_streams?.length ? 150 : 0;
+      const sqsHeight = regionData.sqs_queues?.length ? 150 : 0;
+      const snsHeight = regionData.sns_topics?.length ? 150 : 0;
+      const ecrHeight = regionData.ecr_repositories?.length ? 150 : 0;
+      const sdHeight = regionData.service_discovery?.length ? 150 : 0;
+      const ebsHeight = regionData.ebs_volumes?.length ? 150 : 0;
+      const efsHeight = regionData.efs_filesystems?.length ? 150 : 0;
+      const route53Height = regionData.route53_zones?.length ? 150 : 0;
+      const iamHeight = regionData.iam_roles?.length ? 150 : 0;
+      const cognitoHeight = regionData.cognito_user_pools?.length ? 150 : 0;
+      const wafHeight = regionData.waf_rules?.length ? 150 : 0;
+      const cwHeight = regionData.cloudwatch_alarms?.length ? 150 : 0;
+      const tgwHeight = regionData.transit_gateways?.length ? 150 : 0;
+      const pcxHeight = regionData.vpc_peering_connections?.length ? 150 : 0;
+      const naclHeight = regionData.network_acls?.length ? 150 : 0;
+      const ebAppOffsetY = lambdaHeight + apiHeight + cfHeight + ddbHeight + ecHeight + ecsHeight + eksHeight + asgHeight + fargateHeight + ebHeight + kinesisHeight + sqsHeight + snsHeight + ecrHeight + sdHeight + ebsHeight + efsHeight + route53Height + iamHeight + cognitoHeight + wafHeight + cwHeight + tgwHeight + pcxHeight + naclHeight;
+      const ebAppY = regionResourcesStartY + ebAppOffsetY;
+
+      regionData.elastic_beanstalk_apps.forEach((app: any, ebAppIndex: number) => {
+        const ebAppNodeId = `ebapp-${app.ApplicationName}`;
+        const ebAppNodeX = ebX + ebAppIndex * (ebWidth + ebMargin);
+        const ebAppNodeY = ebAppY;
+        const ebAppPosition = getNodePosition(ebAppNodeId, ebAppNodeX, ebAppNodeY, ebWidth, 120);
+
+        nodes.push({
+          id: ebAppNodeId,
+          type: 'resourceNode',
+          position: ebAppPosition,
+          data: {
+            label: app.ApplicationName,
+            resourceType: ebResourceType,
+            appName: app.ApplicationName,
+            environments: app.Environments?.length || 0,
+            isContainer: true,
+            parentId: regionNodeId,
+            size: {
+              width: ebWidth,
+              height: 120,
+            },
+            config: {
+              originalType: 'AWS::ElasticBeanstalk::Application',
+              region: regionKey,
+              appName: app.ApplicationName,
+            },
+          },
+        });
+
+        edges.push({
+          id: `region-ebapp-${regionKey}-${app.ApplicationName}`,
+          source: regionNodeId,
+          target: ebAppNodeId,
+          label: 'ElasticBeanstalk App',
+          style: { stroke: '#FF9900', strokeWidth: 2 },
+          markerEnd: 'arrowclosed',
+        });
+      });
+    }
+
+    // Add S3 buckets at Region level (AWS Rule: S3 is region-scoped, not VPC-bound)
+    if (regionData.s3_buckets && regionData.s3_buckets.length > 0) {
+      const s3Width = 280;
+      const s3ItemSpacing = 30;
+      
+      // Grid-based positioning: Arrange resources in multiple rows to avoid overlaps
+      // Count existing region-level resources to calculate grid row
+      let resourceCount = 0;
+      if (regionData.lambda_functions?.length) resourceCount += 1;
+      if (regionData.api_gateways?.length) resourceCount += 1;
+      if (regionData.cloudfront_distributions?.length) resourceCount += 1;
+      if (regionData.dynamodb_tables?.length) resourceCount += 1;
+      if (regionData.elasticache_clusters?.length) resourceCount += 1;
+      if (regionData.ecs_clusters?.length) resourceCount += 1;
+      if (regionData.eks_clusters?.length) resourceCount += 1;
+      if (regionData.autoscaling_groups?.length) resourceCount += 1;
+      if (regionData.fargate_tasks?.length) resourceCount += 1;
+      if (regionData.eventbridge?.length) resourceCount += 1;
+      if (regionData.kinesis_streams?.length) resourceCount += 1;
+      if (regionData.sqs_queues?.length) resourceCount += 1;
+      if (regionData.sns_topics?.length) resourceCount += 1;
+      if (regionData.ecr_repositories?.length) resourceCount += 1;
+      
+      // Position S3 after all other resources in grid layout
+      const s3GridColumn = (resourceCount % 3); // 3 columns per row
+      const s3GridRow = Math.floor(resourceCount / 3) + 1; // Place in next row
+      
+      const gridSpacingX = 350;
+      const gridSpacingY = 150;
+      const s3X_grid = regionX + regionPadding + (s3GridColumn * gridSpacingX);
+      const s3Y_grid = regionResourcesStartY + (s3GridRow * gridSpacingY);
 
       regionData.s3_buckets.forEach((bucket: any, s3Index: number) => {
         const s3NodeId = `s3-${bucket.Name}`;
-        const s3NodeX = s3X + s3Index * (s3Width + s3Margin);
-        const s3NodeY = s3Y;
+        const s3NodeX = s3X_grid + s3Index * (s3Width + s3ItemSpacing);
+        const s3NodeY = s3Y_grid;
         const s3Position = getNodePosition(s3NodeId, s3NodeX, s3NodeY);
 
         nodes.push({
@@ -2862,27 +3528,77 @@ export const parseAWSDataJSON = async (
       }
     }
 
-    // === SERVERLESS ARCHITECTURE CONNECTIONS ===
+    // AWS Rule: Create connections between serverless resources
     
-    // AWS Rule: S3 bucket serves as origin for CloudFront distribution
-    if (regionData.s3_buckets && regionData.cloudfront_distributions) {
+    // Load Balancer to ECS Services (ALB/NLB routes traffic to services)
+    if (regionData.load_balancers && regionData.ecs_clusters) {
+      regionData.load_balancers.forEach((lb: any) => {
+        const lbId = lb.LoadBalancerName || lb.DNSName || 'lb';
+        // ECS services are typically routed to by load balancers via target groups
+        // If load balancer has explicit target groups, use those
+        if (lb.TargetGroups && Array.isArray(lb.TargetGroups)) {
+          lb.TargetGroups.forEach((tg: any) => {
+            const targetName = tg.TargetGroupName || tg.Name || '';
+            regionData.ecs_clusters?.forEach((cluster: any) => {
+              if (cluster.Services && Array.isArray(cluster.Services)) {
+                cluster.Services.forEach((service: any) => {
+                  // Match by service name or port
+                  if (service.ServiceName === targetName || 
+                      service.Container?.Port === tg.Port ||
+                      targetName.includes(service.ServiceName) ||
+                      service.ServiceName.includes(targetName)) {
+                    edges.push({
+                      id: `lb-ecs-${lbId}-${cluster.ClusterName}-${service.ServiceName}`,
+                      source: `lb-${lbId}`,
+                      target: `ecs-${cluster.ClusterName}`,
+                      label: `Routes to ${service.ServiceName}`,
+                      style: { stroke: '#3B48CC', strokeWidth: 2 },
+                      markerEnd: 'arrowclosed',
+                    });
+                  }
+                });
+              }
+            });
+          });
+        } else {
+          // If no explicit target groups, connect ALB to all ECS services in the region (common pattern)
+          regionData.ecs_clusters?.forEach((cluster: any) => {
+            if (cluster.Services && Array.isArray(cluster.Services)) {
+              cluster.Services.forEach((service: any, idx: number) => {
+                // Only create edge for first service to avoid clutter, unless explicitly configured
+                if (idx === 0 || service.ServiceDiscovery) {
+                  edges.push({
+                    id: `lb-ecs-${lbId}-${cluster.ClusterName}-${service.ServiceName}`,
+                    source: `lb-${lbId}`,
+                    target: `ecs-${cluster.ClusterName}`,
+                    label: `Routes to ${service.ServiceName}`,
+                    style: { stroke: '#3B48CC', strokeWidth: 2 },
+                    markerEnd: 'arrowclosed',
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+
+    // CloudFront to S3 (Origin bucket)
+    if (regionData.cloudfront_distributions && regionData.s3_buckets) {
       regionData.cloudfront_distributions.forEach((cf: any) => {
-        const cfId = cf.DistributionId || cf.Id || cf.DomainName || `cf-${regionData.cloudfront_distributions.indexOf(cf)}`;
-        const origin = cf.Origin || cf.Origins?.[0]?.DomainName;
-        
-        if (origin) {
-          // Find matching S3 bucket by name
-          const s3Bucket = regionData.s3_buckets.find((bucket: any) => 
-            bucket.Name === origin || bucket.name === origin
+        const originBucket = cf.Origin || cf.Origins?.[0]?.DomainName;
+        if (originBucket) {
+          const s3Bucket = regionData.s3_buckets?.find((bucket: any) => 
+            bucket.Name === originBucket || bucket.Name.includes(originBucket)
           );
-          
           if (s3Bucket) {
+            const cfId = cf.DistributionId || cf.Id || cf.DomainName || originBucket;
             edges.push({
-              id: `s3-cf-${s3Bucket.Name}-${cfId}`,
-              source: `s3-${s3Bucket.Name}`,
-              target: `cf-${cfId}`,
-              label: 'CDN Origin',
-              style: { stroke: '#FF9900', strokeWidth: 2 },
+              id: `cf-s3-${cfId}-${s3Bucket.Name}`,
+              source: `cf-${cfId}`,
+              target: `s3-${s3Bucket.Name}`,
+              label: 'Origin',
+              style: { stroke: '#569A31', strokeWidth: 2, strokeDasharray: '5,5' },
               markerEnd: 'arrowclosed',
             });
           }
@@ -2890,135 +3606,209 @@ export const parseAWSDataJSON = async (
       });
     }
 
-    // AWS Rule: API Gateway routes to Lambda functions
+    // API Gateway to Lambda Functions (via Routes)
     if (regionData.api_gateways && regionData.lambda_functions) {
       regionData.api_gateways.forEach((api: any) => {
-        const apiId = api.id || api.ApiId || api.ApiName || `api-${regionData.api_gateways.indexOf(api)}`;
-        
-        // Extract lambda function names from routes
+        const apiId = api.id || api.ApiId || api.ApiName || 'api';
         if (api.Routes && Array.isArray(api.Routes)) {
-          const integrations = new Set<string>();
           api.Routes.forEach((route: any) => {
-            if (route.Integration) {
-              integrations.add(route.Integration);
-            }
-          });
-
-          integrations.forEach((integration: string) => {
-            // Find matching Lambda function
-            const lambdaFunc = regionData.lambda_functions.find((lambda: any) => 
-              lambda.FunctionName === integration || lambda.functionName === integration
-            );
-            
-            if (lambdaFunc) {
-              edges.push({
-                id: `api-lambda-${apiId}-${lambdaFunc.FunctionName}`,
-                source: `api-${apiId}`,
-                target: `lambda-${lambdaFunc.FunctionName}`,
-                label: 'Invokes',
-                style: { stroke: '#FF9900', strokeWidth: 2 },
-                markerEnd: 'arrowclosed',
-              });
+            const lambdaName = route.Integration;
+            if (lambdaName) {
+              const lambda = regionData.lambda_functions?.find((fn: any) => 
+                fn.FunctionName === lambdaName || fn.FunctionName.includes(lambdaName)
+              );
+              if (lambda) {
+                edges.push({
+                  id: `api-lambda-${apiId}-${lambda.FunctionName}-${route.Path}`,
+                  source: `api-${apiId}`,
+                  target: `lambda-${lambda.FunctionName}`,
+                  label: `${route.Method} ${route.Path}`,
+                  style: { stroke: '#FF9900', strokeWidth: 2 },
+                  markerEnd: 'arrowclosed',
+                });
+              }
             }
           });
         }
       });
     }
 
-    // AWS Rule: Lambda functions access DynamoDB tables
+    // Lambda to DynamoDB (resource access)
     if (regionData.lambda_functions && regionData.dynamodb_tables) {
       regionData.lambda_functions.forEach((lambda: any) => {
-        if (lambda.Permissions && Array.isArray(lambda.Permissions)) {
-          const hasDynamoDBAccess = lambda.Permissions.some((perm: string) => 
-            perm.toLowerCase().includes('dynamodb')
-          );
-
-          if (hasDynamoDBAccess && lambda.EnvironmentVariables?.TABLE_NAME) {
-            const tableName = lambda.EnvironmentVariables.TABLE_NAME;
-            const ddbTable = regionData.dynamodb_tables.find((table: any) => 
-              table.TableName === tableName || table.tableName === tableName
-            );
-
-            if (ddbTable) {
-              edges.push({
-                id: `lambda-ddb-${lambda.FunctionName}-${ddbTable.TableName}`,
-                source: `lambda-${lambda.FunctionName}`,
-                target: `ddb-${ddbTable.TableName}`,
-                label: 'Read/Write',
-                style: { stroke: '#527FFF', strokeWidth: 2 },
-                markerEnd: 'arrowclosed',
-              });
-            }
-          }
+        // Check if Lambda has DynamoDB permissions or environment variables
+        const hasDynamoDBAccess = 
+          lambda.Permissions?.some((perm: string) => perm.includes('dynamodb')) ||
+          lambda.EnvironmentVariables?.TABLE_NAME;
+        
+        if (hasDynamoDBAccess) {
+          // Connect to all DynamoDB tables if permissions exist
+          regionData.dynamodb_tables?.forEach((ddb: any) => {
+            const permission = lambda.Permissions?.find((p: string) => p.includes('dynamodb')) || 'dynamodb:*';
+            edges.push({
+              id: `lambda-ddb-${lambda.FunctionName}-${ddb.TableName}`,
+              source: `lambda-${lambda.FunctionName}`,
+              target: `ddb-${ddb.TableName}`,
+              label: permission,
+              style: { stroke: '#3B48CC', strokeWidth: 2, strokeDasharray: '5,5' },
+              markerEnd: 'arrowclosed',
+            });
+          });
         }
       });
     }
 
-    // AWS Rule: Lambda functions triggered by or publish to SQS
+    // Lambda to SQS (triggers/integration)
     if (regionData.lambda_functions && regionData.sqs_queues) {
       regionData.lambda_functions.forEach((lambda: any) => {
-        if (lambda.Triggers && Array.isArray(lambda.Triggers)) {
-          const hasSQSTrigger = lambda.Triggers.includes('sqs');
-          
-          if (hasSQSTrigger) {
-            // Connect to first SQS queue as a generic trigger
-            const sqsQueue = regionData.sqs_queues[0];
-            if (sqsQueue) {
-              const queueName = sqsQueue.QueueName || sqsQueue.QueueUrl || `queue-0`;
-              edges.push({
-                id: `sqs-lambda-${queueName}-${lambda.FunctionName}`,
-                source: `sqs-${queueName}`,
-                target: `lambda-${lambda.FunctionName}`,
-                label: 'Event Source',
-                style: { stroke: '#FF4F8B', strokeWidth: 2 },
-                markerEnd: 'arrowclosed',
-              });
-            }
-          }
+        // Check if Lambda has SQS triggers or permissions
+        const hasSQSTrigger = lambda.Triggers?.includes('sqs');
+        const hasSQSPermission = lambda.Permissions?.some((perm: string) => perm.includes('sqs'));
+        
+        if (hasSQSTrigger || hasSQSPermission) {
+          // Connect to all SQS queues if triggers/permissions exist
+          regionData.sqs_queues?.forEach((queue: any) => {
+            const queueName = queue.QueueName || `queue`;
+            const permission = lambda.Permissions?.find((p: string) => p.includes('sqs')) || 'sqs:ReceiveMessage';
+            edges.push({
+              id: `lambda-sqs-${lambda.FunctionName}-${queueName}`,
+              source: `lambda-${lambda.FunctionName}`,
+              target: `sqs-${queueName}`,
+              label: hasSQSTrigger ? 'Triggered by' : permission,
+              style: { stroke: '#FF4F8B', strokeWidth: 2 },
+              markerEnd: 'arrowclosed',
+            });
+          });
         }
       });
     }
 
-    // AWS Rule: Lambda functions publish to SNS topics
+    // Lambda to SNS (triggers/publish)
     if (regionData.lambda_functions && regionData.sns_topics) {
       regionData.lambda_functions.forEach((lambda: any) => {
-        if (lambda.Triggers && Array.isArray(lambda.Triggers)) {
-          const hasSNSTrigger = lambda.Triggers.includes('sns');
-          
-          if (hasSNSTrigger) {
-            // Connect to first SNS topic as a generic trigger
-            const snsTopic = regionData.sns_topics[0];
-            if (snsTopic) {
-              const topicName = snsTopic.TopicName || snsTopic.TopicArn || `topic-0`;
-              edges.push({
-                id: `lambda-sns-${lambda.FunctionName}-${topicName}`,
-                source: `lambda-${lambda.FunctionName}`,
-                target: `sns-${topicName}`,
-                label: 'Publishes',
-                style: { stroke: '#FF4F8B', strokeWidth: 2 },
-                markerEnd: 'arrowclosed',
-              });
-            }
-          }
+        // Check if Lambda has SNS permissions
+        const hasSNSPermission = lambda.Permissions?.some((perm: string) => perm.includes('sns'));
+        
+        if (hasSNSPermission) {
+          regionData.sns_topics?.forEach((topic: any) => {
+            const topicName = topic.TopicName || topic.TopicArn?.split(':').pop() || `topic`;
+            edges.push({
+              id: `lambda-sns-${lambda.FunctionName}-${topicName}`,
+              source: `lambda-${lambda.FunctionName}`,
+              target: `sns-${topic.TopicArn || topic.TopicName || topicName}`,
+              label: 'Publishes to',
+              style: { stroke: '#FF4F8B', strokeWidth: 2, strokeDasharray: '5,5' },
+              markerEnd: 'arrowclosed',
+            });
+          });
         }
       });
     }
 
-    // AWS Rule: CloudFront connects to API Gateway (for dynamic content)
-    if (regionData.cloudfront_distributions && regionData.api_gateways && regionData.api_gateways.length > 0) {
-      regionData.cloudfront_distributions.forEach((cf: any) => {
-        const cfId = cf.DistributionId || cf.Id || cf.DomainName || `cf-${regionData.cloudfront_distributions.indexOf(cf)}`;
-        const firstApi = regionData.api_gateways[0];
-        const apiId = firstApi.id || firstApi.ApiId || firstApi.ApiName || `api-0`;
-        
-        edges.push({
-          id: `cf-api-${cfId}-${apiId}`,
-          source: `cf-${cfId}`,
-          target: `api-${apiId}`,
-          label: 'Routes to',
-          style: { stroke: '#FF9900', strokeWidth: 2 },
-          markerEnd: 'arrowclosed',
-        });
+    // ECS Services to ECR (container image references)
+    if (regionData.ecs_clusters && regionData.ecr_repositories) {
+      regionData.ecs_clusters.forEach((cluster: any) => {
+        if (cluster.Services && Array.isArray(cluster.Services)) {
+          cluster.Services.forEach((service: any) => {
+            if (service.Container?.Image) {
+              const imageRepo = service.Container.Image.split(':')[0];
+              const ecrRepo = regionData.ecr_repositories?.find((repo: any) =>
+                repo.RepositoryName === imageRepo || 
+                repo.RepositoryUri?.includes(imageRepo) ||
+                service.Container.Image.includes(repo.RepositoryUri)
+              );
+              if (ecrRepo) {
+                edges.push({
+                  id: `ecs-ecr-${cluster.ClusterName}-${service.ServiceName}-${ecrRepo.RepositoryName}`,
+                  source: `ecs-${cluster.ClusterName}`,
+                  target: `ecr-${ecrRepo.RepositoryName}`,
+                  label: 'Pulls from',
+                  style: { stroke: '#FF9900', strokeWidth: 2, strokeDasharray: '5,5' },
+                  markerEnd: 'arrowclosed',
+                });
+              }
+            }
+          });
+        }
+      });
+    }
+
+    // ECS Services to RDS (database connections)
+    if (regionData.ecs_clusters && regionData.rds_instances) {
+      regionData.ecs_clusters.forEach((cluster: any) => {
+        if (cluster.Services && Array.isArray(cluster.Services)) {
+          cluster.Services.forEach((service: any) => {
+            if (service.Database) {
+              const rdsInstance = regionData.rds_instances?.find((db: any) =>
+                db.DBInstanceIdentifier === service.Database ||
+                db.DBName === service.Database ||
+                db.db_instance_name === service.Database ||
+                db.Engine === service.Database
+              );
+              if (rdsInstance) {
+                const rdsId = rdsInstance.DBInstanceIdentifier || rdsInstance.DBName || rdsInstance.db_instance_name;
+                edges.push({
+                  id: `ecs-rds-${cluster.ClusterName}-${service.ServiceName}-${rdsId}`,
+                  source: `ecs-${cluster.ClusterName}`,
+                  target: `rds-${rdsId}`,
+                  label: 'Accesses',
+                  style: { stroke: '#146EB4', strokeWidth: 2 },
+                  markerEnd: 'arrowclosed',
+                });
+              }
+            }
+          });
+        }
+      });
+    }
+
+    // ECS Services to DynamoDB (table access)
+    if (regionData.ecs_clusters && regionData.dynamodb_tables) {
+      regionData.ecs_clusters.forEach((cluster: any) => {
+        if (cluster.Services && Array.isArray(cluster.Services)) {
+          cluster.Services.forEach((service: any) => {
+            if (service.Database || service.Tables) {
+              const tableNames = Array.isArray(service.Tables) ? service.Tables : [service.Database].filter(Boolean);
+              tableNames.forEach((tableName: string) => {
+                const ddbTable = regionData.dynamodb_tables?.find((tbl: any) =>
+                  tbl.TableName === tableName
+                );
+                if (ddbTable) {
+                  edges.push({
+                    id: `ecs-ddb-${cluster.ClusterName}-${service.ServiceName}-${ddbTable.TableName}`,
+                    source: `ecs-${cluster.ClusterName}`,
+                    target: `ddb-${ddbTable.TableName}`,
+                    label: 'Accesses',
+                    style: { stroke: '#527FFF', strokeWidth: 2 },
+                    markerEnd: 'arrowclosed',
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+
+    // ECS Services to Service Discovery (service registration)
+    if (regionData.ecs_clusters && regionData.service_discovery) {
+      regionData.ecs_clusters.forEach((cluster: any) => {
+        if (cluster.Services && Array.isArray(cluster.Services)) {
+          cluster.Services.forEach((service: any) => {
+            if (service.ServiceDiscovery) {
+              regionData.service_discovery?.forEach((sd: any) => {
+                edges.push({
+                  id: `ecs-sd-${cluster.ClusterName}-${service.ServiceName}-${sd.Namespace}`,
+                  source: `ecs-${cluster.ClusterName}`,
+                  target: `sd-${sd.Namespace}`,
+                  label: 'Registered in',
+                  style: { stroke: '#8C4FFF', strokeWidth: 2, strokeDasharray: '5,5' },
+                  markerEnd: 'arrowclosed',
+                });
+              });
+            }
+          });
+        }
       });
     }
 
