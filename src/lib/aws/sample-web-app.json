@@ -1,154 +1,10 @@
 {
   "us-east-1": {
-    "vpcs": [
-      {
-        "VpcId": "vpc-webapp-001",
-        "CidrBlock": "10.0.0.0/16",
-        "State": "available",
-        "IsDefault": false
-      }
-    ],
-    "subnets": [
-      {
-        "SubnetId": "subnet-public-001",
-        "VpcId": "vpc-webapp-001",
-        "CidrBlock": "10.0.1.0/24",
-        "AvailabilityZone": "us-east-1a",
-        "Type": "public"
-      },
-      {
-        "SubnetId": "subnet-private-001",
-        "VpcId": "vpc-webapp-001",
-        "CidrBlock": "10.0.2.0/24",
-        "AvailabilityZone": "us-east-1b",
-        "Type": "private"
-      }
-    ],
-    "internet_gateways": [
-      {
-        "InternetGatewayId": "igw-webapp-001",
-        "Attachments": [
-          {
-            "VpcId": "vpc-webapp-001",
-            "State": "available"
-          }
-        ]
-      }
-    ],
-    "nat_gateways": [
-      {
-        "NatGatewayId": "nat-webapp-001",
-        "SubnetId": "subnet-public-001",
-        "State": "available"
-      }
-    ],
-    "route_tables": [
-      {
-        "RouteTableId": "rtb-public-001",
-        "VpcId": "vpc-webapp-001",
-        "Type": "public",
-        "Associations": [
-          {
-            "SubnetId": "subnet-public-001",
-            "Main": false
-          }
-        ],
-        "Routes": [
-          {
-            "DestinationCidrBlock": "0.0.0.0/0",
-            "GatewayId": "igw-webapp-001"
-          }
-        ]
-      },
-      {
-        "RouteTableId": "rtb-private-001",
-        "VpcId": "vpc-webapp-001",
-        "Type": "private",
-        "Associations": [
-          {
-            "SubnetId": "subnet-private-001",
-            "Main": false
-          }
-        ],
-        "Routes": [
-          {
-            "DestinationCidrBlock": "0.0.0.0/0",
-            "NatGatewayId": "nat-webapp-001"
-          },
-          {
-            "DestinationPrefixListId": "pl-s3",
-            "VpcEndpointId": "vpce-s3-001"
-          }
-        ]
-      }
-    ],
-    "vpc_endpoints": [
-      {
-        "VpcEndpointId": "vpce-s3-001",
-        "VpcId": "vpc-webapp-001",
-        "ServiceName": "com.amazonaws.us-east-1.s3",
-        "VpcEndpointType": "Gateway",
-        "RouteTableIds": [
-          "rtb-private-001"
-        ],
-        "State": "available"
-      }
-    ],
-    "security_groups": [
-      {
-        "GroupId": "sg-web-001",
-        "GroupName": "web-app-sg",
-        "Description": "Security group for web application",
-        "VpcId": "vpc-webapp-001",
-        "IpPermissions": [
-          {
-            "IpProtocol": "tcp",
-            "FromPort": 80,
-            "ToPort": 80,
-            "IpRanges": [
-              {
-                "CidrIp": "0.0.0.0/0"
-              }
-            ]
-          },
-          {
-            "IpProtocol": "tcp",
-            "FromPort": 443,
-            "ToPort": 443,
-            "IpRanges": [
-              {
-                "CidrIp": "0.0.0.0/0"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "GroupId": "sg-rds-001",
-        "GroupName": "rds-db-sg",
-        "Description": "Security group for RDS database",
-        "VpcId": "vpc-webapp-001",
-        "IpPermissions": [
-          {
-            "IpProtocol": "tcp",
-            "FromPort": 5432,
-            "ToPort": 5432,
-            "UserIdGroupPairs": [
-              {
-                "GroupId": "sg-web-001"
-              }
-            ]
-          }
-        ]
-      }
-    ],
     "instances": [
       {
-        "InstanceId": "i-webapp-001",
         "ImageId": "ami-0c55b159cbfafe1f0",
+        "InstanceId": "i-webapp-001",
         "InstanceType": "t3.medium",
-        "State": "running",
-        "SubnetId": "subnet-public-001",
         "PrivateIpAddress": "10.0.1.100",
         "PublicIpAddress": "54.123.45.67",
         "SecurityGroups": [
@@ -156,6 +12,8 @@
             "GroupId": "sg-web-001"
           }
         ],
+        "State": "running",
+        "SubnetId": "subnet-public-001",
         "Tags": [
           {
             "Key": "Name",
@@ -164,44 +22,188 @@
         ]
       }
     ],
+    "internet_gateways": [
+      {
+        "Attachments": [
+          {
+            "State": "available",
+            "VpcId": "vpc-webapp-001"
+          }
+        ],
+        "InternetGatewayId": "igw-webapp-001"
+      }
+    ],
+    "nat_gateways": [
+      {
+        "NatGatewayId": "nat-webapp-001",
+        "State": "available",
+        "SubnetId": "subnet-public-001"
+      }
+    ],
     "rds_instances": [
       {
+        "allocated_storage": 20,
+        "db_instance_class": "db.t3.micro",
         "db_instance_name": "webapp-postgres-db",
         "engine": "postgresql",
         "engine_version": "13.7",
-        "port": 5432,
-        "db_instance_class": "db.t3.micro",
-        "allocated_storage": 20,
-        "subnet_type": "private",
-        "subnet_id": "subnet-private-001",
         "multi_az": false,
+        "port": 5432,
         "security_group": {
-          "id": "sg-rds-001",
+          "id": "sg-web-001",
           "inbound_rules": [
             {
               "port": 5432,
               "source_security_group": "sg-web-001"
             }
           ]
-        }
+        },
+        "subnet_id": "subnet-private-001",
+        "subnet_type": "private"
+      },
+      {
+        "allocated_storage": 30,
+        "db_instance_class": "db.t3.micro",
+        "db_instance_name": "webapp-mysql-db",
+        "engine": "mysql",
+        "engine_version": "8.0.28",
+        "multi_az": false,
+        "port": 3306,
+        "security_group": {
+          "id": "sg-web-001",
+          "inbound_rules": [
+            {
+              "port": 3306,
+              "source_security_group": "sg-web-001"
+            }
+          ]
+        },
+        "subnet_id": "subnet-public-001",
+        "subnet_type": "private"
+      }
+    ],
+    "route_tables": [
+      {
+        "Associations": [
+          {
+            "Main": false,
+            "SubnetId": "subnet-public-001"
+          }
+        ],
+        "Routes": [
+          {
+            "DestinationCidrBlock": "0.0.0.0/0",
+            "GatewayId": "igw-webapp-001"
+          }
+        ],
+        "RouteTableId": "rtb-public-001",
+        "Type": "public",
+        "VpcId": "vpc-webapp-001"
+      },
+      {
+        "Associations": [
+          {
+            "Main": false,
+            "SubnetId": "subnet-private-001"
+          }
+        ],
+        "Routes": [
+          {
+            "DestinationCidrBlock": "0.0.0.0/0",
+            "NatGatewayId": "nat-webapp-001"
+          }
+        ],
+        "RouteTableId": "rtb-private-001",
+        "Type": "private",
+        "VpcId": "vpc-webapp-001"
       }
     ],
     "s3_buckets": [
       {
-        "Name": "webapp-assets-bucket",
         "CreationDate": "2024-01-15",
-        "Region": "us-east-1",
-        "Versioning": "Enabled",
         "Encryption": "AES256",
-        "Access": "Via VPC Endpoint vpce-s3-001"
+        "Name": "webapp-assets-bucket",
+        "Region": "us-east-1",
+        "Versioning": "Enabled"
       },
       {
-        "Name": "webapp-backups-bucket",
         "CreationDate": "2024-01-15",
-        "Region": "us-east-1",
-        "Versioning": "Enabled",
         "Encryption": "AES256",
-        "Access": "Via VPC Endpoint vpce-s3-001"
+        "Name": "webapp-backups-bucket",
+        "Region": "us-east-1",
+        "Versioning": "Enabled"
+      }
+    ],
+    "security_groups": [
+      {
+        "Description": "Security group for web application",
+        "GroupId": "sg-web-001",
+        "GroupName": "web-app-sg",
+        "IpPermissions": [
+          {
+            "FromPort": 80,
+            "IpProtocol": "tcp",
+            "IpRanges": [
+              {
+                "CidrIp": "0.0.0.0/0"
+              }
+            ],
+            "ToPort": 80
+          },
+          {
+            "FromPort": 443,
+            "IpProtocol": "tcp",
+            "IpRanges": [
+              {
+                "CidrIp": "0.0.0.0/0"
+              }
+            ],
+            "ToPort": 443
+          }
+        ],
+        "VpcId": "vpc-webapp-001"
+      },
+      {
+        "Description": "Security group for RDS database",
+        "GroupId": "sg-rds-001",
+        "GroupName": "rds-db-sg",
+        "IpPermissions": [
+          {
+            "FromPort": 5432,
+            "IpProtocol": "tcp",
+            "ToPort": 5432,
+            "UserIdGroupPairs": [
+              {
+                "GroupId": "sg-web-001"
+              }
+            ]
+          }
+        ],
+        "VpcId": "vpc-webapp-001"
+      }
+    ],
+    "subnets": [
+      {
+        "AvailabilityZone": "us-east-1a",
+        "CidrBlock": "10.0.1.0/24",
+        "SubnetId": "subnet-public-001",
+        "Type": "public",
+        "VpcId": "vpc-webapp-001"
+      },
+      {
+        "AvailabilityZone": "us-east-1b",
+        "CidrBlock": "10.0.2.0/24",
+        "SubnetId": "subnet-private-001",
+        "Type": "private",
+        "VpcId": "vpc-webapp-001"
+      }
+    ],
+    "vpcs": [
+      {
+        "CidrBlock": "10.0.0.0/16",
+        "IsDefault": false,
+        "State": "available",
+        "VpcId": "vpc-webapp-001"
       }
     ]
   }

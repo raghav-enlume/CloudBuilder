@@ -923,6 +923,798 @@ export const cloudResources: ResourceType[] = [
       { key: 'databaseName', label: 'Database Name', type: 'text', placeholder: 'default' },
     ],
   },
+
+  // Additional Analytics & BigData
+  {
+    id: 'glue',
+    name: 'AWS Glue',
+    category: 'analytics',
+    icon: 'glue',
+    description: 'Serverless ETL service',
+    color: '#FF4F8B',
+    editableAttributes: [
+      { key: 'jobName', label: 'Job Name', type: 'text', placeholder: 'my-etl-job' },
+      { key: 'workerCount', label: 'Worker Count', type: 'number', placeholder: '2' },
+      { key: 'schedule', label: 'Schedule', type: 'text', placeholder: 'cron(0 12 * * ? *)' },
+    ],
+  },
+  {
+    id: 'emr',
+    name: 'EMR',
+    category: 'analytics',
+    icon: 'emr',
+    description: 'Big data processing with Hadoop/Spark',
+    color: '#FF4F8B',
+    editableAttributes: [
+      { key: 'clusterName', label: 'Cluster Name', type: 'text', placeholder: 'my-emr-cluster' },
+      { key: 'nodeCount', label: 'Node Count', type: 'number', placeholder: '3' },
+      { key: 'applications', label: 'Applications', type: 'text', placeholder: 'Spark, Hadoop' },
+    ],
+  },
+  {
+    id: 'opensearch',
+    name: 'OpenSearch',
+    category: 'analytics',
+    icon: 'opensearch',
+    description: 'Managed search and analytics engine',
+    color: '#FF4F8B',
+    editableAttributes: [
+      { key: 'domainName', label: 'Domain Name', type: 'text', placeholder: 'my-domain' },
+      { key: 'nodeType', label: 'Node Type', type: 'text', placeholder: 'r6g.xlarge.opensearch' },
+      { key: 'nodeCount', label: 'Node Count', type: 'number', placeholder: '3' },
+    ],
+  },
+  {
+    id: 'quicksight',
+    name: 'QuickSight',
+    category: 'analytics',
+    icon: 'quicksight',
+    description: 'Business intelligence and dashboards',
+    color: '#FF4F8B',
+    editableAttributes: [
+      { key: 'accountName', label: 'Account Name', type: 'text', placeholder: 'my-account' },
+      { key: 'edition', label: 'Edition', type: 'select', options: [
+        { value: 'standard', label: 'Standard' },
+        { value: 'enterprise', label: 'Enterprise' },
+      ]},
+      { key: 'userCount', label: 'User Count', type: 'number', placeholder: '10' },
+    ],
+  },
+  {
+    id: 'qldb',
+    name: 'QLDB',
+    category: 'database',
+    icon: 'qldb',
+    description: 'Quantum ledger database',
+    color: '#3B48CC',
+    editableAttributes: [
+      { key: 'ledgerName', label: 'Ledger Name', type: 'text', placeholder: 'my-ledger' },
+      { key: 'cryptographicHash', label: 'Cryptographic Hash', type: 'boolean' },
+    ],
+  },
+  {
+    id: 'documentdb',
+    name: 'DocumentDB',
+    category: 'database',
+    icon: 'documentdb',
+    description: 'MongoDB-compatible document database',
+    color: '#3B48CC',
+    editableAttributes: [
+      { key: 'clusterIdentifier', label: 'Cluster Identifier', type: 'text', placeholder: 'my-docdb' },
+      { key: 'instanceClass', label: 'Instance Class', type: 'text', placeholder: 'db.r5.large' },
+      { key: 'instanceCount', label: 'Instance Count', type: 'number', placeholder: '3' },
+    ],
+  },
+  {
+    id: 'keyspaces',
+    name: 'Keyspaces',
+    category: 'database',
+    icon: 'keyspaces',
+    description: 'Cassandra-compatible database',
+    color: '#3B48CC',
+    editableAttributes: [
+      { key: 'keyspaceName', label: 'Keyspace Name', type: 'text', placeholder: 'my_keyspace' },
+      { key: 'billingMode', label: 'Billing Mode', type: 'select', options: [
+        { value: 'on-demand', label: 'On-demand' },
+        { value: 'provisioned', label: 'Provisioned' },
+      ]},
+    ],
+  },
+
+  // Compute Extensions
+  {
+    id: 'lightsail',
+    name: 'Lightsail',
+    category: 'compute',
+    icon: 'lightsail',
+    description: 'Simplified cloud compute',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'instanceName', label: 'Instance Name', type: 'text', placeholder: 'my-instance' },
+      { key: 'bundle', label: 'Bundle Size', type: 'select', options: [
+        { value: 'micro', label: 'Micro (512MB)' },
+        { value: 'small', label: 'Small (1GB)' },
+        { value: 'medium', label: 'Medium (2GB)' },
+        { value: 'large', label: 'Large (4GB)' },
+      ]},
+      { key: 'os', label: 'Operating System', type: 'text', placeholder: 'Ubuntu 20.04' },
+    ],
+  },
+  {
+    id: 'apprunner',
+    name: 'App Runner',
+    category: 'compute',
+    icon: 'apprunner',
+    description: 'Fully managed container application service',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'serviceName', label: 'Service Name', type: 'text', placeholder: 'my-service' },
+      { key: 'sourceType', label: 'Source Type', type: 'select', options: [
+        { value: 'repository', label: 'Repository' },
+        { value: 'image', label: 'Image' },
+      ]},
+      { key: 'port', label: 'Port', type: 'number', placeholder: '8080' },
+    ],
+  },
+  {
+    id: 'batch',
+    name: 'AWS Batch',
+    category: 'compute',
+    icon: 'batch',
+    description: 'Batch computing service',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'jobQueueName', label: 'Job Queue Name', type: 'text', placeholder: 'my-queue' },
+      { key: 'computeEnvironment', label: 'Compute Environment', type: 'text', placeholder: 'my-env' },
+      { key: 'priority', label: 'Priority', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'appstream',
+    name: 'AppStream 2.0',
+    category: 'compute',
+    icon: 'appstream',
+    description: 'Application streaming service',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'stackName', label: 'Stack Name', type: 'text', placeholder: 'my-stack' },
+      { key: 'instanceType', label: 'Instance Type', type: 'text', placeholder: 'stream.standard.medium' },
+    ],
+  },
+
+  // Storage Extensions
+  {
+    id: 'fsx',
+    name: 'FSx',
+    category: 'storage',
+    icon: 'fsx',
+    description: 'Managed file system for Windows/Lustre',
+    color: '#569A31',
+    editableAttributes: [
+      { key: 'fileSystemType', label: 'File System Type', type: 'select', options: [
+        { value: 'windows', label: 'Windows File Server' },
+        { value: 'lustre', label: 'Lustre' },
+        { value: 'ontap', label: 'NetApp ONTAP' },
+        { value: 'openibm', label: 'OpenZFS' },
+      ]},
+      { key: 'capacity', label: 'Capacity (GB)', type: 'number', placeholder: '1024' },
+      { key: 'throughput', label: 'Throughput (MB/s)', type: 'number', placeholder: '200' },
+    ],
+  },
+  {
+    id: 'datasync',
+    name: 'DataSync',
+    category: 'storage',
+    icon: 'datasync',
+    description: 'Automated data transfer',
+    color: '#569A31',
+    editableAttributes: [
+      { key: 'taskName', label: 'Task Name', type: 'text', placeholder: 'my-sync-task' },
+      { key: 'sourceLocation', label: 'Source Location', type: 'text', placeholder: 's3://bucket' },
+      { key: 'destinationLocation', label: 'Destination Location', type: 'text', placeholder: 'smb://server' },
+    ],
+  },
+  {
+    id: 'snowball',
+    name: 'Snowball',
+    category: 'storage',
+    icon: 'snowball',
+    description: 'Physical data transfer appliance',
+    color: '#569A31',
+    editableAttributes: [
+      { key: 'jobName', label: 'Job Name', type: 'text', placeholder: 'my-data-transfer' },
+      { key: 'capacity', label: 'Capacity (TB)', type: 'number', placeholder: '50' },
+      { key: 'deviceType', label: 'Device Type', type: 'select', options: [
+        { value: 'snowball', label: 'Snowball' },
+        { value: 'snowball-edge', label: 'Snowball Edge' },
+        { value: 'snowmobile', label: 'Snowmobile' },
+      ]},
+    ],
+  },
+  {
+    id: 'storagegateway',
+    name: 'Storage Gateway',
+    category: 'storage',
+    icon: 'storagegateway',
+    description: 'Hybrid cloud storage gateway',
+    color: '#569A31',
+    editableAttributes: [
+      { key: 'gatewayName', label: 'Gateway Name', type: 'text', placeholder: 'my-gateway' },
+      { key: 'gatewayType', label: 'Gateway Type', type: 'select', options: [
+        { value: 's3-file', label: 'S3 File Gateway' },
+        { value: 'ebs-volume', label: 'Volume Gateway' },
+        { value: 'tape', label: 'Tape Gateway' },
+      ]},
+    ],
+  },
+  {
+    id: 'ebs-snapshots',
+    name: 'EBS Snapshots',
+    category: 'storage',
+    icon: 'ebs-snapshots',
+    description: 'Point-in-time EBS backups',
+    color: '#569A31',
+    editableAttributes: [
+      { key: 'snapshotId', label: 'Snapshot ID', type: 'text', placeholder: 'snap-xxxxxxxxx' },
+      { key: 'sourceVolume', label: 'Source Volume', type: 'text', placeholder: 'vol-xxxxxxxxx' },
+      { key: 'description', label: 'Description', type: 'text', placeholder: 'Daily backup' },
+    ],
+  },
+
+  // Networking Extensions
+  {
+    id: 'directconnect',
+    name: 'Direct Connect',
+    category: 'networking',
+    icon: 'directconnect',
+    description: 'Dedicated network connection',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'connectionName', label: 'Connection Name', type: 'text', placeholder: 'my-connection' },
+      { key: 'bandwidth', label: 'Bandwidth (Gbps)', type: 'select', options: [
+        { value: '1', label: '1 Gbps' },
+        { value: '10', label: '10 Gbps' },
+        { value: '100', label: '100 Gbps' },
+      ]},
+      { key: 'location', label: 'Location', type: 'text', placeholder: 'AWS facility' },
+    ],
+  },
+  {
+    id: 'globalaccelerator',
+    name: 'Global Accelerator',
+    category: 'networking',
+    icon: 'globalaccelerator',
+    description: 'Global traffic optimization',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'acceleratorName', label: 'Accelerator Name', type: 'text', placeholder: 'my-accelerator' },
+      { key: 'enabled', label: 'Enabled', type: 'boolean' },
+      { key: 'listenerCount', label: 'Listener Count', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'vpnconnection',
+    name: 'VPN Connection',
+    category: 'networking',
+    icon: 'vpnconnection',
+    description: 'Site-to-site VPN connectivity',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'vpnName', label: 'VPN Connection Name', type: 'text', placeholder: 'my-vpn' },
+      { key: 'vpnGatewayId', label: 'VGW ID', type: 'text', placeholder: 'vgw-xxxxxxxxx' },
+      { key: 'customerGatewayId', label: 'CGW ID', type: 'text', placeholder: 'cgw-xxxxxxxxx' },
+    ],
+  },
+  {
+    id: 'vpn-gateway',
+    name: 'VPN Gateway',
+    category: 'networking',
+    icon: 'vpn-gateway',
+    description: 'VPN endpoint for VPC',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'gatewayName', label: 'Gateway Name', type: 'text', placeholder: 'my-vgw' },
+      { key: 'type', label: 'Type', type: 'select', options: [
+        { value: 'ipsec.1', label: 'IPsec.1' },
+      ]},
+    ],
+  },
+  {
+    id: 'elasticip',
+    name: 'Elastic IP',
+    category: 'networking',
+    icon: 'elasticip',
+    description: 'Static public IP address',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'ipAddress', label: 'IP Address', type: 'text', placeholder: '203.0.113.0' },
+      { key: 'instance', label: 'Associated Instance', type: 'text', placeholder: 'i-xxxxxxxxx' },
+    ],
+  },
+  {
+    id: 'endpoint-services',
+    name: 'VPC Endpoints',
+    category: 'networking',
+    icon: 'endpoint-services',
+    description: 'Private connectivity to AWS services',
+    color: '#8C4FFF',
+    editableAttributes: [
+      { key: 'endpointName', label: 'Endpoint Name', type: 'text', placeholder: 'my-endpoint' },
+      { key: 'serviceType', label: 'Service Type', type: 'select', options: [
+        { value: 'interface', label: 'Interface Endpoint' },
+        { value: 'gateway', label: 'Gateway Endpoint' },
+        { value: 'gateway-load-balancer', label: 'GatewayLB Endpoint' },
+      ]},
+    ],
+  },
+
+  // Machine Learning Services
+  {
+    id: 'sagemaker',
+    name: 'SageMaker',
+    category: 'ml',
+    icon: 'sagemaker',
+    description: 'Fully managed ML service',
+    color: '#FF6B35',
+    editableAttributes: [
+      { key: 'notebookName', label: 'Notebook Name', type: 'text', placeholder: 'my-notebook' },
+      { key: 'instanceType', label: 'Instance Type', type: 'text', placeholder: 'ml.m5.large' },
+      { key: 'volumeSize', label: 'Volume Size (GB)', type: 'number', placeholder: '5' },
+    ],
+  },
+  {
+    id: 'rekognition',
+    name: 'Rekognition',
+    category: 'ml',
+    icon: 'rekognition',
+    description: 'Image and video analysis',
+    color: '#FF6B35',
+    editableAttributes: [
+      { key: 'collectionName', label: 'Collection Name', type: 'text', placeholder: 'my-collection' },
+      { key: 'maxFaces', label: 'Max Faces', type: 'number', placeholder: '1000' },
+    ],
+  },
+  {
+    id: 'comprehend',
+    name: 'Comprehend',
+    category: 'ml',
+    icon: 'comprehend',
+    description: 'NLP text analysis',
+    color: '#FF6B35',
+    editableAttributes: [
+      { key: 'jobName', label: 'Job Name', type: 'text', placeholder: 'my-analysis' },
+      { key: 'inputS3Bucket', label: 'Input S3 Bucket', type: 'text', placeholder: 'my-bucket' },
+    ],
+  },
+  {
+    id: 'transcribe',
+    name: 'Transcribe',
+    category: 'ml',
+    icon: 'transcribe',
+    description: 'Speech to text conversion',
+    color: '#FF6B35',
+    editableAttributes: [
+      { key: 'jobName', label: 'Job Name', type: 'text', placeholder: 'my-transcription' },
+      { key: 'languageCode', label: 'Language Code', type: 'text', placeholder: 'en-US' },
+    ],
+  },
+  {
+    id: 'translate',
+    name: 'Translate',
+    category: 'ml',
+    icon: 'translate',
+    description: 'Real-time text translation',
+    color: '#FF6B35',
+    editableAttributes: [
+      { key: 'sourceLanguage', label: 'Source Language', type: 'text', placeholder: 'en' },
+      { key: 'targetLanguage', label: 'Target Language', type: 'text', placeholder: 'es' },
+    ],
+  },
+  {
+    id: 'forecast',
+    name: 'Forecast',
+    category: 'ml',
+    icon: 'forecast',
+    description: 'Time series forecasting',
+    color: '#FF6B35',
+    editableAttributes: [
+      { key: 'predictorName', label: 'Predictor Name', type: 'text', placeholder: 'my-predictor' },
+      { key: 'forecastHorizon', label: 'Forecast Horizon', type: 'number', placeholder: '30' },
+    ],
+  },
+  {
+    id: 'lookout',
+    name: 'Lookout for Metrics',
+    category: 'ml',
+    icon: 'lookout',
+    description: 'Anomaly detection',
+    color: '#FF6B35',
+    editableAttributes: [
+      { key: 'detectorName', label: 'Detector Name', type: 'text', placeholder: 'my-detector' },
+      { key: 'sensitivity', label: 'Sensitivity', type: 'select', options: [
+        { value: 'high', label: 'High' },
+        { value: 'normal', label: 'Normal' },
+        { value: 'low', label: 'Low' },
+      ]},
+    ],
+  },
+
+  // Container & Orchestration
+  {
+    id: 'appconfig',
+    name: 'AppConfig',
+    category: 'deployment',
+    icon: 'appconfig',
+    description: 'Application configuration management',
+    color: '#C925D1',
+    editableAttributes: [
+      { key: 'applicationName', label: 'Application Name', type: 'text', placeholder: 'my-app' },
+      { key: 'environmentName', label: 'Environment Name', type: 'text', placeholder: 'prod' },
+    ],
+  },
+  {
+    id: 'appmesh',
+    name: 'App Mesh',
+    category: 'deployment',
+    icon: 'appmesh',
+    description: 'Service mesh for microservices',
+    color: '#C925D1',
+    editableAttributes: [
+      { key: 'meshName', label: 'Mesh Name', type: 'text', placeholder: 'my-mesh' },
+      { key: 'virtualNodeCount', label: 'Virtual Nodes', type: 'number', placeholder: '3' },
+    ],
+  },
+  {
+    id: 'elasticcontainerregistry',
+    name: 'ECR',
+    category: 'deployment',
+    icon: 'ecr',
+    description: 'Docker container registry',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'repositoryName', label: 'Repository Name', type: 'text', placeholder: 'my-app' },
+      { key: 'imageScanningEnabled', label: 'Image Scanning', type: 'boolean' },
+    ],
+  },
+
+  // Integration Services
+  {
+    id: 'sqs-standard',
+    name: 'SQS Standard Queue',
+    category: 'messaging',
+    icon: 'sqs-standard',
+    description: 'Standard message queue',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'queueName', label: 'Queue Name', type: 'text', placeholder: 'my-queue' },
+      { key: 'visibilityTimeout', label: 'Visibility Timeout (s)', type: 'number', placeholder: '30' },
+    ],
+  },
+  {
+    id: 'sqs-fifo',
+    name: 'SQS FIFO Queue',
+    category: 'messaging',
+    icon: 'sqs-fifo',
+    description: 'FIFO message queue (First-In-First-Out)',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'queueName', label: 'Queue Name', type: 'text', placeholder: 'my-queue.fifo' },
+      { key: 'contentDeduplication', label: 'Content Deduplication', type: 'boolean' },
+    ],
+  },
+  {
+    id: 'stepfunctions',
+    name: 'Step Functions',
+    category: 'messaging',
+    icon: 'stepfunctions',
+    description: 'Workflow orchestration',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'stateMachineName', label: 'State Machine Name', type: 'text', placeholder: 'my-workflow' },
+      { key: 'executionCount', label: 'Recent Executions', type: 'number', placeholder: '0' },
+    ],
+  },
+  {
+    id: 'appsync',
+    name: 'AppSync',
+    category: 'messaging',
+    icon: 'appsync',
+    description: 'GraphQL API development',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'apiName', label: 'API Name', type: 'text', placeholder: 'my-api' },
+      { key: 'authType', label: 'Auth Type', type: 'select', options: [
+        { value: 'api-key', label: 'API Key' },
+        { value: 'iam', label: 'IAM' },
+        { value: 'cognito', label: 'Cognito' },
+        { value: 'oidc', label: 'OpenID Connect' },
+      ]},
+    ],
+  },
+
+  // Media & Transcoding
+  {
+    id: 'mediaconvert',
+    name: 'MediaConvert',
+    category: 'media',
+    icon: 'mediaconvert',
+    description: 'Video transcoding service',
+    color: '#17A2B8',
+    editableAttributes: [
+      { key: 'jobName', label: 'Job Name', type: 'text', placeholder: 'my-transcoding' },
+      { key: 'queue', label: 'Queue', type: 'text', placeholder: 'default' },
+    ],
+  },
+  {
+    id: 'mediapackage',
+    name: 'MediaPackage',
+    category: 'media',
+    icon: 'mediapackage',
+    description: 'Video content packaging',
+    color: '#17A2B8',
+    editableAttributes: [
+      { key: 'channelId', label: 'Channel ID', type: 'text', placeholder: 'my-channel' },
+      { key: 'packageName', label: 'Package Name', type: 'text', placeholder: 'my-package' },
+    ],
+  },
+  {
+    id: 'medialive',
+    name: 'MediaLive',
+    category: 'media',
+    icon: 'medialive',
+    description: 'Live video encoding',
+    color: '#17A2B8',
+    editableAttributes: [
+      { key: 'channelName', label: 'Channel Name', type: 'text', placeholder: 'my-channel' },
+      { key: 'resolution', label: 'Resolution', type: 'select', options: [
+        { value: 'hd', label: 'HD (1080p)' },
+        { value: '4k', label: '4K' },
+      ]},
+    ],
+  },
+  {
+    id: 'mediatailor',
+    name: 'MediaTailor',
+    category: 'media',
+    icon: 'mediatailor',
+    description: 'Personalized ad insertion',
+    color: '#17A2B8',
+    editableAttributes: [
+      { key: 'configurationName', label: 'Configuration Name', type: 'text', placeholder: 'my-config' },
+      { key: 'adDecisionServerUrl', label: 'Ad Decision Server URL', type: 'text', placeholder: 'https://ads.example.com' },
+    ],
+  },
+
+  // IoT Services
+  {
+    id: 'iot-core',
+    name: 'IoT Core',
+    category: 'iot',
+    icon: 'iot-core',
+    description: 'IoT device connectivity',
+    color: '#00A86B',
+    editableAttributes: [
+      { key: 'endpointAddress', label: 'Endpoint Address', type: 'text', placeholder: 'xxxxx.iot.region.amazonaws.com' },
+      { key: 'thingCount', label: 'Thing Count', type: 'number', placeholder: '0' },
+    ],
+  },
+  {
+    id: 'iot-analytics',
+    name: 'IoT Analytics',
+    category: 'iot',
+    icon: 'iot-analytics',
+    description: 'IoT data processing',
+    color: '#00A86B',
+    editableAttributes: [
+      { key: 'channelName', label: 'Channel Name', type: 'text', placeholder: 'my-channel' },
+      { key: 'dataStoreName', label: 'Data Store Name', type: 'text', placeholder: 'my-datastore' },
+    ],
+  },
+  {
+    id: 'iot-greengrass',
+    name: 'Greengrass',
+    category: 'iot',
+    icon: 'iot-greengrass',
+    description: 'Edge computing runtime',
+    color: '#00A86B',
+    editableAttributes: [
+      { key: 'groupName', label: 'Group Name', type: 'text', placeholder: 'my-group' },
+      { key: 'coreVersion', label: 'Core Version', type: 'text', placeholder: 'v2' },
+    ],
+  },
+  {
+    id: 'iot-sitewise',
+    name: 'IoT SiteWise',
+    category: 'iot',
+    icon: 'iot-sitewise',
+    description: 'Industrial IoT gateway',
+    color: '#00A86B',
+    editableAttributes: [
+      { key: 'portalName', label: 'Portal Name', type: 'text', placeholder: 'my-portal' },
+      { key: 'projectCount', label: 'Project Count', type: 'number', placeholder: '1' },
+    ],
+  },
+  {
+    id: 'iot-things-graph',
+    name: 'IoT Things Graph',
+    category: 'iot',
+    icon: 'iot-things-graph',
+    description: 'IoT application building',
+    color: '#00A86B',
+    editableAttributes: [
+      { key: 'deploymentName', label: 'Deployment Name', type: 'text', placeholder: 'my-deployment' },
+    ],
+  },
+
+  // Robotics
+  {
+    id: 'robomaker',
+    name: 'RoboMaker',
+    category: 'robotics',
+    icon: 'robomaker',
+    description: 'Robot simulation and development',
+    color: '#696969',
+    editableAttributes: [
+      { key: 'simulationJobName', label: 'Simulation Job Name', type: 'text', placeholder: 'my-sim' },
+      { key: 'robotSoftwareSuite', label: 'Robot Software Suite', type: 'text', placeholder: 'ROS2' },
+    ],
+  },
+
+  // Satellite
+  {
+    id: 'ground-station',
+    name: 'Ground Station',
+    category: 'satellite',
+    icon: 'ground-station',
+    description: 'Satellite ground station automation',
+    color: '#4B0082',
+    editableAttributes: [
+      { key: 'missionProfileName', label: 'Mission Profile Name', type: 'text', placeholder: 'my-mission' },
+    ],
+  },
+
+  // Migration Services
+  {
+    id: 'database-migration-service',
+    name: 'Database Migration Service',
+    category: 'migration',
+    icon: 'dms',
+    description: 'Database migration tool',
+    color: '#17A2B8',
+    editableAttributes: [
+      { key: 'replicationInstanceIdentifier', label: 'Replication Instance', type: 'text', placeholder: 'my-instance' },
+      { key: 'engine', label: 'Engine', type: 'text', placeholder: 'mysql' },
+    ],
+  },
+  {
+    id: 'application-migration-service',
+    name: 'Application Migration Service',
+    category: 'migration',
+    icon: 'ams',
+    description: 'Lift-and-shift migration',
+    color: '#17A2B8',
+    editableAttributes: [
+      { key: 'applicationName', label: 'Application Name', type: 'text', placeholder: 'my-app' },
+      { key: 'sourceServer', label: 'Source Server', type: 'text', placeholder: 'source-1' },
+    ],
+  },
+  {
+    id: 'transfer-family',
+    name: 'Transfer Family',
+    category: 'migration',
+    icon: 'transfer-family',
+    description: 'Managed file transfer service',
+    color: '#17A2B8',
+    editableAttributes: [
+      { key: 'serverName', label: 'Server Name', type: 'text', placeholder: 'my-server' },
+      { key: 'protocol', label: 'Protocol', type: 'select', options: [
+        { value: 'sftp', label: 'SFTP' },
+        { value: 'ftp', label: 'FTP' },
+        { value: 'ftps', label: 'FTPS' },
+        { value: 'as2', label: 'AS2' },
+      ]},
+    ],
+  },
+
+  // Customer Engagement
+  {
+    id: 'connect',
+    name: 'Connect',
+    category: 'engagement',
+    icon: 'connect',
+    description: 'Cloud-based contact center',
+    color: '#FF6B6B',
+    editableAttributes: [
+      { key: 'instanceAlias', label: 'Instance Alias', type: 'text', placeholder: 'my-instance' },
+      { key: 'agentCount', label: 'Agent Count', type: 'number', placeholder: '10' },
+    ],
+  },
+  {
+    id: 'pinpoint',
+    name: 'Pinpoint',
+    category: 'engagement',
+    icon: 'pinpoint',
+    description: 'Customer engagement platform',
+    color: '#FF6B6B',
+    editableAttributes: [
+      { key: 'projectName', label: 'Project Name', type: 'text', placeholder: 'my-project' },
+      { key: 'campaignCount', label: 'Campaign Count', type: 'number', placeholder: '0' },
+    ],
+  },
+  {
+    id: 'chime',
+    name: 'Chime',
+    category: 'engagement',
+    icon: 'chime',
+    description: 'Communications platform',
+    color: '#FF6B6B',
+    editableAttributes: [
+      { key: 'accountName', label: 'Account Name', type: 'text', placeholder: 'my-account' },
+      { key: 'userCount', label: 'User Count', type: 'number', placeholder: '50' },
+    ],
+  },
+  {
+    id: 'sesv2',
+    name: 'SES',
+    category: 'engagement',
+    icon: 'sesv2',
+    description: 'Email sending service',
+    color: '#FF6B6B',
+    editableAttributes: [
+      { key: 'configurationSet', label: 'Configuration Set', type: 'text', placeholder: 'my-config-set' },
+      { key: 'verifiedDomain', label: 'Verified Domain', type: 'text', placeholder: 'example.com' },
+    ],
+  },
+
+  // Business Applications
+  {
+    id: 'alexa-for-business',
+    name: 'Alexa for Business',
+    category: 'engagement',
+    icon: 'alexa-for-business',
+    description: 'Alexa device management',
+    color: '#FF6B6B',
+    editableAttributes: [
+      { key: 'organizationName', label: 'Organization Name', type: 'text', placeholder: 'my-org' },
+      { key: 'deviceCount', label: 'Device Count', type: 'number', placeholder: '10' },
+    ],
+  },
+
+  // Developer Tools
+  {
+    id: 'developer-tools',
+    name: 'Cloud9',
+    category: 'devtools',
+    icon: 'cloud9',
+    description: 'Cloud IDE',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'environmentName', label: 'Environment Name', type: 'text', placeholder: 'my-env' },
+      { key: 'instanceType', label: 'Instance Type', type: 'text', placeholder: 't2.micro' },
+    ],
+  },
+  {
+    id: 'x-ray',
+    name: 'X-Ray',
+    category: 'devtools',
+    icon: 'x-ray',
+    description: 'Distributed tracing service',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'samplingRate', label: 'Sampling Rate', type: 'number', placeholder: '0.05' },
+    ],
+  },
+  {
+    id: 'personal-health-dashboard',
+    name: 'Personal Health Dashboard',
+    category: 'devtools',
+    icon: 'phd',
+    description: 'AWS service health',
+    color: '#FF9900',
+    editableAttributes: [
+      { key: 'region', label: 'Monitored Region', type: 'text', placeholder: 'us-east-1' },
+    ],
+  },
 ];
 
 export const categoryLabels: Record<string, string> = {
@@ -935,6 +1727,15 @@ export const categoryLabels: Record<string, string> = {
   messaging: 'Messaging & Events',
   devops: 'DevOps & IaC',
   monitoring: 'Monitoring & Logging',
+  ml: 'Machine Learning',
+  deployment: 'Container & Deployment',
+  media: 'Media & Transcoding',
+  iot: 'IoT Services',
+  robotics: 'Robotics',
+  satellite: 'Satellite',
+  migration: 'Migration',
+  engagement: 'Customer Engagement',
+  devtools: 'Developer Tools',
 };
 
 export const categoryColors: Record<string, string> = {
@@ -947,4 +1748,13 @@ export const categoryColors: Record<string, string> = {
   messaging: '#FF9900',
   devops: '#C925D1',
   monitoring: '#FF4F8B',
+  ml: '#FF6B35',
+  deployment: '#FF9900',
+  media: '#17A2B8',
+  iot: '#00A86B',
+  robotics: '#696969',
+  satellite: '#4B0082',
+  migration: '#17A2B8',
+  engagement: '#FF6B6B',
+  devtools: '#FF9900',
 };

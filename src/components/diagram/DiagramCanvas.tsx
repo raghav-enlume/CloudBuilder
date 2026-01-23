@@ -56,6 +56,19 @@ const DiagramCanvasInner = () => {
     return () => window.removeEventListener('fitViewOnLoad', handleFitViewOnLoad);
   }, [fitView]);
 
+  // Listen for layout applied event
+  useEffect(() => {
+    const handleLayoutApplied = () => {
+      console.log('Layout applied, fitting view');
+      setTimeout(() => {
+        fitView({ padding: 0.15, minZoom: 0.05, maxZoom: 1 });
+      }, 100);
+    };
+    
+    window.addEventListener('layoutApplied', handleLayoutApplied);
+    return () => window.removeEventListener('layoutApplied', handleLayoutApplied);
+  }, [fitView]);
+
   // Ensure edges always appear on top of all layers and receive events
   useEffect(() => {
     const style = document.createElement('style');
@@ -77,7 +90,7 @@ const DiagramCanvasInner = () => {
         pointer-events: auto !important;
         opacity: 0;
         transition: opacity 0.2s ease-in-out;
-        background-color: rgba(255, 255, 255, 0.6);
+        background-color: transparent;
         padding: 3px 6px;
         border-radius: 3px;
         font-size: 8px;

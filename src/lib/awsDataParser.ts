@@ -45,6 +45,100 @@ interface AWSDataInput {
     service_discovery?: any;
     databases?: any;
     messaging?: any;
+    // Storage Extensions
+    glacier?: any[];
+    fsx?: any[];
+    datasync?: any[];
+    snowball?: any[];
+    storagegateway?: any[];
+    ebs_snapshots?: any[];
+    // Database Extensions
+    aurora?: any[];
+    redshift?: any[];
+    documentdb?: any[];
+    neptune?: any[];
+    timestream?: any[];
+    qldb?: any[];
+    keyspaces?: any[];
+    // Compute Extensions
+    lightsail?: any[];
+    apprunner?: any[];
+    batch?: any[];
+    appstream?: any[];
+    // Networking Extensions
+    directconnect?: any[];
+    globalaccelerator?: any[];
+    vpnconnection?: any[];
+    vpn_gateway?: any[];
+    elasticip?: any[];
+    endpoint_services?: any[];
+    // ML Services
+    sagemaker?: any[];
+    rekognition?: any[];
+    comprehend?: any[];
+    transcribe?: any[];
+    translate?: any[];
+    forecast?: any[];
+    lookout?: any[];
+    // Analytics
+    athena?: any[];
+    glue?: any[];
+    emr?: any[];
+    opensearch?: any[];
+    quicksight?: any[];
+    // Deployment & Containers
+    appconfig?: any[];
+    appmesh?: any[];
+    elasticcontainerregistry?: any[];
+    // Messaging & Integration
+    eventbridge?: any[];
+    appsync?: any[];
+    kinesis_firehose?: any[];
+    stepfunctions?: any[];
+    // Media Services
+    mediaconvert?: any[];
+    mediapackage?: any[];
+    medialive?: any[];
+    mediatailor?: any[];
+    // IoT Services
+    iot_core?: any[];
+    iot_analytics?: any[];
+    iot_greengrass?: any[];
+    iot_sitewise?: any[];
+    iot_things_graph?: any[];
+    // Robotics
+    robomaker?: any[];
+    // Satellite
+    groundstation?: any[];
+    // Migration Services
+    database_migration_service?: any[];
+    application_migration_service?: any[];
+    transfer_family?: any[];
+    // Customer Engagement
+    connect?: any[];
+    pinpoint?: any[];
+    chime?: any[];
+    sesv2?: any[];
+    alexaforbusiness?: any[];
+    // DevOps
+    cloudformation?: any[];
+    awscdk?: any[];
+    codepipeline?: any[];
+    codebuild?: any[];
+    codedeploy?: any[];
+    // Monitoring & Logging
+    cloudtrail?: any[];
+    awsconfig?: any[];
+    awsbackup?: any[];
+    // Security & Identity
+    secretsmanager?: any[];
+    ssmparameterstore?: any[];
+    shield?: any[];
+    awsorganizations?: any[];
+    // Developer Tools
+    cloud9?: any[];
+    xray?: any[];
+    personalhealthdashboard?: any[];
     [key: string]: any;
   };
 }
@@ -901,7 +995,7 @@ export const parseAWSDataJSON = async (
                 (ngw: any) => ngw.SubnetId === subnet.SubnetId
               ) || [];
               const subnetRDSInstances = regionData.rds_instances?.filter(
-                (rds: any) => rds.subnet_ids?.includes(subnet.SubnetId)
+                (rds: any) => rds.SubnetId === subnet.SubnetId
               ) || [];
               
               const instancesHeight = subnetInstances.length > 0 ? Math.max(subnetInstances.length * 80, 80) : 0;
@@ -943,7 +1037,10 @@ export const parseAWSDataJSON = async (
       regionPadding = 140;
 
       regionContainerWidth = Math.max(vpcCount * maxVpcWidth + (vpcCount + 1) * vpcMarginBetween, 1100);
-      regionContainerHeight = Math.max(regionPadding * 2 + maxVpcHeightLocal, 400);
+      
+      // Account for S3 buckets inside region (if present)
+      const s3Height = (regionData.s3_buckets?.length || 0) > 0 ? 150 : 0;
+      regionContainerHeight = Math.max(regionPadding * 2 + maxVpcHeightLocal + s3Height + 50, 400);
       regionResourcesStartY = regionY + regionPadding + maxVpcHeightLocal + 50;
     } else {
       // Serverless/Event-driven architecture - calculate height based on region-level resources
@@ -1036,7 +1133,7 @@ export const parseAWSDataJSON = async (
           (ngw: any) => ngw.SubnetId === subnet.SubnetId
         ) || [];
         const subnetRDSInstances = regionData.rds_instances?.filter(
-          (rds: any) => rds.subnet_id === subnet.SubnetId
+          (rds: any) => rds.SubnetId === subnet.SubnetId
         ) || [];
         
         const instancesHeight = subnetInstances.length > 0 ? Math.max(subnetInstances.length * 80, 80) : 0;
@@ -1157,9 +1254,10 @@ export const parseAWSDataJSON = async (
         (ngw: any) => regionData.subnets?.some((s: any) => s.SubnetId === ngw.SubnetId && s.VpcId === vpc.VpcId)
       ) || [];
       
+      const natMargin = 15;
+      const natWidth = 160;
+      
       if (vpcNATGateways.length > 0) {
-        const natMargin = 15;
-        const natWidth = 160;
         vpcNATGateways.forEach((ngw: any, natIndex: number) => {
           const natNodeId = `nat-${ngw.NatGatewayId}`;
           
@@ -1269,9 +1367,37 @@ export const parseAWSDataJSON = async (
         });
       }
 
-      // Security Groups are used only for creating connections (not displayed as nodes in UI)
+      // Security Groups - Create nodes and connect to instances
       vpcSecurityGroups.forEach((sg: any, sgIndex: number) => {
         const sgNodeId = `sg-${sg.GroupId}`;
+        const sgMargin = 15;
+        const sgWidth = 160;
+        const sgX = vpcX + vpcPadding + igwWidth + natWidth + 30 + sgIndex * (sgWidth + sgMargin);
+        const sgY = vpcY + vpcPadding;
+        const sgPosition = getNodePosition(sgNodeId, sgX, sgY);
+
+        // Create Security Group node
+        nodes.push({
+          id: sgNodeId,
+          type: 'resourceNode',
+          position: sgPosition,
+          data: {
+            label: sg.GroupName || sg.GroupId,
+            resourceType: securityGroupResourceType,
+            groupId: sg.GroupId,
+            groupName: sg.GroupName,
+            description: sg.Description,
+            vpcId: sg.VpcId,
+            parentId: vpcNodeId,
+            config: {
+              originalType: 'AWS::EC2::SecurityGroup',
+              region: regionKey,
+              description: sg.Description,
+              ingressRules: sg.IpPermissions || [],
+              egressRules: sg.IpPermissionsEgress || [],
+            },
+          },
+        });
 
         // Connect security group to instances that use it in this VPC
         regionData.instances.forEach((instance: any) => {
@@ -1282,10 +1408,10 @@ export const parseAWSDataJSON = async (
           ) {
             edges.push({
               id: `sg-instance-${sg.GroupId}-${instance.InstanceId}`,
-              source: `instance-${instance.InstanceId}`,
+              source: sgNodeId,
               target: `instance-${instance.InstanceId}`,
-              label: `SG: ${sg.GroupName || sg.GroupId}`,
-              style: { stroke: '#DD344C', strokeWidth: 2, strokeDasharray: '3,3' },
+              label: `uses`,
+              style: { stroke: '#DD344C', strokeWidth: 2 },
               markerEnd: 'arrowclosed',
             });
           }
@@ -1325,7 +1451,7 @@ export const parseAWSDataJSON = async (
         
         // Count RDS instances in this subnet
         const subnetRDSInstances = regionData.rds_instances?.filter(
-          (rds: any) => rds.subnet_id === subnet.SubnetId
+          (rds: any) => rds.SubnetId === subnet.SubnetId
         ) || [];
         
         // Calculate height: only add for existing resources
@@ -1444,7 +1570,7 @@ export const parseAWSDataJSON = async (
     if (hasVPCs) {
       regionData.vpcs.forEach((vpc: any, vpcIndex: number) => {
       const vpcRDSInstances = regionData.rds_instances?.filter((rds: any) => {
-        const rdsSubnet = regionData.subnets?.find((s: any) => s.SubnetId === rds.subnet_id);
+        const rdsSubnet = regionData.subnets?.find((s: any) => s.SubnetId === rds.SubnetId);
         return rdsSubnet?.VpcId === vpc.VpcId;
       }) || [];
 
@@ -3379,42 +3505,20 @@ export const parseAWSDataJSON = async (
       });
     }
 
-    // Add S3 buckets at Region level (AWS Rule: S3 is region-scoped, not VPC-bound)
+    // Add S3 buckets at Region level (AWS Rule: S3 is region-scoped, positioned at bottom of region)
     if (regionData.s3_buckets && regionData.s3_buckets.length > 0) {
       const s3Width = 280;
       const s3ItemSpacing = 30;
+      const s3BucketHeight = 100;
       
-      // Grid-based positioning: Arrange resources in multiple rows to avoid overlaps
-      // Count existing region-level resources to calculate grid row
-      let resourceCount = 0;
-      if (regionData.lambda_functions?.length) resourceCount += 1;
-      if (regionData.api_gateways?.length) resourceCount += 1;
-      if (regionData.cloudfront_distributions?.length) resourceCount += 1;
-      if (regionData.dynamodb_tables?.length) resourceCount += 1;
-      if (regionData.elasticache_clusters?.length) resourceCount += 1;
-      if (regionData.ecs_clusters?.length) resourceCount += 1;
-      if (regionData.eks_clusters?.length) resourceCount += 1;
-      if (regionData.autoscaling_groups?.length) resourceCount += 1;
-      if (regionData.fargate_tasks?.length) resourceCount += 1;
-      if (regionData.eventbridge?.length) resourceCount += 1;
-      if (regionData.kinesis_streams?.length) resourceCount += 1;
-      if (regionData.sqs_queues?.length) resourceCount += 1;
-      if (regionData.sns_topics?.length) resourceCount += 1;
-      if (regionData.ecr_repositories?.length) resourceCount += 1;
-      
-      // Position S3 after all other resources in grid layout
-      const s3GridColumn = (resourceCount % 3); // 3 columns per row
-      const s3GridRow = Math.floor(resourceCount / 3) + 1; // Place in next row
-      
-      const gridSpacingX = 350;
-      const gridSpacingY = 150;
-      const s3X_grid = regionX + regionPadding + (s3GridColumn * gridSpacingX);
-      const s3Y_grid = regionResourcesStartY + (s3GridRow * gridSpacingY);
+      // Position S3 buckets at the bottom-right of the region, inside the region bounds
+      const s3StartX = regionX + regionPadding;
+      const s3StartY = regionY + regionContainerHeight - s3BucketHeight - regionPadding; // Position at bottom with padding
 
       regionData.s3_buckets.forEach((bucket: any, s3Index: number) => {
         const s3NodeId = `s3-${bucket.Name}`;
-        const s3NodeX = s3X_grid + s3Index * (s3Width + s3ItemSpacing);
-        const s3NodeY = s3Y_grid;
+        const s3NodeX = s3StartX + s3Index * (s3Width + s3ItemSpacing);
+        const s3NodeY = s3StartY;
         const s3Position = getNodePosition(s3NodeId, s3NodeX, s3NodeY);
 
         nodes.push({
@@ -3812,10 +3916,212 @@ export const parseAWSDataJSON = async (
       });
     }
 
+    // AWS Rule: Connect EC2 instances to Internet Gateway (for public instances)
+    if (regionData.instances && regionData.internet_gateways && regionData.subnets) {
+      regionData.instances.forEach((instance: any) => {
+        const instanceSubnet = regionData.subnets?.find((s: any) => s.SubnetId === instance.SubnetId);
+        const instanceVpc = regionData.vpcs?.find((v: any) => v.VpcId === instance.VpcId);
+        
+        // Check if instance is in a public subnet or has public IP
+        if (instanceSubnet?.Type === 'public' || instance.PublicIpAddress) {
+          const vpcIgw = regionData.internet_gateways?.find((igw: any) =>
+            igw.Attachments?.some((att: any) => att.VpcId === instance.VpcId)
+          );
+          
+          if (vpcIgw) {
+            edges.push({
+              id: `instance-igw-${instance.InstanceId}-${vpcIgw.InternetGatewayId}`,
+              source: `instance-${instance.InstanceId}`,
+              target: `igw-${vpcIgw.InternetGatewayId}`,
+              label: 'Internet Access',
+              style: { stroke: '#FF6B35', strokeWidth: 2 },
+              markerEnd: 'arrowclosed',
+            });
+          }
+        }
+      });
+    }
+
+    // AWS Rule: Connect EC2 instances to NAT Gateway (for private instances with NAT gateway route)
+    if (regionData.instances && regionData.nat_gateways && regionData.route_tables && regionData.subnets) {
+      regionData.instances.forEach((instance: any) => {
+        const instanceSubnet = regionData.subnets?.find((s: any) => s.SubnetId === instance.SubnetId);
+        
+        // Check if instance is in a private subnet
+        if (instanceSubnet?.Type === 'private') {
+          // Find the route table associated with this subnet
+          const routeTable = regionData.route_tables?.find((rt: any) =>
+            rt.Associations?.some((assoc: any) => assoc.SubnetId === instance.SubnetId)
+          );
+          
+          if (routeTable && routeTable.Routes && Array.isArray(routeTable.Routes)) {
+            // Check if route table has NAT Gateway route for 0.0.0.0/0
+            const natRoute = routeTable.Routes.find((route: any) => 
+              route.NatGatewayId && route.DestinationCidrBlock === '0.0.0.0/0'
+            );
+            
+            if (natRoute) {
+              const natGateway = regionData.nat_gateways?.find((nat: any) =>
+                nat.NatGatewayId === natRoute.NatGatewayId
+              );
+              
+              if (natGateway) {
+                edges.push({
+                  id: `instance-nat-${instance.InstanceId}-${natGateway.NatGatewayId}`,
+                  source: `instance-${instance.InstanceId}`,
+                  target: `nat-${natGateway.NatGatewayId}`,
+                  label: 'Egress via NAT',
+                  style: { stroke: '#FF6B35', strokeWidth: 2 },
+                  markerEnd: 'arrowclosed',
+                });
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // AWS Rule: Connect EC2 instances to S3 buckets (direct access)
+    if (regionData.instances && regionData.s3_buckets && regionData.iam_roles) {
+      regionData.instances.forEach((instance: any) => {
+        // Check if instance has S3 access role
+        const hasS3Role = instance.IamInstanceProfile?.Arn?.includes('S3') || 
+                          instance.IamInstanceProfile?.name?.includes('S3') ||
+                          regionData.iam_roles?.some((role: any) => 
+                            role.RoleName?.includes('S3') && 
+                            (instance.IamInstanceProfile?.Arn?.includes(role.RoleName) || 
+                             instance.Role === role.RoleName)
+                          );
+        
+        if (hasS3Role || regionData.iam_roles?.length > 0) {
+          // Connect instance to all S3 buckets in the region
+          regionData.s3_buckets?.forEach((bucket: any) => {
+            edges.push({
+              id: `instance-s3-${instance.InstanceId}-${bucket.Name}`,
+              source: `instance-${instance.InstanceId}`,
+              target: `s3-${bucket.Name}`,
+              label: 'S3 Access',
+              style: { stroke: '#569A31', strokeWidth: 2, strokeDasharray: '5,5' },
+              markerEnd: 'arrowclosed',
+            });
+          });
+        }
+      });
+    }
+
     // Update position for next region with dynamic spacing (AWS Rule: Account for all resources)
     const s3Height = regionData.s3_buckets?.length ? 150 : 0;
     const regionMargin = 200 + Math.ceil((regionData.vpcs?.length || 0) * 50);
     currentY += regionContainerHeight + regionMargin + s3Height;
+  });
+
+  // Create connection edges between EC2 instances and related resources
+  // This must happen AFTER all nodes are created so we can find node IDs
+  Object.entries(data).forEach(([regionKey, regionData]) => {
+    if (!regionData.instances) return;
+
+    regionData.instances.forEach((instance: any) => {
+      const instanceVpcId = instance.VpcId;
+      const instanceSubnetId = instance.SubnetId;
+
+      // EC2 to RDS connections (same VPC)
+      if (regionData.rds_instances) {
+        regionData.rds_instances.forEach((rds: any) => {
+          if (rds.VpcId === instanceVpcId) {
+            // Find RDS node - node ID is rds-${db_instance_name}
+            const dbName = rds.db_instance_name || rds.DBInstanceIdentifier;
+            const expectedRdsNodeId = `rds-${dbName}`;
+            
+            const rdsNode = nodes.find((n: any) => {
+              const nodeId = n.id || '';
+              return nodeId === expectedRdsNodeId || nodeId.includes(dbName);
+            });
+            
+            if (rdsNode) {
+              edges.push({
+                id: `ec2-rds-${instance.InstanceId}-${dbName}`,
+                source: `instance-${instance.InstanceId}`,
+                target: rdsNode.id,
+                label: 'Connects to',
+                style: { stroke: '#FF6B6B', strokeWidth: 2 },
+                markerEnd: 'arrowclosed',
+              });
+            }
+          }
+        });
+      }
+
+      // EC2 to NAT Gateway (if in public subnet, EC2 uses NAT for outbound)
+      if (regionData.nat_gateways && regionData.subnets) {
+        const subnet = regionData.subnets.find((s: any) => s.SubnetId === instanceSubnetId);
+        if (subnet && subnet.Type === 'public') {
+          regionData.nat_gateways.forEach((nat: any) => {
+            // Find NAT node - node ID is nat-${NatGatewayId}
+            const expectedNatNodeId = `nat-${nat.NatGatewayId}`;
+            const natNode = nodes.find((n: any) => n.id === expectedNatNodeId);
+            
+            if (natNode) {
+              edges.push({
+                id: `ec2-nat-${instance.InstanceId}-${nat.NatGatewayId}`,
+                source: `instance-${instance.InstanceId}`,
+                target: natNode.id,
+                label: 'Routes via NAT',
+                style: { stroke: '#8C4FFF', strokeWidth: 2 },
+                markerEnd: 'arrowclosed',
+              });
+            }
+          });
+        }
+      }
+
+      // EC2 to Internet Gateway (if in public subnet)
+      if (regionData.internet_gateways && regionData.subnets) {
+        const subnet = regionData.subnets.find((s: any) => s.SubnetId === instanceSubnetId);
+        if (subnet && subnet.Type === 'public') {
+          regionData.internet_gateways.forEach((igw: any) => {
+            // Find IGW node - node ID is igw-${InternetGatewayId}
+            const expectedIgwNodeId = `igw-${igw.InternetGatewayId}`;
+            const igwNode = nodes.find((n: any) => n.id === expectedIgwNodeId);
+            
+            if (igwNode) {
+              edges.push({
+                id: `ec2-igw-${instance.InstanceId}-${igw.InternetGatewayId}`,
+                source: `instance-${instance.InstanceId}`,
+                target: igwNode.id,
+                label: 'Internet Access',
+                style: { stroke: '#1DB954', strokeWidth: 2 },
+                markerEnd: 'arrowclosed',
+              });
+            }
+          });
+        }
+      }
+
+      // EC2 to S3 Buckets connections
+      if (regionData.s3_buckets) {
+        regionData.s3_buckets.forEach((s3: any) => {
+          // Find S3 node - node ID is s3-${bucket_name}
+          const bucketName = s3.Name || s3.name || s3.BucketName;
+          const expectedS3NodeId = `s3-${bucketName}`;
+          
+          const s3Node = nodes.find((n: any) => {
+            const nodeId = n.id || '';
+            return nodeId === expectedS3NodeId || nodeId.includes(bucketName);
+          });
+          
+          if (s3Node) {
+            edges.push({
+              id: `ec2-s3-${instance.InstanceId}-${bucketName}`,
+              source: `instance-${instance.InstanceId}`,
+              target: s3Node.id,
+              label: 'Access',
+              style: { stroke: '#FFA500', strokeWidth: 2 },
+              markerEnd: 'arrowclosed',
+            });
+          }
+        });
+      }
+    });
   });
 
   return { nodes, edges };

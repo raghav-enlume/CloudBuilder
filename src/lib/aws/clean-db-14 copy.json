@@ -1,0 +1,786 @@
+[
+    {
+        "region": "sample-web-app",
+        "total_resources": 17,
+        "resources": [
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "vpc-webapp-001",
+                "resource_name": "Sample Web App VPC",
+                "resource_type": "VPC",
+                "resource_category": "NETWORKING",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "VpcId": "vpc-webapp-001",
+                    "State": "available",
+                    "CidrBlock": "10.0.0.0/16",
+                    "DhcpOptionsId": "dopt-webapp-001",
+                    "InstanceTenancy": "default",
+                    "IsDefault": false,
+                    "OwnerId": "123456789012",
+                    "Tags": [
+                        {
+                            "Key": "Name",
+                            "Value": "Sample Web App VPC"
+                        },
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "subnet-public-001",
+                "resource_name": "Sample Web App VPC-public-subnet",
+                "resource_type": "SUBNET",
+                "resource_category": "NETWORKING",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "SubnetId": "subnet-public-001",
+                    "VpcId": "vpc-webapp-001",
+                    "CidrBlock": "10.0.1.0/24",
+                    "AvailabilityZone": "us-east-1a",
+                    "MapPublicIpOnLaunch": true,
+                    "Tags": [
+                        {
+                            "Key": "Name",
+                            "Value": "Sample Web App VPC-public"
+                        },
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Type",
+                            "Value": "public"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "subnet-private-001",
+                "resource_name": "Sample Web App VPC-private-subnet",
+                "resource_type": "SUBNET",
+                "resource_category": "NETWORKING",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "SubnetId": "subnet-private-001",
+                    "VpcId": "vpc-webapp-001",
+                    "CidrBlock": "10.0.2.0/24",
+                    "AvailabilityZone": "us-east-1b",
+                    "MapPublicIpOnLaunch": false,
+                    "Tags": [
+                        {
+                            "Key": "Name",
+                            "Value": "Sample Web App VPC-private"
+                        },
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Type",
+                            "Value": "private"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "igw-webapp-001",
+                "resource_name": "bo-drone-igw-547",
+                "resource_type": "INTERNET_GATEWAY",
+                "resource_category": "NETWORKING",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "igw-webapp-001",
+                    "name": "bo-drone-igw-547",
+                    "InternetGatewayId": "igw-webapp-001",
+                    "Attachments": [
+                        {
+                            "State": "available",
+                            "VpcId": "vpc-webapp-001"
+                        }
+                    ],
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "bo-drone-igw-547"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "nat-webapp-001",
+                "resource_name": "bo-drone-nat-548",
+                "resource_type": "NAT_GATEWAY",
+                "resource_category": "NETWORKING",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "nat-webapp-001",
+                    "name": "bo-drone-nat-548",
+                    "NatGatewayId": "nat-webapp-001",
+                    "VpcId": "vpc-webapp-001",
+                    "SubnetId": "subnet-public-001",
+                    "State": "available",
+                    "NatGatewayAddresses": [
+                        {
+                            "AllocationId": "eipalloc-webapp-001"
+                        }
+                    ],
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "bo-drone-nat-548"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "rtb-public-001",
+                "resource_name": "bo-drone-rtb-549",
+                "resource_type": "ROUTE_TABLE",
+                "resource_category": "NETWORKING",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "rtb-public-001",
+                    "name": "bo-drone-rtb-549",
+                    "RouteTableId": "rtb-public-001",
+                    "VpcId": "vpc-webapp-001",
+                    "Routes": [
+                        {
+                            "destination_cidr": "0.0.0.0/0",
+                            "target_type": "internet_gateway",
+                            "target_id": "igw-webapp-001"
+                        },
+                        {
+                            "destination_cidr": "10.0.0.0/16",
+                            "target_type": "local",
+                            "target_id": "local"
+                        }
+                    ],
+                    "Associations": [],
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "bo-drone-rtb-549"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "rtb-private-001",
+                "resource_name": "bo-drone-rtb-550",
+                "resource_type": "ROUTE_TABLE",
+                "resource_category": "NETWORKING",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "rtb-private-001",
+                    "name": "bo-drone-rtb-550",
+                    "RouteTableId": "rtb-private-001",
+                    "VpcId": "vpc-webapp-001",
+                    "Routes": [
+                        {
+                            "destination_cidr": "0.0.0.0/0",
+                            "target_type": "nat_gateway",
+                            "target_id": "nat-webapp-001"
+                        },
+                        {
+                            "destination_cidr": "10.0.0.0/16",
+                            "target_type": "local",
+                            "target_id": "local"
+                        }
+                    ],
+                    "Associations": [],
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "bo-drone-rtb-550"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "sg-web-001",
+                "resource_name": "web-app-sg",
+                "resource_type": "SECURITY_GROUP",
+                "resource_category": "SECURITY",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "sg-web-001",
+                    "name": "web-app-sg",
+                    "GroupId": "sg-web-001",
+                    "GroupName": "web-app-sg",
+                    "VpcId": "vpc-webapp-001",
+                    "Description": "Security group for web-app-sg",
+                    "IpPermissions": [],
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "web-app-sg"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "sg-rds-001",
+                "resource_name": "rds-db-sg",
+                "resource_type": "SECURITY_GROUP",
+                "resource_category": "SECURITY",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "sg-rds-001",
+                    "name": "rds-db-sg",
+                    "GroupId": "sg-rds-001",
+                    "GroupName": "rds-db-sg",
+                    "VpcId": "vpc-webapp-001",
+                    "Description": "Security group for rds-db-sg",
+                    "IpPermissions": [],
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "rds-db-sg"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "i-webapp-001",
+                "resource_name": "bo-drone-instance-553",
+                "resource_type": "EC2",
+                "resource_category": "COMPUTE",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "i-webapp-001",
+                    "name": "bo-drone-instance-553",
+                    "InstanceId": "i-webapp-001",
+                    "InstanceType": "t3.medium",
+                    "State": {
+                        "Name": "running"
+                    },
+                    "VpcId": "vpc-webapp-001",
+                    "PrivateIpAddress": "10.0.1.100",
+                    "ImageId": "ami-0abcdef1234567890",
+                    "SubnetId": "subnet-public-001",
+                    "SecurityGroups": [
+                        {
+                            "GroupId": "sg-web-001",
+                            "GroupName": "web-app-sg"
+                        }
+                    ],
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "bo-drone-instance-553"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "rds-webapp-postgres",
+                "resource_name": "bo-drone-db-554",
+                "resource_type": "RDS",
+                "resource_category": "DATABASE",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "rds-webapp-postgres",
+                    "name": "bo-drone-db-554",
+                    "DBInstanceIdentifier": "rds-webapp-postgres",
+                    "db_instance_name": "rds-webapp-postgres",
+                    "Engine": "postgresql",
+                    "engine": "postgresql",
+                    "engine_version": "13.7",
+                    "DBInstanceClass": "db.t3.micro",
+                    "db_instance_class": "db.t3.micro",
+                    "port": 5432,
+                    "allocated_storage": 20,
+                    "VpcId": "vpc-webapp-001",
+                    "subnet_type": "public",
+                    "subnet_id": "subnet-public-001",
+                    "multi_az": false,
+                    "DBSubnetGroup": {
+                        "VpcId": "vpc-webapp-001",
+                        "Subnets": [
+                            {
+                                "SubnetIdentifier": "subnet-public-001"
+                            }
+                        ]
+                    },
+                    "VpcSecurityGroupIds": [
+                        "sg-rds-001"
+                    ],
+                    "security_group": {
+                        "id": "sg-rds-001",
+                        "inbound_rules": [
+                            {
+                                "port": 5432,
+                                "source_security_group": "sg-web-001"
+                            }
+                        ]
+                    },
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "bo-drone-db-554"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "rds-webapp-mysql",
+                "resource_name": "bo-drone-db-555",
+                "resource_type": "RDS",
+                "resource_category": "DATABASE",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "rds-webapp-mysql",
+                    "name": "bo-drone-db-555",
+                    "DBInstanceIdentifier": "rds-webapp-mysql",
+                    "db_instance_name": "rds-webapp-mysql",
+                    "Engine": "mysql",
+                    "engine": "mysql",
+                    "engine_version": "8.0",
+                    "DBInstanceClass": "db.t3.micro",
+                    "db_instance_class": "db.t3.micro",
+                    "port": 3306,
+                    "allocated_storage": 20,
+                    "VpcId": "vpc-webapp-001",
+                    "subnet_type": "private",
+                    "subnet_id": "subnet-private-001",
+                    "multi_az": false,
+                    "DBSubnetGroup": {
+                        "VpcId": "vpc-webapp-001",
+                        "Subnets": [
+                            {
+                                "SubnetIdentifier": "subnet-private-001"
+                            }
+                        ]
+                    },
+                    "VpcSecurityGroupIds": [
+                        "sg-rds-001"
+                    ],
+                    "security_group": {
+                        "id": "sg-rds-001",
+                        "inbound_rules": [
+                            {
+                                "port": 3306,
+                                "source_security_group": "sg-web-001"
+                            }
+                        ]
+                    },
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "bo-drone-db-555"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "s3-webapp-assets",
+                "resource_name": "webapp-assets-bucket",
+                "resource_type": "S3",
+                "resource_category": "STORAGE",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "Name": "webapp-assets-bucket",
+                    "CreationDate": "2024-01-15",
+                    "Region": "sample-web-app",
+                    "Versioning": "Enabled",
+                    "Encryption": "AES256",
+                    "Access": "Via VPC Endpoint vpce-s3-001",
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "webapp-assets-bucket"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "s3-webapp-backups",
+                "resource_name": "webapp-backups-bucket",
+                "resource_type": "S3",
+                "resource_category": "STORAGE",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "Name": "webapp-backups-bucket",
+                    "CreationDate": "2024-01-15",
+                    "Region": "sample-web-app",
+                    "Versioning": "Enabled",
+                    "Encryption": "AES256",
+                    "Access": "Via VPC Endpoint vpce-s3-001",
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "webapp-backups-bucket"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "tg-webapp-001",
+                "resource_name": "webapp-target-group",
+                "resource_type": "TARGET_GROUP",
+                "resource_category": "NETWORKING",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "tg-webapp-001",
+                    "name": "webapp-target-group",
+                    "TargetGroupArn": "arn:aws:elasticloadbalancing:sample-web-app:123456789012:targetgroup/webapp-target-group/tg-webapp-001",
+                    "TargetGroupName": "webapp-target-group",
+                    "VpcId": "vpc-webapp-001",
+                    "Port": 80,
+                    "Protocol": "HTTP",
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "webapp-target-group"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "alb-webapp-001",
+                "resource_name": "webapp-load-balancer",
+                "resource_type": "LOAD_BALANCER",
+                "resource_category": "NETWORKING",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "alb-webapp-001",
+                    "name": "webapp-load-balancer",
+                    "LoadBalancerArn": "arn:aws:elasticloadbalancing:sample-web-app:123456789012:loadbalancer/app/webapp-load-balancer/alb-webapp-001",
+                    "LoadBalancerName": "webapp-load-balancer",
+                    "VpcId": "vpc-webapp-001",
+                    "Scheme": "internet-facing",
+                    "Type": "application",
+                    "State": {
+                        "Code": "active"
+                    },
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "webapp-load-balancer"
+                        }
+                    ]
+                }
+            },
+            {
+                "region": "sample-web-app",
+                "cloud_resource_id": "vpce-s3-001",
+                "resource_name": "com.amazonaws.us-east-1.s3",
+                "resource_type": "API_GATEWAY",
+                "resource_category": "NETWORKING",
+                "utilization_level": null,
+                "is_shared": false,
+                "resource_property": {
+                    "id": "vpce-s3-001",
+                    "name": "com.amazonaws.us-east-1.s3",
+                    "VpcEndpointId": "vpce-s3-001",
+                    "ServiceName": "com.amazonaws.us-east-1.s3",
+                    "VpcId": "vpc-webapp-001",
+                    "VpcEndpointType": "Gateway",
+                    "Tags": [
+                        {
+                            "Key": "Environment",
+                            "Value": "production"
+                        },
+                        {
+                            "Key": "Organization",
+                            "Value": "BO Drone"
+                        },
+                        {
+                            "Key": "ManagedBy",
+                            "Value": "blazeops"
+                        },
+                        {
+                            "Key": "Project",
+                            "Value": "drone-platform"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "com.amazonaws.us-east-1.s3"
+                        }
+                    ]
+                }
+            }
+        ],
+        "diagram_base64": null,
+        "diagram_format": "png"
+    }
+]

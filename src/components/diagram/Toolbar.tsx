@@ -1,4 +1,4 @@
-import { Trash2, Download, Upload, Undo, Redo, FileArchive, Zap, Library, Cloud } from 'lucide-react';
+import { Trash2, Download, Upload, Undo, Redo, FileArchive, Zap, Library, Cloud, Layout, Maximize2, Grid3x3, List } from 'lucide-react';
 import JSZip from 'jszip';
 import { useRef, useState } from 'react';
 import { Node, Edge } from 'reactflow';
@@ -21,15 +21,18 @@ import {
 import { parseArchitectureJSON } from '@/lib/architectureParser';
 import { parseAWSDataJSON } from '@/lib/awsDataParser';
 import { ARCHITECTURE_TEMPLATES } from '@/data/templates';
+import { layoutAWSResources } from '@/lib/layoutEngine';
 
-export const Toolbar = () => {
-  const { nodes, edges, clearDiagram, undo, redo, canUndo, canRedo, loadDiagram } = useDiagramStore();
+export const Toolbar = ({ isInfoPanelOpen, onToggleInfoPanel }: { isInfoPanelOpen: boolean; onToggleInfoPanel: () => void }) => {
+  const { nodes, edges, clearDiagram, undo, redo, canUndo, canRedo, loadDiagram, updateNodes } = useDiagramStore();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const architectureFileInputRef = useRef<HTMLInputElement>(null);
   const awsDataFileInputRef = useRef<HTMLInputElement>(null);
+  const dbJsonFileInputRef = useRef<HTMLInputElement>(null);
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
   const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
+  const [isLayouting, setIsLayouting] = useState(false);
 
   const handleExportJSON = () => {
     const data = { nodes, edges };
@@ -295,6 +298,11 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
       });
 
       setIsImportDialogOpen(false);
+
+      // Auto-apply hierarchical layout
+      setTimeout(() => {
+        handleApplyLayout('hierarchical');
+      }, 300);
     } catch (error) {
       toast({
         title: 'Import failed',
@@ -306,6 +314,151 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
     // Reset file input
     if (awsDataFileInputRef.current) {
       awsDataFileInputRef.current.value = '';
+    }
+  };
+
+  const handleDBJsonImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const fileContent = await file.text();
+      let data = JSON.parse(fileContent);
+
+      // Import the parser function
+      const { getAWSDataFromDBJson } = await import('@/lib/dbJsonParser');
+      
+      // Handle multiple formats:
+      // 1. Array of wrapped objects (multiple regions): [{region, resources}, ...]
+      // 2. Single wrapped object: {region, resources}
+      // 3. Flat array of resources: [resource, ...]
+      
+      let resourcesArray: any[] = [];
+      let isMultiRegion = false;
+      
+      // Check if array of wrapped objects (each with region and resources)
+      if (Array.isArray(data) && data.length > 0 && data[0]?.region && data[0]?.resources && Array.isArray(data[0].resources)) {
+        isMultiRegion = true;
+        // Flatten all resources from all regions for validation
+        resourcesArray = data.flatMap((region: any) => region.resources || []);
+      }
+      // Check if wrapped single object
+      else if (data.resources && Array.isArray(data.resources)) {
+        resourcesArray = data.resources;
+      }
+      // Check if flat array
+      else if (Array.isArray(data)) {
+        resourcesArray = data;
+      }
+      
+      // Validate the DB JSON format
+      const isValidDBJson = resourcesArray.length > 0 && resourcesArray.some((item: any) => 
+        item.resource_type && (item.resource_property || item.id)
+      );
+
+      if (!isValidDBJson) {
+        toast({
+          title: 'Invalid DB JSON format',
+          description: 'The file must contain resources with resource_type and resource_property fields.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      // Convert DB JSON to AWS format (handles all formats internally)
+      const awsData = getAWSDataFromDBJson(data);
+      
+      // Parse AWS data to nodes and edges
+      const { nodes: parsedNodes, edges: parsedEdges } = await parseAWSDataJSON(awsData);
+
+      // Load the diagram
+      loadDiagram(parsedNodes, parsedEdges);
+
+      // Count resources
+      const vpcCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'vpc').length;
+      const subnetCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'subnet').length;
+      const instanceCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'ec2').length;
+      const rdsCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'rds').length;
+      const natCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'nat').length;
+      const igwCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'igw').length;
+      const s3Count = parsedNodes.filter(n => n.data?.resourceType?.id === 's3').length;
+      const sgCount = parsedNodes.filter(n => n.data?.resourceType?.id === 'securitygroup').length;
+
+      const resourceSummary = [
+        vpcCount > 0 && `${vpcCount} VPCs`,
+        subnetCount > 0 && `${subnetCount} Subnets`,
+        instanceCount > 0 && `${instanceCount} EC2 Instances`,
+        rdsCount > 0 && `${rdsCount} RDS Databases`,
+        natCount > 0 && `${natCount} NAT Gateways`,
+        igwCount > 0 && `${igwCount} Internet Gateways`,
+        s3Count > 0 && `${s3Count} S3 Buckets`,
+        sgCount > 0 && `${sgCount} Security Groups`,
+      ]
+        .filter(Boolean)
+        .join(', ');
+
+      toast({
+        title: 'DB JSON imported',
+        description: `Loaded ${resourceSummary || 'resources'} with ${parsedEdges.length} connections.${isMultiRegion ? ' (Multi-region)' : ''}`,
+      });
+
+      setIsImportDialogOpen(false);
+
+      // Auto-apply hierarchical layout
+      setTimeout(() => {
+        handleApplyLayout('hierarchical');
+      }, 300);
+    } catch (error) {
+      toast({
+        title: 'Import failed',
+        description: error instanceof Error ? error.message : 'Failed to import the DB JSON file.',
+        variant: 'destructive',
+      });
+    }
+
+    // Reset file input
+    if (dbJsonFileInputRef.current) {
+      dbJsonFileInputRef.current.value = '';
+    }
+  };
+
+  const handleApplyLayout = (strategy: 'hierarchical' | 'grid' | 'force') => {
+    if (nodes.length === 0) {
+      toast({
+        title: 'Empty diagram',
+        description: 'Add some resources before applying layout.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsLayouting(true);
+    try {
+      const layoutedNodes = layoutAWSResources(
+        nodes.map((n) => ({ ...n })),
+        edges,
+        strategy
+      );
+      updateNodes(layoutedNodes);
+
+      // Dispatch event to fit view (handled in DiagramCanvas which is inside ReactFlowProvider)
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('layoutApplied', { detail: { strategy } }));
+      }, 100);
+
+      toast({
+        title: 'Layout applied',
+        description: `Resources arranged using ${strategy} layout.`,
+      });
+    } catch (error) {
+      console.error('Layout error:', error);
+      toast({
+        title: 'Layout failed',
+        description: 'Could not apply layout to diagram.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLayouting(false);
     }
   };
 
@@ -427,6 +580,17 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
                     <Cloud className="h-4 w-4 mr-2" />
                     AWS Data Format
                   </Button>
+                  <Button 
+                    onClick={() => {
+                      setIsImportDialogOpen(false);
+                      dbJsonFileInputRef.current?.click();
+                    }}
+                    className="w-full"
+                    variant="outline"
+                  >
+                    <Cloud className="h-4 w-4 mr-2" />
+                    DB Format (Flat Array)
+                  </Button>
                 </div>
               </DialogContent>
             </Dialog>
@@ -459,6 +623,15 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
           onChange={handleAWSDataImport}
           className="hidden"
           aria-label="Import AWS data"
+        />
+
+        <input
+          ref={dbJsonFileInputRef}
+          type="file"
+          accept=".json"
+          onChange={handleDBJsonImport}
+          className="hidden"
+          aria-label="Import DB JSON format"
         />
 
         <div className="w-px h-6 bg-border mx-1" />
@@ -513,13 +686,60 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
             <Button 
               variant="ghost" 
               size="icon" 
-              className="h-9 w-9" 
-              onClick={handleClear}
+              className="h-9 w-9"
+              onClick={() => handleApplyLayout('hierarchical')}
+              disabled={isLayouting || nodes.length === 0}
             >
-              <Trash2 className="h-4 w-4" />
+              <Layout className="h-4 w-4" />
             </Button>
           </TooltipTrigger>
-          <TooltipContent>Clear Canvas</TooltipContent>
+          <TooltipContent>Hierarchical Layout (Python diagrams style)</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-9 w-9"
+              onClick={() => handleApplyLayout('grid')}
+              disabled={isLayouting || nodes.length === 0}
+            >
+              <Grid3x3 className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Grid Layout</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-9 w-9"
+              onClick={() => handleApplyLayout('force')}
+              disabled={isLayouting || nodes.length === 0}
+            >
+              <Maximize2 className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Force-Directed Layout</TooltipContent>
+        </Tooltip>
+
+        <div className="w-px h-6 bg-border mx-1" />
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button 
+              variant={isInfoPanelOpen ? "default" : "ghost"}
+              size="icon" 
+              className="h-9 w-9"
+              onClick={onToggleInfoPanel}
+            >
+              <List className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Resource Information</TooltipContent>
         </Tooltip>
 
         <div className="w-px h-6 bg-border mx-1" />
