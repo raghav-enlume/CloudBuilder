@@ -16,7 +16,7 @@ import { getIconComponent } from '@/lib/iconMapper';
 const parentContainerMap: Record<string, string> = {
   vpc: 'region',
   subnet: 'vpc',
-  securitygroup: 'subnet',
+  // securitygroup: 'subnet', // Removed - security groups are floating elements
 };
 
 const containerSizes: Record<string, { width: number; height: number }> = {
@@ -44,7 +44,14 @@ export const TopPropertiesBar = () => {
     return null;
   }
 
-  const { label, resourceType, config = {}, isContainer } = node.data;
+  const { label, resourceType, config = {} } = node.data;
+  
+  // Safety check for resourceType
+  if (!resourceType || !resourceType.id) {
+    console.warn('Node missing valid resourceType:', node);
+    return null;
+  }
+  
   const { editableAttributes = [] } = resourceType;
   const IconComponent = getIconComponent(resourceType.icon);
 
@@ -180,8 +187,8 @@ export const TopPropertiesBar = () => {
         <div className="flex items-center gap-3 min-w-fit">
           <div className="flex items-center gap-2">
             {IconComponent ? (
-              <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: `${resourceType.color}40` }}>
-                <div style={{ color: resourceType.color }}>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: `${resourceType.color || '#666'}40` }}>
+                <div style={{ color: resourceType.color || '#666' }}>
                   <IconComponent size={24} />
                 </div>
               </div>

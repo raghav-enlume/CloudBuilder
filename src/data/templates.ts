@@ -12,7 +12,19 @@ export interface ArchitectureTemplate {
 
 // Helper function to find resource type by name
 const findResourceType = (typeName: string) => {
-  return cloudResources.find(rt => rt.name === typeName);
+  const resourceType = cloudResources.find(rt => rt.name === typeName);
+  if (!resourceType) {
+    console.warn(`Resource type not found: ${typeName}`);
+    return {
+      id: typeName.toLowerCase().replace(/\s+/g, ''),
+      name: typeName,
+      category: 'unknown',
+      icon: 'unknown',
+      description: `Unknown resource type: ${typeName}`,
+      color: '#888'
+    };
+  }
+  return resourceType;
 };
 
 export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
@@ -24,7 +36,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
     nodes: [
       {
         id: 'node-alb',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 100, y: 50 },
         data: {
           label: 'ALB',
@@ -36,7 +48,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-ec2-1',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: -100, y: 200 },
         data: {
           label: 'Web Server 1',
@@ -50,7 +62,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-ec2-2',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 100, y: 200 },
         data: {
           label: 'Web Server 2',
@@ -64,7 +76,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-rds',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 0, y: 400 },
         data: {
           label: 'RDS Database',
@@ -79,7 +91,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-s3',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 400, y: 200 },
         data: {
           label: 'S3 Bucket',
@@ -99,7 +111,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-ec2-1',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-alb-ec2-2',
@@ -107,7 +119,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-ec2-2',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-ec2-rds',
@@ -115,7 +127,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-rds',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-ec2-rds-2',
@@ -123,7 +135,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-rds',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-ec2-s3',
@@ -131,7 +143,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-s3',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
     ],
   },
@@ -143,7 +155,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
     nodes: [
       {
         id: 'node-producer',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 50, y: 50 },
         data: {
           label: 'Data Producer',
@@ -156,7 +168,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-kinesis',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 50, y: 200 },
         data: {
           label: 'Kinesis Stream',
@@ -168,7 +180,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-lambda-processor',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: -150, y: 350 },
         data: {
           label: 'Stream Processor',
@@ -183,7 +195,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-dynamodb',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 50, y: 350 },
         data: {
           label: 'DynamoDB',
@@ -196,7 +208,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-s3-analytics',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 250, y: 350 },
         data: {
           label: 'S3 Data Lake',
@@ -216,7 +228,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-kinesis',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-kinesis-lambda',
@@ -224,7 +236,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-lambda-processor',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-kinesis-dynamodb',
@@ -232,7 +244,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-dynamodb',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-lambda-s3',
@@ -240,7 +252,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-s3-analytics',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
     ],
   },
@@ -252,7 +264,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
     nodes: [
       {
         id: 'node-alb-cache',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 100, y: 50 },
         data: {
           label: 'Load Balancer',
@@ -264,7 +276,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-app-1',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: -100, y: 200 },
         data: {
           label: 'App Server 1',
@@ -278,7 +290,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-app-2',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 100, y: 200 },
         data: {
           label: 'App Server 2',
@@ -292,7 +304,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-app-3',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 300, y: 200 },
         data: {
           label: 'App Server 3',
@@ -306,7 +318,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-elasticache',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 100, y: 400 },
         data: {
           label: 'ElastiCache',
@@ -319,7 +331,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
       },
       {
         id: 'node-db-cache',
-        type: 'resourceNode',
+        type: 'resource',
         position: { x: 350, y: 400 },
         data: {
           label: 'RDS Database',
@@ -340,7 +352,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-app-1',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-lb-app2',
@@ -348,7 +360,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-app-2',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-lb-app3',
@@ -356,7 +368,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-app-3',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-app1-cache',
@@ -364,7 +376,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-elasticache',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-app2-cache',
@@ -372,7 +384,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-elasticache',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-app3-cache',
@@ -380,7 +392,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-elasticache',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
       {
         id: 'edge-cache-db',
@@ -388,7 +400,7 @@ export const ARCHITECTURE_TEMPLATES: ArchitectureTemplate[] = [
         target: 'node-db-cache',
         type: 'smoothstep',
         animated: true,
-        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+        style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       },
     ],
   },

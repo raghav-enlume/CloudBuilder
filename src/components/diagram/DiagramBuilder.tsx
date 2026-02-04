@@ -6,113 +6,14 @@ import { Toolbar } from './Toolbar';
 import { ResourceInfoPanel } from './ResourceInfoPanel';
 import { useDiagramStore } from '@/store/diagramStore';
 import { ResourceType } from '@/types/diagram';
-import architectureDiagram from '@/lib/graph-upload/sample-web-app.json';
-import { parseAWSDataJSON } from '@/lib/awsDataParser';
-import { getAWSDataFromDBJson } from '@/lib/dbJsonParser';
-import region1Data from '@/lib/aws/region-1-architecture.json';
-// import dbJsonData from '@/lib/aws/db.json';
-import dbJsonData from '@/lib/aws/clean-db-14.json';
 
 const DiagramBuilderContent = ({ onDragEnd }: { onDragEnd: (event: DragEndEvent) => void }) => {
   const { loadDiagram, setLoadedSecurityGroups, nodes, edges } = useDiagramStore();
   const [isInfoPanelOpen, setIsInfoPanelOpen] = useState(false);
 
-  // Load architecture diagram on component mount
-  useEffect(() => {
-    const loadAWSData = async () => {
-      try {
-        // Switch between data sources: 'region1' or 'dbJson'
-        const USE_DB_JSON = true; // Set to false to use region-1-architecture.json
-        
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let awsData: any;
-        let dataSource: string;
-        
-        if (USE_DB_JSON) {
-          // Convert DB JSON format to AWS format
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          awsData = getAWSDataFromDBJson(dbJsonData as any);
-          console.log('awsData', awsData)
-          dataSource = 'db.json (DB format)';
-        } else {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          awsData = region1Data as any;
-          dataSource = 'region-1-architecture.json';
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const { nodes: parsedNodes, edges } = await parseAWSDataJSON(awsData as any);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        loadDiagram(parsedNodes as any, edges as any);
-        console.log(`Loaded ${dataSource} data:`, { nodes: parsedNodes.length, edges: edges.length });
-
-        // Extract and store security groups from the loaded data
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const allSecurityGroups: any[] = [];
-        Object.values(awsData).forEach((regionData) => {
-          if (regionData && typeof regionData === 'object' && 'security_groups' in regionData) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const sgs = (regionData as any).security_groups;
-            if (Array.isArray(sgs)) {
-              allSecurityGroups.push(...sgs);
-            }
-          }
-        });
-        setLoadedSecurityGroups(allSecurityGroups);
-
-        // Trigger fitView after a longer delay to ensure DOM is ready and find first region
-        setTimeout(() => {
-          // Find the first region node
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const firstRegionNode = parsedNodes.find((node: any) => node.data?.resourceType?.id === 'region');
-          if (firstRegionNode) {
-            window.dispatchEvent(new CustomEvent('fitViewOnLoad', {
-              detail: { nodeId: firstRegionNode.id }
-            }));
-            console.log('fitViewOnLoad event dispatched for region:', firstRegionNode.id);
-          } else {
-            window.dispatchEvent(new CustomEvent('fitViewOnLoad'));
-            console.log('fitViewOnLoad event dispatched');
-          }
-        }, 500);
-      } catch (error) {
-        console.error('Failed to load architecture data:', error);
-      }
-    };
-    
-    loadAWSData();
-  }, [loadDiagram, setLoadedSecurityGroups]);
-
-  // useEffect(() => {
-  //   try {
-  //     const { nodes, edges } = architectureDiagram as { nodes: Record<string, unknown>[]; edges: Record<string, unknown>[] };
-  //     loadDiagram(nodes, edges);
-  //     console.log('Loaded architecture diagram:', { nodes: nodes.length, edges: edges.length });
-
-  //     // Extract and store security groups from the loaded data
-  //     const securityGroups = nodes
-  //       .filter((node) => node.data?.resourceType?.id === 'securityGroup')
-  //       .map((node) => node.data);
-  //     setLoadedSecurityGroups(securityGroups);
-
-  //     // Trigger fitView after a longer delay to ensure DOM is ready and find first region
-  //     setTimeout(() => {
-  //       // Find the first region node
-  //       const firstRegionNode = nodes.find((node) => node.data?.resourceType?.id === 'region');
-  //       if (firstRegionNode) {
-  //         window.dispatchEvent(new CustomEvent('fitViewOnLoad', {
-  //           detail: { nodeId: firstRegionNode.id }
-  //         }));
-  //         console.log('fitViewOnLoad event dispatched for region:', firstRegionNode.id);
-  //       } else {
-  //         window.dispatchEvent(new CustomEvent('fitViewOnLoad'));
-  //         console.log('fitViewOnLoad event dispatched');
-  //       }
-  //     }, 500);
-  //   } catch (error) {
-  //     console.error('Failed to load architecture diagram:', error);
-  //   }
-  // }, [loadDiagram, setLoadedSecurityGroups]);
+  // Component is ready with empty diagram by default
+  // Component is ready with empty diagram by default
+  // Sample data can be loaded via import buttons in the toolbar
 
   return (
     <div className="flex h-screen bg-canvas overflow-hidden">

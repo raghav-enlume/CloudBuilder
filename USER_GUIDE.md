@@ -138,11 +138,12 @@ The application maintains a strict hierarchy for valid architectures:
 Region (Container)
 ├── VPC (Container)
 │   ├── Subnet (Container)
-│   │   ├── Security Group (Container)
-│   │   │   └── EC2 Instance (Resource)
+│   │   ├── EC2 Instance (Resource)
+│   │   ├── RDS Database (Resource)
 │   │   └── NAT Gateway (Resource)
 │   ├── Internet Gateway (Resource)
-│   └── Route Table (Resource)
+│   ├── Route Table (Resource)
+│   └── Security Groups (Floating - Associated via Edges)
 └── Other Regional Resources
 ```
 
@@ -184,11 +185,13 @@ Region (Container)
 
 ### Resizing Resources
 
-For **container resources** (VPC, Subnet, Security Group):
+For **container resources** (VPC, Subnet):
 1. Select the resource
 2. Look for resize handles at the edges
 3. Drag handles to resize
 4. Container automatically adjusts to fit children
+
+**Security Groups** are floating elements and can be positioned anywhere in the VPC area.
 
 ### Deleting Resources
 

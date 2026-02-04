@@ -355,9 +355,9 @@ Region (Level 0)
 |------|-------|----------|-------|-----------|--------|----------|-------|
 | Region | `region` | Networking | #3949AB | ✅ | None | VPCs | 0 |
 | VPC | `vpc` | Networking | #8C4FFF | ✅ | Region | Subnets, IGWs, RTs | 1 |
-| Subnet | `subnet` | Networking | #8C4FFF | ✅ | VPC | Security Groups | 2 |
-| Security Group | `securityGroup` | Security | #DD344C | ✅ | Subnet | EC2 Instances | 3 |
-| EC2 | `ec2` | Compute | #FF9900 | ❌ | Security Group | None | 4 |
+| Subnet | `subnet` | Networking | #8C4FFF | ✅ | VPC | EC2, RDS, Lambda | 2 |
+| Security Group | `securityGroup` | Security | #DD344C | ❌ | VPC | None | 1 |
+| EC2 | `ec2` | Compute | #FF9900 | ❌ | Subnet | None | 3 |
 | Route Table | `routetable` | Networking | #8C4FFF | ❌ | VPC | None | 2 |
 | IGW | `internetgateway` | Compute | #FF9900 | ❌ | VPC | None | 2 |
 

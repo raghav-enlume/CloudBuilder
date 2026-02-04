@@ -48,7 +48,6 @@ const isContainerNode = (node: any): boolean => {
          node?.data?.resourceType?.id === 'autoscaling' ||
          node?.data?.resourceType?.id === 'vpc' ||
          node?.data?.resourceType?.id === 'subnet' ||
-         node?.data?.resourceType?.id === 'securitygroup' ||
          node?.data?.resourceType?.id === 'region';
 };
 
@@ -132,8 +131,8 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
 
   addNode: (resourceType, position, parentId, isContainer = false) => {
     set((state) => {
-      // Auto-detect container types for VPC, Subnet, SecurityGroup
-      const shouldBeContainer = isContainer || resourceType.id === 'vpc' || resourceType.id === 'subnet' || resourceType.id === 'securitygroup';
+      // Auto-detect container types for VPC, Subnet (Security Groups are not containers)
+      const shouldBeContainer = isContainer || resourceType.id === 'vpc' || resourceType.id === 'subnet';
       
       let size = undefined;
       
@@ -145,12 +144,13 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
           size = { width: 700, height: 500 };
         } else if (resourceType.id === 'subnet') {
           size = { width: 450, height: 300 };
-        } else if (resourceType.id === 'securitygroup') {
-          size = { width: 350, height: 250 };
         }
       } else if (resourceType?.id === 'autoscaling') {
         // default size only for autoscaling to make it visible
         size = { width: 240, height: 72 };
+      } else if (resourceType?.id === 'securitygroup') {
+        // Security groups are floating elements, not containers
+        size = { width: 200, height: 100 };
       }
       
       const currentPosition = position;
@@ -465,7 +465,7 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
       id: `edge-${Date.now()}`,
       type: 'smoothstep',
       animated: false,
-      style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2 },
+      style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 1.0 },
       markerEnd: { type: 'arrowclosed' as any },
     };
 
@@ -824,8 +824,22 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
 
   loadDiagram: (nodes, edges) => {
     set((state) => {
+      // Ensure security groups are never containers (AWS standards)
+      const sanitizedNodes = nodes.map(node => {
+        if (node.data?.resourceType?.id === 'securitygroup') {
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              isContainer: false, // Security groups are floating elements, not containers
+            },
+          };
+        }
+        return node;
+      });
+
       // Auto-detect parent relationships based on node positions
-      const nodesWithParents = autoDetectParents(nodes);
+      const nodesWithParents = autoDetectParents(sanitizedNodes);
 
       const newState = {
         nodes: nodesWithParents,

@@ -208,7 +208,7 @@ All nodes must have:
 }
 ```
 
-#### Type 2: Subnet → Security Group (Containment)
+#### Type 2: Subnet → Security Group (Association)
 ```json
 {
   "id": "subnet-to-sg-subnet-456-sg-789",
@@ -217,12 +217,13 @@ All nodes must have:
   "type": "smoothstep",
   "style": {
     "stroke": "#FF6B35",
-    "strokeWidth": 2
+    "strokeWidth": 2,
+    "strokeDasharray": "4,4"
   }
 }
 ```
 
-#### Type 3: Security Group → EC2 Instance (Containment)
+#### Type 3: Security Group → EC2 Instance (Association)
 ```json
 {
   "id": "sg-to-instance-sg-789-instance-012",
@@ -231,7 +232,8 @@ All nodes must have:
   "type": "smoothstep",
   "style": {
     "stroke": "#DD344C",
-    "strokeWidth": 2
+    "strokeWidth": 2,
+    "strokeDasharray": "4,4"
   }
 }
 ```
@@ -314,29 +316,31 @@ Notes:
   - Prevents collisions even when children are added later
 ```
 
-#### Security Group (Container inside Subnet)
+#### Security Group (Floating Element at VPC Level)
 ```
-position.x = subnet.x + padding(30px)
-position.y = subnet.y + padding(30px)
-width = 120px (minimum, can expand for children)
-height = 120px (minimum, can expand for children)
+position.x = vpc.x + vpc.width + padding(40px)
+position.y = vpc.y + padding(50px) + (index * 120px)
+width = 200px (fixed)
+height = 100px (fixed)
 
-Container Role:
-  - Acts as protective boundary for EC2 instances
-  - Can contain multiple instances
-  - Only SGs protecting instances are created (orphaned SGs filtered)
+Floating Role:
+  - Associated with resources via edges, not containment
+  - Positioned outside VPC container
+  - Can protect multiple resources across subnets
+  - Shows security group rules and associations
 ```
 
 #### EC2 Instance
 ```
-position.x = sg.x + padding(20px)  OR  subnet.x + padding(30px) (if no SG)
-position.y = sg.y + padding(20px)  OR  subnet.y + padding(30px) (if no SG)
+position.x = subnet.x + padding(30px)
+position.y = subnet.y + padding(30px) + (index * 100px)
 width = 120px (fixed)
 height = 88px (fixed)
 
 Placement:
-  - Primary: Inside Security Group (nested within SG container)
-  - Fallback: Directly in Subnet (if no SG)
+  - Always positioned directly within subnet containers
+  - Associated with security groups via edges (not containment)
+  - Can belong to multiple security groups simultaneously
 ```
 
 ### 4.3 Coordinate Transformations
@@ -402,16 +406,15 @@ height = max(vpc.y + vpc.height) + padding(40px)
 |-----------|---------|-------|
 | Region | 40px | All sides |
 | VPC | 40px | All sides |
-| Subnet | 30px | Instance/SG placement |
+| Subnet | 30px | Instance placement |
 | Subnet spacing | 50px | Minimum margin between subnets (increased from 20px) |
-| Security Group | 20px | Instance placement within SG |
 | RT/IGW spacing | 100px | Vertical spacing |
 
 ### 5.3 Minimum Size Constraints
 
 | Resource Type | Min Width | Min Height | Notes |
 |---------------|-----------|------------|-------|
-| Security Group | 120px | 120px | Acts as container for instances |
+| Security Group | 200px | 100px | Floating element (not container) |
 | EC2 Instance | 120px | 88px | Fixed size |
 | Route Table | 120px | 88px | Fixed size |
 | Internet Gateway | 120px | 88px | Fixed size |

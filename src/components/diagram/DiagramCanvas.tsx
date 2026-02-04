@@ -18,6 +18,7 @@ import { TopPropertiesBar } from './TopPropertiesBar';
 import { cn } from '@/lib/utils';
 
 const nodeTypes: NodeTypes = {
+  resource: ResourceNode,
   resourceNode: ResourceNode,
   textLabel: TextLabel,
   iconNode: IconNode,
@@ -74,15 +75,15 @@ const DiagramCanvasInner = () => {
     const style = document.createElement('style');
     style.textContent = `
       .react-flow__edge {
-        z-index: 10000 !important;
+        z-index: -1 !important;
         pointer-events: auto !important;
       }
       .react-flow__edge-path {
-        z-index: 10000 !important;
+        z-index: -1 !important;
         pointer-events: auto !important;
       }
       .react-flow__edge-background {
-        z-index: 10000 !important;
+        z-index: -1 !important;
         pointer-events: auto !important;
       }
       .react-flow__edge-label {
@@ -105,6 +106,10 @@ const DiagramCanvasInner = () => {
       .react-flow__edge-text{
         font-size: 8px;
       }
+      .react-flow__edge-textbg {
+        fill: white;
+        opacity: 0.5;
+      }
       .react-flow__node {
         z-index: -1 !important;
       }
@@ -118,7 +123,7 @@ const DiagramCanvasInner = () => {
         z-index: -1 !important;
       }
       .selectable {
-        z-index: -1 !important;
+        z-index: 1 !important;
       }
     `;
     document.head.appendChild(style);
@@ -129,17 +134,46 @@ const DiagramCanvasInner = () => {
 
   // Enhanced edges with better arrow markers and hover effects
   const enhancedEdges = useMemo(() => {
-    return edges.map((edge: any) => ({
-      ...edge,
-      markerEnd: {
-        type: MarkerType.ArrowClosed,
-        color: hoveredEdgeId === edge.id ? '#000000' : '#000000',
-      },
-      style: {
-        stroke: hoveredEdgeId === edge.id ? '#000000' : '#000000',
-        strokeWidth: hoveredEdgeId === edge.id ? 1.5 : 1,
-      },
-    }));
+    return edges.map((edge: any) => {
+      const connectionType = edge.data?.connectionType || 'default';
+      const isHovered = hoveredEdgeId === edge.id;
+
+      // Dynamic styling based on connection type
+      const getEdgeColor = (type: string) => {
+        const colors = {
+          internet: '#2196F3',
+          loadbalancer: '#8C4FFF',
+          targetgroup: '#FF6B35',
+          database: '#4CAF50',
+          routing: '#757575',
+          vpcendpoint: '#00ACC1',
+          security: '#F44336',
+          default: '#2196F3',
+        };
+        return colors[type as keyof typeof colors] || colors.default;
+      };
+
+      const baseColor = getEdgeColor(connectionType);
+      const hoverColor = baseColor;
+
+      return {
+        ...edge,
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          width: 12,
+          height: 12,
+          color: isHovered ? hoverColor : baseColor,
+        },
+        style: {
+          ...edge.style,
+          stroke: isHovered ? hoverColor : baseColor,
+          strokeWidth: isHovered ? (edge.style?.strokeWidth || 1.0) + 0.5 : edge.style?.strokeWidth || 1.0,
+          filter: isHovered ? `drop-shadow(0 0 6px ${baseColor}40)` : edge.style?.filter,
+          transition: 'all 0.2s ease-in-out',
+        },
+        animated: connectionType === 'internet', // Animate internet connections
+      };
+    });
   }, [edges, hoveredEdgeId]);
 
   const onNodesChange = useCallback(
@@ -240,6 +274,8 @@ const DiagramCanvasInner = () => {
           // style: { stroke: 'hsl(210, 100%, 50%)', strokeWidth: 2.5 },
           markerEnd: {
             type: MarkerType.ArrowClosed,
+            width: 12,
+            height: 12,
             color: 'hsl(210, 100%, 50%)',
           },
         }}
