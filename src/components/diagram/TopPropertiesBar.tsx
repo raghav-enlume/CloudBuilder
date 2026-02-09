@@ -210,17 +210,11 @@ export const TopPropertiesBar = () => {
       </div>
 
       {/* Second Row - Additional Properties */}
-      {secondRowAttrs.length > 0 && (
+      {/* {secondRowAttrs.length > 0 && (
         <div className="flex items-center gap-6 px-4 py-3">
           {secondRowAttrs.map((attr, index) => renderAttributeField(attr, index))}
-
-          {/* Pricing */}
-          {/* <div className="ml-auto flex items-center gap-2 pr-4">
-            <span className="text-xs text-muted-foreground">100%</span>
-            <span className="text-lg font-bold text-green-600">$70</span>
-          </div> */}
         </div>
-      )}
+      )} */}
     </div>
   );
 };

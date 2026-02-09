@@ -225,6 +225,27 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
           isContainer: shouldBeContainer,
           size,
           nestingDepth: 0, // Will be calculated after node is added
+          config: shouldBeContainer ? (() => {
+            if (resourceType.id === 'vpc') {
+              return {
+                vpcName: 'my-vpc',
+                cidrBlock: '10.0.0.0/16',
+                dnsHostnamesEnabled: true,
+                width: size?.width || 700,
+                height: size?.height || 500,
+              };
+            } else if (resourceType.id === 'subnet') {
+              return {
+                subnetName: 'my-subnet',
+                cidrBlock: '10.0.1.0/24',
+                availabilityZone: 'us-east-1a',
+                publicSubnet: false,
+                width: size?.width || 450,
+                height: size?.height || 300,
+              };
+            }
+            return undefined;
+          })() : undefined,
         },
       };
 
@@ -824,8 +845,77 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
 
   loadDiagram: (nodes, edges) => {
     set((state) => {
+      // Ensure VPC and subnet nodes have the correct type and resourceType for property display
+      const processedNodes = nodes.map((node) => {
+        // Convert container nodes to 'group' type for proper property panel display
+        if (node.data?.isContainer && (node.data?.resourceType?.id === 'vpc' || node.data?.resourceType?.id === 'subnet')) {
+          return {
+            ...node,
+            type: 'group', // Ensure VPC and subnet containers use 'group' type
+          };
+        }
+
+        // For nodes created by buildArchitectureGraph (flat array import)
+        // Add resourceType for VPC and subnet group nodes
+        if (node.type === 'group' && node.data?.kind === 'vpc') {
+          const vpcResource = cloudResources.find(r => r.id === 'vpc');
+          if (vpcResource) {
+            // Extract VPC properties from raw data
+            const rawVpc = node.data.raw;
+            const config = {
+              vpcName: node.data.label || rawVpc?.name || node.id,
+              cidrBlock: node.data.cidr || rawVpc?.cidr || '10.0.0.0/16',
+              region: 'us-east-1', // Default region
+              tenancy: 'default',
+              enableDnsHostnames: true,
+              enableDnsSupport: true,
+              width: node.style?.width || 980,
+              height: node.style?.height || 640,
+            };
+
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                resourceType: vpcResource,
+                isContainer: true,
+                config,
+              },
+            };
+          }
+        }
+
+        if (node.type === 'group' && node.data?.kind === 'subnet') {
+          const subnetResource = cloudResources.find(r => r.id === 'subnet');
+          if (subnetResource) {
+            // Extract subnet properties from raw data
+            const rawSubnet = node.data.raw;
+            const config = {
+              subnetName: node.data.label || rawSubnet?.name || node.id,
+              cidrBlock: node.data.cidr || rawSubnet?.cidr || '10.0.1.0/24',
+              availabilityZone: 'us-east-1a', // Default AZ
+              publicSubnet: node.data.subnetKind === 'public',
+              width: node.style?.width || 460,
+              height: node.style?.height || 520,
+            };
+
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                resourceType: subnetResource,
+                isContainer: true,
+                config,
+              },
+            };
+          }
+        }
+
+        return node;
+      });
+
       // Ensure security groups are never containers (AWS standards)
-      const sanitizedNodes = nodes.map(node => {
+      const sanitizedNodes = processedNodes.map(node => {
         if (node.data?.resourceType?.id === 'securitygroup') {
           return {
             ...node,

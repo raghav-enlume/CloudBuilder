@@ -14,7 +14,7 @@
                 "resource_property": {
                     "VpcId": "vpc-webapp-001",
                     "State": "available",
-                    "CidrBlock": "10.105.0.0/16",
+                    "CidrBlock": "10.1.0.0/16",
                     "DhcpOptionsId": "dopt-webapp-001",
                     "InstanceTenancy": "default",
                     "IsDefault": false,

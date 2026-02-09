@@ -450,6 +450,8 @@ export const cloudResources: ResourceType[] = [
       { key: 'cidrBlock', label: 'CIDR Block', type: 'text', placeholder: '10.0.1.0/24' },
       { key: 'availabilityZone', label: 'Availability Zone', type: 'text', placeholder: 'us-east-1a' },
       { key: 'publicSubnet', label: 'Public Subnet', type: 'boolean' },
+      { key: 'width', label: 'Width', type: 'number', placeholder: '450' },
+      { key: 'height', label: 'Height', type: 'number', placeholder: '300' },
     ],
   },
   {

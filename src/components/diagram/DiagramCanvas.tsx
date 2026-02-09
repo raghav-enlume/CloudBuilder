@@ -14,6 +14,7 @@ import { useDiagramStore } from '@/store/diagramStore';
 import ResourceNode from './ResourceNode';
 import TextLabel from './TextLabel';
 import { IconNode } from './IconNode';
+import GroupNode1 from './GroupNode1';
 import { TopPropertiesBar } from './TopPropertiesBar';
 import { cn } from '@/lib/utils';
 
@@ -22,6 +23,7 @@ const nodeTypes: NodeTypes = {
   resourceNode: ResourceNode,
   textLabel: TextLabel,
   iconNode: IconNode,
+  group: GroupNode1,
 };
 
 const DiagramCanvasInner = () => {

@@ -216,7 +216,7 @@ function buildArchitectureFromFlatVpc(
     normalizeId(natRes?.resource_property?.id) ||
     bestIdFromFlatResource(natRes);
 
-  const lbs = allResources.filter((r) => r?.resource_type === "LOAD_BALANCER" && inVpc(r));
+  const lbs = allResources.filter((r) => (r?.resource_type === "LOAD_BALANCER" || r?.resource_type === "ALB") && inVpc(r));
   const albRes =
     lbs.find((r) => {
       const scheme = String(r?.resource_property?.Scheme ?? "").toLowerCase();

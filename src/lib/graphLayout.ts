@@ -35,23 +35,23 @@ export interface ElkLayoutConfig {
   nodePlacement?: 'BRANDES_KOEPF' | 'LINEAR_SEGMENTS' | 'INTERACTIVE' | 'SIMPLE';
 }
 
-// Default ELK configuration
+// Default ELK configuration optimized for AWS architecture diagrams
 const defaultConfig: ElkLayoutConfig = {
-  rootDirection: 'DOWN',
-  rootSpacing: 60,  // Increased from 30 for better clearance between groups and standalone nodes
-  rootLayerSpacing: 50,  // Increased from 40 for better vertical separation
-  vpcDirection: 'RIGHT',
-  subnetDirection: 'DOWN',
-  containerPadding: '[top=25,left=15,bottom=15,right=15]',  // Increased padding
-  nodeSpacing: 25,  // Increased from 15 for more space between nodes
-  algorithm: 'layered',
-  nodeNodeBetweenLayers: 40,  // Increased from 35 for better layer separation
-  edgeNodeBetweenLayers: 20,  // Increased from 15 for better edge clearance
-  considerModelOrder: 'NONE',
-  cycleBreaking: 'GREEDY',
-  layering: 'NETWORK_SIMPLEX',
-  crossingMinimization: 'LAYER_SWEEP',
-  nodePlacement: 'BRANDES_KOEPF',
+  rootDirection: 'DOWN',           // Top-down hierarchy for architecture flow
+  rootSpacing: 80,                // Increased spacing between root-level elements
+  rootLayerSpacing: 70,           // More vertical separation between layers
+  vpcDirection: 'RIGHT',          // VPCs laid out horizontally
+  subnetDirection: 'DOWN',        // Subnets stacked vertically within VPCs
+  containerPadding: '[top=35,left=25,bottom=25,right=25]', // Generous padding for groups
+  nodeSpacing: 35,                // More space between nodes within containers
+  algorithm: 'layered',           // Layered algorithm for hierarchical layouts
+  nodeNodeBetweenLayers: 60,      // Increased layer separation for edge clearance
+  edgeNodeBetweenLayers: 30,      // More space for edges between layers
+  considerModelOrder: 'NONE',     // Let ELK optimize ordering
+  cycleBreaking: 'GREEDY',        // Good for most architecture graphs
+  layering: 'NETWORK_SIMPLEX',    // Efficient layering algorithm
+  crossingMinimization: 'LAYER_SWEEP', // Minimize edge crossings
+  nodePlacement: 'BRANDES_KOEPF', // Balanced node placement
 };
 
 export async function layoutGraphWithELK(
@@ -76,14 +76,19 @@ export async function layoutGraphWithELK(
   const groupKind = (n: Node): string | undefined => (n?.data as any)?.kind;
   const sizeFor = (n: Node) => {
     if (isGroup(n)) {
-      const width = typeof (n.style as any)?.width === "number" ? (n.style as any).width : 800;
-      const height =
-        typeof (n.style as any)?.height === "number" ? (n.style as any).height : 520;
-      return { width, height };
+      const kind = groupKind(n);
+      if (kind === 'vpc') {
+        // VPC groups need more space for subnets and resources
+        return { width: 1000, height: 700 };
+      } else if (kind === 'subnet') {
+        // Subnet groups within VPCs
+        return { width: 600, height: 400 };
+      }
+      // Default group size
+      return { width: 800, height: 520 };
     }
-    // Use actual rendered node size for resource nodes (54x54)
-    // This matches the AwsResourceNode component dimensions
-    return { width: 84, height: 84 };
+    // AWS resource nodes - standard size for icons and labels
+    return { width: 140, height: 90 };
   };
 
   const buildElkChild = (id: string): any => {
@@ -114,6 +119,12 @@ export async function layoutGraphWithELK(
               "elk.layered.layering": layoutConfig.layering,
               "elk.layered.crossingMinimization": layoutConfig.crossingMinimization,
               "elk.layered.nodePlacement": layoutConfig.nodePlacement,
+              // Additional options for better edge routing and spacing
+              "elk.layered.unnecessaryBendpoints": "true", // Remove unnecessary bends
+              "elk.edgeRouting": "POLYLINE", // Better edge routing for complex diagrams
+              "elk.layered.edgeRouting": "ORTHOGONAL", // Orthogonal edges for clarity
+              "elk.spacing.edgeEdge": "15", // Space between parallel edges
+              "elk.spacing.edgeNode": "25", // Space between edges and nodes
             },
             children,
           }
@@ -140,6 +151,12 @@ export async function layoutGraphWithELK(
       "elk.layered.layering": layoutConfig.layering,
       "elk.layered.crossingMinimization": layoutConfig.crossingMinimization,
       "elk.layered.nodePlacement": layoutConfig.nodePlacement,
+      // Additional options for better edge routing and spacing at root level
+      "elk.layered.unnecessaryBendpoints": "true",
+      "elk.edgeRouting": "POLYLINE",
+      "elk.layered.edgeRouting": "ORTHOGONAL",
+      "elk.spacing.edgeEdge": "20",
+      "elk.spacing.edgeNode": "30",
     },
     children: rootChildren,
     edges: edges
