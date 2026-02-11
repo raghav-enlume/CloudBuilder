@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { Node, Edge, addEdge, applyNodeChanges, applyEdgeChanges, NodeChange, EdgeChange, Connection } from 'reactflow';
 import { ResourceType } from '@/types/diagram';
 import { cloudResources } from '@/data/resources';
+import { extractResourceConfig } from '@/lib/resourceConfigExtractor';
 
 interface HistoryState {
   nodes: Node[];
@@ -845,66 +846,61 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
 
   loadDiagram: (nodes, edges) => {
     set((state) => {
-      // Ensure VPC and subnet nodes have the correct type and resourceType for property display
+      // Process all nodes to extract properties from raw AWS data and ensure resourceType is set
       const processedNodes = nodes.map((node) => {
-        // Convert container nodes to 'group' type for proper property panel display
-        if (node.data?.isContainer && (node.data?.resourceType?.id === 'vpc' || node.data?.resourceType?.id === 'subnet')) {
-          return {
-            ...node,
-            type: 'group', // Ensure VPC and subnet containers use 'group' type
-          };
-        }
+        const label = node.data?.label || node.id;
+        let resourceType = node.data?.resourceType;
+        let data = node.data;
 
-        // For nodes created by buildArchitectureGraph (flat array import)
-        // Add resourceType for VPC and subnet group nodes
-        if (node.type === 'group' && node.data?.kind === 'vpc') {
-          const vpcResource = cloudResources.find(r => r.id === 'vpc');
-          if (vpcResource) {
-            // Extract VPC properties from raw data
-            const rawVpc = node.data.raw;
-            const config = {
-              vpcName: node.data.label || rawVpc?.name || node.id,
-              cidrBlock: node.data.cidr || rawVpc?.cidr || '10.0.0.0/16',
-              region: 'us-east-1', // Default region
-              tenancy: 'default',
-              enableDnsHostnames: true,
-              enableDnsSupport: true,
-              width: node.style?.width || 980,
-              height: node.style?.height || 640,
-            };
+        // ===== Handle group nodes from buildArchitectureGraph (type: 'group', kind: 'vpc'|'subnet') =====
+        if (node.type === 'group' && node.data?.kind) {
+          const kind = node.data.kind;
 
-            return {
-              ...node,
-              data: {
+          // For VPC group nodes
+          if (kind === 'vpc' && !resourceType) {
+            const vpcResource = cloudResources.find((r) => r.id === 'vpc');
+            if (vpcResource) {
+              resourceType = vpcResource;
+              const config = extractResourceConfig(node.data.raw, 'vpc', label);
+              data = {
                 ...node.data,
                 resourceType: vpcResource,
                 isContainer: true,
                 config,
-              },
-            };
+              };
+            }
           }
+
+          // For Subnet group nodes
+          if (kind === 'subnet' && !resourceType) {
+            const subnetResource = cloudResources.find((r) => r.id === 'subnet');
+            if (subnetResource) {
+              resourceType = subnetResource;
+              const config = extractResourceConfig(node.data.raw, 'subnet', label);
+              data = {
+                ...node.data,
+                resourceType: subnetResource,
+                isContainer: true,
+                config,
+              };
+            }
+          }
+
+          return {
+            ...node,
+            data,
+          };
         }
 
-        if (node.type === 'group' && node.data?.kind === 'subnet') {
-          const subnetResource = cloudResources.find(r => r.id === 'subnet');
-          if (subnetResource) {
-            // Extract subnet properties from raw data
-            const rawSubnet = node.data.raw;
-            const config = {
-              subnetName: node.data.label || rawSubnet?.name || node.id,
-              cidrBlock: node.data.cidr || rawSubnet?.cidr || '10.0.1.0/24',
-              availabilityZone: 'us-east-1a', // Default AZ
-              publicSubnet: node.data.subnetKind === 'public',
-              width: node.style?.width || 460,
-              height: node.style?.height || 520,
-            };
+        // ===== Handle regular resource nodes (type: 'resource') =====
+        if (node.type === 'resource' && node.data?.raw && resourceType?.id) {
+          const config = extractResourceConfig(node.data.raw, resourceType.id, label);
 
+          if (Object.keys(config).length > 0) {
             return {
               ...node,
               data: {
                 ...node.data,
-                resourceType: subnetResource,
-                isContainer: true,
                 config,
               },
             };
@@ -915,7 +911,7 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
       });
 
       // Ensure security groups are never containers (AWS standards)
-      const sanitizedNodes = processedNodes.map(node => {
+      const sanitizedNodes = processedNodes.map((node) => {
         if (node.data?.resourceType?.id === 'securitygroup') {
           return {
             ...node,
