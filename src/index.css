@@ -231,3 +231,9 @@
     box-shadow: var(--shadow-lg);
   }
 }
+
+
+.wNormal > div:first-child {
+  display: inherit !important;
+  min-width: inherit !important;
+}
