@@ -47,7 +47,7 @@ git --version
 
 ```bash
 git clone <repository-url>
-cd architect-playhouse-main
+cd CloudBuilder
 ```
 
 ### 2. Install Dependencies
