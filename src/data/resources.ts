@@ -27,6 +27,10 @@ export const cloudResources: ResourceType[] = [
         { value: 'm5.xlarge', label: 'm5.xlarge' },
       ]},
       { key: 'instanceCount', label: 'Instance Count', type: 'number', placeholder: '1' },
+      { key: 'platform', label: 'Platform', type: 'select', options: [
+        { value: 'linux/unix', label: 'Linux/Unix' },
+        { value: 'windows', label: 'Windows' },
+      ]},
       { key: 'osType', label: 'Operating System', type: 'select', options: [
         { value: 'amazon-linux', label: 'Amazon Linux' },
         { value: 'ubuntu', label: 'Ubuntu' },

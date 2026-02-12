@@ -893,18 +893,21 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
         }
 
         // ===== Handle regular resource nodes (type: 'resource') =====
-        if (node.type === 'resource' && node.data?.raw && resourceType?.id) {
-          const config = extractResourceConfig(node.data.raw, resourceType.id, label);
+        if (node.type === 'resource' && resourceType?.id) {
+          // Extract config from raw data if available
+          const config = node.data?.raw 
+            ? extractResourceConfig(node.data.raw, resourceType.id, label)
+            : {};
 
-          if (Object.keys(config).length > 0) {
-            return {
-              ...node,
-              data: {
-                ...node.data,
-                config,
-              },
-            };
-          }
+          // Always return with config, even if empty
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              resourceType,
+              config,
+            },
+          };
         }
 
         return node;

@@ -28,7 +28,11 @@ export function extractResourceConfig(
 ): Record<string, unknown> {
   if (!raw) return {};
 
-  const prop = (raw.resource_property as Record<string, unknown>) || {};
+  // Handle nested raw data from buildArchitectureGraph
+  const actualRaw = (raw as any)?.raw || raw;
+  
+  // Handle both flat-array format (raw.resource_property) and direct property format (raw)
+  const prop = (actualRaw.resource_property as Record<string, unknown>) || actualRaw;
   const tags = Array.isArray(prop.Tags) ? (prop.Tags as TagObject[]) : [];
 
   const getTagValue = (key: string): string | undefined => {
@@ -110,13 +114,14 @@ export function extractResourceConfig(
     case 'alb':
     case 'nlb':
     case 'elb': {
+      // Extract load balancer type from the Type field in resource_property
+      const lbTypeFromProp = (prop.Type as string)?.toLowerCase();
+      const lbType = lbTypeFromProp === 'application' ? 'application' 
+                   : lbTypeFromProp === 'network' ? 'network' 
+                   : 'classic';
+      
       return {
-        lbType:
-          resourceTypeId === 'nlb'
-            ? 'network'
-            : resourceTypeId === 'alb'
-              ? 'application'
-              : 'classic',
+        lbType,
         lbName: (prop.LoadBalancerName as string) || getTagValue('Name') || label,
         scheme: (prop.Scheme as string) || 'internet-facing',
       };
@@ -131,6 +136,11 @@ export function extractResourceConfig(
         ? (securityGroups[0].GroupId || securityGroups[0].GroupName || '')
         : '';
       
+      // Determine platform from AWS Platform field or OS type
+      const awsPlatform = (prop.Platform as string)?.toLowerCase();
+      const inferredOsType = inferOSFromImageId(prop.ImageId as string) || 'amazon-linux';
+      const platform = awsPlatform === 'windows' || inferredOsType === 'windows' ? 'windows' : 'linux/unix';
+      
       return {
         instanceType: (prop.InstanceType as string) || 't2.micro',
         region: (prop.Region as string) || 'us-east-1',
@@ -138,6 +148,7 @@ export function extractResourceConfig(
         subnet: (prop.SubnetId as string) || '',
         securityGroup: primarySecurityGroup,
         instanceCount: 1,
+        platform,
         osType: inferOSFromImageId(prop.ImageId as string) || 'amazon-linux',
       };
     }

@@ -17,13 +17,13 @@ export type ArchitectureVpc = {
   cidr?: string;
   name?: string;
   internet?: { type?: string; label?: string };
-  internet_gateway?: { id: string; type?: string; label?: string };
+  internet_gateway?: { id: string; type?: string; label?: string; raw?: any };
   subnets?: {
     public?: ArchitectureSubnet;
     private?: ArchitectureSubnet;
   };
-  storage?: Array<{ id: string; type?: string; name?: string; access?: string }>;
-  vpc_endpoints?: Array<{ id: string; type?: string; service?: string; note?: string }>;
+  storage?: Array<{ id: string; type?: string; name?: string; access?: string; raw?: any }>;
+  vpc_endpoints?: Array<{ id: string; type?: string; service?: string; note?: string; raw?: any }>;
   traffic_flows?: Array<{ from: string; to: string; protocol?: string }>;
 };
 
@@ -34,6 +34,7 @@ export type ArchitectureSubnet = {
   route_table?: {
     id: string;
     routes?: Array<{ destination: string; target: string }>;
+    raw?: any;
   };
   resources?: Array<Record<string, any>>;
 };
@@ -134,6 +135,7 @@ function routeTableToSchemaFromFlat(rt: any) {
   return {
     id: normalizeId(p.RouteTableId) || normalizeId(p.id) || bestIdFromFlatResource(rt) || "route-table",
     routes: schemaRoutes,
+    raw: rt,
   };
 }
 
@@ -249,13 +251,14 @@ function buildArchitectureFromFlatVpc(
             : "VPC_ENDPOINT";
       const service = normalizeEndpointService(p.ServiceName);
       const note = normalizeId(p.name) || undefined;
-      return { id, type, service, note };
+      return { id, type, service, note, raw: r };
     })
     .filter(Boolean) as Array<{
     id: string;
     type?: string;
     service?: string;
     note?: string;
+    raw?: any;
   }>;
 
   const hasS3Endpoint = vpcEndpoints.some(
@@ -275,6 +278,7 @@ function buildArchitectureFromFlatVpc(
         type: "S3",
         name: b?.resource_name || b?.resource_property?.name || id,
         access: hasS3Endpoint ? "via-vpc-endpoint" : undefined,
+        raw: b,
       };
     })
     .filter(Boolean) as Array<{
@@ -282,6 +286,7 @@ function buildArchitectureFromFlatVpc(
     type?: string;
     name?: string;
     access?: string;
+    raw?: any;
   }>;
 
   const publicSubnetResources: Array<Record<string, any>> = [];
@@ -295,10 +300,10 @@ function buildArchitectureFromFlatVpc(
 
     if (type === "RDS") {
       const engine = normalizeId(r?.resource_property?.Engine);
-      arr.push({ id, type, name, ...(engine ? { engine } : null) });
+      arr.push({ id, type, name, ...(engine ? { engine } : null), raw: r });
       return;
     }
-    arr.push({ id, type, name });
+    arr.push({ id, type, name, raw: r });
   };
 
   if (natRes) pushResource(publicSubnetResources, natRes, "NAT_GATEWAY");
@@ -366,7 +371,7 @@ function buildArchitectureFromFlatVpc(
       cidr: vpcCidr,
       name: vpcName,
       internet: { type: "INTERNET", label: "Internet" },
-      internet_gateway: { id: igwId, type: "INTERNET_GATEWAY", label: igwLabel },
+      internet_gateway: { id: igwId, type: "INTERNET_GATEWAY", label: igwLabel, raw: igwRes },
       subnets: {
         ...(publicSubnetSchema ? { public: publicSubnetSchema } : null),
         ...(privateSubnetSchema ? { private: privateSubnetSchema } : null),
@@ -711,7 +716,7 @@ export function buildArchitectureGraph(
       "INTERNET_GATEWAY",
       vpcId,
       undefined,
-      vpc.internet_gateway
+      vpc.internet_gateway?.raw || vpc.internet_gateway
     )
   );
 
@@ -791,7 +796,7 @@ export function buildArchitectureGraph(
   // Route tables (inside subnets)
   if (publicSubnet?.route_table?.id && publicSubnetId) {
     const rtId = publicSubnet.route_table.id;
-    nodes.push(resourceNode(rtId, "Public Route Table", "ROUTE_TABLE", publicSubnetId, undefined, publicSubnet.route_table));
+    nodes.push(resourceNode(rtId, "Public Route Table", "ROUTE_TABLE", publicSubnetId, undefined, publicSubnet.route_table?.raw || publicSubnet.route_table));
     for (const r of publicSubnet.route_table.routes ?? []) {
       if (r.target === "internet_gateway") {
         edges.push(
@@ -812,7 +817,7 @@ export function buildArchitectureGraph(
   if (privateSubnet?.route_table?.id && privateSubnetId) {
     const rtId = privateSubnet.route_table.id;
     nodes.push(
-      resourceNode(rtId, "Private Route Table", "ROUTE_TABLE", privateSubnetId, undefined, privateSubnet.route_table)
+      resourceNode(rtId, "Private Route Table", "ROUTE_TABLE", privateSubnetId, undefined, privateSubnet.route_table?.raw || privateSubnet.route_table)
     );
     for (const r of privateSubnet.route_table.routes ?? []) {
       if (r.target === "nat_gateway") {
@@ -885,7 +890,7 @@ export function buildArchitectureGraph(
   for (const s of vpc.storage ?? []) {
     const id = normalizeId(s?.id);
     if (!id) continue;
-    nodes.push(resourceNode(id, s?.name ?? id, s?.type ?? "S3", vpcId, { access: s?.access }, s));
+    nodes.push(resourceNode(id, s?.name ?? id, s?.type ?? "S3", vpcId, { access: s?.access }, s?.raw || s));
   }
 
   // VPC Endpoints – place inside VPC
@@ -893,7 +898,7 @@ export function buildArchitectureGraph(
     const id = normalizeId(ep?.id);
     if (!id) continue;
     const label = ep?.service ? `${ep.service} Endpoint` : id;
-    nodes.push(resourceNode(id, label, ep?.type ?? "VPC_ENDPOINT", vpcId, { note: ep?.note }, ep));
+    nodes.push(resourceNode(id, label, ep?.type ?? "VPC_ENDPOINT", vpcId, { note: ep?.note }, ep?.raw || ep));
   }
 
   // Traffic flows -> edges
