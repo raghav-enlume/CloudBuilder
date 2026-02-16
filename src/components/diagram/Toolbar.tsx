@@ -1,4 +1,4 @@
-import { Download, Upload, Undo, Redo, FileArchive, Library, List } from 'lucide-react';
+import { Download, Upload, Undo, Redo, FileArchive, Library, List, Save, Trash2 } from 'lucide-react';
 import JSZip from 'jszip';
 import { useRef, useState } from 'react';
 import { Node, Edge } from 'reactflow';
@@ -22,7 +22,7 @@ import { ARCHITECTURE_TEMPLATES } from '@/data/templates';
 import { convertFlatArrayImport, parseImportFormat } from '@/lib/flatArrayConverter';
 
 export const Toolbar = ({ isInfoPanelOpen, onToggleInfoPanel }: { isInfoPanelOpen: boolean; onToggleInfoPanel: () => void }) => {
-  const { nodes, edges, clearDiagram, undo, redo, canUndo, canRedo, loadDiagram, updateNodes } = useDiagramStore();
+  const { nodes, edges, clearDiagram, undo, redo, canUndo, canRedo, loadDiagram, updateNodes, saveDiagram } = useDiagramStore();
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
@@ -38,6 +38,8 @@ export const Toolbar = ({ isInfoPanelOpen, onToggleInfoPanel }: { isInfoPanelOpe
     a.download = 'architecture-diagram.json';
     a.click();
     URL.revokeObjectURL(url);
+    
+    localStorage.removeItem('architecture-diagram');
     
     toast({
       title: 'Diagram exported',
@@ -96,6 +98,8 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
       title: 'ZIP exported',
       description: 'Your diagram has been downloaded as a ZIP file.',
     });
+    
+    localStorage.removeItem('architecture-diagram');
   };
 
   const handleClear = () => {
@@ -112,6 +116,14 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
     toast({
       title: 'Canvas cleared',
       description: 'All nodes and connections have been removed.',
+    });
+  };
+
+  const handleSave = () => {
+    saveDiagram();
+    toast({
+      title: 'Diagram saved',
+      description: 'Your diagram has been saved locally.',
     });
   };
 
@@ -160,7 +172,7 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
 
       // Load the diagram
       console.log('Loading diagram with nodes and edges:', nodesToLoad, edgesToLoad);
-      loadDiagram(nodesToLoad, edgesToLoad);
+      loadDiagram(nodesToLoad, edgesToLoad, true);
     } catch (error) {
       toast({
         title: 'Import failed',
@@ -248,6 +260,15 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
         </Tooltip>
 
         <div className="w-px h-6 bg-border mx-1" />
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size="icon" className="h-9 w-9" onClick={handleSave}>
+              <Save className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Save Diagram</TooltipContent>
+        </Tooltip>
 
         <Tooltip>
           <TooltipTrigger asChild>
@@ -414,7 +435,19 @@ ${[...new Set(nodes.map(n => n.data.resourceType))].map(type => `- ${type}`).joi
           <TooltipContent>Template Library</TooltipContent>
         </Tooltip>
 
-        
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-9 w-9"
+              onClick={handleClear}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Clear Canvas</TooltipContent>
+        </Tooltip>
 
         <Tooltip>
           <TooltipTrigger asChild>

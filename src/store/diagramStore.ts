@@ -36,7 +36,9 @@ interface DiagramStore {
   redo: () => void;
   canUndo: () => boolean;
   canRedo: () => boolean;
-  loadDiagram: (nodes: Node[], edges: Edge[]) => void;
+  loadDiagram: (nodes: Node[], edges: Edge[], clearStorage?: boolean) => void;
+  saveDiagram: () => void;
+  loadDiagramFromStorage: () => void;
   setLoadedSecurityGroups: (groups: Record<string, unknown>[]) => void;
   saveHistory: () => void;
 }
@@ -802,6 +804,7 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
         ...historyUpdate,
       };
     });
+    localStorage.removeItem('architecture-diagram');
   },
 
   undo: () => {
@@ -844,7 +847,7 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
     return state.historyIndex < state.history.length - 1;
   },
 
-  loadDiagram: (nodes, edges) => {
+  loadDiagram: (nodes, edges, clearStorage = false) => {
     set((state) => {
       // Process all nodes to extract properties from raw AWS data and ensure resourceType is set
       const processedNodes = nodes.map((node) => {
@@ -956,10 +959,33 @@ export const useDiagramStore = create<DiagramStore>((set, get) => ({
         ...historyUpdate,
       };
     });
+    if (clearStorage) {
+      localStorage.removeItem('architecture-diagram');
+    }
   },
 
   saveHistory: () => {
     set((state) => saveStateToHistory(state));
+  },
+
+  saveDiagram: () => {
+    const state = get();
+    const data = { nodes: state.nodes, edges: state.edges };
+    localStorage.setItem('architecture-diagram', JSON.stringify(data));
+  },
+
+  loadDiagramFromStorage: () => {
+    const stored = localStorage.getItem('architecture-diagram');
+    if (stored) {
+      try {
+        const data = JSON.parse(stored);
+        if (data.nodes && data.edges) {
+          get().loadDiagram(data.nodes, data.edges);
+        }
+      } catch (error) {
+        console.error('Failed to load diagram from localStorage:', error);
+      }
+    }
   },
 
   setLoadedSecurityGroups: (groups: any[]) => {

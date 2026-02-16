@@ -8,8 +8,12 @@ import { useDiagramStore } from '@/store/diagramStore';
 import { ResourceType } from '@/types/diagram';
 
 const DiagramBuilderContent = ({ onDragEnd }: { onDragEnd: (event: DragEndEvent) => void }) => {
-  const { loadDiagram, setLoadedSecurityGroups, nodes, edges } = useDiagramStore();
+  const { loadDiagram, setLoadedSecurityGroups, nodes, edges, loadDiagramFromStorage } = useDiagramStore();
   const [isInfoPanelOpen, setIsInfoPanelOpen] = useState(false);
+
+  useEffect(() => {
+    loadDiagramFromStorage();
+  }, [loadDiagramFromStorage]);
 
   // Component is ready with empty diagram by default
   // Component is ready with empty diagram by default
